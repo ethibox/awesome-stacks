@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  web:
+    image: ghost:2.4.0
+    volumes:
+      - ghost:/var/lib/ghost/content
+    environment:
+      url: ${SCHEME:-http}://${DOMAIN:-localhost}
+    deploy:
+      labels:
+        traefik.port: 2368
+        traefik.frontend.rule: Host:${DOMAIN}
+        traefik.enable: "true"
+
+networks:
+  default:
+    external:
+      name: traefik-net
+
+volumes:
+  ghost:
+    name: ghost-{{ index .Service.Labels "com.docker.stack.namespace" }}
+    driver: ${VOLUME_DRIVER:-local}
