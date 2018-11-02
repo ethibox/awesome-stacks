@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: traefik:1.7.4
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./acme.json:/acme.json
+      - ./traefik.toml:/traefik.toml
+    deploy:
+      placement:
+        constraints: [node.role==manager]
+
+networks:
+  default:
+    external:
+      name: traefik-net
