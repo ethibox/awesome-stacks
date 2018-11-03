@@ -17,6 +17,8 @@ services:
     image: grafana/grafana:5.3.2
     ports:
       - "3000:3000"
+    volumes:
+      - grafana:/var/lib/grafana
 
   cadvisor:
     image: google/cadvisor:v0.31.0
@@ -41,3 +43,13 @@ services:
     image: prom/alertmanager:v0.15.2
     ports:
       - 9093:9093
+
+networks:
+  default:
+    external:
+      name: traefik-net
+
+volumes:
+  grafana:
+    name: grafana-{{ index .Service.Labels "com.docker.stack.namespace" }}
+    driver: ${VOLUME_DRIVER:-local}
