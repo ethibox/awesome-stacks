@@ -25,3 +25,7 @@ onHostRule = true
   watch = true
   swarmmode = true
   exposedByDefault = false
+
+[metrics]
+  [metrics.prometheus]
+    entryPoint = "traefik"
