@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.4.3
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:5.3.2
+    ports:
+      - "3000:3000"
+
+  cadvisor:
+    image: google/cadvisor:v0.31.0
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    deploy:
+      mode: global
+      
+  node-exporter:
+    image: prom/node-exporter:v0.16.0
+    volumes:
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /proc:/host/proc:ro
+    deploy:
+      mode: global
