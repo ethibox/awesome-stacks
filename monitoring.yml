@@ -1,12 +1,17 @@
-version: '3'
+version: '3.7'
+
+configs:
+  prometheus_config:
+    file: ./config/prometheus.yml
 
 services:
   prometheus:
     image: prom/prometheus:v2.4.3
     ports:
       - '9090:9090'
-    volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
 
   grafana:
     image: grafana/grafana:5.3.2
