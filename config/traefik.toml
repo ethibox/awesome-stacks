@@ -29,3 +29,6 @@ onHostRule = true
 [metrics]
   [metrics.prometheus]
     entryPoint = "traefik"
+
+[accessLog]
+  filePath = "/var/log/access.log"
