@@ -6,11 +6,11 @@ services:
     volumes:
       - ghost:/var/lib/ghost/content
     environment:
-      url: ${SCHEME:-http}://${DOMAIN:-localhost}
+      url: ${SCHEME:-http}://${DOMAIN:?err}
     deploy:
       labels:
         traefik.port: 2368
-        traefik.frontend.rule: Host:${DOMAIN}
+        traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
 
 networks:
