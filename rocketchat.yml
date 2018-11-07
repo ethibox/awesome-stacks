@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  hack:
+    image: alpine
+    command: sh -c "mkdir $$VOLUME1 && mkdir $$VOLUME2"
+    volumes:
+      - /mnt/data:/mnt/data
+    environment:
+      - VOLUME1=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-uploads
+      - VOLUME2=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mongo
+    deploy:
+      restart_policy:
+        condition: none
+
+  web:
+    image: rocketchat/rocket.chat:0.71.1
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-uploads:/app/uploads
+    environment:
+      - ROOT_URL=${SCHEME:-http}://${DOMAIN:?err}
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+    depends_on:
+      - mongo
+    deploy:
+      placement:
+        constraints: [node.role==worker]
+      labels:
+        traefik.port: 3000
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+
+  mongo:
+    image: mongo:4.0.3
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mongo:/data/db
+    deploy:
+      placement:
+        constraints: [node.role==worker]
+
+networks:
+  default:
+    external:
+      name: traefik-net
