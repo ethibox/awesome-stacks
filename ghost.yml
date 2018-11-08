@@ -30,7 +30,7 @@ services:
     volumes:
       - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-isso:/data
     environment:
-      - ISSO_HOST=${ISSO_SCHEME:-http}://${ISSO_DOMAIN:?err}
+      - ISSO_HOST=${SCHEME:-http}://${DOMAIN:?err}
     deploy:
       labels:
         traefik.port: 80
