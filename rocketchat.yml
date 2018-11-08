@@ -29,6 +29,10 @@ services:
         traefik.port: 3000
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - traefik
+      - mongo
 
   mongo:
     image: mongo:4.0.3
@@ -37,8 +41,11 @@ services:
     deploy:
       placement:
         constraints: [node.role==worker]
+    networks:
+      - mongo
 
 networks:
-  default:
+  mongo:
+  traefik:
     external:
       name: traefik-net
