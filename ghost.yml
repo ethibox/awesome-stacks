@@ -1,10 +1,22 @@
 version: '3.7'
 
 services:
+  hack:
+    image: alpine
+    command: sh -c "mkdir -p $$VOLUME1 && mkdir -p $$VOLUME2"
+    volumes:
+      - /mnt/data:/mnt/data
+    environment:
+      - VOLUME1=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-ghost
+      - VOLUME2=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-isso
+    deploy:
+      restart_policy:
+        condition: none
+
   web:
     image: ghost:2.4.0
     volumes:
-      - ghost:/var/lib/ghost/content
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-ghost:/var/lib/ghost/content
     environment:
       url: ${SCHEME:-http}://${DOMAIN:?err}
     deploy:
@@ -13,12 +25,19 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
 
+  isso:
+    image: sheogorath/isso-docker:0.10.6
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-isso:/data
+    environment:
+      - ISSO_HOST=${ISSO_SCHEME:-http}://${ISSO_DOMAIN:?err}
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${ISSO_DOMAIN:?err}
+        traefik.enable: "true"
+
 networks:
   default:
     external:
       name: traefik-net
-
-volumes:
-  ghost:
-    name: ghost-{{ index .Service.Labels "com.docker.stack.namespace" }}
-    driver: ${VOLUME_DRIVER:-local}
