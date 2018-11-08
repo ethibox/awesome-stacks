@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  hack:
+    image: alpine
+    command: sh -c "mkdir -p $$VOLUME1 && mkdir -p $$VOLUME2"
+    volumes:
+      - /mnt/data:/mnt/data
+    environment:
+      - VOLUME1=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mysql
+      - VOLUME2=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-wordpress
+    deploy:
+      restart_policy:
+        condition: none
+
+  web:
+    image: ston3o/wordpress:4.9.8
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-wordpress:/var/www/html/wp-content
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: myp@ssw0rd
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - traefik
+      - internal
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: myp@ssw0rd
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: myp@ssw0rd
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
