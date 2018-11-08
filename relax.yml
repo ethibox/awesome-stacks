@@ -29,7 +29,7 @@ services:
         traefik.docker.network: traefik-net
     networks:
       - traefik
-      - mongo
+      - internal
 
   mongo:
     image: mongo:4.0.3
@@ -39,10 +39,10 @@ services:
       placement:
         constraints: [node.role==worker]
     networks:
-      - mongo
+      - internal
 
 networks:
-  mongo:
+  internal:
   traefik:
     external:
       name: traefik-net
