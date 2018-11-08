@@ -1,0 +1,100 @@
+version: "3.7"
+
+services:
+  hack:
+    image: alpine
+    command: sh -c "mkdir $$VOLUME1 && mkdir $$VOLUME2 && mkdir $$VOLUME3"
+    volumes:
+      - /mnt/data:/mnt/data
+    environment:
+      - VOLUME1=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-storage
+      - VOLUME2=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-public
+      - VOLUME3=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mysql
+    deploy:
+      restart_policy:
+        condition: none
+
+  mysql:
+    image: mysql:8.0.13
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: myp@ssw0rd
+      MYSQL_DATABASE: ninja
+      MYSQL_USER: ninja
+      MYSQL_PASSWORD: myp@ssw0rd
+    networks:
+      - internal
+
+  app:
+    image: invoiceninja/invoiceninja:4.5.5
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-storage:/var/www/app/storage:rw
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-public:/var/www/app/public:rw
+    environment:
+      - APP_LOCALE=fr
+      - APP_ENV=production
+      - APP_DEBUG=0
+      - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
+      - REQUIRE_HTTPS=true
+      - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
+      - APP_CIPHER=AES-256-CBC
+      - DB_USERNAME=ninja
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_HOST=mysql
+      - DB_DATABASE=ninja
+      - PRECONFIGURED_INSTALL=true
+    networks:
+      - internal
+
+  web:
+    image: ston3o/invoiceninja-front
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-storage:/var/www/app/storage:rw
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-public:/var/www/app/public:rw
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - traefik
+      - internal
+
+  cron:
+    image: invoiceninja/invoiceninja:4.5.5
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-storage:/var/www/app/storage:rw
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-public:/var/www/app/public:rw
+    environment:
+      - APP_LOCALE=fr
+      - APP_ENV=production
+      - APP_DEBUG=0
+      - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
+      - REQUIRE_HTTPS=true
+      - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
+      - APP_CIPHER=AES-256-CBC
+      - DB_USERNAME=ninja
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_HOST=mysql
+      - DB_DATABASE=ninja
+      - PRECONFIGURED_INSTALL=true
+    entrypoint: |
+      bash -c 'bash -s <<EOF
+      trap "break;exit" SIGHUP SIGINT SIGTERM
+      sleep 300s
+      while /bin/true; do
+        ./artisan ninja:send-invoices
+        ./artisan ninja:send-reminders
+        sleep 1d
+      done
+      EOF'
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
