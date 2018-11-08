@@ -3,7 +3,7 @@ version: "3.7"
 services:
   hack:
     image: alpine
-    command: sh -c "mkdir $$VOLUME1 && mkdir $$VOLUME2 && mkdir $$VOLUME3"
+    command: sh -c "mkdir -p $$VOLUME1 && mkdir -p $$VOLUME2 && mkdir -p $$VOLUME3"
     volumes:
       - /mnt/data:/mnt/data
     environment:
