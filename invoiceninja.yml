@@ -37,7 +37,7 @@ services:
       - APP_DEBUG=0
       - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
       - REQUIRE_HTTPS=true
-      - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
+      - APP_KEY=${APP_KEY:-SomeR@ndomStringSomeR@ndomString}
       - APP_CIPHER=AES-256-CBC
       - DB_USERNAME=ninja
       - DB_PASSWORD=myp@ssw0rd
@@ -73,7 +73,7 @@ services:
       - APP_DEBUG=0
       - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
       - REQUIRE_HTTPS=true
-      - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
+      - APP_KEY=${APP_KEY:-SomeR@ndomStringSomeR@ndomString}
       - APP_CIPHER=AES-256-CBC
       - DB_USERNAME=ninja
       - DB_PASSWORD=myp@ssw0rd
