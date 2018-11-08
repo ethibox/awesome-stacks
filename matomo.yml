@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  hack:
+    image: alpine
+    command: sh -c "mkdir -p $$VOLUME1"
+    volumes:
+      - /mnt/data:/mnt/data
+    environment:
+      - VOLUME1=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-db
+    deploy:
+      restart_policy:
+        condition: none
+
+  db:
+    image: mariadb:10.3.10
+    volumes:
+      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: myp@assw0rd
+    networks:
+      - internal
+
+  matomo:
+    image: matomo:3.6.1
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - traefik
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
