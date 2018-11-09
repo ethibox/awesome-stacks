@@ -1,27 +1,12 @@
 version: '3.7'
 
 services:
-  hack:
-    image: alpine
-    command: sh -c "mkdir -p $$VOLUME1"
-    volumes:
-      - /mnt/data:/mnt/data
-    environment:
-      - VOLUME1=/mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mongo
-    deploy:
-      restart_policy:
-        condition: none
-
   web:
     image: ston3o/relax:latest
     environment:
       DATABASE_HOST: mongo
       DATABASE_NAME: relax
-    depends_on:
-      - mongo
     deploy:
-      placement:
-        constraints: [node.role==worker]
       labels:
         traefik.port: 1337
         traefik.enable: "true"
@@ -34,12 +19,16 @@ services:
   mongo:
     image: mongo:4.0.3
     volumes:
-      - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mongo:/data/db
-    deploy:
-      placement:
-        constraints: [node.role==worker]
+      - mongo:/data/db
     networks:
       - internal
+
+volumes:
+  mongo:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
 
 networks:
   internal:
