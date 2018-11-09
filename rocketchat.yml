@@ -3,7 +3,7 @@ version: '3.7'
 services:
   hack:
     image: alpine
-    command: sh -c "mkdir $$VOLUME1 && mkdir $$VOLUME2"
+    command: sh -c "mkdir -p $$VOLUME1 && mkdir -p $$VOLUME2"
     volumes:
       - /mnt/data:/mnt/data
     environment:
@@ -23,8 +23,6 @@ services:
     depends_on:
       - mongo
     deploy:
-      placement:
-        constraints: [node.role==worker]
       labels:
         traefik.port: 3000
         traefik.frontend.rule: Host:${DOMAIN:?err}
@@ -32,20 +30,17 @@ services:
         traefik.docker.network: traefik-net
     networks:
       - traefik
-      - mongo
+      - internal
 
   mongo:
     image: mongo:4.0.3
     volumes:
       - /mnt/data/{{ index .Service.Labels "com.docker.stack.namespace" }}-mongo:/data/db
-    deploy:
-      placement:
-        constraints: [node.role==worker]
     networks:
-      - mongo
+      - internal
 
 networks:
-  mongo:
+  internal:
   traefik:
     external:
       name: traefik-net
