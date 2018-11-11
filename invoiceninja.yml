@@ -16,7 +16,11 @@ services:
   app:
     image: ston3o/invoiceninja:4.5.6
     volumes:
-      - uploads:/var/www/app/public/logo
+      - type: volume
+        source: uploads
+        target: /var/www/app/public/logo
+        volume:
+          nocopy: true
     environment:
       - APP_LOCALE=fr
       - APP_ENV=production
@@ -30,12 +34,12 @@ services:
       - DB_HOST=mysql
       - DB_DATABASE=ninja
       - PRECONFIGURED_INSTALL=true
-      - MAIL_HOST=mail.service.host
-      - MAIL_USERNAME=username
-      - MAIL_PASSWORD=password
-      - MAIL_DRIVER=smtp
-      - MAIL_FROM_NAME="My name"
-      - MAIL_FROM_ADDRESS=user@mail.com
+      - MAIL_HOST=${MAIL_HOST:-mail.service.host}
+      - MAIL_USERNAME=${MAIL_USERNAME:-username}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-password}
+      - MAIL_DRIVER=${MAIL_DRIVER:-smtp}
+      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-user@mail.com}
     deploy:
       labels:
         traefik.port: 80
