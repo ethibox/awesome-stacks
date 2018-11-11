@@ -1,27 +1,44 @@
 version: '3.7'
 
 configs:
+  alert_rules:
+    name: alert.rules-${CONFIG_VERSION:-0}
+    file: ./config/alert.rules.yml
   prometheus_config:
+    name: prometheus.yml-${CONFIG_VERSION:-0}
     file: ./config/prometheus.yml
+  alertmanager_config:
+    name: alertmanager.yml-${CONFIG_VERSION:-0}
+    file: ./config/alertmanager.yml
 
 services:
   prometheus:
     image: prom/prometheus:v2.4.3
     ports:
-      - '9090:9090'
+      - 9090:9090
     configs:
       - source: prometheus_config
         target: /etc/prometheus/prometheus.yml
+      - source: alert_rules
+        target: /etc/prometheus/alert.rules.yml
+    networks:
+      - traefik
+      - internal
 
   grafana:
     image: grafana/grafana:5.3.2
+    user: root
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
       - grafana:/var/lib/grafana
+    networks:
+      - internal
 
   cadvisor:
     image: google/cadvisor:v0.31.0
+    ports:
+      - 8080:8080
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -29,27 +46,50 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     deploy:
       mode: global
+    networks:
+      - internal
       
   node-exporter:
     image: prom/node-exporter:v0.16.0
+    ports:
+      - 9100:9100
     volumes:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
       - /proc:/host/proc:ro
+      - /etc/hostname:/etc/nodename
+    hostname: "{{.Node.Hostname}}"
+    environment:
+      HOST_HOSTNAME: /etc/hostname
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     deploy:
       mode: global
+    networks:
+      - internal
 
   alertmanager:
     image: prom/alertmanager:v0.15.2
     ports:
       - 9093:9093
-
-networks:
-  default:
-    external:
-      name: traefik-net
+    command: --config.file=/etc/alertmanager/alertmanager.yml
+    configs:
+      - source: alertmanager_config
+        target: /etc/alertmanager/alertmanager.yml
+    networks:
+      - internal
 
 volumes:
   grafana:
-    name: grafana-{{ index .Service.Labels "com.docker.stack.namespace" }}
-    driver: ${VOLUME_DRIVER:-local}
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
