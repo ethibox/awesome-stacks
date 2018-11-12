@@ -38,8 +38,6 @@ services:
 
   web:
     <<: *defaults
-    ports:
-      - 9000:9000
     deploy:
       labels:
         traefik.port: 9000
