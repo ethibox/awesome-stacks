@@ -4,7 +4,7 @@ services:
   web:
     image: ghost:2.4.0
     volumes:
-      - ghost:/var/lib/ghost/content
+      - ghost:/var/lib/ghost/content:nocopy
     environment:
       url: ${SCHEME:-http}://${DOMAIN:?err}
     deploy:
@@ -16,7 +16,7 @@ services:
   isso:
     image: sheogorath/isso-docker:0.10.6
     volumes:
-      - isso:/data
+      - isso:/data:nocopy
     environment:
       - ISSO_HOST=${SCHEME:-http}://${DOMAIN:?err}
     deploy:
