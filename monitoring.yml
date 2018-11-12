@@ -1,15 +1,15 @@
 version: '3.7'
 
 configs:
-  alert_rules:
-    name: alert.rules-${CONFIG_VERSION:-0}
-    file: ./config/alert.rules.yml
-  prometheus_config:
+  prometheus.yml:
     name: prometheus.yml-${CONFIG_VERSION:-0}
-    file: ./config/prometheus.yml
-  alertmanager_config:
+    file: ./configs/prometheus.yml
+  alert.rules.yml:
+    name: alert.rules-${CONFIG_VERSION:-0}
+    file: ./configs/alert.rules.yml
+  alertmanager.yml:
     name: alertmanager.yml-${CONFIG_VERSION:-0}
-    file: ./config/alertmanager.yml
+    file: ./configs/alertmanager.yml
 
 services:
   prometheus:
@@ -17,13 +17,13 @@ services:
     ports:
       - 9090:9090
     configs:
-      - source: prometheus_config
+      - source: prometheus.yml
         target: /etc/prometheus/prometheus.yml
-      - source: alert_rules
+      - source: alert.rules.yml
         target: /etc/prometheus/alert.rules.yml
     networks:
-      - traefik
       - internal
+      - traefik
 
   grafana:
     image: grafana/grafana:5.3.2
@@ -37,8 +37,6 @@ services:
 
   cadvisor:
     image: google/cadvisor:v0.31.0
-    ports:
-      - 8080:8080
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -51,8 +49,6 @@ services:
       
   node-exporter:
     image: prom/node-exporter:v0.16.0
-    ports:
-      - 9100:9100
     volumes:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
@@ -76,7 +72,7 @@ services:
       - 9093:9093
     command: --config.file=/etc/alertmanager/alertmanager.yml
     configs:
-      - source: alertmanager_config
+      - source: alertmanager.yml
         target: /etc/alertmanager/alertmanager.yml
     networks:
       - internal
