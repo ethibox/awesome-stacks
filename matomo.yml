@@ -4,7 +4,7 @@ services:
   db:
     image: mariadb:10.3.10
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/mysql:nocopy
     environment:
       MYSQL_ROOT_PASSWORD: myp@assw0rd
     networks:
@@ -13,7 +13,7 @@ services:
   matomo:
     image: matomo:3.6.1
     volumes:
-      - config:/var/www/html/config
+      - config:/var/www/html/config:nocopy
     deploy:
       labels:
         traefik.port: 80

@@ -19,7 +19,7 @@ services:
   mongo:
     image: mongo:4.0.3
     volumes:
-      - mongo:/data/db
+      - mongo:/data/db:nocopy
     networks:
       - internal
 

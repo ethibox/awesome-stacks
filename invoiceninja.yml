@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql:nocopy
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: ninja
@@ -16,11 +16,7 @@ services:
   app:
     image: ston3o/invoiceninja:4.5.6
     volumes:
-      - type: volume
-        source: uploads
-        target: /var/www/app/public/logo
-        volume:
-          nocopy: true
+      - uploads:/var/www/app/public/logo:nocopy
     environment:
       - APP_LOCALE=fr
       - APP_ENV=production
