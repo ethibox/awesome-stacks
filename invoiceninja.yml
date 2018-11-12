@@ -20,7 +20,7 @@ services:
     environment:
       - APP_LOCALE=fr
       - APP_ENV=production
-      - APP_DEBUG=0
+      - APP_DEBUG=false
       - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
       - REQUIRE_HTTPS=true
       - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
@@ -33,6 +33,8 @@ services:
       - MAIL_HOST=${MAIL_HOST:-mail.service.host}
       - MAIL_USERNAME=${MAIL_USERNAME:-username}
       - MAIL_PASSWORD=${MAIL_PASSWORD:-password}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
       - MAIL_DRIVER=${MAIL_DRIVER:-smtp}
       - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-user@mail.com}
