@@ -6,7 +6,7 @@ services:
       ports:
         - ${SSH_PORT:-10022}:22
       volumes:
-        - data:/data
+        - data:/data:nocopy
       deploy:
         labels:
           traefik.port: 3000

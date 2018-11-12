@@ -4,7 +4,7 @@ services:
   web:
     image: rocketchat/rocket.chat:0.71.1
     volumes:
-      - uploads:/app/uploads
+      - uploads:/app/uploads:nocopy
     environment:
       - ROOT_URL=${SCHEME:-http}://${DOMAIN:?err}
       - MONGO_URL=mongodb://mongo:27017/rocketchat
@@ -23,7 +23,7 @@ services:
   mongo:
     image: mongo:4.0.3
     volumes:
-      - mongo:/data/db
+      - mongo:/data/db:nocopy
     networks:
       - internal
 

@@ -4,7 +4,7 @@ services:
   web:
     image: ston3o/wordpress:4.9.8
     volumes:
-      - wordpress:/var/www/html/wp-content
+      - wordpress:/var/www/html/wp-content:nocopy
     environment:
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: wordpress
@@ -22,7 +22,7 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql:nocopy
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: wordpress
