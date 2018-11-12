@@ -10,12 +10,16 @@ configs:
   alertmanager.yml:
     name: alertmanager.yml-${CONFIG_VERSION:-0}
     file: ./configs/alertmanager.yml
+  blackbox.yml:
+    name: blackbox.yml-${CONFIG_VERSION:-0}
+    file: ./configs/blackbox.yml
+  Caddyfile:
+    name: Caddyfile-${CONFIG_VERSION:-0}
+    file: ./configs/Caddyfile
 
 services:
   prometheus:
     image: prom/prometheus:v2.4.3
-    ports:
-      - 9090:9090
     configs:
       - source: prometheus.yml
         target: /etc/prometheus/prometheus.yml
@@ -28,8 +32,6 @@ services:
   grafana:
     image: grafana/grafana:5.3.2
     user: root
-    ports:
-      - 3000:3000
     volumes:
       - grafana:/var/lib/grafana:nocopy
     networks:
@@ -68,12 +70,35 @@ services:
 
   alertmanager:
     image: prom/alertmanager:v0.15.2
-    ports:
-      - 9093:9093
     command: --config.file=/etc/alertmanager/alertmanager.yml
     configs:
       - source: alertmanager.yml
         target: /etc/alertmanager/alertmanager.yml
+    networks:
+      - internal
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.12.0
+    command: --config.file=/config/blackbox.yml
+    networks:
+      - internal
+      - traefik
+    configs:
+      - source: blackbox.yml
+        target: /config/blackbox.yml
+
+  caddy:
+    image: stefanprodan/caddy:0.10.10
+    ports:
+      - "3000:3000"
+      - "9090:9090"
+      - "9093:9093"
+    configs:
+      - source: Caddyfile
+        target: /etc/caddy/Caddyfile
+    environment:
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
     networks:
       - internal
 
