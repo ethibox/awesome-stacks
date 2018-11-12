@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./acme.json:/acme.json
-      - ./config/traefik.toml:/traefik.toml
+      - ./configs/traefik.toml:/traefik.toml
       - /var/log/access.log:/var/log/access.log
     deploy:
       placement:
