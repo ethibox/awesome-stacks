@@ -1,0 +1,50 @@
+# NOTE: https://github.com/pydio/cells/issues/19
+
+version: '3'
+
+services:
+  pydio:
+    image: pydio/cells:1.2.1
+    volumes: ["data:/root/.config/pydio/cells:nocopy"]
+    environment:
+      - CELLS_BIND=0.0.0.0:8080
+      - CELLS_EXTERNAL=${DOMAIN:?err}
+      - CELLS_NO_SSL=1
+    deploy:
+      labels:
+        traefik.port: 8080
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - internal
+      - traefik
+
+  mysql:
+    image: mysql:5.7
+    volumes: ["mysql:/var/lib/mysql:nocopy"]
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      MYSQL_DATABASE: cells
+      MYSQL_USER: pydio
+      MYSQL_PASSWORD: P@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  mysql:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
