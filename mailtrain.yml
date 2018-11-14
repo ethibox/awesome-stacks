@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=mailtrain
+      - MYSQL_DATABASE=mailtrain
+      - MYSQL_USER=mailtrain
+      - MYSQL_PASSWORD=mailtrain
+    volumes: ["mysql:/var/lib/mysql:nocopy"]
+    networks:
+      - internal
+
+  redis:
+    image: redis:3.0
+    volumes: ["redis:/data:nocopy"]
+    networks:
+      - internal
+
+  mailtrain:
+    image: ston3o/mailtrain:1.24.1
+    ports: ["3000:3000"]
+    volumes:
+      - data:/app/public/grapejs/uploads:nocopy
+      - data:/app/public/mosaico/uploads:nocopy
+      - reports:/app/protected/reports:nocopy
+    deploy:
+      labels:
+        traefik.port: 3000
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - traefik
+      - internal
+
+volumes:
+  mysql:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  redis:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  data:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  reports:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
