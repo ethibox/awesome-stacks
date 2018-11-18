@@ -1,0 +1,71 @@
+version: "3.3"
+
+services:
+  peertube:
+    image: chocobozzz/peertube:production-stretch
+    environment:
+      - PEERTUBE_DB_USERNAME=postgres
+      - PEERTUBE_DB_PASSWORD=myp@ssw0rd
+      - PEERTUBE_WEBSERVER_HOSTNAME=${DOMAIN:?err}
+      - PEERTUBE_WEBSERVER_PORT=443
+      - PEERTUBE_WEBSERVER_HTTPS=true
+      - PEERTUBE_ADMIN_EMAIL=admin@domain.tld
+      - PEERTUBE_SIGNUP_ENABLED=true
+    volumes:
+      - data:/data
+      - config:/config
+    deploy:
+      labels:
+        traefik.port: 9000
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=peertube
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:4-alpine
+    volumes:
+      - redis:/data
+    networks:
+      - internal
+
+volumes:
+  data:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  config:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  postgres:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  redis:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
