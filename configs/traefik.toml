@@ -31,4 +31,5 @@ onHostRule = true
     entryPoint = "traefik"
 
 [accessLog]
-  filePath = "/var/log/access.log"
+  filePath = "/var/log/traefik/access.log.json"
+  format = "json"

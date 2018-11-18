@@ -4,13 +4,19 @@ services:
   traefik:
     image: traefik:1.7.4
     ports:
-      - "80:80"
-      - "443:443"
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./acme.json:/acme.json
       - ./configs/traefik.toml:/traefik.toml
-      - /var/log/access.log:/var/log/access.log
+      - /var/log/traefik/:/var/log/traefik/
     deploy:
       placement:
         constraints: [node.role==manager]
