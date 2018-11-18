@@ -34,7 +34,14 @@ services:
     user: root
     volumes:
       - grafana:/var/lib/grafana:nocopy
+    deploy:
+      labels:
+        traefik.port: 3000
+        traefik.frontend.rule: Host:${DOMAIN_GRAFANA:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
     networks:
+      - traefik
       - internal
 
   cadvisor:
@@ -90,7 +97,6 @@ services:
   caddy:
     image: stefanprodan/caddy:0.10.10
     ports:
-      - "3000:3000"
       - "9090:9090"
       - "9093:9093"
     configs:
