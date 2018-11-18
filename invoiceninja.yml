@@ -20,11 +20,12 @@ services:
     environment:
       - APP_LOCALE=fr
       - APP_ENV=production
-      - APP_DEBUG=false
+      - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
       - REQUIRE_HTTPS=true
       - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
       - APP_CIPHER=AES-256-CBC
+      - LOCK_SENT_INVOICES=${LOCK_SENT_INVOICES:-false}
       - DB_USERNAME=ninja
       - DB_PASSWORD=myp@ssw0rd
       - DB_HOST=mysql
