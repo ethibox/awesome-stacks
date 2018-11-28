@@ -1,3 +1,9 @@
+filebeat.modules:
+  - module: system
+    syslog:
+      enabled: true
+      var.paths: ["/var/log/syslog*"]
+
 filebeat.inputs:
   - type: log
     enabled: true

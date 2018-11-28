@@ -14,10 +14,6 @@ services:
     volumes: ["elasticsearch:/usr/share/elasticsearch/data:nocopy"]
     networks:
       - internal
-    deploy:
-      placement:
-        constraints:
-          - node.hostname!=worker-01
 
   kibana:
     image: kibana:6.5.0
@@ -48,9 +44,7 @@ services:
     networks:
       - internal
     deploy:
-      placement:
-        constraints:
-          - node.hostname==master
+      mode: global
 
 volumes:
   elasticsearch:
