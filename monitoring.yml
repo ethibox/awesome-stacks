@@ -20,11 +20,21 @@ configs:
 services:
   prometheus:
     image: prom/prometheus:v2.4.3
+    user: root
     configs:
       - source: prometheus.yml
         target: /etc/prometheus/prometheus.yml
       - source: alert.rules.yml
         target: /etc/prometheus/alert.rules.yml
+    volumes:
+      - prometheus:/prometheus:nocopy
+    deploy:
+      labels:
+        traefik.port: 9090
+        traefik.frontend.rule: Host:${DOMAIN_PROMETHEUS:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+        traefik.frontend.auth.basic: ${BASIC_AUTH:?err}
     networks:
       - internal
       - traefik
@@ -94,22 +104,13 @@ services:
       - source: blackbox.yml
         target: /config/blackbox.yml
 
-  caddy:
-    image: stefanprodan/caddy:0.10.10
-    ports:
-      - "9090:9090"
-      - "9093:9093"
-    configs:
-      - source: Caddyfile
-        target: /etc/caddy/Caddyfile
-    environment:
-      - ADMIN_USER=${ADMIN_USER:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-    networks:
-      - internal
-
 volumes:
   grafana:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  prometheus:
     driver: nfs
     driver_opts:
       share: ${NFS_SERVER:?err}:/mnt/data
