@@ -20,7 +20,6 @@ services:
 
   mailtrain:
     image: ston3o/mailtrain:1.24.1
-    ports: ["3000:3000"]
     volumes:
       - data:/app/public/grapejs/uploads:nocopy
       - data:/app/public/mosaico/uploads:nocopy
