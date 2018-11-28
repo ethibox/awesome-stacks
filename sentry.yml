@@ -9,7 +9,7 @@ x-defaults: &defaults
     SENTRY_REDIS_HOST: redis
     SENTRY_POSTGRES_HOST: postgres
     SENTRY_EMAIL_HOST: smtp
-    SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+    SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:?err}
   volumes:
     - sentry:/var/lib/sentry/files:nocopy
 
