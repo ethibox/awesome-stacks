@@ -1,0 +1,14 @@
+global:
+  smtp_smarthost: 'mail.ston3o.me:587'
+  smtp_from: 'noreply@ston3o.me'
+  smtp_auth_username: 'username'
+  smtp_auth_password: 'password'
+
+route:
+  group_by: [alertname]
+  receiver: email-me
+
+receivers:
+- name: email-me
+  email_configs:
+  - to: contact@ston3o.me
