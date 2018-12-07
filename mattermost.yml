@@ -1,0 +1,66 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:9.4-alpine
+    volumes:
+      - db:/var/lib/postgresql/data:nocopy
+    environment:
+      - POSTGRES_USER=mattermost
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=mattermost
+    networks:
+      - internal
+
+  app:
+    image: mattermost/mattermost-prod-app:5.5.1
+    volumes:
+      - data:/mattermost/data
+      - config:/mattermost/config
+      - plugins:/mattermost/plugins
+    environment:
+      - MM_USERNAME=mattermost
+      - MM_PASSWORD=myp@ssw0rd
+      - MM_DBNAME=mattermost
+    networks:
+      - internal
+
+  web:
+    image: mattermost/mattermost-prod-web:5.5.1
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  db:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  data:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  config:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  plugins:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
