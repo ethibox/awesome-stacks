@@ -13,9 +13,6 @@ configs:
   blackbox.yml:
     name: blackbox.yml-${CONFIG_VERSION:-0}
     file: ./configs/blackbox.yml
-  Caddyfile:
-    name: Caddyfile-${CONFIG_VERSION:-0}
-    file: ./configs/Caddyfile
 
 services:
   prometheus:
