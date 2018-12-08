@@ -12,12 +12,6 @@ services:
     networks:
       - internal
 
-  redis:
-    image: redis:3.0
-    volumes: ["redis:/data:nocopy"]
-    networks:
-      - internal
-
   mailtrain:
     image: ston3o/mailtrain:1.24.1
     volumes:
@@ -34,13 +28,13 @@ services:
       - traefik
       - internal
 
+  redis:
+    image: redis:5.0.2-alpine
+    networks:
+      - internal
+
 volumes:
   mysql:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  redis:
     driver: nfs
     driver_opts:
       share: ${NFS_SERVER:?err}:/mnt/data
