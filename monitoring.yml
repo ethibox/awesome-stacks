@@ -31,7 +31,7 @@ services:
         traefik.frontend.rule: Host:${DOMAIN_PROMETHEUS:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
-        traefik.frontend.auth.basic: ${BASIC_AUTH:?err}
+        traefik.frontend.auth.basic.users: ${BASIC_AUTH:?err}
     networks:
       - internal
       - traefik
