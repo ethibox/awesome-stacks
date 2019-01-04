@@ -1,8 +1,10 @@
+# chown -R www-data:www-data <dir>
+
 version: '3.7'
 
 services:
   web:
-    image: ston3o/wordpress:4.9.8
+    image: ston3o/wordpress:5.0.2
     volumes:
       - wordpress:/var/www/html/wp-content:nocopy
     environment:
