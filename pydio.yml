@@ -4,7 +4,7 @@ version: '3'
 
 services:
   pydio:
-    image: pydio/cells:1.2.1
+    image: pydio/cells:1.2.4
     volumes: ["data:/root/.config/pydio/cells:nocopy"]
     environment:
       - CELLS_BIND=0.0.0.0:8080
