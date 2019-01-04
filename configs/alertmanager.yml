@@ -1,7 +1,7 @@
 global:
-  smtp_smarthost: 'mail.ston3o.me:587'
-  smtp_from: 'noreply@ston3o.me'
-  smtp_auth_username: 'username'
+  smtp_smarthost: 'mail.ethibox.fr:587'
+  smtp_from: 'noreply@ethibox.fr'
+  smtp_auth_username: 'noreply@ethibox.fr'
   smtp_auth_password: 'password'
 
 route:
@@ -11,4 +11,4 @@ route:
 receivers:
 - name: email-me
   email_configs:
-  - to: contact@ston3o.me
+  - to: contact@ethibox.fr
