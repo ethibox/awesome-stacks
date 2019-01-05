@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    image: rocketchat/rocket.chat:0.71.1
+    image: rocketchat/rocket.chat:0.73.1
     volumes:
       - uploads:/app/uploads:nocopy
     environment:
