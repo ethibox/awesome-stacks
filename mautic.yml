@@ -1,0 +1,46 @@
+# NOTE: https://github.com/mautic/mautic/issues/5285
+
+version: '3.7'
+
+services:
+  mautic:
+    image: ston3o/mautic:2.15.0-beta
+    volumes:
+      - /home/admin/${DOMAIN:?err}/mautic:/var/www/html
+    environment:
+      MAUTIC_DB_HOST: mysql
+      MAUTIC_DB_PASSWORD: myp@ssw0rd
+      MAUTIC_TRUSTED_PROXIES: 0.0.0.0/0
+    ports:
+     - 0:80
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      placement:
+        constraints:
+          - node.hostname==worker-01
+    networks:
+      - traefik
+      - internal
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - /home/admin/${DOMAIN:?err}/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: myp@ssw0rd
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==worker-01
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
