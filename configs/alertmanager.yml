@@ -11,4 +11,4 @@ route:
 receivers:
 - name: email-me
   email_configs:
-  - to: contact@ethibox.fr
+  - to: alert@ethibox.fr

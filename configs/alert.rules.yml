@@ -3,7 +3,7 @@ groups:
   rules:
   - alert: EndpointDown
     expr: probe_success == 0
-    for: 10s
+    for: 30s
     labels:
       severity: "critical"
     annotations:
