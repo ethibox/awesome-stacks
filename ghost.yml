@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    image: ghost:2.4.0
+    image: ghost:2.9.1-alpine
     volumes:
       - ghost:/var/lib/ghost/content:nocopy
     environment:
