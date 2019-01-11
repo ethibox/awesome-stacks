@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  web:
+    image: wordpress:5.0.3
+    volumes:
+      - wordpress:/var/www/html/wp-content:nocopy
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: myp@ssw0rd
+    ports:
+      - 0:80
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysql:/var/lib/mysql:nocopy
+    environment:
+      MYSQL_ROOT_PASSWORD: myp@ssw0rd
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: myp@ssw0rd
+
+volumes:
+  wordpress:
+  mysql:
