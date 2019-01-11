@@ -2,18 +2,24 @@ version: "3.3"
 
 services:
   peertube:
-    image: chocobozzz/peertube:production-stretch
+    image: chocobozzz/peertube:v1.1.0-stretch
     environment:
       - PEERTUBE_DB_USERNAME=postgres
       - PEERTUBE_DB_PASSWORD=myp@ssw0rd
       - PEERTUBE_WEBSERVER_HOSTNAME=${DOMAIN:?err}
       - PEERTUBE_WEBSERVER_PORT=443
       - PEERTUBE_WEBSERVER_HTTPS=true
-      - PEERTUBE_ADMIN_EMAIL=admin@domain.tld
-      - PEERTUBE_SIGNUP_ENABLED=true
+      - PEERTUBE_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@domain.tld}
+      - PEERTUBE_SMTP_USERNAME=${SMTP_USERNAME}
+      - PEERTUBE_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - PEERTUBE_SMTP_HOSTNAME=${SMTP_HOSTNAME}
+      - PEERTUBE_SMTP_PORT=${SMTP_PORT:-25}
+      - PEERTUBE_SMTP_FROM=${SMTP_FROM}
+      - PEERTUBE_SMTP_TLS=${SMTP_TLS:-true}
+      - PEERTUBE_SMTP_DISABLE_STARTTLS=false
     volumes:
-      - data:/data
-      - config:/config
+      - data:/data:nocopy
+      - config:/config:nocopy
     deploy:
       labels:
         traefik.port: 9000
@@ -31,14 +37,12 @@ services:
       - POSTGRES_PASSWORD=myp@ssw0rd
       - POSTGRES_DB=peertube
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data:nocopy
     networks:
       - internal
 
   redis:
     image: redis:4-alpine
-    volumes:
-      - redis:/data
     networks:
       - internal
 
@@ -54,11 +58,6 @@ volumes:
       share: ${NFS_SERVER:?err}:/mnt/data
       create: "true"
   postgres:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  redis:
     driver: nfs
     driver_opts:
       share: ${NFS_SERVER:?err}:/mnt/data
