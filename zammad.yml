@@ -1,0 +1,92 @@
+# sudo sysctl -w vm.max_map_count=262144
+# echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
+# chmod g+rwx esdatadir && chgrp 1000 esdatadir
+
+version: '3'
+
+services:
+  zammad-elasticsearch:
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-2.7.0-14
+    volumes: ["elasticsearch:/usr/share/elasticsearch/data:nocopy"]
+    networks:
+      - internal
+
+  zammad-init:
+    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    command: ["zammad-init"]
+    volumes: ["zammad:/opt/zammad:nocopy"]
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+  zammad-memcached:
+    image: zammad/zammad-docker-compose:zammad-memcached-2.7.0-14
+    command: ["zammad-memcached"]
+    networks:
+      - internal
+
+  zammad-nginx:
+    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    command: ["zammad-nginx"]
+    volumes: ["zammad:/opt/zammad:nocopy"]
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - traefik
+      - internal
+
+  zammad-postgresql:
+    image: zammad/zammad-docker-compose:zammad-postgresql-2.7.0-14
+    volumes: ["postgresql:/var/lib/postgresql/data:nocopy"]
+    networks:
+      - internal
+
+  zammad-railsserver:
+    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    command: ["zammad-railsserver"]
+    volumes: ["zammad:/opt/zammad:nocopy"]
+    networks:
+      - internal
+
+  zammad-scheduler:
+    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    command: ["zammad-scheduler"]
+    volumes: ["zammad:/opt/zammad:nocopy"]
+    networks:
+      - internal
+
+  zammad-websocket:
+    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    command: ["zammad-websocket"]
+    volumes: ["zammad:/opt/zammad:nocopy"]
+    networks:
+      - internal
+
+volumes:
+  zammad:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  elasticsearch:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  postgresql:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
