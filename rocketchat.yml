@@ -2,14 +2,12 @@ version: '3.7'
 
 services:
   web:
-    image: rocketchat/rocket.chat:0.73.1
+    image: rocketchat/rocket.chat:0.73.2
     volumes:
       - uploads:/app/uploads:nocopy
     environment:
       - ROOT_URL=${SCHEME:-http}://${DOMAIN:?err}
       - MONGO_URL=mongodb://mongo:27017/rocketchat
-    depends_on:
-      - mongo
     deploy:
       labels:
         traefik.port: 3000
