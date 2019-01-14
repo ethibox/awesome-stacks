@@ -14,11 +14,6 @@ x-defaults: &defaults
     - sentry:/var/lib/sentry/files:nocopy
 
 services:
-  smtp:
-    image: tianon/exim4
-    networks:
-      - internal
-
   memcached:
     image: memcached:1.5-alpine
     networks:
