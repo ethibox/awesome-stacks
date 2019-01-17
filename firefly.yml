@@ -1,0 +1,62 @@
+version: '3.7'
+
+services: 
+  app: 
+    image: jc5x/firefly-iii:latest
+    environment: 
+      - FF_DB_HOST=db
+      - FF_DB_NAME=firefly
+      - FF_DB_USER=firefly
+      - FF_DB_PASSWORD=firefly
+      - FF_APP_KEY=S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly
+      - FF_APP_ENV=local
+      - FF_DB_CONNECTION=pgsql
+      - TZ=Europe/Paris
+      - APP_LOG_LEVEL=debug
+      - APP_URL=https://${DOMAIN:?err}
+      - TRUSTED_PROXIES=**
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    volumes:
+      - upload:/var/www/firefly-iii/storage/upload
+      - export:/var/www/firefly-iii/storage/export
+    networks:
+      - internal
+      - traefik
+
+  db: 
+    image: postgres:10
+    environment: 
+      - POSTGRES_PASSWORD=firefly
+      - POSTGRES_USER=firefly
+    volumes:
+      - db:/var/lib/postgresql/data:nocopy
+    networks:
+      - internal
+
+volumes:
+  db:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  upload:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+  export:
+    driver: nfs
+    driver_opts:
+      share: ${NFS_SERVER:?err}:/mnt/data
+      create: "true"
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
