@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   peertube:
-    image: chocobozzz/peertube:v1.1.0-stretch
+    image: chocobozzz/peertube:v1.2.1-stretch
     environment:
       - PEERTUBE_DB_USERNAME=postgres
       - PEERTUBE_DB_PASSWORD=myp@ssw0rd
