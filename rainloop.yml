@@ -10,7 +10,7 @@ services:
         traefik.enable: "true"
         traefik.docker.network: traefik-net
     volumes:
-      - rainloop:/rainloop/data
+      - rainloop:/rainloop/data:nocopy
 
 volumes:
   rainloop:

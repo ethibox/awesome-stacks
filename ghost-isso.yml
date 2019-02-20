@@ -4,7 +4,7 @@ services:
   web:
     image: ghost:2.9.1-alpine
     volumes:
-      - ghost:/var/lib/ghost/content
+      - ghost:/var/lib/ghost/content:nocopy
     environment:
       url: ${SCHEME:-http}://${DOMAIN:?err}
     deploy:
