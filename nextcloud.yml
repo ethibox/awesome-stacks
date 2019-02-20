@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:14.0.4
+    image: nextcloud:15.0.4
     volumes:
       - nextcloud:/var/www/html:nocopy
     deploy:
