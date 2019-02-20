@@ -11,8 +11,6 @@ services:
       MAUTIC_DB_HOST: mysql
       MAUTIC_DB_PASSWORD: myp@ssw0rd
       MAUTIC_TRUSTED_PROXIES: 0.0.0.0/0
-    ports:
-     - 0:80
     deploy:
       labels:
         traefik.port: 80
