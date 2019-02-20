@@ -2,15 +2,20 @@ version: '3.7'
 
 services:
   web:
-    image: etherpad/etherpad
+    image: etherpad/etherpad:latest
     volumes:
-      - etherpad:/opt/etherpad-lite/var:nocopy
+      - etherpad:/opt/etherpad/var:nocopy
     deploy:
       labels:
         traefik.port: 9001
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 100M
+        reservations:
+          memory: 70M
 
 volumes:
   etherpad:
