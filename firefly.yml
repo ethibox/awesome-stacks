@@ -22,8 +22,8 @@ services:
         traefik.enable: "true"
         traefik.docker.network: traefik-net
     volumes:
-      - upload:/var/www/firefly-iii/storage/upload
-      - export:/var/www/firefly-iii/storage/export
+      - upload:/var/www/firefly-iii/storage/upload:nocopy
+      - export:/var/www/firefly-iii/storage/export:nocopy
     networks:
       - internal
       - traefik

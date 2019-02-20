@@ -15,9 +15,9 @@ services:
   app:
     image: mattermost/mattermost-prod-app:5.8.0
     volumes:
-      - data:/mattermost/data
-      - config:/mattermost/config
-      - plugins:/mattermost/plugins
+      - data:/mattermost/data:nocopy
+      - config:/mattermost/config:nocopy
+      - plugins:/mattermost/plugins:nocopy
     environment:
       - MM_USERNAME=mattermost
       - MM_PASSWORD=myp@ssw0rd
