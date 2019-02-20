@@ -4,7 +4,7 @@ version: '3'
 
 services:
   pydio:
-    image: pydio/cells:1.2.4
+    image: pydio/cells:1.2.5
     volumes: ["data:/root/.config/pydio/cells:nocopy"]
     environment:
       - CELLS_BIND=0.0.0.0:8080
@@ -16,6 +16,11 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 500M
     networks:
       - internal
       - traefik
@@ -24,10 +29,16 @@ services:
     image: mysql:5.7
     volumes: ["mysql:/var/lib/mysql:nocopy"]
     environment:
-      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: cells
       MYSQL_USER: pydio
-      MYSQL_PASSWORD: P@ssw0rd
+      MYSQL_PASSWORD: myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 150M
     networks:
       - internal
 
