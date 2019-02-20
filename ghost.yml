@@ -12,26 +12,14 @@ services:
         traefik.port: 2368
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
-
-  isso:
-    image: sheogorath/isso-docker:0.10.6
-    volumes:
-      - isso:/data:nocopy
-    environment:
-      - ISSO_HOST=${SCHEME:-http}://${DOMAIN:?err}
-    deploy:
-      labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${ISSO_DOMAIN:?err}
-        traefik.enable: "true"
+      resources:
+        limits:
+          memory: 150M
+        reservations:
+          memory: 100M
 
 volumes:
   ghost:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  isso:
     driver: nfs
     driver_opts:
       share: ${NFS_SERVER:?err}:/mnt/data
