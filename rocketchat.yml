@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    image: rocketchat/rocket.chat:0.73.2
+    image: rocketchat/rocket.chat:0.74.3
     volumes:
       - uploads:/app/uploads:nocopy
     environment:
@@ -14,6 +14,17 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 500M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
     networks:
       - traefik
       - internal
