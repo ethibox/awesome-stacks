@@ -15,7 +15,7 @@ services:
         limits:
           memory: 100M
         reservations:
-          memory: 70M
+          memory: 100M
 
 volumes:
   etherpad:
