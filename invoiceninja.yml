@@ -18,7 +18,6 @@ services:
           memory: 200M
     networks:
       - internal
-      - dashboard
 
   # adminer:
     # image: adminer:4.7.0
