@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mail:
+    image: tvial/docker-mailserver:latest
+    ports:
+      - "25:25"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/maildata:/var/mail
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mailstate:/var/mail-state
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config/:/tmp/docker-mailserver/
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/certs/:/certs/
+    environment:
+      - OVERRIDE_HOSTNAME=mail.ethibox.fr
+      - ENABLE_SPAMASSASSIN=1
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=0
+      - ONE_DIR=1
+      - DMS_DEBUG=0
+      - SSL_TYPE=manual
+      - SSL_CERT_PATH=/certs/certs/mail.ethibox.fr.crt
+      - SSL_KEY_PATH=/certs/private/mail.ethibox.fr.key
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+    deploy:
+      placement:
+        constraints: [node.role==manager]
