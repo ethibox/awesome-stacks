@@ -16,8 +16,8 @@ services:
     image: mattermost/mattermost-prod-app:5.8.0
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/mattermost/data
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config:/mattermost/config:nocopy
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/plugins:/mattermost/plugins:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config:/mattermost/config
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/plugins:/mattermost/plugins
     environment:
       - MM_USERNAME=mattermost
       - MM_PASSWORD=myp@ssw0rd
