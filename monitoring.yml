@@ -32,6 +32,11 @@ services:
         traefik.enable: "true"
         traefik.docker.network: traefik-net
         traefik.frontend.auth.basic.users: ${BASIC_AUTH:?err}
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 350M
     networks:
       - internal
       - traefik
@@ -52,7 +57,7 @@ services:
       - internal
 
   cadvisor:
-    image: google/cadvisor:v0.31.0
+    image: google/cadvisor:v0.32.0
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -60,6 +65,13 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     deploy:
       mode: global
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
     networks:
       - internal
       
@@ -79,6 +91,11 @@ services:
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     deploy:
       mode: global
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
     networks:
       - internal
 
