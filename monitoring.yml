@@ -24,7 +24,7 @@ services:
       - source: alert.rules.yml
         target: /etc/prometheus/alert.rules.yml
     volumes:
-      - prometheus:/prometheus:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/prometheus:/prometheus
     deploy:
       labels:
         traefik.port: 9090
@@ -45,7 +45,7 @@ services:
     image: grafana/grafana:5.3.2
     user: root
     volumes:
-      - grafana:/var/lib/grafana:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/grafana:/var/lib/grafana
     deploy:
       labels:
         traefik.port: 3000
@@ -117,18 +117,6 @@ services:
     configs:
       - source: blackbox.yml
         target: /config/blackbox.yml
-
-volumes:
-  grafana:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  prometheus:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:9.4-alpine
     volumes:
-      - db:/var/lib/postgresql/data:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=mattermost
       - POSTGRES_PASSWORD=myp@ssw0rd
@@ -15,9 +15,9 @@ services:
   app:
     image: mattermost/mattermost-prod-app:5.8.0
     volumes:
-      - data:/mattermost/data:nocopy
-      - config:/mattermost/config:nocopy
-      - plugins:/mattermost/plugins:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/mattermost/data
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config:/mattermost/config:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/plugins:/mattermost/plugins:nocopy
     environment:
       - MM_USERNAME=mattermost
       - MM_PASSWORD=myp@ssw0rd
@@ -36,28 +36,6 @@ services:
     networks:
       - internal
       - traefik
-
-volumes:
-  db:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  data:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  config:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  plugins:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

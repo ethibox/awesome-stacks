@@ -19,16 +19,9 @@ services:
   mongo:
     image: mongo:4.0.3
     volumes:
-      - mongo:/data/db:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mongo:/data/db
     networks:
       - internal
-
-volumes:
-  mongo:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

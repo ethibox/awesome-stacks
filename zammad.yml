@@ -7,14 +7,16 @@ version: '3'
 services:
   zammad-elasticsearch:
     image: zammad/zammad-docker-compose:zammad-elasticsearch-2.7.0-14
-    volumes: ["elasticsearch:/usr/share/elasticsearch/data:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/elasticsearch:/usr/share/elasticsearch/data
     networks:
       - internal
 
   zammad-init:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-init"]
-    volumes: ["zammad:/opt/zammad:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     deploy:
       restart_policy:
         condition: on-failure
@@ -30,7 +32,8 @@ services:
   zammad-nginx:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-nginx"]
-    volumes: ["zammad:/opt/zammad:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     deploy:
       labels:
         traefik.port: 80
@@ -43,47 +46,34 @@ services:
 
   zammad-postgresql:
     image: zammad/zammad-docker-compose:zammad-postgresql-2.7.0-14
-    volumes: ["postgresql:/var/lib/postgresql/data:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgresql:/var/lib/postgresql/data
     networks:
       - internal
 
   zammad-railsserver:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-railsserver"]
-    volumes: ["zammad:/opt/zammad:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     networks:
       - internal
 
   zammad-scheduler:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-scheduler"]
-    volumes: ["zammad:/opt/zammad:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     networks:
       - internal
 
   zammad-websocket:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-websocket"]
-    volumes: ["zammad:/opt/zammad:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     networks:
       - internal
-
-volumes:
-  zammad:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  elasticsearch:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  postgresql:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

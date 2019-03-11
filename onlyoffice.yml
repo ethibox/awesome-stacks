@@ -1,0 +1,39 @@
+# php occ --no-warnings config:system:set trusted_domains 1 --value="nginx"
+# php occ --no-warnings app:install onlyoffice
+# php occ --no-warnings config:system:set onlyoffice DocumentServerUrl --value="/ds-vpath/"
+# php occ --no-warnings config:system:set onlyoffice DocumentServerInternalUrl --value="http://onlyoffice-document-server/"
+# php occ --no-warnings config:system:set onlyoffice StorageUrl --value="http://nginx/"
+
+version: '3'
+
+services:
+  nginx:
+    image: ston3o/onlyoffice-proxy:latest
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/nextcloud:/var/www/html
+    networks:
+      - traefik
+      - internal
+
+  nextcloud:
+    image: nextcloud:15.0.5-fpm
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/nextcloud:/var/www/html
+    networks:
+      - internal
+
+  onlyoffice-document-server:
+    image: onlyoffice/documentserver:5.2.7.2
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net

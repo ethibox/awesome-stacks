@@ -22,8 +22,8 @@ services:
         traefik.enable: "true"
         traefik.docker.network: traefik-net
     volumes:
-      - upload:/var/www/firefly-iii/storage/upload:nocopy
-      - export:/var/www/firefly-iii/storage/export:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/upload:/var/www/firefly-iii/storage/upload
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/export:/var/www/firefly-iii/storage/export
     networks:
       - internal
       - traefik
@@ -34,26 +34,9 @@ services:
       - POSTGRES_PASSWORD=firefly
       - POSTGRES_USER=firefly
     volumes:
-      - db:/var/lib/postgresql/data:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
     networks:
       - internal
-
-volumes:
-  db:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  upload:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  export:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

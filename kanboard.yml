@@ -4,8 +4,8 @@ services:
   kanboard:
     image: kanboard/kanboard:v1.2.7
     volumes:
-      - data:/var/www/app/data:nocopy
-      - plugins:/var/www/app/plugins:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/var/www/app/data
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/plugins:/var/www/app/plugins
     deploy:
       labels:
         traefik.port: 80
@@ -17,18 +17,6 @@ services:
           memory: 200M
         reservations:
           memory: 200M
-
-volumes:
-  data:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  plugins:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   default:

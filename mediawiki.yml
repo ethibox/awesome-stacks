@@ -4,7 +4,7 @@ services:
   web:
     image: bitnami/mediawiki:1.32.0
     volumes:
-      - data:/bitnami:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/bitnami
     environment:
       MARIADB_HOST: mariadb
       MARIADB_PORT_NUMBER: 3306
@@ -31,21 +31,9 @@ services:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: my_wiki
     volumes:
-      - mariadb:/var/lib/mysql:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
     networks:
       - internal
-
-volumes:
-  data:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  mariadb:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

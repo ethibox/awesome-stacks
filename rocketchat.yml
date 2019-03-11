@@ -4,7 +4,7 @@ services:
   web:
     image: rocketchat/rocket.chat:0.74.3
     volumes:
-      - uploads:/app/uploads:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/uploads:/app/uploads
     environment:
       - ROOT_URL=${SCHEME:-http}://${DOMAIN:?err}
       - MONGO_URL=mongodb://mongo:27017/rocketchat
@@ -32,21 +32,9 @@ services:
   mongo:
     image: mongo:4.0.3
     volumes:
-      - mongo:/data/db:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mongo:/data/db
     networks:
       - internal
-
-volumes:
-  uploads:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  mongo:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

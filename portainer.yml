@@ -4,11 +4,7 @@ services:
   agent:
     image: portainer/agent:1.2.1
     environment:
-      # REQUIRED: Should be equal to the service name prefixed by "tasks." when
-      # deployed inside an overlay network
       AGENT_CLUSTER_ADDR: tasks.agent
-      # AGENT_PORT: 9001
-      # LOG_LEVEL: debug
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
@@ -21,7 +17,7 @@ services:
     image: portainer/portainer:1.20.2
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     volumes:
-      - portainer:/data
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/portainer:/data
     deploy:
       labels:
         traefik.port: 9000
@@ -43,10 +39,3 @@ networks:
   agent_network:
     driver: overlay
     attachable: true
-
-volumes:
-  portainer:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
