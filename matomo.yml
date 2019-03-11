@@ -7,11 +7,17 @@ services:
       - db:/var/lib/mysql:nocopy
     environment:
       MYSQL_ROOT_PASSWORD: myp@assw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
     networks:
       - internal
 
   matomo:
-    image: matomo:3.6.1
+    image: matomo:3.8.1
     volumes:
       - config:/var/www/html/config:nocopy
     deploy:
@@ -20,6 +26,11 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
     networks:
       - traefik
       - internal
