@@ -102,10 +102,25 @@
             "stackfile": "habitica.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
         ]
     },
     {
@@ -325,7 +340,7 @@
         "type": 2,
         "title": "phpBB",
         "description": "phpBB",
-        "categories": ["video"],
+        "categories": ["forum"],
         "platform": "linux",
         "logo": "https://d2.alternativeto.net/dist/icons/phpbb_29312.png?width=128&height=128&mode=crop&upscale=false",
         "repository": {
