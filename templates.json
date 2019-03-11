@@ -65,10 +65,6 @@
             {
                 "name": "DOMAIN",
                 "label": "Domain name"
-            },
-            {
-                "name": "ISSO_DOMAIN",
-                "label": "Isso Domain name"
             }
         ]
     },
