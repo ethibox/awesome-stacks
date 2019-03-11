@@ -4,7 +4,7 @@ services:
   web:
     image: etherpad/etherpad:latest
     volumes:
-      - etherpad:/opt/etherpad/var:nocopy
+        - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/opt/etherpad/var
     deploy:
       labels:
         traefik.port: 9001
@@ -16,13 +16,6 @@ services:
           memory: 100M
         reservations:
           memory: 100M
-
-volumes:
-  etherpad:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   default:

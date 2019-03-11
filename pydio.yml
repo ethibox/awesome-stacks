@@ -5,7 +5,8 @@ version: '3'
 services:
   pydio:
     image: pydio/cells:1.2.5
-    volumes: ["data:/root/.config/pydio/cells:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/root/.config/pydio/cells
     environment:
       - CELLS_BIND=0.0.0.0:8080
       - CELLS_EXTERNAL=${DOMAIN:?err}
@@ -27,7 +28,8 @@ services:
 
   mysql:
     image: mysql:5.7
-    volumes: ["mysql:/var/lib/mysql:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: cells
@@ -41,18 +43,6 @@ services:
           memory: 150M
     networks:
       - internal
-
-volumes:
-  data:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  mysql:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

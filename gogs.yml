@@ -7,7 +7,7 @@ services:
       ports:
         - ${SSH_PORT:-10022}:22
       volumes:
-        - data:/data:nocopy
+        - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/data
       deploy:
         labels:
           traefik.port: 3000
@@ -19,13 +19,6 @@ services:
             memory: 100M
           reservations:
             memory: 100M
-
-volumes:
-  data:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   default:

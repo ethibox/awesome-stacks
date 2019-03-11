@@ -1,0 +1,438 @@
+[
+    {
+        "type": 2,
+        "title": "Etherpad",
+        "description": "Etherpad",
+        "categories": ["editor"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/etherpad-lite_34842.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "etherpad.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Firefly",
+        "description": "Firefly",
+        "categories": ["finance"],
+        "platform": "linux",
+        "logo": "https://i.imgur.com/745Ox6Z.png",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "firefly.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Ghost",
+        "description": "Ghost",
+        "categories": ["blog"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/ghost_131380.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "ghost.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          },
+          {
+            "name": "ISSO_DOMAIN",
+            "label": "Isso Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Gogs",
+        "description": "Gogs",
+        "categories": ["git"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/gogs-go-git-service-_114268.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "gogs.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Habitica",
+        "description": "Habitica",
+        "categories": ["gamification"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/habitica_83130.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "habitica.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Invoice Ninja",
+        "description": "Invoice Ninja",
+        "categories": ["facturation"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/invoice-ninja_66356.jpg?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "invoiceninja.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Kanboard",
+        "description": "Kanboard",
+        "categories": ["project-management"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/kanboard_39005.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "kanboard.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Mailtrain",
+        "description": "Mailtrain",
+        "categories": ["newsletter"],
+        "platform": "linux",
+        "logo": "https://i.imgur.com/OtQmNYw.png",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "mailtrain.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Matomo",
+        "description": "Matomo",
+        "categories": ["analytics"],
+        "platform": "linux",
+        "logo": "https://i.imgur.com/k0tWHTC.jpg",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "matomo.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Mattermost",
+        "description": "Mattermost",
+        "categories": ["chat"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/mattermost_82289.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "mattermost.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Mautic",
+        "description": "Mautic",
+        "categories": ["marketing"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/mautic_68586.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "mautic.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Mediawiki",
+        "description": "Mediawiki",
+        "categories": ["wiki"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/mediawiki_134922.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "mediawiki.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Nextcloud",
+        "description": "Nextcloud",
+        "categories": ["cloud"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/nextcloud_128910.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "nextcloud.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Onlyoffice",
+        "description": "Onlyoffice",
+        "categories": ["editor"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/onlyoffice_136164.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "onlyoffice.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Owncloud",
+        "description": "Owncloud",
+        "categories": ["cloud"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/owncloud_100910.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "owncloud.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "PeerTube",
+        "description": "PeerTube",
+        "categories": ["video"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/peertube_119078.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "peertube.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "phpBB",
+        "description": "phpBB",
+        "categories": ["video"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/phpbb_29312.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "phpbb.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Pydio",
+        "description": "Pydio",
+        "categories": ["cloud"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/ajaxplorer_100129.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "pydio.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Rainloop",
+        "description": "Rainloop",
+        "categories": ["mail"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/rainloop_42431.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "rainloop.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Rocket.Chat",
+        "description": "Rocket.Chat",
+        "categories": ["chat"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/rocket-chat_74537.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "rocketchat.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Sentry",
+        "description": "Sentry",
+        "categories": ["dev"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/sentry_88750.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "sentry.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Wekan",
+        "description": "Wekan",
+        "categories": ["project-management"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/wekan_72958.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "wekan.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Wordpress",
+        "description": "Wordpress",
+        "categories": ["blog"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/wordpress_79228.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "wordpress.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Zammad",
+        "description": "Zammad",
+        "categories": ["helpdesk"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/zammad_96895.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "zammad.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    }
+]

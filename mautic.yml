@@ -6,7 +6,7 @@ services:
   mautic:
     image: ston3o/mautic:2.15.0
     volumes:
-      - /home/admin/${DOMAIN:?err}/mautic:/var/www/html
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/var/www/html
     environment:
       MAUTIC_DB_HOST: mysql
       MAUTIC_DB_PASSWORD: myp@ssw0rd
@@ -17,9 +17,6 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
-      placement:
-        constraints:
-          - node.hostname==worker-01
     networks:
       - traefik
       - internal
@@ -27,13 +24,9 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - /home/admin/${DOMAIN:?err}/mysql:/var/lib/mysql
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
-    deploy:
-      placement:
-        constraints:
-          - node.hostname==worker-01
     networks:
       - internal
 

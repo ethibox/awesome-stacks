@@ -13,7 +13,7 @@ services:
       - OWNCLOUD_ADMIN_USERNAME=admin
       - OWNCLOUD_ADMIN_PASSWORD=${PASSWORD:?err}
     volumes:
-      - owncloud:/mnt/data:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/owncloud:/mnt/data
     deploy:
       labels:
         traefik.port: 8080
@@ -29,21 +29,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
     volumes:
-      - mariadb:/var/lib/mysql:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
     networks:
       - internal
-
-volumes:
-  owncloud:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  mariadb:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

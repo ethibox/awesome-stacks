@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - mysql:/var/lib/mysql:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: ninja
@@ -36,7 +36,7 @@ services:
   app:
     image: ston3o/invoiceninja:4.5.9
     volumes:
-      - uploads:/var/www/app/public/logo:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/uploads:/var/www/app/public/logo
     environment:
       - APP_LOCALE=fr
       - APP_ENV=production
@@ -73,18 +73,6 @@ services:
     networks:
       - internal
       - traefik
-
-volumes:
-  uploads:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  mysql:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

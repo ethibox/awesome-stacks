@@ -13,7 +13,8 @@ configs:
 services:
   elasticsearch:
     image: elasticsearch:6.5.0
-    volumes: ["elasticsearch:/usr/share/elasticsearch/data:nocopy"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/elasticsearch:/usr/share/elasticsearch/data
     networks:
       - internal
 
@@ -47,13 +48,6 @@ services:
       - internal
     deploy:
       mode: global
-
-volumes:
-  elasticsearch:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:

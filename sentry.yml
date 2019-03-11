@@ -11,7 +11,7 @@ x-defaults: &defaults
     SENTRY_EMAIL_HOST: smtp
     SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:?err}
   volumes:
-    - sentry:/var/lib/sentry/files:nocopy
+    - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/sentry:/var/lib/sentry/files
 
 services:
   memcached:
@@ -27,7 +27,7 @@ services:
   postgres:
     image: postgres:9.5
     volumes:
-      - postgres:/var/lib/postgresql/data:nocopy
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgres:/var/lib/postgresql/data
     networks:
       - internal
 
@@ -54,18 +54,6 @@ services:
     command: run worker
     networks:
       - internal
-
-volumes:
-  sentry:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
-  postgres:
-    driver: nfs
-    driver_opts:
-      share: ${NFS_SERVER:?err}:/mnt/data
-      create: "true"
 
 networks:
   internal:
