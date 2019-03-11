@@ -120,10 +120,25 @@
             "stackfile": "invoiceninja.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
         ]
     },
     {
@@ -372,10 +387,25 @@
             "stackfile": "rocketchat.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
         ]
     },
     {
