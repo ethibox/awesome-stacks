@@ -14,9 +14,9 @@ services:
         traefik.enable: "true"
       resources:
         limits:
-          memory: 150M
+          memory: 200M
         reservations:
-          memory: 100M
+          memory: 200M
 
   isso:
     image: ston3o/isso-docker:0.11.1
@@ -39,9 +39,9 @@ services:
         traefik.enable: "true"
       resources:
         limits:
-          memory: 30M
+          memory: 50M
         reservations:
-          memory: 25M
+          memory: 50M
 
 volumes:
   ghost:
