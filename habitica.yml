@@ -18,7 +18,7 @@ services:
         limits:
           memory: 200M
         reservations:
-          memory: 150M
+          memory: 200M
     networks:
       - traefik
       - internal
@@ -27,6 +27,12 @@ services:
     image: mongo:3.4
     volumes:
       - mongo:/data/db:nocopy
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
     networks:
       - internal
 
