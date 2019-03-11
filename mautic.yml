@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   mautic:
-    image: ston3o/mautic:2.15.0-beta
+    image: ston3o/mautic:2.15.0
     volumes:
       - /home/admin/${DOMAIN:?err}/mautic:/var/www/html
     environment:
