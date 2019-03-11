@@ -11,7 +11,7 @@ services:
       - OWNCLOUD_DB_PASSWORD=myp@ssw0rd
       - OWNCLOUD_DB_HOST=mariadb
       - OWNCLOUD_ADMIN_USERNAME=admin
-      - OWNCLOUD_ADMIN_PASSWORD=${PASSWORD:?err}
+      # - OWNCLOUD_ADMIN_PASSWORD=${PASSWORD:?err}
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/owncloud:/mnt/data
     deploy:
