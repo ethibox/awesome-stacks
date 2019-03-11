@@ -11,6 +11,12 @@ services:
     volumes: ["mysql:/var/lib/mysql:nocopy"]
     networks:
       - internal
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
 
   mailtrain:
     image: ston3o/mailtrain:1.24.1
@@ -24,6 +30,11 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
     networks:
       - traefik
       - internal
