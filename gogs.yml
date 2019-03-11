@@ -16,9 +16,9 @@ services:
           traefik.docker.network: traefik-net
         resources:
           limits:
-            memory: 50M
+            memory: 100M
           reservations:
-            memory: 50M
+            memory: 100M
 
 volumes:
   data:
