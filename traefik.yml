@@ -13,8 +13,8 @@ services:
         protocol: tcp
         mode: host
     volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/acme.json:/acme.json
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./acme.json:/acme.json
       - ./configs/traefik.toml:/traefik.toml
       - /var/log/traefik/:/var/log/traefik/
     deploy:
