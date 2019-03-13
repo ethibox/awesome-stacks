@@ -64,9 +64,9 @@ services:
 
       - MIX_PUSHER_APP_KEY=${PUSHER_APP_KEY}
       - MIX_PUSHER_APP_CLUSTER=${PUSHER_APP_CLUSTER}
-      - MIX_APP_URL=${APP_URL}
-      - MIX_API_BASE=${API_BASE}
-      - MIX_API_SEARCH=${API_SEARCH}
+      - MIX_APP_URL=${SCHEME:-http}://${DOMAIN}
+      - MIX_API_BASE="/api/1/"
+      - MIX_API_SEARCH="/api/search"
 
       - ACTIVITYPUB_INBOX=false
       - ACTIVITYPUB_SHAREDINBOX=false
