@@ -71,6 +71,7 @@ services:
       - ACTIVITYPUB_INBOX=false
       - ACTIVITYPUB_SHAREDINBOX=false
       - HORIZON_DARKMODE=true
+      - HORIZON_EMBED=true
 
       # Set these both "true" to enable federation.
       # You might need to also run:
