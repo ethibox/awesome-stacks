@@ -352,6 +352,39 @@
     },
     {
         "type": 2,
+        "title": "Pixelfed",
+        "description": "Pixelfed",
+        "categories": ["photo"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/pixelfed_136182.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "pixelfed.yml"
+        },
+        "env": [
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Pydio",
         "description": "Pydio",
         "categories": ["cloud"],
