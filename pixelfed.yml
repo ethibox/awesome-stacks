@@ -13,7 +13,7 @@ services:
         traefik.docker.network: traefik-net
     environment:
       - APP_NAME=${APP_NAME:-"PixelFed Test"}
-      - APP_ENV=local
+      - APP_ENV=${APP_ENV:-local}
       - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
       - APP_DEBUG=true
       - APP_URL=${SCHEME:-http}://${DOMAIN}
