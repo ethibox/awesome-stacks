@@ -298,6 +298,26 @@
     },
     {
         "type": 2,
+        "title": "OpenFaaS",
+        "name": "func",
+        "description": "OpenFaaS",
+        "note": "Deploys the API gateway and sample functions. You can access the UI on port 8080. <b>Warning</b>: the name of the stack must be 'func'.",
+        "categories": ["serverless"],
+        "platform": "linux",
+        "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/openfaas.png",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "openfaas.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Owncloud",
         "description": "Owncloud",
         "categories": ["cloud"],
