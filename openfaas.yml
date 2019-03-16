@@ -4,6 +4,7 @@ services:
         image: openfaas/gateway:0.9.14
         networks:
             - functions
+            - traefik
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
             read_timeout:  "300s"        # Maximum time to read HTTP request
@@ -125,6 +126,9 @@ networks:
         attachable: true
         labels:
           - "openfaas=true"
+    traefik:
+      external:
+        name: traefik-net
 
 secrets:
     basic-auth-user:
