@@ -4,7 +4,10 @@ services:
   mail:
     image: tvial/docker-mailserver:latest
     ports:
-      - "25:25"
+      - target: 25
+        published: 25
+        protocol: tcp
+        mode: host
       - "143:143"
       - "587:587"
       - "993:993"
