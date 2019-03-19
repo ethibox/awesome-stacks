@@ -16,7 +16,7 @@ configs:
 
 services:
   prometheus:
-    image: prom/prometheus:v2.4.3
+    image: prom/prometheus:v2.8.0
     user: root
     configs:
       - source: prometheus.yml
@@ -38,12 +38,14 @@ services:
           memory: 400M
         reservations:
           memory: 350M
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik
 
   grafana:
-    image: grafana/grafana:5.3.2
+    image: grafana/grafana:6.0.1
     user: root
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/grafana:/var/lib/grafana
@@ -53,12 +55,14 @@ services:
         traefik.frontend.rule: Host:${DOMAIN_GRAFANA:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
 
   cadvisor:
-    image: google/cadvisor:v0.32.0
+    image: google/cadvisor:v0.33.0
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -102,17 +106,23 @@ services:
       - internal
 
   alertmanager:
-    image: prom/alertmanager:v0.15.2
+    image: prom/alertmanager:v0.16.1
     command: --config.file=/etc/alertmanager/alertmanager.yml
     configs:
       - source: alertmanager.yml
         target: /etc/alertmanager/alertmanager.yml
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
   blackbox-exporter:
-    image: prom/blackbox-exporter:v0.12.0
+    image: prom/blackbox-exporter:v0.14.0
     command: --config.file=/config/blackbox.yml
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik
