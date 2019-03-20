@@ -9,6 +9,9 @@ services:
     image: zammad/zammad-docker-compose:zammad-elasticsearch-2.7.0-14
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/elasticsearch:/usr/share/elasticsearch/data
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -20,6 +23,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -40,12 +45,17 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
 
   zammad-postgresql:
     image: zammad/zammad-docker-compose:zammad-postgresql-2.7.0-14
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgresql:/var/lib/postgresql/data
     networks:
@@ -54,6 +64,9 @@ services:
   zammad-railsserver:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-railsserver"]
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     networks:
@@ -62,6 +75,9 @@ services:
   zammad-scheduler:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-scheduler"]
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     networks:
@@ -70,6 +86,9 @@ services:
   zammad-websocket:
     image: zammad/zammad-docker-compose:zammad-2.7.0-14
     command: ["zammad-websocket"]
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
     networks:

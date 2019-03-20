@@ -37,6 +37,7 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+                    - 'node.labels.reserved != true'
         secrets:
             - basic-auth-user
             - basic-auth-password
@@ -59,6 +60,7 @@ services:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+                    - 'node.labels.reserved != true'
             resources:
                 # limits:   # Enable if you want to limit memory usage
                 #     memory: 100M
@@ -92,6 +94,7 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+                    - 'node.labels.reserved != true'
 
     queue-worker:
         image: openfaas/queue-worker:0.5.4
@@ -116,6 +119,7 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+                    - 'node.labels.reserved != true'
         secrets:
             - basic-auth-user
             - basic-auth-password

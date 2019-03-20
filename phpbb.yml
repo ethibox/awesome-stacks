@@ -8,6 +8,9 @@ services:
       MYSQL_DATABASE: phpbb
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -35,6 +38,8 @@ services:
           memory: 200M
         reservations:
           memory: 200M
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
