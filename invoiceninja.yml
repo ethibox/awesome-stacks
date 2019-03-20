@@ -16,6 +16,8 @@ services:
           memory: 200M
         reservations:
           memory: 200M
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -69,6 +71,8 @@ services:
           memory: 200M
         reservations:
           memory: 200M
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik

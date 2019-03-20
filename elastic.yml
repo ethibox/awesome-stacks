@@ -15,6 +15,9 @@ services:
     image: elasticsearch:6.5.0
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/elasticsearch:/usr/share/elasticsearch/data
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -27,12 +30,17 @@ services:
         traefik.enable: "true"
         traefik.docker.network: traefik-net
         traefik.frontend.auth.basic: ${BASIC_AUTH:?err}
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
 
   logstash:
     image: logstash:6.5.0
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 

@@ -16,6 +16,8 @@ services:
           memory: 100M
         reservations:
           memory: 100M
+      placement:
+        constraints: [node.labels.reserved != true]
 
 networks:
   default:

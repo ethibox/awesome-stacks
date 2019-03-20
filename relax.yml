@@ -12,6 +12,8 @@ services:
         traefik.enable: "true"
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
@@ -20,6 +22,9 @@ services:
     image: mongo:4.0.3
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mongo:/data/db
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 

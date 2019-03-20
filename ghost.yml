@@ -17,6 +17,8 @@ services:
           memory: 200M
         reservations:
           memory: 200M
+      placement:
+        constraints: [node.labels.reserved != true]
 
   # isso:
     # image: ston3o/isso-docker:0.11.1

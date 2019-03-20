@@ -11,6 +11,8 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
     environment:
       - APP_NAME=${APP_NAME:-"PixelFed Test"}
       - APP_ENV=${APP_ENV:-local}
