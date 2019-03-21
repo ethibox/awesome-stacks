@@ -97,6 +97,9 @@ services:
       - MYSQL_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -104,6 +107,9 @@ services:
     image: redis:4-alpine
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/redis:/data
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
