@@ -2,11 +2,17 @@ version: '3'
 
 services:
   server:
-    image: registry.gitlab.com/commento/commento:v1.6.1
+    image: registry.gitlab.com/commento/commento:v1.6.2
     environment:
       COMMENTO_ORIGIN: ${SCHEME:-http}://${DOMAIN:?err}
       COMMENTO_PORT: 8080
-      COMMENTO_POSTGRES: postgres://postgres:postgres@db:5432/commento?sslmode=disable
+      COMMENTO_POSTGRES: postgres://postgres:myp@ssw0rd@db:5432/commento?sslmode=disable
+      COMMENTO_FORBID_NEW_OWNERS: ${COMMENTO_FORBID_NEW_OWNERS:-false}
+      COMMENTO_SMTP_HOST: ${COMMENTO_SMTP_HOST:-mail.service.host}
+      COMMENTO_SMTP_PORT: ${COMMENTO_SMTP_PORT:-587}
+      COMMENTO_SMTP_USERNAME: ${COMMENTO_SMTP_USERNAME:-example@mail.com}
+      COMMENTO_SMTP_PASSWORD: ${COMMENTO_SMTP_PASSWORD:-password}
+      COMMENTO_SMTP_FROM_ADDRESS: ${COMMENTO_SMTP_FROM_ADDRESS:-user@mail.com}
     deploy:
       labels:
         traefik.port: 8080
@@ -20,11 +26,11 @@ services:
       - traefik
 
   db:
-    image: postgres:9.4-alpine
+    image: postgres:11.2-alpine
     environment:
       POSTGRES_DB: commento
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: myp@ssw0rd
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
     networks:
