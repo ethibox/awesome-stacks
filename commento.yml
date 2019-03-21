@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  server:
+    image: registry.gitlab.com/commento/commento
+    environment:
+      COMMENTO_ORIGIN: ${SCHEME:-http}://${DOMAIN:?err}
+      COMMENTO_PORT: 8080
+      COMMENTO_POSTGRES: postgres://postgres:postgres@db:5432/commento?sslmode=disable
+    deploy:
+      labels:
+        traefik.port: 8080
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
+    networks:
+      - internal
+      - traefik
+
+  db:
+    image: postgres:9.4-alpine
+    environment:
+      POSTGRES_DB: commento
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
