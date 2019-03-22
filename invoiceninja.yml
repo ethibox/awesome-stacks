@@ -35,7 +35,7 @@ services:
       # - traefik
 
   app:
-    image: ston3o/invoiceninja:4.5.9
+    image: ston3o/invoiceninja:4.5.11
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/uploads:/var/www/app/public/logo
     environment:
