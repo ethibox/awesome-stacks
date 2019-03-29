@@ -48,4 +48,4 @@ networks:
       name: metabase-net
   traefik:
     external:
-      ame: traefik-net
+      name: traefik-net
