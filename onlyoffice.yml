@@ -27,11 +27,17 @@ services:
     image: nextcloud:15.0.5-fpm
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/nextcloud:/var/www/html
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
   onlyoffice-document-server:
     image: onlyoffice/documentserver:5.2.7.2
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
