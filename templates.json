@@ -295,6 +295,24 @@
     },
     {
         "type": 2,
+        "title": "Metabase",
+        "description": "Metabase",
+        "categories": ["analytics"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/metabase_103051.png?width=64&height=64&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "metabase.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Mediawiki",
         "description": "Mediawiki",
         "categories": ["wiki"],
