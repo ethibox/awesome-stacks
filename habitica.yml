@@ -1,8 +1,8 @@
-version: "3.5"
+version: "3.7"
 
 services:
   server:
-    image: habitica/habitica-auto:4.70.0
+    image: habitica/habitica-auto:4.81.1
     command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@habitica.com}
