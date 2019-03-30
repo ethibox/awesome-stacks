@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+  polr:
+    image: ethibox/polr:2.2.0
+    environment:
+      - DB_HOST=mariadb
+      - DB_DATABASE=${DB_DATABASE:-polr}
+      - DB_USERNAME=${DB_USERNAME:-polr}
+      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-user@example.com}
+      - APP_PROTOCOL=${SCHEME:-http}://
+      - APP_ADDRESS=${DOMAIN:?err}
+      - SETTING_ADV_ANALYTICS=${SETTING_ADV_ANALYTICS:-false}
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.4.3
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=${DB_DATABASE:-polr}
+      - MYSQL_USER=${DB_USERNAME:-polr}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
