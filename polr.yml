@@ -20,6 +20,11 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 100M
+        reservations:
+          memory: 100M
       placement:
         constraints: [node.labels.reserved != true]
     networks:
@@ -36,6 +41,11 @@ services:
     deploy:
       placement:
         constraints: [node.labels.reserved != true]
+      resources:
+        limits:
+          memory: 100M
+        reservations:
+          memory: 100M
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
     networks:
