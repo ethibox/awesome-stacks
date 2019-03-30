@@ -492,6 +492,39 @@
     },
     {
         "type": 2,
+        "title": "Polr",
+        "description": "Polr",
+        "categories": ["url-shortening"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/polr_60021.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "polr.yml"
+        },
+        "env": [
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Rainloop",
         "description": "Rainloop",
         "categories": ["mail"],
