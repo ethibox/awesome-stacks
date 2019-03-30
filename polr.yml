@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.7'
 
 services:
   polr:
@@ -33,6 +33,9 @@ services:
       - MYSQL_DATABASE=${DB_DATABASE:-polr}
       - MYSQL_USER=${DB_USERNAME:-polr}
       - MYSQL_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
     networks:
