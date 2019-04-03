@@ -4,7 +4,7 @@ version: '3'
 
 services:
   pydio:
-    image: pydio/cells:1.2.5
+    image: pydio/cells:1.4.1
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/root/.config/pydio/cells
     environment:
