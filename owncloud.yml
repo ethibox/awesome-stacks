@@ -20,6 +20,8 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
@@ -28,6 +30,9 @@ services:
     image: mariadb:10.3.10
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
     networks:
