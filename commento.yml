@@ -31,6 +31,9 @@ services:
       POSTGRES_DB: commento
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: myp@ssw0rd
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
     networks:
