@@ -19,6 +19,9 @@ services:
       RABBIT_USER: taiga
       RABBIT_PASSWORD: password
       RABBIT_VHOST: taiga
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -28,6 +31,9 @@ services:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/front:/taiga-conf
     environment:
       TAIGA_HOST: ${DOMAIN:?err}
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -37,6 +43,9 @@ services:
       POSTGRES_DB: taiga
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
     networks:
@@ -48,6 +57,9 @@ services:
       RABBIT_USER: taiga
       RABBIT_PASSWORD: password
       RABBIT_VHOST: taiga
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
@@ -58,6 +70,9 @@ services:
       RABBIT_VHOST: taiga
       RABBIT_USER: taiga
       RABBIT_PASSWORD: password
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
