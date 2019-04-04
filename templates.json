@@ -594,6 +594,24 @@
     },
     {
         "type": 2,
+        "title": "Taiga",
+        "description": "Taiga",
+        "categories": ["project"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/taiga-io_58635.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "taiga.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Wekan",
         "description": "Wekan",
         "categories": ["project-management"],
