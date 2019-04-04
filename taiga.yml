@@ -1,4 +1,6 @@
 # mkdir -p back cert db front media proxy
+# chmod 755 media front
+# Go to /admin/ to change default password admin:123123
 
 version: '3.7'
 
