@@ -604,10 +604,25 @@
             "stackfile": "taiga.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
         ]
     },
     {

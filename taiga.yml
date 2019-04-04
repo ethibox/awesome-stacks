@@ -11,6 +11,7 @@ services:
     environment:
       TAIGA_HOST: ${DOMAIN:?err}
       TAIGA_SECRET: ${TAIGA_SECRET:-secret}
+      TAIGA_SCHEME: ${SCHEME:-http}
       DB_HOST: db
       DB_NAME: taiga
       DB_USER: postgres
@@ -31,6 +32,7 @@ services:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/front:/taiga-conf
     environment:
       TAIGA_HOST: ${DOMAIN:?err}
+      TAIGA_SCHEME: ${SCHEME:-http}
     deploy:
       placement:
         constraints: [node.labels.reserved != true]
