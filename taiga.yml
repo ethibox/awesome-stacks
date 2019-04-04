@@ -1,0 +1,90 @@
+# mkdir -p back cert db front media proxy
+
+version: '3.7'
+
+services:
+  back:
+    image: dockertaiga/back:latest
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/media:/taiga-media
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/back:/taiga-conf
+    environment:
+      TAIGA_HOST: ${DOMAIN:?err}
+      TAIGA_SECRET: ${TAIGA_SECRET:-secret}
+      DB_HOST: db
+      DB_NAME: taiga
+      DB_USER: postgres
+      DB_PASSWORD: password
+      RABBIT_HOST: rabbit
+      RABBIT_USER: taiga
+      RABBIT_PASSWORD: password
+      RABBIT_VHOST: taiga
+    networks:
+      - internal
+
+  front:
+    image: dockertaiga/front
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/front:/taiga-conf
+    environment:
+      TAIGA_HOST: ${DOMAIN:?err}
+    networks:
+      - internal
+
+  db:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_DB: taiga
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  rabbit:
+    image: dockertaiga/rabbit:latest
+    environment:
+      RABBIT_USER: taiga
+      RABBIT_PASSWORD: password
+      RABBIT_VHOST: taiga
+    networks:
+      - internal
+
+  events:
+    image: dockertaiga/events:latest
+    environment:
+      RABBIT_HOST: rabbit
+      RABBIT_VHOST: taiga
+      RABBIT_USER: taiga
+      RABBIT_PASSWORD: password
+    networks:
+      - internal
+
+  proxy:
+    image: dockertaiga/proxy:latest
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/cert:/taiga-cert
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/proxy:/taiga-conf
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
+    environment:
+      TAIGA_HOST: ${DOMAIN:?err}
+      TAIGA_BACK_HOST: back
+      TAIGA_FRONT_HOST: front
+      EVENTS_HOST: events
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
