@@ -9,7 +9,7 @@ x-defaults: &defaults
     SENTRY_REDIS_HOST: redis
     SENTRY_POSTGRES_HOST: postgres
     SENTRY_EMAIL_HOST: smtp
-    SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:?err}
+    SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
   volumes:
     - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/sentry:/var/lib/sentry/files
 
