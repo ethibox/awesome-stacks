@@ -1,3 +1,7 @@
+# mkdir config data db plugins && chown -R 2000:2000 config plugins data
+# Add SMTP configuration on Notifications -> Email
+# Change language on General -> Language (only first two fields)
+
 version: "3.7"
 
 services:
@@ -16,7 +20,7 @@ services:
       - internal
 
   app:
-    image: mattermost/mattermost-prod-app:5.8.0
+    image: mattermost/mattermost-prod-app:5.9.0
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/mattermost/data
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config:/mattermost/config
@@ -32,7 +36,7 @@ services:
       - internal
 
   web:
-    image: mattermost/mattermost-prod-web:5.8.0
+    image: mattermost/mattermost-prod-web:5.9.0
     deploy:
       labels:
         traefik.port: 80
