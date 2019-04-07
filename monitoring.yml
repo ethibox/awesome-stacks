@@ -23,9 +23,6 @@ services:
         target: /etc/prometheus/prometheus.yml
       - source: alert.rules.yml
         target: /etc/prometheus/alert.rules.yml
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/prometheus:/prometheus
-      - /etc/localtime:/etc/localtime:ro
     deploy:
       labels:
         traefik.port: 9090
