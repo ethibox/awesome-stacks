@@ -52,6 +52,28 @@
     },
     {
         "type": 2,
+        "title": "Collabora",
+        "description": "Collabora",
+        "categories": ["editor"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/libreoffice-from-collabora_59004.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "collabora.yml"
+        },
+        "env": [
+            {
+                "name": "DOMAIN",
+                "label": "Protocol"
+            },
+            {
+                "name": "NEXTCLOUD_DOMAIN",
+                "label": "Domain name"
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Firefly",
         "description": "Firefly",
         "categories": ["finance"],
