@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   web:
-    image: ston3o/wordpress:5.1.0
+    image: ston3o/wordpress:5.1.1
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/wordpress:/var/www/html/wp-content
     environment:
