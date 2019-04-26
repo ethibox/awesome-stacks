@@ -8,7 +8,7 @@ services:
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/wordpress:/var/www/html/wp-content
     environment:
-      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_HOST: mariadb
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: myp@ssw0rd
     deploy:
@@ -28,10 +28,10 @@ services:
       - traefik
       - internal
 
-  mysql:
-    image: mysql:5.7
+  mariadb:
+    image: mariadb:10.3.10
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mariadb
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: wordpress
