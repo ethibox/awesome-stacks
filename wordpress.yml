@@ -31,7 +31,7 @@ services:
   mariadb:
     image: mariadb:10.3.10
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mariadb
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: myp@ssw0rd
       MYSQL_DATABASE: wordpress
