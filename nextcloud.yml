@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:15.0.5
+    image: nextcloud:15.0.7
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/nextcloud:/var/www/html
     deploy:
