@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   db:
@@ -6,7 +6,10 @@ services:
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: myp@assw0rd
+      MYSQL_ROOT_PASSWORD: myp@ssw0rd
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: myp@ssw0rd
     deploy:
       resources:
         limits:
@@ -19,7 +22,7 @@ services:
       - internal
 
   matomo:
-    image: matomo:3.8.1
+    image: matomo:3.9.1
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config:/var/www/html/config
     deploy:
