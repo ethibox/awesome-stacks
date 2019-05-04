@@ -1,15 +1,15 @@
 version: "3.3"
 services:
     gateway:
-        image: openfaas/gateway:0.9.14
+        image: openfaas/gateway:0.12.0
         networks:
             - functions
             - traefik
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  "300s"        # Maximum time to read HTTP request
-            write_timeout: "300s"        # Maximum time to write HTTP response
-            upstream_timeout: "300s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
+            read_timeout:  "5m5s"        # Maximum time to read HTTP request
+            write_timeout: "5m5s"        # Maximum time to write HTTP response
+            upstream_timeout: "5m"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
             dnsrr: "true"               # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
@@ -50,8 +50,8 @@ services:
         networks:
             - functions
         environment:
-            read_timeout:  "300s"   # set both here, and on your functions
-            write_timeout: "300s"   # set both here, and on your functions
+            read_timeout:  "5m5s"   # set both here, and on your functions
+            write_timeout: "5m5s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
@@ -97,12 +97,12 @@ services:
                     - 'node.labels.reserved != true'
 
     queue-worker:
-        image: openfaas/queue-worker:0.5.4
+        image: openfaas/queue-worker:0.7.1
         networks:
             - functions
         environment:
             max_inflight: "1"
-            ack_wait: "300s"    # Max duration of any async task / request
+            ack_wait: "5m5s"    # Max duration of any async task / request
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
         deploy:
