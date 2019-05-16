@@ -547,6 +547,24 @@
     },
     {
         "type": 2,
+        "title": "Prestashop",
+        "description": "Prestashop",
+        "categories": ["e-commerce"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/prestashop_96599.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "prestashop.yml"
+        },
+        "env": [
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Rainloop",
         "description": "Rainloop",
         "categories": ["mail"],
