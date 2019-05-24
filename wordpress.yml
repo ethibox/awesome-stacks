@@ -20,7 +20,7 @@ services:
       - internal
 
   app:
-    image: ethibox/wordpress:5.1.1
+    image: ethibox/wordpress:5.2.1
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/wordpress:/var/www/html/
     environment:
