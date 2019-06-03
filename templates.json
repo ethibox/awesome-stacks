@@ -143,6 +143,24 @@
     },
     {
         "type": 2,
+        "title": "Fathom",
+        "description": "Fathom",
+        "categories": ["analytics"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/fathom-analytics_139581.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "fathom.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Habitica",
         "description": "Habitica",
         "categories": ["gamification"],
