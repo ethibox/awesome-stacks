@@ -4,7 +4,7 @@ services:
   web:
     image: etherpad/etherpad:latest
     volumes:
-        - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/opt/etherpad/var
+        - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/opt/etherpad-lite/var
     deploy:
       labels:
         traefik.port: 9001
