@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server:
-    image: registry.gitlab.com/commento/commento:v1.6.2
+    image: registry.gitlab.com/commento/commento:v1.7.0
     environment:
       COMMENTO_ORIGIN: ${SCHEME:-http}://${DOMAIN:?err}
       COMMENTO_PORT: 8080
