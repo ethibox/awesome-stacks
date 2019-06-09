@@ -2,7 +2,7 @@ version: '3'
 
 services:
     gogs:
-      image: gogs/gogs:0.11.66
+      image: gogs/gogs:0.11.86
       user: root
       ports:
         - ${SSH_PORT:-10022}:22
