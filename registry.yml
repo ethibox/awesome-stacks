@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  web:
+    image: registry:2
+    environment:
+      REGISTRY_AUTH_HTPASSWD_PATH: /run/secrets/registry-htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_AUTH: htpasswd
+    deploy:
+      labels:
+        traefik.port: 5000
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      placement:
+        constraints: [node.labels.reserved != true]
+    secrets:
+      - registry-htpasswd
+
+secrets:
+  registry-htpasswd:
+    external: true
+
+networks:
+  default:
+    external:
+      name: traefik-net
