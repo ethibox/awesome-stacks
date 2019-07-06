@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    image: ghost:2.22-alpine
+    image: ghost:2.25.4-alpine
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/ghost:/var/lib/ghost/content
     environment:
