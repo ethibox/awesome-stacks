@@ -19,6 +19,24 @@
     },
     {
         "type": 2,
+        "title": "Codimd",
+        "description": "Codimd",
+        "categories": ["editor"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/codimd_131536.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "codimd.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Commento",
         "description": "Commento",
         "categories": ["comment"],

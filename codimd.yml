@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_USER=hackmd
+      - POSTGRES_PASSWORD=hackmdpass
+      - POSTGRES_DB=hackmd
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  app:
+    image: hackmdio/hackmd:1.3.1-alpine
+    environment:
+      - HMD_DB_URL=postgres://hackmd:hackmdpass@postgres:5432/hackmd
+    deploy:
+      labels:
+        traefik.port: 3000
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
+      placement:
+        constraints: [node.labels.reserved != true]
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
