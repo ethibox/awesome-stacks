@@ -736,6 +736,24 @@
     },
     {
         "type": 2,
+        "title": "Wiki.js",
+        "description": "Wiki",
+        "categories": ["wiki"],
+        "platform": "linux",
+        "logo": "https://i.imgur.com/a6GELLc.png",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "wikijs.yml"
+        },
+        "env": [
+          {
+            "name": "DOMAIN",
+            "label": "Domain name"
+          }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Wordpress",
         "description": "Wordpress",
         "categories": ["blog"],
