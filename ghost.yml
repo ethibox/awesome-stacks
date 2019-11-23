@@ -13,7 +13,7 @@ services:
         traefik.frontend.rule: Host:${DOMAIN:?err}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
-        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||X-XSS-Protection: 1; mode=block||Strict-Transport-Security: max-age=31536000; includeSubDomains||Referrer-Policy: no-referrer||X-Content-Type-Options: nosniff"
+        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||X-XSS-Protection: 1; mode=block||Strict-Transport-Security: max-age=31536000; includeSubDomains||X-Content-Type-Options: nosniff"
       resources:
         limits:
           memory: 200M
