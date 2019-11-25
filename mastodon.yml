@@ -1,0 +1,98 @@
+# mkdir -p {system,postgres,redis} && chown 991:991 system
+# bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
+# bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
+# tootctl accounts create <username> --email <email> --confirmed --role admin # Add user
+
+version: '3.7'
+
+x-defaults: &defaults
+  environment:
+    - LOCAL_DOMAIN=${DOMAIN:?err}
+    - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
+    - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"DEFAULT_KEY"}
+    - OTP_SECRET=${OTP_SECRET}
+    - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+    - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+    - DB_HOST=db
+    - DB_PORT=5432
+    - DB_NAME=postgres
+    - DB_USER=postgres
+    - DB_PASS=
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - REDIS_PASSWORD=
+    - SMTP_SERVER=${SMTP_SERVER:-smtp.mailgun.org}
+    - SMTP_PORT=${SMTP_PORT:-587}
+    - SMTP_LOGIN=${SMTP_LOGIN}
+    - SMTP_PASSWORD=${SMTP_PASSWORD}
+    - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
+    - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
+    - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-notifications@example.com}
+
+services:
+  db:
+    image: postgres:9.6-alpine
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:5.0-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/redis:/data
+    networks:
+      - internal
+
+  web:
+    <<: *defaults
+    image: tootsuite/mastodon:v3.0.1
+    command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rake db:migrate; bundle exec rake assets:precompile; bundle exec rails s -p 3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
+    deploy:
+      labels:
+        traefik.port: 3000
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 500M
+      placement:
+        constraints: [node.labels.reserved != true]
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/system:/mastodon/public/system
+    networks:
+      - traefik
+      - internal
+
+  streaming:
+    <<: *defaults
+    image: tootsuite/mastodon:v3.0.1
+    command: node ./streaming
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
+    networks:
+      - internal
+
+  sidekiq:
+    <<: *defaults
+    image: tootsuite/mastodon:v3.0.1
+    command: bundle exec sidekiq
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/system:/mastodon/public/system
+    networks:
+      - internal
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
