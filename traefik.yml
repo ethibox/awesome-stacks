@@ -1,8 +1,8 @@
-version: "3.3"
+version: "3.7"
 
 services:
   traefik:
-    image: traefik:1.7.12
+    image: traefik:1.7
     ports:
       - target: 80
         published: 80
