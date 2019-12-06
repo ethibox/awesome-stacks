@@ -3,8 +3,10 @@ version: '3.7'
 services:
   web:
     image: etherpad/etherpad:latest
+    environment:
+      - NODE_ENV=production
     volumes:
-        - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/opt/etherpad-lite/var
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/opt/etherpad-lite/var
     deploy:
       labels:
         traefik.port: 9001
