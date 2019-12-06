@@ -1,0 +1,50 @@
+# git clone https://framagit.org/framasoft/framadate/framadate.git data
+
+version: '3.7'
+
+services:
+  mariadb:
+    image: mariadb:10.3.14
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=framadate
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=framadate
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql:cached
+    networks:
+      - internal
+
+  framadate:
+    image: ethibox/framadate
+    environment:
+      - APP_NAME=Framadate
+      - DOMAIN=${DOMAIN:?err}
+      - ADMIN_MAIL=${ADMIN_MAIL:-noreply@ethibox.fr}
+      - MYSQL_USER=framadate
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DB=framadate
+      - MYSQL_HOST=mariadb
+      - MYSQL_PORT=3306
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - APACHE_RUN_USER=#1000
+      - FRAMADATE_DEVMODE=${FRAMADATE_DEVMODE:-0}
+      - SMTP_SERVER=${SMTP_SERVER:-localhost:25}
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/var/www/framadate
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.enable: "true"
+        traefik.docker.network: traefik-net
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+  traefik:
+    external:
+      name: traefik-net
