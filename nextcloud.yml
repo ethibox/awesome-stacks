@@ -2,18 +2,40 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:15.0.7
+    image: nextcloud:17.0.1
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/nextcloud:/var/www/html
     deploy:
       labels:
         traefik.port: 80
         traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
+        traefik.frontend.redirect.permanent: 'true'
+        traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
+        traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
         traefik.enable: "true"
+        traefik.docker.network: traefik-net
       placement:
         constraints: [node.labels.reserved != true]
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.3.12
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASS:-myp@ssw0rd}
+      - MYSQL_DATABASE=nextcloud
+    volumes:
+      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+    deploy:
+      placement:
+        constraints: [node.labels.reserved != true]
+    networks:
+      - internal
 
 networks:
-  default:
+  internal:
+  traefik:
     external:
       name: traefik-net
