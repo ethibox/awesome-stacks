@@ -50,5 +50,5 @@ volumes:
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
