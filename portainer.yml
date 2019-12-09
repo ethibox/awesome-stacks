@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
   agent:
-    image: portainer/agent:1.2.1
+    image: portainer/agent:1.5.1
     environment:
-      AGENT_CLUSTER_ADDR: tasks.agent
+      - AGENT_CLUSTER_ADDR=tasks.agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
@@ -14,16 +14,16 @@ services:
       - agent_network
 
   portainer:
-    image: portainer/portainer:1.20.2
+    image: portainer/portainer:1.23.0
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/portainer:/data
+      - ${VOLUME_PATH}portainer:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`${DOMAIN:-portainer.localhost}`)
+      - traefik.http.routers.portainer.tls=${HTTPS:-false}
+      - traefik.http.routers.portainer.tls.certresolver=mytlschallenge
     deploy:
-      labels:
-        traefik.port: 9000
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
       mode: replicated
       replicas: 1
       placement:
@@ -32,10 +32,13 @@ services:
       - agent_network
       - traefik
 
+volumes:
+  portainer:
+
 networks:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
   agent_network:
     driver: overlay
     attachable: true
