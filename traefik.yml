@@ -4,23 +4,20 @@ services:
   traefik:
     image: traefik:1.7
     ports:
-      - target: 80
-        published: 80
-        protocol: tcp
-        mode: host
-      - target: 443
-        published: 443
-        protocol: tcp
-        mode: host
+      - 80:80
+    command:
+      - --entryPoints=Name:http Address::80 Compress:true
+      - --defaultEntryPoints=http
+      - --docker.swarmmode=true
+      - --docker.exposedbydefault=true
+      - --docker.network=traefik-net
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/acme.json:/acme.json
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./configs/traefik.toml:/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
       placement:
         constraints: [node.role==manager]
 
 networks:
   default:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net

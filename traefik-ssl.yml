@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  traefik:
+    image: traefik:1.7
+    ports:
+      - 80:80
+      - 443:443
+    command:
+      # - --debug
+      # - --loglevel=INFO
+      - --entryPoints=Name:http Address::80 Compress:true Redirect.EntryPoint:https
+      - --entryPoints=Name:https Address::443 Compress:true TLS
+      - --defaultEntryPoints=https,http
+      - --docker.swarmmode=true
+      - --docker.exposedbydefault=false
+      - --docker.network=traefik-net
+      - --acme
+      - --acme.onHostRule=true
+      - --acme.storage=/letsencrypt/acme.json
+      - --acme.acmeLogging=true
+      - --acme.entryPoint=https
+      - --acme.httpChallenge.entryPoint=http
+      - --acme.email=${ACME_EMAIL:-noreply@yopmail.com}
+    volumes:
+      - ${VOLUME_PATH}letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      placement:
+        constraints: [node.role==manager]
+
+volumes:
+  letsencrypt:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
