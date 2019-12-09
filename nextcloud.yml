@@ -1,20 +1,27 @@
-version: '3'
+version: '3.7'
 
 services:
   nextcloud:
     image: nextcloud:17.0.1
+    environment:
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/nextcloud:/var/www/html
+      - ${VOLUME_PATH}nextcloud:/var/www/html
     deploy:
       labels:
+        traefik.enable: "true"
         traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.frontend.rule: Host:${DOMAIN:-nexcloud.localhost}
         traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
         traefik.frontend.redirect.permanent: 'true'
         traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
         traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
       placement:
         constraints: [node.labels.reserved != true]
     networks:
@@ -24,15 +31,21 @@ services:
   mariadb:
     image: mariadb:10.3.12
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASS:-myp@ssw0rd}
-      - MYSQL_DATABASE=nextcloud
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     deploy:
       placement:
         constraints: [node.labels.reserved != true]
     networks:
       - internal
+
+volumes:
+  nextcloud:
+  mariadb:
 
 networks:
   internal:
