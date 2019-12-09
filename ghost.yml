@@ -1,28 +1,28 @@
 version: '3.7'
 
 services:
-  web:
-    image: ghost:3.0.3-alpine
+  ghost:
+    image: ghost:${VERSION:-3.0.3-alpine}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/ghost:/var/lib/ghost/content
+      - ${VOLUME_PATH}ghost:/var/lib/ghost/content
     environment:
-      url: ${SCHEME:-http}://${DOMAIN:?err}
+      - url=${SCHEME:-http}://${DOMAIN-ghost.localhost}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ghost.rule=Host(`${DOMAIN:-ghost.localhost}`)
+      - traefik.http.routers.ghost.tls=${HTTPS:-false}
+      - traefik.http.routers.ghost.tls.certresolver=mytlschallenge
     deploy:
-      labels:
-        traefik.port: 2368
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||X-XSS-Protection: 1; mode=block||Strict-Transport-Security: max-age=31536000; includeSubDomains||X-Content-Type-Options: nosniff"
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
+
+volumes:
+  ghost:
 
 networks:
   default:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net

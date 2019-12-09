@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  traefik:
+    image: traefik:${VERSION:-v2.0.6}
+    command:
+      # - --log.level=DEBUG
+      - --providers.docker
+      - --providers.docker.network=traefik-net
+      - --providers.docker.exposedByDefault=false
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
+      - --certificatesresolvers.mytlschallenge.acme.email=${ACME_EMAIL:-noreply@yopmail.com}
+      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${VOLUME_PATH}letsencrypt:/letsencrypt
+    labels:
+      - traefik.http.routers.https-redirect.entrypoints=http
+      - traefik.http.routers.https-redirect.rule=HostRegexp(`{any:.*}`)
+      - traefik.http.routers.https-redirect.middlewares=https-redirect
+      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+
+volumes:
+  letsencrypt:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

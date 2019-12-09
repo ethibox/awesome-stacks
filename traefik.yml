@@ -1,26 +1,23 @@
-version: "3.7"
+version: '3.7'
 
 services:
   traefik:
-    image: traefik:1.7
+    image: traefik:${VERSION:-v2.0.6}
+    command:
+      # - --log.level=DEBUG
+      - --providers.docker
+      - --providers.docker.network=traefik-net
+      - --providers.docker.exposedByDefault=false
+      - --entrypoints.http.address=:80
     ports:
-      - target: 80
-        published: 80
-        protocol: tcp
-        mode: host
-      - target: 443
-        published: 443
-        protocol: tcp
-        mode: host
+      - "80:80"
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/acme.json:/acme.json
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./configs/traefik.toml:/traefik.toml
-    deploy:
-      placement:
-        constraints: [node.role==manager]
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  letsencrypt:
 
 networks:
   default:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
