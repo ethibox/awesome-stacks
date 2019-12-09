@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   traefik:
-    image: traefik:1.7
+    image: traefik:${VERSION:-1.7}
     ports:
       - 80:80
       - 443:443
