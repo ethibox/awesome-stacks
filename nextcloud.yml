@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   nextcloud:
-    image: nextcloud:17.0.1
+    image: nextcloud:${VERSION:-17.0.1}
     environment:
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
@@ -17,7 +17,7 @@ services:
       labels:
         traefik.enable: "true"
         traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:-nexcloud.localhost}
+        traefik.frontend.rule: Host:${DOMAIN:-nextcloud.localhost}
         traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
         traefik.frontend.redirect.permanent: 'true'
         traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
