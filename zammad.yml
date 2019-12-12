@@ -2,100 +2,86 @@
 # echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
 # chmod g+rwx esdatadir && chgrp 1000 esdatadir
 
-version: '3'
+version: '3.7'
 
 services:
   zammad-elasticsearch:
-    image: zammad/zammad-docker-compose:zammad-elasticsearch-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-3.2.0-6}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/elasticsearch:/usr/share/elasticsearch/data
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
     networks:
       - internal
 
   zammad-init:
-    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
     command: ["zammad-init"]
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
+      - ${VOLUME_PATH}zammad:/opt/zammad
     deploy:
       restart_policy:
         condition: on-failure
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
   zammad-memcached:
-    image: zammad/zammad-docker-compose:zammad-memcached-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-memcached-${VERSION:-3.2.0-6}
     command: ["zammad-memcached"]
     networks:
       - internal
 
   zammad-nginx:
-    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
     command: ["zammad-nginx"]
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
+      - ${VOLUME_PATH}zammad:/opt/zammad
     deploy:
       labels:
         traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.frontend.rule: Host:${DOMAIN:-zammad.localhost}
         traefik.enable: "true"
         traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
 
   zammad-postgresql:
-    image: zammad/zammad-docker-compose:zammad-postgresql-2.7.0-14
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+    image: zammad/zammad-docker-compose:zammad-postgresql-${VERSION:-3.2.0-6}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgresql:/var/lib/postgresql/data
+      - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
     networks:
       - internal
 
   zammad-railsserver:
-    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
     command: ["zammad-railsserver"]
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
+      - ${VOLUME_PATH}zammad:/opt/zammad
     networks:
       - internal
 
   zammad-scheduler:
-    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
     command: ["zammad-scheduler"]
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
+      - ${VOLUME_PATH}zammad:/opt/zammad
     networks:
       - internal
 
   zammad-websocket:
-    image: zammad/zammad-docker-compose:zammad-2.7.0-14
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
     command: ["zammad-websocket"]
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/zammad:/opt/zammad
+      - ${VOLUME_PATH}zammad:/opt/zammad
     networks:
       - internal
+
+volumes:
+  zammad:
+  elasticsearch:
+  postgresql:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
