@@ -1,28 +1,28 @@
-version: '3'
+version: '3.7'
 
 services:
     gogs:
-      image: gogs/gogs:0.11.86
+      image: gogs/gogs:${VERSION-0.11.91}
       user: root
       ports:
         - ${SSH_PORT:-10022}:22
       volumes:
-        - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/data
+        - ${VOLUME_PATH}data:/data
       deploy:
         labels:
-          traefik.port: 3000
-          traefik.frontend.rule: Host:${DOMAIN:?err}
-          traefik.enable: "true"
-          traefik.docker.network: traefik-net
+          - traefik.port=3000
+          - traefik.enable=true
+          - traefik.frontend.rule=Host:${DOMAIN:-gogs.localhost}
         resources:
           limits:
             memory: 100M
           reservations:
             memory: 100M
-        placement:
-          constraints: [node.labels.reserved != true]
+
+volumes:
+  data:
 
 networks:
   default:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
