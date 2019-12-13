@@ -23,10 +23,9 @@ services:
       - ${VOLUME_PATH}config:/config
     deploy:
       labels:
-        traefik.port: 9000
-        traefik.frontend.rule: Host:${DOMAIN:-peertube.localhost}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=9000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-peertube.localhost}
     networks:
       - internal
       - traefik
