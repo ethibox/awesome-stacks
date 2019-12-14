@@ -1,56 +1,53 @@
-# mkdir config data db plugins && chown -R 2000:2000 config plugins data
-# Add SMTP configuration on Notifications -> Email
-# Change language on General -> Language (only first two fields)
-
 version: "3.7"
 
 services:
-  db:
-    image: postgres:9.4-alpine
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=mattermost
-      - POSTGRES_PASSWORD=myp@ssw0rd
-      - POSTGRES_DB=mattermost
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
-    networks:
-      - internal
-
   app:
-    image: mattermost/mattermost-prod-app:5.9.0
+    image: mattermost/mattermost-prod-app:${VERSION:-5.17.1}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/mattermost/data
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config:/mattermost/config
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/plugins:/mattermost/plugins
+      - ${VOLUME_PATH}data:/mattermost/data
     environment:
       - MM_USERNAME=mattermost
       - MM_PASSWORD=myp@ssw0rd
       - MM_DBNAME=mattermost
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - MM_SERVICESETTINGS_SITEURL=${SCHEME:-http}://${DOMAIN:-mattermost.localhost}
+      - MM_LOCALIZATIONSETTINGS_DEFAULTCLIENTLOCALE=${LOCALE:-fr}
+      - MM_LOCALIZATIONSETTINGS_AVAILABLELOCALES=${LOCALE:-fr}
+      - MM_EMAILSETTINGS_ENABLEPREVIEWMODEBANNER=FALSE
+      - MM_EMAILSETTINGS_SMTPUSERNAME=${SMTP_USERNAME}
+      - MM_EMAILSETTINGS_SMTPPASSWORD=${SMTP_PASSWORD}
+      - MM_EMAILSETTINGS_SMTPSERVER=${SMTP_SERVER}
+      - MM_EMAILSETTINGS_SMTPPORT=${SMTP_PORT}
     networks:
       - internal
 
   web:
-    image: mattermost/mattermost-prod-web:5.9.0
+    image: mattermost/mattermost-prod-web:${VERSION-5.17.1}
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-mattermost.localhost}
     networks:
       - internal
       - traefik
 
+  db:
+    image: postgres:9.6-alpine
+    volumes:
+      - ${VOLUME_PATH}db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=mattermost
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=mattermost
+    networks:
+      - internal
+
+volumes:
+  data:
+  db:
+
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
