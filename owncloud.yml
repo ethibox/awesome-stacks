@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   owncloud:
-    image: owncloud/server:10.3.2
+    image: owncloud/server:${VERSION:-10.3.2}
     environment:
       - OWNCLOUD_DOMAIN=${DOMAIN:-owncloud.localhost}
       - OWNCLOUD_DB_TYPE=mysql
