@@ -1,56 +1,40 @@
 version: "3.7"
 
 services:
-  mysql:
-    image: mysql:5.7
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
+  nginx:
+    image: ethibox/nginx-proxy
+    command: /bin/sh -c "envsubst '$$NGINX_ROOT_PATH' < /etc/nginx/nginx.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     environment:
-      MYSQL_ROOT_PASSWORD: myp@ssw0rd
-      MYSQL_DATABASE: ninja
-      MYSQL_USER: ninja
-      MYSQL_PASSWORD: myp@ssw0rd
+      - NGINX_ROOT_PATH=/var/www/app/public
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/app/public
     deploy:
-      resources:
-        limits:
-          memory: 200M
-        reservations:
-          memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
+      labels:
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-invoiceninja.localhost}
     networks:
       - internal
-
-  # adminer:
-    # image: adminer:4.7.0
-    # deploy:
-      # labels:
-        # traefik.port: 8080
-        # traefik.frontend.rule: Host:adminer.${DOMAIN:?err}
-        # traefik.enable: "true"
-        # traefik.docker.network: traefik-net
-        # traefik.frontend.auth.basic: ${BASIC_AUTH:?err}
-    # networks:
-      # - internal
-      # - traefik
+      - traefik
 
   app:
-    image: ston3o/invoiceninja:4.5.11
+    image: invoiceninja/invoiceninja:${VERSION:-alpine-4.5.17}
+    command: /bin/sh -c "chown -R www-data:www-data /var/www/app/ && php-fpm"
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/uploads:/var/www/app/public/logo
+      - ${VOLUME_PATH}data:/var/www/app/public
     environment:
       - APP_LOCALE=fr
-      - APP_ENV=production
+      - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_URL=${SCHEME:-http}://${DOMAIN:?err}
-      - REQUIRE_HTTPS=true
-      - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
+      - APP_URL=${SCHEME:-http}://${DOMAIN:-invoiceninja.localhost}
+      - REQUIRE_HTTPS=${HTTPS:-false}
+      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_CIPHER=AES-256-CBC
       - LOCK_SENT_INVOICES=${LOCK_SENT_INVOICES:-false}
-      - DB_USERNAME=ninja
+      - DB_USERNAME=invoiceninja
       - DB_PASSWORD=myp@ssw0rd
-      - DB_HOST=mysql
-      - DB_DATABASE=ninja
+      - DB_HOST=mariadb
+      - DB_DATABASE=invoiceninja
       - PRECONFIGURED_INSTALL=true
       - MAIL_HOST=${MAIL_HOST:-mail.service.host}
       - MAIL_USERNAME=${MAIL_USERNAME:-username}
@@ -61,24 +45,32 @@ services:
       - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-user@mail.com}
     deploy:
-      labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
-      - traefik
+
+  mariadb:
+    image: mariadb:10.3.14
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=invoiceninja
+      - MYSQL_USER=invoiceninja
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  data:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
