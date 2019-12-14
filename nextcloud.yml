@@ -1,8 +1,25 @@
 version: '3.7'
 
 services:
-  nextcloud:
-    image: nextcloud:${VERSION:-17.0.1}
+  nginx:
+    image: ethibox/nginx-proxy:latest
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:-nextcloud.localhost}
+        traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
+        traefik.frontend.redirect.permanent: "true"
+        traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
+        traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: nextcloud:${VERSION:-17.0.1-fpm-alpine}
     environment:
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
@@ -13,20 +30,8 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:-nextcloud.localhost}
-        traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
-        traefik.frontend.redirect.permanent: 'true'
-        traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
-        traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
-      - traefik
 
   mariadb:
     image: mariadb:10.3.12
@@ -37,9 +42,6 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
