@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mautic:
-    image: ethibox/mautic:2.15.3
+    image: ethibox/mautic:${VERSION:-2.15.3}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html
     environment:
