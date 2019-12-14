@@ -1,8 +1,21 @@
 version: '3.7'
 
 services:
+  nginx:
+    image: ethibox/nginx-proxy:latest
+    volumes:
+      - ${VOLUME_PATH}wordpress:/var/www/html:cached
+    deploy:
+      labels:
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-wordpress.localhost}
+    networks:
+      - internal
+      - traefik
+
   app:
-    image: ethibox/wordpress:${VERSION:-5.3.0}
+    image: wordpress:${VERSION:-5.3.1-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
@@ -10,17 +23,12 @@ services:
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=myp@ssw0rd
     deploy:
-      labels:
-        - traefik.port=80
-        - traefik.enable=true
-        - traefik.frontend.rule=Host:${DOMAIN:-wordpress.localhost}
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
     networks:
-      - traefik
       - internal
 
   mariadb:
