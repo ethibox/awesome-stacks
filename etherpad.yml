@@ -15,14 +15,11 @@ services:
         - traefik.enable=true
         - traefik.port=9001
         - traefik.frontend.rule=Host:${DOMAIN:-etherpad.localhost}
-        - traefik.docker.network=traefik-net
       resources:
         limits:
           memory: 100M
         reservations:
           memory: 100M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
