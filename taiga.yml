@@ -1,6 +1,3 @@
-# mkdir -p back cert db front media proxy
-# chmod 755 media front
-# python3 manage.py loaddata initial_user
 # Go to /admin/ to change default password admin:123123
 
 version: '3.7'
@@ -9,102 +6,82 @@ services:
   back:
     image: dockertaiga/back:latest
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/media:/taiga-media
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/back:/taiga-conf
+      - ${VOLUME_PATH}media:/taiga-media
     environment:
-      TAIGA_HOST: ${DOMAIN:?err}
-      TAIGA_SECRET: ${TAIGA_SECRET:-secret}
-      TAIGA_SCHEME: ${SCHEME:-http}
-      DB_HOST: db
-      DB_NAME: taiga
-      DB_USER: postgres
-      DB_PASSWORD: password
-      RABBIT_HOST: rabbit
-      RABBIT_USER: taiga
-      RABBIT_PASSWORD: password
-      RABBIT_VHOST: taiga
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - TAIGA_HOST=${DOMAIN:-taiga.localhost}
+      - TAIGA_SECRET=${TAIGA_SECRET:-secret}
+      - TAIGA_SCHEME=${SCHEME:-http}
+      - DB_HOST=db
+      - DB_NAME=taiga
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - RABBIT_HOST=rabbit
+      - RABBIT_USER=taiga
+      - RABBIT_PASSWORD=password
+      - RABBIT_VHOST=taiga
     networks:
       - internal
 
   front:
     image: dockertaiga/front
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/front:/taiga-conf
     environment:
-      TAIGA_HOST: ${DOMAIN:?err}
-      TAIGA_SCHEME: ${SCHEME:-http}
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - TAIGA_HOST=${DOMAIN:-taiga.localhost}
+      - TAIGA_SCHEME=${SCHEME:-http}
     networks:
       - internal
 
   db:
     image: postgres:10-alpine
     environment:
-      POSTGRES_DB: taiga
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - POSTGRES_DB=taiga
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
+      - ${VOLUME_PATH}db:/var/lib/postgresql/data
     networks:
       - internal
 
   rabbit:
     image: dockertaiga/rabbit:latest
     environment:
-      RABBIT_USER: taiga
-      RABBIT_PASSWORD: password
-      RABBIT_VHOST: taiga
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - RABBIT_USER=taiga
+      - RABBIT_PASSWORD=password
+      - RABBIT_VHOST=taiga
     networks:
       - internal
 
   events:
     image: dockertaiga/events:latest
     environment:
-      RABBIT_HOST: rabbit
-      RABBIT_VHOST: taiga
-      RABBIT_USER: taiga
-      RABBIT_PASSWORD: password
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - RABBIT_HOST=rabbit
+      - RABBIT_VHOST=taiga
+      - RABBIT_USER=taiga
+      - RABBIT_PASSWORD=password
     networks:
       - internal
 
   proxy:
     image: dockertaiga/proxy:latest
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/cert:/taiga-cert
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/proxy:/taiga-conf
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-taiga.localhost}
     environment:
-      TAIGA_HOST: ${DOMAIN:?err}
-      TAIGA_BACK_HOST: back
-      TAIGA_FRONT_HOST: front
-      EVENTS_HOST: events
+      - TAIGA_HOST=${DOMAIN:-taiga.localhost}
+      - TAIGA_BACK_HOST=back
+      - TAIGA_FRONT_HOST=front
+      - EVENTS_HOST=events
     networks:
       - internal
       - traefik
 
+volumes:
+  media:
+  db:
+
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
