@@ -2,13 +2,12 @@ version: '3.7'
 
 services:
   metabase:
-    image: metabase/metabase:v0.32.5
+    image: metabase/metabase:${VERSION:-v0.33.7.1}
     deploy:
       labels:
-        traefik.port: 3000
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=3000
+        - traefik.frontend.rule=Host:${DOMAIN:-metabase.localhost}
+        - traefik.enable=true
       resources:
         limits:
           memory: 500M
@@ -21,31 +20,32 @@ services:
       - MB_DB_HOST=mariadb
       - MB_DB_DBNAME=metabase
       - MB_DB_PORT=3306
-      - MB_DB_USER=root
+      - MB_DB_USER=metabase
       - MB_DB_PASS=${DB_PASS:-myp@ssw0rd}
     networks:
       - internal
       - traefik
-      - metabase
 
   mariadb:
     image: mariadb:10.3.12
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASS:-myp@ssw0rd}
+      - MYSQL_USER=metabase
       - MYSQL_DATABASE=metabase
+      - MYSQL_PASSWORD=myp@ssw0rd
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     deploy:
       placement:
         constraints: [node.labels.reserved != true]
     networks:
       - internal
 
+volumes:
+  mariadb:
+
 networks:
   internal:
-  metabase:
-    external:
-      name: metabase-net
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
