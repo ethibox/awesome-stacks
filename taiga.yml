@@ -23,7 +23,7 @@ services:
       - internal
 
   front:
-    image: dockertaiga/front
+    image: dockertaiga/front:latest
     environment:
       - TAIGA_HOST=${DOMAIN:-taiga.localhost}
       - TAIGA_SCHEME=${SCHEME:-http}
