@@ -1,46 +1,34 @@
 # docker exec -it <container_web_name> sentry upgrade
 # docker run --rm sentry config generate-secret-key
 
-version: '3.4'
+version: '3.7'
 
 x-defaults: &defaults
-  image: sentry:9.1.0
+  image: sentry:9.1.2
   environment:
-    SENTRY_MEMCACHED_HOST: memcached
-    SENTRY_REDIS_HOST: redis
-    SENTRY_POSTGRES_HOST: postgres
-    SENTRY_EMAIL_HOST: smtp
-    SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
-  deploy:
-    placement:
-      constraints: [node.labels.reserved != true]
+    - SENTRY_MEMCACHED_HOST=memcached
+    - SENTRY_REDIS_HOST=redis
+    - SENTRY_POSTGRES_HOST=postgres
+    - SENTRY_EMAIL_HOST=smtp
+    - SENTRY_SECRET_KEY=${SENTRY_SECRET_KEY:-"b%msj2qkn#_2v+cochcvb^(*b-q@u@l80!k5ip-5n6rjaodnvu"}
   volumes:
-    - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/sentry:/var/lib/sentry/files
+    - ${VOLUME_PATH}sentry:/var/lib/sentry/files
 
 services:
   memcached:
     image: memcached:1.5-alpine
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
   redis:
     image: redis:3.2-alpine
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
   postgres:
     image: postgres:9.5
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgres:/var/lib/postgresql/data
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
       - internal
 
@@ -48,10 +36,9 @@ services:
     <<: *defaults
     deploy:
       labels:
-        traefik.port: 9000
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=9000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-sentry.localhost}
     networks:
       - traefik
       - internal
@@ -68,8 +55,12 @@ services:
     networks:
       - internal
 
+volumes:
+  postgres:
+  sentry:
+
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
