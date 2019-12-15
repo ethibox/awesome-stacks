@@ -1,32 +1,24 @@
 # php artisan migrate:fresh
 
-version: '3'
+version: '3.7'
 
 services:
   app:
     image: ethibox/pixelfed:latest
-    deploy:
-      labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
     environment:
       - APP_NAME=${APP_NAME:-"PixelFed Test"}
       - APP_ENV=${APP_ENV:-local}
-      - APP_KEY=${APP_KEY:-SomeRandomStringSomeRandomString}
+      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_URL=${SCHEME:-http}://${DOMAIN}
+      - APP_URL=${SCHEME:-http}://${DOMAIN:-pixelfed.localhost}
 
-      - ADMIN_DOMAIN=${DOMAIN}
-      - APP_DOMAIN=${DOMAIN}
+      - ADMIN_DOMAIN=${DOMAIN:-pixelfed.localhost}
+      - APP_DOMAIN=${DOMAIN:-pixelfed.localhost}
 
       - LOG_CHANNEL=stack
 
       - DB_CONNECTION=mysql
-      - DB_HOST=db
+      - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_DATABASE=pixelfed
       - DB_USERNAME=pixelfed
@@ -51,7 +43,7 @@ services:
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-noreply@ethibox.fr}
       - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
 
-      - SESSION_DOMAIN=${DOMAIN}
+      - SESSION_DOMAIN=${DOMAIN:-pixelfed.localhost}
       - SESSION_SECURE_COOKIE=true
       - API_BASE="/api/1/"
       - API_SEARCH="/api/search"
@@ -66,7 +58,7 @@ services:
 
       - MIX_PUSHER_APP_KEY=${PUSHER_APP_KEY}
       - MIX_PUSHER_APP_CLUSTER=${PUSHER_APP_CLUSTER}
-      - MIX_APP_URL=${SCHEME:-http}://${DOMAIN}
+      - MIX_APP_URL=${SCHEME:-http}://${DOMAIN:-pixelfed.localhost}
       - MIX_API_BASE="/api/1/"
       - MIX_API_SEARCH="/api/search"
 
@@ -75,46 +67,45 @@ services:
       - HORIZON_DARKMODE=true
       - HORIZON_EMBED=true
 
-      # Set these both "true" to enable federation.
-      # You might need to also run:
-      #   php artisan cache:clear
-      #   php artisan optimize:clear
-      #   php artisan optimize
       - ACTIVITY_PUB=${ACTIVITY_PUB:-false}
       - REMOTE_FOLLOW=${REMOTE_FOLLOW:-false}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/var/www/storage
+      - ${VOLUME_PATH}data:/var/www/storage
+    deploy:
+      labels:
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-pixelfed.localhost}
     networks:
       - traefik
       - internal
 
-  db:
-    image: mysql:5.7
+  mariadb:
+    image: mariadb:10.3.14
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=pixelfed
       - MYSQL_USER=pixelfed
       - MYSQL_PASSWORD=myp@ssw0rd
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
   redis:
     image: redis:4-alpine
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/redis:/data
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - ${VOLUME_PATH}redis:/data
     networks:
       - internal
+
+volumes:
+  data:
+  redis:
+  mariadb:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
