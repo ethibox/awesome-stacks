@@ -3,6 +3,7 @@ version: '3.7'
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
+    command: /bin/sh -c "cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
@@ -10,7 +11,7 @@ services:
         traefik.enable: "true"
         traefik.port: 80
         traefik.frontend.rule: Host:${DOMAIN:-nextcloud.localhost}
-        traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
+        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
         traefik.frontend.redirect.permanent: "true"
         traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
         traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
@@ -27,9 +28,10 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER:-admin}
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
-      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost} nginx
+      - NEXTCLOUD_UPDATE=1
     volumes:
-      - ${VOLUME_PATH}nextcloud:/var/www/html
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
       - internal
 
