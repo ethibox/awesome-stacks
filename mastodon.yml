@@ -26,7 +26,7 @@ x-defaults: &defaults
     - SMTP_PASSWORD=${SMTP_PASSWORD}
     - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
     - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
-    - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-notifications@example.com}
+    - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-noreply@ethibox.fr}
 
 services:
   db:

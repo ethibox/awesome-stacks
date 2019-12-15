@@ -10,7 +10,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
-      - ADMIN_EMAIL=${ADMIN_EMAIL:-user@example.com}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@ethibox.fr}
       - APP_PROTOCOL=${SCHEME:-http}://
       - APP_ADDRESS=${DOMAIN:?err}
       - SETTING_ADV_ANALYTICS=${SETTING_ADV_ANALYTICS:-false}

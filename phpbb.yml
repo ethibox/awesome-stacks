@@ -24,7 +24,7 @@ services:
       - PHPBB_DATABASE_PASSWORD=myp@ssw0rd
       - PHPBB_USERNAME=${PHPBB_USERNAME:-admin}
       - PHPBB_PASSWORD=${PHPBB_PASSWORD:-myp@ssw0rd}
-      - PHPBB_EMAIL=${EMAIL:-user@example.com}
+      - PHPBB_EMAIL=${EMAIL:-noreply@ethibox.fr}
     volumes:
       - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/phpbb:/bitnami
     deploy:

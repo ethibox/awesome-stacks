@@ -39,7 +39,7 @@ services:
       PS_ENABLE_SSL: ${PS_ENABLE_SSL:-1}
       PS_FOLDER_INSTALL: ${PS_FOLDER_INSTALL:-install-destroy}
       PS_FOLDER_ADMIN: ${PS_FOLDER_ADMIN:-admin-secure}
-      ADMIN_MAIL: ${ADMIN_MAIL:-demo@prestashop.com}
+      ADMIN_MAIL: ${ADMIN_MAIL:-noreply@ethibox.fr}
       ADMIN_PASSWD: ${ADMIN_PASSWD:-prestashop_demo}
     deploy:
       labels:

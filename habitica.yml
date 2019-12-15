@@ -5,7 +5,7 @@ services:
     image: habitica/habitica-auto:${VERSION:-4.81.1}
     command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
     environment:
-      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@habitica.com}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@ethibox.fr}
       - BASE_URL=${SCHEME:-http}://${DOMAIN:-habitica.localhost}
       - NODE_DB_URI=mongodb://mongo/habitrpg
     deploy:

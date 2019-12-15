@@ -8,7 +8,7 @@ services:
     environment:
       - APP_NAME=Framadate
       - DOMAIN=${DOMAIN:-framadate.localhost}
-      - ADMIN_MAIL=${ADMIN_MAIL:-example@mail.com}
+      - ADMIN_MAIL=${ADMIN_MAIL:-noreply@ethibox.fr}
       - MYSQL_USER=framadate
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_DB=framadate

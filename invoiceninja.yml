@@ -43,7 +43,7 @@ services:
       - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
       - MAIL_DRIVER=${MAIL_DRIVER:-smtp}
       - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
-      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-user@mail.com}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-noreply@ethibox.fr}
     deploy:
       resources:
         limits:

@@ -21,7 +21,7 @@ services:
       - --acme.acmeLogging=true
       - --acme.entryPoint=https
       - --acme.httpChallenge.entryPoint=http
-      - --acme.email=${ACME_EMAIL:-noreply@yopmail.com}
+      - --acme.email=${ACME_EMAIL:-noreply@ethibox.fr}
     volumes:
       - ${VOLUME_PATH}letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
