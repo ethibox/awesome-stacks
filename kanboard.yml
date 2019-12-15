@@ -1,24 +1,27 @@
-version: '3'
+version: '3.7'
 
 services:
   kanboard:
-    image: kanboard/kanboard:v1.2.7
+    image: kanboard/kanboard:${VERSION:-v1.2.12}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/var/www/app/data
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/plugins:/var/www/app/plugins
+      - ${VOLUME_PATH}data:/var/www/app/data
+      - ${VOLUME_PATH}plugins:/var/www/app/plugins
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-kanboard.localhost}
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
 
+volumes:
+  data:
+  plugins:
+
 networks:
   default:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
