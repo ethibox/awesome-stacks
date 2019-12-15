@@ -3,24 +3,12 @@
 version: '3.7'
 
 services:
-  mariadb:
-    image: mariadb:10.3.14
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
-      - MYSQL_USER=framadate
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
-      - MYSQL_DATABASE=framadate
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql:cached
-    networks:
-      - internal
-
   framadate:
-    image: ethibox/framadate
+    image: ethibox/framadate:latest
     environment:
       - APP_NAME=Framadate
-      - DOMAIN=${DOMAIN:?err}
-      - ADMIN_MAIL=${ADMIN_MAIL:-noreply@ethibox.fr}
+      - DOMAIN=${DOMAIN:-framadate.localhost}
+      - ADMIN_MAIL=${ADMIN_MAIL:-example@mail.com}
       - MYSQL_USER=framadate
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_DB=framadate
@@ -32,19 +20,34 @@ services:
       - FRAMADATE_DEVMODE=${FRAMADATE_DEVMODE:-0}
       - SMTP_SERVER=${SMTP_SERVER:-localhost:25}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/var/www/framadate
+      - ${VOLUME_PATH}data:/var/www/framadate
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-framadate.localhost}
     networks:
       - internal
       - traefik
 
+  mariadb:
+    image: mariadb:10.3.14
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=framadate
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=framadate
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
