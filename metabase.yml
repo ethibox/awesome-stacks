@@ -13,8 +13,6 @@ services:
           memory: 500M
         reservations:
           memory: 500M
-      placement:
-        constraints: [node.labels.reserved != true]
     environment:
       - MB_DB_TYPE=mysql
       - MB_DB_HOST=mariadb
@@ -35,9 +33,6 @@ services:
       - MYSQL_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
 
