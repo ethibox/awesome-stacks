@@ -1,0 +1,80 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: ethibox/nginx-proxy:local3
+    command: /bin/sh -c "cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:-nextcloud.localhost}
+        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
+        traefik.frontend.passHostHeader: "true"
+        traefik.frontend.redirect.permanent: "true"
+        traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
+        traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: nextcloud:${VERSION:-17.0.1-fpm-alpine}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        apk add --no-cache sudo
+        sudo -u www-data php occ --no-warnings app:install richdocuments
+        sudo -u www-data php occ --no-warnings app:enable richdocuments
+        sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
+        php-fpm
+    environment:
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost} nginx
+      - NEXTCLOUD_UPDATE=1
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.3.12
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+  collabora:
+    image: collabora/code:4.0.9.4
+    environment:
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+      - SLEEPFORDEBUGGER=0
+      - domain=${DOMAIN:-nextcloud.localhost}
+      - username=${NEXTCLOUD_ADMIN_USER:-admin}
+      - password=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  nextcloud:
+  mariadb:
+
+networks:
+  internal:
+  traefik:
+    external: true
+    name: traefik-net
