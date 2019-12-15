@@ -11,7 +11,7 @@ services:
         traefik.enable: "true"
         traefik.port: 80
         traefik.frontend.rule: Host:${DOMAIN:-nextcloud.localhost}
-        traefik.frontend.headers.customResponseHeaders: "Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
+        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||Strict-Transport-Security: max-age=31536000||Referrer-Policy: no-referrer"
         traefik.frontend.redirect.permanent: "true"
         traefik.frontend.redirect.regex: https://(.*)/.well-known/(card|cal)dav
         traefik.frontend.redirect.replacement: https://$$1/remote.php/dav/
@@ -30,7 +30,7 @@ services:
         sudo -u www-data php occ --no-warnings app:install onlyoffice
         sudo -u www-data php occ --no-warnings config:system:set trusted_domains 2 --value="nginx"
         sudo -u www-data php occ --no-warnings config:system:set onlyoffice DocumentServerUrl --value="/ds-vpath/"
-        sudo -u www-data php occ --no-warnings config:system:set onlyoffice DocumentServerInternalUrl --value="http://onlyoffice-document-server/"
+        sudo -u www-data php occ --no-warnings config:system:set onlyoffice DocumentServerInternalUrl --value="http://onlyoffice/"
         sudo -u www-data php occ --no-warnings config:system:set onlyoffice StorageUrl --value="http://nginx/"
         php-fpm
     environment:
@@ -59,7 +59,7 @@ services:
     networks:
       - internal
 
-  onlyoffice-document-server:
+  onlyoffice:
     image: onlyoffice/documentserver:5.4.2.46
     networks:
       - internal
