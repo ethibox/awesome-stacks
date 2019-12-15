@@ -1,16 +1,14 @@
-# mkdir fathom.db
-
 version: '3.7'
 
 services:
   web:
     image: usefathom/fathom:latest
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/fathom/fathom.db:/app/fathom.db
+      - ${VOLUME_PATH}fathom:/app
     deploy:
       labels:
         traefik.port: 8080
-        traefik.frontend.rule: Host:${DOMAIN:?err}
+        traefik.frontend.rule: Host:${DOMAIN:-fathom.localhost}
         traefik.enable: "true"
         traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||X-XSS-Protection: 1; mode=block||Strict-Transport-Security: max-age=31536000; includeSubDomains||Referrer-Policy: no-referrer||X-Content-Type-Options: nosniff"
       resources:
@@ -18,10 +16,11 @@ services:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
+
+volumes:
+  fathom:
 
 networks:
   default:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
