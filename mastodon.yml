@@ -14,9 +14,9 @@ x-defaults: &defaults
     - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
     - DB_HOST=db
     - DB_PORT=5432
-    - DB_NAME=postgres
-    - DB_USER=postgres
-    - DB_PASS=
+    - DB_NAME=mastodon
+    - DB_USER=mastodon
+    - DB_PASS=myp@ssw0rd
     - REDIS_HOST=redis
     - REDIS_PORT=6379
     - REDIS_PASSWORD=
@@ -33,6 +33,10 @@ services:
     image: postgres:9.6-alpine
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
+    environment:
+      - POSTGRES_DB=mastodon
+      - POSTGRES_USER=mastodon
+      - POSTGRES_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
