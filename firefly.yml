@@ -7,49 +7,48 @@ version: '3.7'
 
 services: 
   app: 
-    image: jc5x/firefly-iii:latest
+    image: jc5x/firefly-iii:${VERSION:-release-4.8.2}
     environment: 
-      - FF_DB_HOST=db
-      - FF_DB_NAME=firefly
-      - FF_DB_USER=firefly
-      - FF_DB_PASSWORD=firefly
-      - FF_APP_KEY=S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly
-      - FF_APP_ENV=local
-      - FF_DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_DATABASE=firefly
+      - DB_USERNAME=firefly
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_CONNECTION=pgsql
+      - DB_PORT=5432
+      - APP_KEY=S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly
+      - APP_ENV=${APP_ENV:-local}
       - TZ=Europe/Paris
-      - APP_LOG_LEVEL=debug
-      - APP_URL=https://${DOMAIN:?err}
+      - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
+      - APP_URL=${SCHEME:-http}://${DOMAIN:-firefly.localhost}
       - TRUSTED_PROXIES=**
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-firefly.localhost}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/upload:/var/www/firefly-iii/storage/upload
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/export:/var/www/firefly-iii/storage/export
+      - ${VOLUME_PATH}storage:/var/www/firefly-iii/storage/
     networks:
       - internal
       - traefik
 
-  db: 
+  postgres:
     image: postgres:10
     environment: 
-      - POSTGRES_PASSWORD=firefly
+      - POSTGRES_DB=firefly
       - POSTGRES_USER=firefly
+      - POSTGRES_PASSWORD=myp@ssw0rd
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/db:/var/lib/postgresql/data
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
       - internal
+
+volumes:
+  postgres:
+  storage:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
