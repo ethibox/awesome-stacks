@@ -4,24 +4,21 @@ services:
   web:
     image: huginn/huginn:latest
     environment:
-      DATABASE_HOST: mysql
-      HUGINN_DATABASE_NAME: huginn
-      HUGINN_DATABASE_USERNAME: huginn
-      HUGINN_DATABASE_PASSWORD: myp@ssw0rd
-      DO_NOT_SEED: "true"
+      - DATABASE_HOST=mysql
+      - HUGINN_DATABASE_NAME=huginn
+      - HUGINN_DATABASE_USERNAME=huginn
+      - HUGINN_DATABASE_PASSWORD=myp@ssw0rd
+      - DO_NOT_SEED=true
     deploy:
       labels:
-        traefik.port: 3000
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=3000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-huginn.localhost}
       resources:
         limits:
           memory: 500M
         reservations:
           memory: 500M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik
@@ -29,25 +26,26 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
+      - ${VOLUME_PATH}mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: myp@ssw0rd
-      MYSQL_DATABASE: huginn
-      MYSQL_USER: huginn
-      MYSQL_PASSWORD: myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=huginn
+      - MYSQL_USER=huginn
+      - MYSQL_PASSWORD=myp@ssw0rd
     deploy:
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
+
+volumes:
+  mysql:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
