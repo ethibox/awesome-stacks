@@ -2,33 +2,30 @@ version: "3.7"
 
 services:
   server:
-    image: habitica/habitica-auto:4.81.1
+    image: habitica/habitica-auto:${VERSION:-4.81.1}
     command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@habitica.com}
-      - BASE_URL=${SCHEME:-http}://${DOMAIN:?err}
+      - BASE_URL=${SCHEME:-http}://${DOMAIN:-habitica.localhost}
       - NODE_DB_URI=mongodb://mongo/habitrpg
     deploy:
       labels:
-        traefik.port: 3000
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=3000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-habitica.localhost}
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
 
   mongo:
-    image: mongo:3.4
+    image: mongo:4.0.3
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mongo:/data/db
+      - ${VOLUME_PATH}mongo:/data/db
     deploy:
       resources:
         limits:
@@ -38,8 +35,11 @@ services:
     networks:
       - internal
 
+volumes:
+  mongo:
+
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
