@@ -2,44 +2,44 @@ version: '3.7'
 
 services:
   web:
-    image: requarks/wiki:beta
+    image: requarks/wiki:${VERSION:-2.0.12}
     environment:
-      DB_TYPE: postgres
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: wikijs
-      DB_PASS: myp@ssw0rd
-      DB_NAME: wikijs
+      - DB_TYPE=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=wikijs
+      - DB_PASS=myp@ssw0rd
+      - DB_NAME=wikijs
     deploy:
       labels:
-        traefik.port: 3000
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=3000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-wikijs.localhost}
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik
 
-  db:
+  postgres:
     image: postgres:9-alpine
     environment:
-      POSTGRES_DB: wikijs
-      POSTGRES_PASSWORD: myp@ssw0rd
-      POSTGRES_USER: wikijs
+      - POSTGRES_DB=wikijs
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_USER=wikijs
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/postgres:/var/lib/postgresql/data
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
       - internal
+
+volumes:
+  postgres:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
