@@ -36,10 +36,9 @@ services:
       - ${VOLUME_PATH}zammad:/opt/zammad
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:-zammad.localhost}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-zammad.localhost}
     networks:
       - traefik
       - internal
