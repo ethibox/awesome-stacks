@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   polr:
-    image: ethibox/polr:2.2.0
+    image: ethibox/polr:${VERSION:-2.2.0}
     environment:
       - DB_HOST=mariadb
       - DB_DATABASE=${DB_DATABASE:-polr}
@@ -12,21 +12,18 @@ services:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@ethibox.fr}
       - APP_PROTOCOL=${SCHEME:-http}://
-      - APP_ADDRESS=${DOMAIN:?err}
+      - APP_ADDRESS=${DOMAIN:-polr.localhost}
       - SETTING_ADV_ANALYTICS=${SETTING_ADV_ANALYTICS:-false}
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-polr.localhost}
       resources:
         limits:
           memory: 100M
         reservations:
           memory: 100M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik
@@ -39,20 +36,21 @@ services:
       - MYSQL_USER=${DB_USERNAME:-polr}
       - MYSQL_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
     deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
       resources:
         limits:
           memory: 100M
         reservations:
           memory: 100M
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     networks:
       - internal
+
+volumes:
+  mariadb:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
