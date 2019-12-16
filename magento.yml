@@ -6,44 +6,45 @@
 version: '3.7'
 
 services:
-  mysql:
-    image: mysql:5.7
+  magento:
+    image: bitnami/magento:${VERSION:-2.3.3}
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - MAGENTO_DATABASE_USER=magento
+      - MAGENTO_DATABASE_PASSWORD=myp@ssw0rd
+      - MAGENTO_DATABASE_NAME=magento
+      - MAGENTO_HOST=${DOMAIN:-magento.localhost}
+      - MAGENTO_MODE=production
+    deploy:
+      labels:
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-magento.localhost}
+    volumes:
+      - ${VOLUME_PATH}magento:/bitnami
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.3.14
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_USER=magento
       - MYSQL_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=magento
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mysql:/var/lib/mysql
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     networks:
       - internal
 
+volumes:
+  mariadb:
   magento:
-    image: bitnami/magento:2.2.6
-    ports:
-      - 30001:80
-    environment:
-      - MARIADB_HOST=mysql
-      - MARIADB_PORT_NUMBER=3306
-      - MAGENTO_DATABASE_USER=magento
-      - MAGENTO_DATABASE_PASSWORD=myp@ssw0rd
-      - MAGENTO_DATABASE_NAME=magento
-      - MAGENTO_HOST=${DOMAIN:?err}
-      - MAGENTO_MODE=production
-    deploy:
-      labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/magento:/bitnami
-    networks:
-      - traefik
-      - internal
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
