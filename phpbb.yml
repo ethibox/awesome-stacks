@@ -1,21 +1,8 @@
-version: '3'
+version: '3.7'
 
 services:
-  mariadb:
-    image: mariadb:10.3.10
-    environment:
-      MYSQL_ROOT_PASSWORD: myp@ssw0rd
-      MYSQL_DATABASE: phpbb
-    volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
-    networks:
-      - internal
-
   phpbb:
-    image: bitnami/phpbb:3.2.5
+    image: bitnami/phpbb:${VERSION:-3.2.8}
     environment:
       - MARIADB_HOST=mariadb
       - MARIADB_PORT_NUMBER=3306
@@ -26,26 +13,39 @@ services:
       - PHPBB_PASSWORD=${PHPBB_PASSWORD:-myp@ssw0rd}
       - PHPBB_EMAIL=${EMAIL:-noreply@ethibox.fr}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/phpbb:/bitnami
+      - ${VOLUME_PATH}phpbb:/bitnami
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-phpbb.localhost}
       resources:
         limits:
           memory: 200M
         reservations:
           memory: 200M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - traefik
       - internal
 
+  mariadb:
+    image: mariadb:10.3.10
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=phpbb
+      - MYSQL_USER=phpbb
+      - MYSQL_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  phpbb:
+  mariadb:
+
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
