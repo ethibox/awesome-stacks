@@ -1,20 +1,17 @@
 version: '3.7'
 
 services:
-  web:
-    image: wekanteam/wekan:v2.65
+  wekan:
+    image: wekanteam/wekan:${VERSION:-v3.56}
     environment:
-      - MONGO_URL=mongodb://mongo
-      - VIRTUAL_HOST=${DOMAIN}
-      - ROOT_URL=${SCHEME:-http}://${DOMAIN:?err}
+      - MONGO_URL=mongodb://mongo:27017/wekan
+      - VIRTUAL_HOST=${DOMAIN:-wekan.localhost}
+      - ROOT_URL=${SCHEME:-http}://${DOMAIN:-wekan.localhost}
     deploy:
       labels:
-        traefik.port: 8080
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
+        - traefik.port=8080
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-wekan.localhost}
     networks:
       - traefik
       - internal
@@ -22,15 +19,15 @@ services:
   mongo:
     image: mongo:4.0.3
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mongo:/data/db
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+      - ${VOLUME_PATH}mongo:/data/db
     networks:
       - internal
+
+volumes:
+  mongo:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
