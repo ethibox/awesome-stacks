@@ -2,46 +2,36 @@ version: '3.7'
 
 services:
   web:
-    image: bitnami/mediawiki:1.32.0
+    image: mediawiki:${VERSION:-1.33.1}
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/data:/bitnami
-    environment:
-      MARIADB_HOST: mariadb
-      MARIADB_PORT_NUMBER: 3306
-      MEDIAWIKI_USERNAME: ${MEDIAWIKI_USERNAME:-admin}
-      MEDIAWIKI_PASSWORD: ${MEDIAWIKI_PASSWORD:-myp@ssw0rd}
-      MEDIAWIKI_EMAIL: ${MEDIAWIKI_EMAIL:-noreply@ethibox.fr}
-      MEDIAWIKI_WIKI_NAME: ${MEDIAWIKI_WIKI_NAME:-MediaWiki}
-      MEDIAWIKI_DATABASE_USER: root
-      MEDIAWIKI_DATABASE_NAME: my_wiki
-      MEDIAWIKI_DATABASE_PASSWORD: myp@ssw0rd
+      - ${VOLUME_PATH}data:/var/www/html
     deploy:
       labels:
-        traefik.port: 80
-        traefik.frontend.rule: Host:${DOMAIN:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-mediawiki.localhost}
     networks:
       - internal
       - traefik
 
   mariadb:
-    image: mariadb:10.3.10
-    environment:
-      MYSQL_ROOT_PASSWORD: myp@ssw0rd
-      MYSQL_DATABASE: my_wiki
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+    image: mariadb:10.3.14
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mariadb:/var/lib/mysql
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=mediawiki
+      - MYSQL_USER=mediawiki
+      - MYSQL_PASSWORD=myp@ssw0rd
     networks:
       - internal
+
+volumes:
+  data:
+  mariadb:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net
