@@ -3,7 +3,16 @@ version: '3.7'
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
-    command: /bin/sh -c "usermod -u 82 www-data && cp /etc/nginx/nginx-onlyoffice.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        usermod -u 82 www-data
+        cp /etc/nginx/nginx-onlyoffice.conf /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
@@ -28,10 +37,10 @@ services:
         sleep 10
         apk add --no-cache sudo
         sudo -u www-data php occ --no-warnings app:install onlyoffice
-        sudo -u www-data php occ --no-warnings config:system:set trusted_domains 2 --value="nginx"
         sudo -u www-data php occ --no-warnings config:system:set onlyoffice DocumentServerUrl --value="/ds-vpath/"
         sudo -u www-data php occ --no-warnings config:system:set onlyoffice DocumentServerInternalUrl --value="http://onlyoffice/"
         sudo -u www-data php occ --no-warnings config:system:set onlyoffice StorageUrl --value="http://nginx/"
+        sudo -u www-data php occ --no-warnings config:system:set trusted_proxies 0 --value="172.xx.0.x"
         php-fpm
     environment:
       - MYSQL_HOST=mariadb
@@ -40,7 +49,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER:-admin}
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
-      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost} nginx
       - NEXTCLOUD_UPDATE=1
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
