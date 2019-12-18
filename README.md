@@ -7,7 +7,15 @@ Stacks
 ## Usage
 
 ```bash
+# 1. Deploy traefik
+docker network create --driver=overlay traefik-net
+docker stack deploy -c traefik.yml traefik
+
+# 2. Deploy a stack
 docker stack deploy -c <stack.yml> <name>
+
+# Exemple
+DOMAIN=mydomain.com VERSION=5.3-fpm docker stack deploy -c wordpress.yml mywordpress
 ```
 
 ## Support
@@ -16,7 +24,7 @@ Support me with a monthly donation and help me continue my activities:
 
 [![liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/ston3o/donate)
 
-Buy me a beer (BTC): [bitcoin:112aZxX9Jiya4TM6Le4foxTq9V8U6aVGbG](112aZxX9Jiya4TM6Le4foxTq9V8U6aVGbG)
+Buy me a beer (BTC): [bitcoin:112aZxX9Jiya4TM6Le4foxTq9V8U6aVGbG](bitcoin:112aZxX9Jiya4TM6Le4foxTq9V8U6aVGbG)
 
 ## License
 
