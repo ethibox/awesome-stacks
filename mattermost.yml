@@ -1,3 +1,5 @@
+# chown 2000:2000 data plugins config
+
 version: "3.7"
 
 services:
@@ -5,6 +7,8 @@ services:
     image: mattermost/mattermost-prod-app:${VERSION:-5.17.1}
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
+      - ${VOLUME_PATH}config:/mattermost/config
+      - ${VOLUME_PATH}plugins:/mattermost/plugins
     environment:
       - MM_USERNAME=mattermost
       - MM_PASSWORD=myp@ssw0rd
@@ -44,6 +48,8 @@ services:
 
 volumes:
   data:
+  config:
+  plugins:
   db:
 
 networks:
