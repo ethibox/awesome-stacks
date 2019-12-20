@@ -4,8 +4,14 @@ services:
   traefik:
     image: traefik:${VERSION:-v1.7.20-alpine}
     ports:
-      - 80:80
-      - 443:443
+      - target: 80 # http://bit.ly/2SfiOhk
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
     command:
       # - --debug
       # - --loglevel=INFO
