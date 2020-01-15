@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  scrumblr:
+    image: timmit/scrumblr:latest
+    command: --redis redis:6379
+    deploy:
+      labels:
+        traefik.port: 8080
+        traefik.frontend.rule: Host:${DOMAIN:-scrumblr.localhost}
+        traefik.enable: "true"
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:latest
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  redis:
+
+networks:
+  internal:
+  traefik:
+    external: true
+    name: traefik-net
