@@ -1,0 +1,60 @@
+# enable_registration=true
+
+version: '3.7'
+
+services:
+  web:
+    image: vectorim/riot-web:${VERSION:-v1.5.7}
+    volumes:
+      - ${VOLUME_PATH}config:/etc/riot-web/
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.frontend.rule: Host:${DOMAIN:-riot.localhost}
+        traefik.enable: "true"
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
+    networks:
+      - traefik
+      - internal
+
+  synapse:
+    image: matrixdotorg/synapse:v1.8.0
+    volumes:
+      - ${VOLUME_PATH}synapse:/data
+    deploy:
+      labels:
+        traefik.port: 8008
+        traefik.frontend.rule: Host:${DOMAIN:-riot.localhost};PathPrefix:/_matrix
+        traefik.enable: "true"
+    networks:
+      - traefik
+      - internal
+
+  synapse-init:
+    image: matrixdotorg/synapse:v1.8.0
+    command: generate
+    volumes:
+      - ${VOLUME_PATH}synapse:/data
+    environment:
+      - SYNAPSE_SERVER_NAME=${DOMAIN:-riot.localhost}
+      - SYNAPSE_REPORT_STATS=no
+      - SYNAPSE_NO_TLS=yes
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+volumes:
+  config:
+  synapse:
+
+networks:
+  internal:
+  traefik:
+    external: true
+    name: traefik-net
