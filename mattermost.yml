@@ -4,7 +4,7 @@ version: "3.7"
 
 services:
   app:
-    image: mattermost/mattermost-prod-app:${VERSION:-5.17.1}
+    image: mattermost/mattermost-prod-app:${VERSION:-5.19.0}
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
       - ${VOLUME_PATH}config:/mattermost/config
@@ -25,7 +25,7 @@ services:
       - internal
 
   web:
-    image: mattermost/mattermost-prod-web:${VERSION-5.17.1}
+    image: mattermost/mattermost-prod-web:${VERSION-5.19.0}
     deploy:
       labels:
         - traefik.port=80
