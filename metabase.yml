@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   metabase:
-    image: metabase/metabase:${VERSION:-v0.33.7.1}
+    image: metabase/metabase:${VERSION:-v0.34}
     deploy:
       labels:
         - traefik.port=3000
