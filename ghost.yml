@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    image: ghost:${VERSION:-3.1.1-alpine}
+    image: ghost:${VERSION:-3.3.0-alpine}
     volumes:
       - ${VOLUME_PATH}ghost:/var/lib/ghost/content
     environment:
