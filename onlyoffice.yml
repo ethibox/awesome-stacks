@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  onlyoffice-community-server:
+    image: onlyoffice/communityserver:10.5.1.1028
+    environment:
+      - ONLYOFFICE_CORE_MACHINEKEY=${SECRET:-core_secret}
+      - DOCUMENT_SERVER_PORT_80_TCP_ADDR=onlyoffice-document-server
+      - MYSQL_SERVER_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_SERVER_DB_NAME=onlyoffice 
+      - MYSQL_SERVER_HOST=mariadb
+      - MYSQL_SERVER_USER=onlyoffice
+      - MYSQL_SERVER_PASS=myp@ssw0rd
+    deploy:
+      labels:
+        - traefik.port=80
+        - traefik.frontend.rule=Host:${DOMAIN:-onlyoffice.localhost}
+        - traefik.frontend.passHostHeader=true
+        - traefik.enable=true
+    volumes:
+      - ${VOLUME_PATH}community:/var/www/onlyoffice/Data
+      - ${VOLUME_PATH}data:/var/www/onlyoffice/DocumentServerData
+    networks:
+      - traefik
+      - internal
+
+  onlyoffice-document-server:
+    image: onlyoffice/documentserver:5.4.2.46
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.3.10
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=onlyoffice
+      - MYSQL_USER=onlyoffice
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  community:
+  data:
+
+networks:
+  internal:
+  traefik:
+    external: true
+    name: traefik-net
