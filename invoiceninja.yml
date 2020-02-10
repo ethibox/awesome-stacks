@@ -3,10 +3,20 @@ version: "3.7"
 services:
   nginx:
     image: ethibox/nginx-proxy
-    command: /bin/sh -c "envsubst '$$NGINX_ROOT_PATH' < /etc/nginx/nginx.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        envsubst '$$NGINX_ROOT_PATH' < /etc/nginx/nginx.template > /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        sed -i -e 's/fastcgi_pass backend;/fastcgi_pass backend;\n            fastcgi_param HTTPS '$$HTTPS';/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
     environment:
       - NGINX_ROOT_PATH=/var/www/app/public
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+      - HTTPS=${HTTPS:-0}
     volumes:
+      - ${VOLUME_PATH}storage:/var/www/app/storage
       - ${VOLUME_PATH}data:/var/www/app/public
     deploy:
       labels:
@@ -21,13 +31,14 @@ services:
     image: invoiceninja/invoiceninja:${VERSION:-alpine-4.5.17}
     command: /bin/sh -c "chown -R www-data:www-data /var/www/app/ && php-fpm"
     volumes:
+      - ${VOLUME_PATH}storage:/var/www/app/storage
       - ${VOLUME_PATH}data:/var/www/app/public
     environment:
       - APP_LOCALE=fr
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=${SCHEME:-http}://${DOMAIN:-invoiceninja.localhost}
-      - REQUIRE_HTTPS=${HTTPS:-false}
+      - REQUIRE_HTTPS=${REQUIRE_HTTPS:-false}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_CIPHER=AES-256-CBC
       - LOCK_SENT_INVOICES=${LOCK_SENT_INVOICES:-false}
@@ -68,6 +79,7 @@ services:
 volumes:
   mariadb:
   data:
+  storage:
 
 networks:
   internal:
