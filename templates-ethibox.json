@@ -289,12 +289,12 @@
             },
             {
                 "name": "REQUIRE_HTTPS",
-                "default": true,
+                "default": "true",
                 "preset": true
             },
             {
                 "name": "HTTPS",
-                "default": 1,
+                "default": "1",
                 "preset": true
             },
             {
