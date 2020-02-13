@@ -294,7 +294,7 @@
             },
             {
                 "name": "HTTPS",
-                "default": 0,
+                "default": 1,
                 "preset": true
             },
             {
