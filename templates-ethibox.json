@@ -288,6 +288,16 @@
                 "label": "Domain name"
             },
             {
+                "name": "REQUIRE_HTTPS",
+                "default": true,
+                "preset": true
+            },
+            {
+                "name": "HTTPS",
+                "default": 0,
+                "preset": true
+            },
+            {
                 "name": "VOLUME_PATH",
                 "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
                 "preset": true
