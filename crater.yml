@@ -25,7 +25,7 @@ services:
       - traefik
     
   app:
-    image: ethibox/crater:${VERSION:-2.1.0}
+    image: ethibox/crater:${VERSION:-3.0.0}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     networks:
