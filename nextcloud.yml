@@ -3,7 +3,13 @@ version: '3.7'
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
-    command: /bin/sh -c "cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    command: /bin/sh -c "apk add --no-cache curl && cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
@@ -20,7 +26,15 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-17.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-18.0.1-fpm-alpine}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        apk add --no-cache sudo
+        sudo -u www-data php occ --no-warnings config:system:set trusted_proxies 0 --value="172.xx.0.x"
+        php-fpm
     environment:
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
