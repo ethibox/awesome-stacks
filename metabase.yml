@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   metabase:
-    image: metabase/metabase:${VERSION:-v0.34}
+    image: metabase/metabase:${VERSION:-v0.34.2}
     deploy:
       labels:
         - traefik.port=3000
@@ -19,7 +19,7 @@ services:
       - MB_DB_DBNAME=metabase
       - MB_DB_PORT=3306
       - MB_DB_USER=metabase
-      - MB_DB_PASS=${DB_PASS:-myp@ssw0rd}
+      - MB_DB_PASS=myp@ssw0rd
     networks:
       - internal
       - traefik
@@ -27,7 +27,7 @@ services:
   mariadb:
     image: mariadb:10.3.12
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASS:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_USER=metabase
       - MYSQL_DATABASE=metabase
       - MYSQL_PASSWORD=myp@ssw0rd
