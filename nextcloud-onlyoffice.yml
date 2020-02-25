@@ -29,7 +29,7 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-17.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-18.0.1-fpm-alpine}
     command:
       - /bin/sh
       - -c
