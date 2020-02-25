@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   nginx:
-    image: ethibox/nginx-proxy:local3
+    image: ethibox/nginx-proxy
     command: /bin/sh -c "cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
@@ -21,7 +21,7 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-17.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-18.0.1-fpm-alpine}
     command:
       - /bin/sh
       - -c
