@@ -2,8 +2,16 @@ version: '3.7'
 
 services:
   nginx:
-    image: ethibox/nginx-proxy
-    command: /bin/sh -c "cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    image: ethibox/nginx-proxy:latest
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
