@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   matomo:
-    image: matomo:${VERSION:-3.13.0}
+    image: matomo:${VERSION:-3.13.1}
     environment:
       - MATOMO_DATABASE_USERNAME=matomo
       - MATOMO_DATABASE_DBNAME=matomo
