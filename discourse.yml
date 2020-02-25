@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  discourse:
+    image: bitnami/discourse:${VERSION:-2.3.10}
+    environment:
+      - POSTGRESQL_HOST=postgresql
+      - POSTGRESQL_ROOT_USER=postgres
+      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=discourse
+      - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=discourse
+      - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=myp@ssw0rd
+      - DISCOURSE_POSTGRESQL_NAME=discourse
+      - DISCOURSE_POSTGRESQL_USERNAME=discourse
+      - DISCOURSE_POSTGRESQL_PASSWORD=myp@ssw0rd
+      - DISCOURSE_HOSTNAME=${DOMAIN:-discourse.localhost}
+    volumes:
+        - data:/bitnami
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.port=3000
+        - traefik.frontend.rule=Host:${DOMAIN:-discourse.localhost}
+    networks:
+      - traefik
+      - internal
+
+  postgresql:
+    image: bitnami/postgresql:11
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - postgres:/bitnami/postgresql
+    networks:
+      - internal
+
+  redis:
+    image: redis:5.0
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  data:
+
+networks:
+  internal:
+  traefik:
+    external: true
+    name: traefik-net
