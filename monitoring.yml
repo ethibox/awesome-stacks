@@ -1,62 +1,66 @@
 version: '3.7'
 
-configs:
-  prometheus.yml:
-    name: prometheus.yml-${CONFIG_VERSION:-0}
-    file: ./configs/prometheus.yml
-  alert.rules.yml:
-    name: alert.rules-${CONFIG_VERSION:-0}
-    file: ./configs/alert.rules.yml
-  alertmanager.yml:
-    name: alertmanager.yml-${CONFIG_VERSION:-0}
-    file: ./configs/alertmanager.yml
-  blackbox.yml:
-    name: blackbox.yml-${CONFIG_VERSION:-0}
-    file: ./configs/blackbox.yml
-
 services:
+  init:
+    image: alpine:latest
+    command:
+      - /bin/sh
+      - -c
+      - |
+        wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/alertmanager.yml -O /mnt/alertmanager.yml
+        wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/alert.rules.yml -O /mnt/alert.rules.yml
+        wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/blackbox.yml -O /mnt/blackbox.yml
+        wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/prometheus.yml -O /mnt/prometheus.yml
+        sed -i -e 's/SMTP_HOST/'${SMTP_HOST:-mail.service.host:587}'/g' /mnt/alertmanager.yml
+        sed -i -e 's/SMTP_FROM/'${SMTP_FROM:-noreply@ethibox.fr}'/g' /mnt/alertmanager.yml
+        sed -i -e 's/SMTP_USERNAME/'${SMTP_USERNAME:-noreply@ethibox.fr}'/g' /mnt/alertmanager.yml
+        sed -i -e 's/SMTP_PASSWORD/'${SMTP_PASSWORD:-myp@ssw0rd}'/g' /mnt/alertmanager.yml
+        sed -i -e 's/SMTP_TO/'${SMTP_TO:-noreply@ethibox.fr}'/g' /mnt/alertmanager.yml
+        for DOMAIN in ${DOMAINS}; do sed -i -e 's/#/#\n        - '$$DOMAIN'/g' /mnt/prometheus.yml; done
+    volumes:
+      - ${VOLUME_PATH}config:/mnt
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   prometheus:
-    image: prom/prometheus:v2.8.0
-    user: root
-    configs:
-      - source: prometheus.yml
-        target: /etc/prometheus/prometheus.yml
-      - source: alert.rules.yml
-        target: /etc/prometheus/alert.rules.yml
+    image: prom/prometheus:v2.16.0
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.route-prefix=/prometheus'
+      - '--web.external-url=http://${DOMAIN:-monitoring.localhost}/prometheus'
+    volumes:
+      - ${VOLUME_PATH}config:/etc/prometheus/
     deploy:
       labels:
-        traefik.port: 9090
-        traefik.frontend.rule: Host:${DOMAIN_PROMETHEUS:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-        traefik.frontend.auth.basic.users: ${BASIC_AUTH:?err}
+        - traefik.port=9090
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-monitoring.localhost};PathPrefix:/prometheus
+        - traefik.frontend.auth.basic.users=admin:${HTPASSWD:?err}
       resources:
         limits:
           memory: 400M
         reservations:
           memory: 350M
-      placement:
-        constraints: [node.labels.reserved != true]
     networks:
       - internal
       - traefik
 
   grafana:
-    image: grafana/grafana:6.0.1
-    user: root
+    image: grafana/grafana:6.6.2
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/grafana:/var/lib/grafana
+      - ${VOLUME_PATH}grafana:/var/lib/grafana
     deploy:
       labels:
-        traefik.port: 3000
-        traefik.frontend.rule: Host:${DOMAIN_GRAFANA:?err}
-        traefik.enable: "true"
-        traefik.docker.network: traefik-net
-      placement:
-        constraints: [node.labels.reserved != true]
+        - traefik.port=3000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-monitoring.localhost}
     networks:
-      - traefik
       - internal
+      - traefik
 
   cadvisor:
     image: google/cadvisor:v0.33.0
@@ -105,30 +109,25 @@ services:
   alertmanager:
     image: prom/alertmanager:v0.16.1
     command: --config.file=/etc/alertmanager/alertmanager.yml
-    configs:
-      - source: alertmanager.yml
-        target: /etc/alertmanager/alertmanager.yml
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+    volumes:
+      - ${VOLUME_PATH}config:/etc/alertmanager/
     networks:
       - internal
 
   blackbox-exporter:
     image: prom/blackbox-exporter:v0.14.0
     command: --config.file=/config/blackbox.yml
-    deploy:
-      placement:
-        constraints: [node.labels.reserved != true]
+    volumes:
+      - ${VOLUME_PATH}config:/config
     networks:
       - internal
-      - traefik
-    configs:
-      - source: blackbox.yml
-        target: /config/blackbox.yml
+
+volumes:
+  config:
+  grafana:
 
 networks:
   internal:
   traefik:
-    external:
-      name: traefik-net
+    external: true
+    name: traefik-net

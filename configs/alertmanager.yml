@@ -1,8 +1,8 @@
 global:
-  smtp_smarthost: 'mail.ethibox.fr:587'
-  smtp_from: 'noreply@ethibox.fr'
-  smtp_auth_username: 'noreply@ethibox.fr'
-  smtp_auth_password: 'password'
+  smtp_smarthost: SMTP_HOST
+  smtp_from: SMTP_FROM
+  smtp_auth_username: SMTP_USERNAME
+  smtp_auth_password: SMTP_PASSWORD
 
 route:
   group_by: [alertname]
@@ -11,4 +11,4 @@ route:
 receivers:
 - name: email-me
   email_configs:
-  - to: alert@ethibox.fr
+  - to: SMTP_TO
