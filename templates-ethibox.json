@@ -690,6 +690,29 @@
             {
                 "name": "DOMAIN",
                 "label": "Domain name"
+            },
+            {
+                "name": "ADMIN_MAIL",
+                "label": "Admin email"
+            },
+            {
+                "name": "ADMIN_PASSWD",
+                "label": "Admin password"
+            },
+            {
+                "name": "HTTPS",
+                "default": "1",
+                "preset": true
+            },
+            {
+                "name": "PS_ENABLE_SSL",
+                "default": "1",
+                "preset": true
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
             }
         ]
     },
