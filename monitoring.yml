@@ -50,6 +50,7 @@ services:
 
   grafana:
     image: grafana/grafana:6.6.2
+    user: root
     volumes:
       - ${VOLUME_PATH}grafana:/var/lib/grafana
     deploy:
@@ -62,7 +63,7 @@ services:
       - traefik
 
   cadvisor:
-    image: google/cadvisor:v0.33.0
+    image: gcr.io/google-containers/cadvisor:v0.36.0
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
