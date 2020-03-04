@@ -37,8 +37,8 @@ scrape_configs:
     params:
       module: [http_2xx]
     static_configs:
-      - targets: #
-        - https://ethibox.fr
+      - targets: #targets
+        - https://ethibox.fr #domain
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

@@ -7,16 +7,15 @@ services:
       - /bin/sh
       - -c
       - |
+        wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/prometheus.yml -O /mnt/prometheus.yml
         wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/alertmanager.yml -O /mnt/alertmanager.yml
         wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/alert.rules.yml -O /mnt/alert.rules.yml
         wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/blackbox.yml -O /mnt/blackbox.yml
-        wget --no-cache -q https://raw.githubusercontent.com/ethibox/stacks/master/configs/prometheus.yml -O /mnt/prometheus.yml
         sed -i -e 's/SMTP_HOST/'${SMTP_HOST:-mail.service.host:587}'/g' /mnt/alertmanager.yml
         sed -i -e 's/SMTP_FROM/'${SMTP_FROM:-noreply@ethibox.fr}'/g' /mnt/alertmanager.yml
         sed -i -e 's/SMTP_USERNAME/'${SMTP_USERNAME:-noreply@ethibox.fr}'/g' /mnt/alertmanager.yml
         sed -i -e 's/SMTP_PASSWORD/'${SMTP_PASSWORD:-myp@ssw0rd}'/g' /mnt/alertmanager.yml
         sed -i -e 's/SMTP_TO/'${SMTP_TO:-noreply@ethibox.fr}'/g' /mnt/alertmanager.yml
-        for DOMAIN in ${DOMAINS}; do sed -i -e 's/#/#\n        - '$$DOMAIN'/g' /mnt/prometheus.yml; done
     volumes:
       - ${VOLUME_PATH}config:/mnt
     deploy:
