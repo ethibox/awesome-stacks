@@ -16,7 +16,7 @@ do
     sed -i -e '/#domain/d' "$PROMETHEUS_FILE"
 
     for DOMAIN in ${DOMAINS}; do
-        sed -i -e "s+#targets+#targets\n        - $DOMAIN #domain+g" "$PROMETHEUS_FILE";
+        sed -i -e "s+#targets+#targets\n        - https://$DOMAIN #domain+g" "$PROMETHEUS_FILE";
     done
 
     docker service update --force "$PROMETHEUS_SERVICE"
