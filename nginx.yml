@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  web:
+    image: ${IMAGE:-nginx:alpine}
+    deploy:
+      labels:
+        traefik.port: ${PORT:-80}
+        traefik.frontend.rule: Host:${DOMAIN:-nginx.localhost}
+        traefik.enable: "true"
+        traefik.frontend.headers.customResponseHeaders: "X-Frame-Options: SAMEORIGIN||X-XSS-Protection: 1; mode=block||Strict-Transport-Security: max-age=31536000; includeSubDomains||X-Content-Type-Options: nosniff"
+
+networks:
+  default:
+    external: true
+    name: traefik-net

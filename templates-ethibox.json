@@ -473,6 +473,34 @@
     },
     {
         "type": 2,
+        "title": "Nginx",
+        "description": "Nginx",
+        "categories": ["default"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/nginx_102035.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "nginx.yml"
+        },
+        "env": [
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "IMAGE",
+                "label": "Image",
+                "default": "nginx:alpine"
+            },
+            {
+                "name": "PORT",
+                "label": "Port",
+                "default": "80"
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Nextcloud",
         "description": "Nextcloud",
         "categories": ["cloud"],
