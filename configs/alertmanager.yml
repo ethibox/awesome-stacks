@@ -1,8 +1,8 @@
 global:
-  smtp_smarthost: SMTP_HOST
-  smtp_from: SMTP_FROM
-  smtp_auth_username: SMTP_USERNAME
-  smtp_auth_password: SMTP_PASSWORD
+  smtp_smarthost: 'SMTP_HOST'
+  smtp_from: 'SMTP_FROM'
+  smtp_auth_username: 'SMTP_USERNAME'
+  smtp_auth_password: 'SMTP_PASSWORD'
 
 route:
   group_by: [alertname]
