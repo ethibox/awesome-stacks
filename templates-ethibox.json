@@ -58,6 +58,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -71,10 +75,6 @@
                         "value": "https"
                     }
                 ]
-            },
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
             },
             {
                 "name": "VOLUME_PATH",
@@ -159,6 +159,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -172,10 +176,6 @@
                         "value": "https"
                     }
                 ]
-            },
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
             }
         ]
     },
@@ -279,13 +279,13 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "default": "https",
                 "preset": true
-            },
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
             },
             {
                 "name": "REQUIRE_HTTPS",
@@ -604,6 +604,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -617,10 +621,6 @@
                         "value": "https"
                     }
                 ]
-            },
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
             }
         ]
     },
@@ -655,6 +655,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -670,8 +674,9 @@
                 ]
             },
             {
-                "name": "DOMAIN",
-                "label": "Domain name"
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
             }
         ]
     },
@@ -728,10 +733,15 @@
             "stackfile": "rainloop.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
+            }
         ]
     },
     {
@@ -747,6 +757,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -760,7 +774,21 @@
                         "value": "https"
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "type": 2,
+        "title": "Searx",
+        "description": "Searx",
+        "categories": ["search"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/searx_130441.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "searx.yml"
+        },
+        "env": [
             {
                 "name": "DOMAIN",
                 "label": "Domain name"
@@ -882,6 +910,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -895,10 +927,6 @@
                         "value": "https"
                     }
                 ]
-            },
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
             }
         ]
     },
