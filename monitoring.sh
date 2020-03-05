@@ -9,11 +9,11 @@ PORTAINER_TOKEN="$1"
 PORTAINER_DOMAIN="$2"
 PROMETHEUS_FILE="$3"
 PROMETHEUS_SERVICE="$4"
-DOMAINS=$(curl -s "https://$PORTAINER_DOMAIN/api/stacks" -H "Authorization: Bearer $PORTAINER_TOKEN" | jq -r '.[].Env[0].value' | uniq)
-
 while :
 do
     sed -i -e '/#domain/d' "$PROMETHEUS_FILE"
+
+    DOMAINS=$(curl -s "https://$PORTAINER_DOMAIN/api/stacks" -H "Authorization: Bearer $PORTAINER_TOKEN" | jq -r '.[].Env[0].value' | uniq)
 
     for DOMAIN in ${DOMAINS}; do
         sed -i -e "s+#targets+#targets\n        - https://$DOMAIN #domain+g" "$PROMETHEUS_FILE";
