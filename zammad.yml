@@ -1,12 +1,14 @@
 # sudo sysctl -w vm.max_map_count=262144
 # echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
-# chmod g+rwx esdatadir && chgrp 1000 esdatadir
+# chmod g+rwx elasticsearch && chgrp 1000 elasticsearch
 
 version: '3.7'
 
 services:
   zammad-elasticsearch:
     image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-3.3.0-11}
+    environment:
+      - discovery.type=single-node
     volumes:
       - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
     networks:
@@ -17,6 +19,9 @@ services:
     command: ["zammad-init"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
+    environment:
+      - POSTGRESQL_PASS=myp@ssw0rd
+      - POSTGRESQL_DB=zammad
     deploy:
       restart_policy:
         condition: on-failure
@@ -47,6 +52,10 @@ services:
     image: zammad/zammad-docker-compose:zammad-postgresql-${VERSION:-3.3.0-11}
     volumes:
       - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=zammad
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=zammad
     networks:
       - internal
 
@@ -55,6 +64,12 @@ services:
     command: ["zammad-railsserver"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
+    networks:
+      - internal
+
+  zammad-memcached:
+    image: memcached:1.5.22-alpine
+    command: memcached -m 256M
     networks:
       - internal
 
