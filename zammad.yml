@@ -6,14 +6,14 @@ version: '3.7'
 
 services:
   zammad-elasticsearch:
-    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-3.3.0-11}
     volumes:
       - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
     networks:
       - internal
 
   zammad-init:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.3.0-11}
     command: ["zammad-init"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -24,13 +24,13 @@ services:
       - internal
 
   zammad-memcached:
-    image: zammad/zammad-docker-compose:zammad-memcached-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-memcached-${VERSION:-3.3.0-11}
     command: ["zammad-memcached"]
     networks:
       - internal
 
   zammad-nginx:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.3.0-11}
     command: ["zammad-nginx"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -44,14 +44,14 @@ services:
       - internal
 
   zammad-postgresql:
-    image: zammad/zammad-docker-compose:zammad-postgresql-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-postgresql-${VERSION:-3.3.0-11}
     volumes:
       - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
     networks:
       - internal
 
   zammad-railsserver:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.3.0-11}
     command: ["zammad-railsserver"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -59,7 +59,7 @@ services:
       - internal
 
   zammad-scheduler:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.3.0-11}
     command: ["zammad-scheduler"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -67,7 +67,7 @@ services:
       - internal
 
   zammad-websocket:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.2.0-6}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-3.3.0-11}
     command: ["zammad-websocket"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
