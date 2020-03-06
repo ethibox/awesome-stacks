@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   traefik:
-    image: traefik:${VERSION:-v1.7.20-alpine}
+    image: traefik:${VERSION:-v1.7.21-alpine}
     ports:
       - target: 80 # http://bit.ly/2SfiOhk
         published: 80
