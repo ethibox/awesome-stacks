@@ -3,7 +3,15 @@ version: '3.7'
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
-    command: /bin/sh -c "cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
@@ -61,6 +69,8 @@ volumes:
 
 networks:
   internal:
+    driver: overlay
+    attachable: true
   traefik:
     external: true
     name: traefik-net
