@@ -20,8 +20,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
       mode: ${MODE:-replicated}
-      # placement:
-        # constraints: [node.role==manager]
+      placement:
+        constraints: [node.role==manager]
 
 networks:
   default:
