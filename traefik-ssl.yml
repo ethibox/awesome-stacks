@@ -32,6 +32,7 @@ services:
       - ${VOLUME_PATH}letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
+      mode: ${MODE:-replicated}
       placement:
         constraints: [node.role==manager]
 
