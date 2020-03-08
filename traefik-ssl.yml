@@ -21,25 +21,44 @@ services:
       - --docker.swarmmode=true
       - --docker.exposedbydefault=false
       - --docker.network=traefik-net
+      - --consul
+      - --consul.endpoint=consul:8500
+      - --consul.prefix=traefik
       - --acme
       - --acme.onHostRule=true
-      - --acme.storage=/letsencrypt/acme.json
+      - --acme.storage=traefik/acme/account
       - --acme.acmeLogging=true
       - --acme.entryPoint=https
       - --acme.httpChallenge.entryPoint=http
       - --acme.email=${ACME_EMAIL:-noreply@ethibox.fr}
     volumes:
-      - ${VOLUME_PATH}letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
       mode: ${MODE:-replicated}
       placement:
         constraints: [node.role==manager]
+    networks:
+      - internal
+      - traefik
+
+  consul:
+    image: consul:1.7.1
+    command: agent -server -bootstrap-expect=1
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+      - CONSUL_CLIENT_INTERFACE=eth0
+    volumes:
+      - ${VOLUME_PATH}consul:/consul/data
+    networks:
+      - internal
 
 volumes:
-  letsencrypt:
+  consul:
 
 networks:
-  default:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
     external: true
     name: traefik-net
