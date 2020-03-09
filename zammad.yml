@@ -1,6 +1,6 @@
 # sudo sysctl -w vm.max_map_count=262144
 # echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
-# chmod g+rwx elasticsearch && chgrp 1000 elasticsearch
+# chown -R 1000:1000 elasticsearch
 
 version: '3.7'
 
@@ -29,8 +29,8 @@ services:
       - internal
 
   zammad-memcached:
-    image: zammad/zammad-docker-compose:zammad-memcached-${VERSION:-3.3.0-11}
-    command: ["zammad-memcached"]
+    image: memcached:1.5.22-alpine
+    command: memcached -m 256M
     networks:
       - internal
 
@@ -64,12 +64,6 @@ services:
     command: ["zammad-railsserver"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
-    networks:
-      - internal
-
-  zammad-memcached:
-    image: memcached:1.5.22-alpine
-    command: memcached -m 256M
     networks:
       - internal
 
