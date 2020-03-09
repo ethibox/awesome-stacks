@@ -64,6 +64,8 @@ services:
 
 networks:
   internal:
+    driver: overlay
+    attachable: true
   traefik:
     external:
       name: traefik-net

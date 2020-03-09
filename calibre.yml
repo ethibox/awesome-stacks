@@ -22,6 +22,9 @@ volumes:
   books:
 
 networks:
+  internal:
+    driver: overlay
+    attachable: true
   default:
     external: true
     name: traefik-net

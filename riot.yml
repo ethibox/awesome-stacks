@@ -55,6 +55,8 @@ volumes:
 
 networks:
   internal:
+    driver: overlay
+    attachable: true
   traefik:
     external: true
     name: traefik-net
