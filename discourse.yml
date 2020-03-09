@@ -17,7 +17,7 @@ services:
       - DISCOURSE_PASSWORD=${DISCOURSE_PASSWORD:-myp@ssw0rd}
       - DISCOURSE_EMAIL=${DISCOURSE_EMAIL:-admin@example.com}
     volumes:
-        - data:/bitnami
+        - ${VOLUME_PATH}data:/bitnami
     deploy:
       labels:
         - traefik.enable=true
@@ -32,7 +32,7 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - postgres:/bitnami/postgresql
+      - ${VOLUME_PATH}postgres:/bitnami/postgresql
     networks:
       - internal
 
