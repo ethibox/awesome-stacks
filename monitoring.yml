@@ -27,11 +27,13 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time 5d'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.route-prefix=/prometheus'
       - '--web.external-url=http://${DOMAIN:-monitoring.localhost}/prometheus'
     volumes:
+      - ${VOLUME_PATH}prometheus:/prometheus
       - ${VOLUME_PATH}config:/etc/prometheus/
     deploy:
       labels:
@@ -125,6 +127,7 @@ services:
 volumes:
   config:
   grafana:
+  prometheus:
 
 networks:
   internal:
