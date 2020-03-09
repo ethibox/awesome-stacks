@@ -50,6 +50,7 @@ services:
     volumes:
       - ${VOLUME_PATH}consul:/consul/data
     networks:
+      - traefik
       - internal
 
 volumes:
