@@ -97,7 +97,7 @@
         "env": [
             {
                 "name": "DOMAIN",
-                "label": "Protocol"
+                "label": "Domain name"
             },
             {
                 "name": "NEXTCLOUD_DOMAIN",
@@ -119,7 +119,7 @@
         "env": [
             {
                 "name": "DOMAIN",
-                "label": "Protocol"
+                "label": "Domain name"
             },
             {
                 "name": "VOLUME_PATH",
@@ -142,7 +142,15 @@
         "env": [
             {
                 "name": "DOMAIN",
-                "label": "Protocol"
+                "label": "Domain name"
+            },
+            {
+                "name": "DISCOURSE_EMAIL",
+                "label": "Admin email"
+            },
+            {
+                "name": "DISCOURSE_PASSWORD",
+                "label": "Admin password"
             },
             {
                 "name": "VOLUME_PATH",
