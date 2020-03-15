@@ -1,3 +1,5 @@
+# default account => admin@admin.admin:admin@admin.admin
+
 version: '3.7'
 
 services:
@@ -16,6 +18,12 @@ services:
       - START_WEBDAV=0
       - REPLY_BY_EMAIL=0
       - TRACIM_WEBSITE__BASE_URL=${SCHEME:-http}://${DOMAIN:-tracim.localhost}
+      - TRACIM_EMAIL__NOTIFICATION__ACTIVATED=${NOTIFICATION_ACTIVATED:-False}
+      - TRACIM_EMAIL__NOTIFICATION__SMTP__SERVER=${SMTP_SERVER}
+      - TRACIM_EMAIL__NOTIFICATION__SMTP__PORT=${SMTP_PORT}
+      - TRACIM_EMAIL__NOTIFICATION__SMTP__USER=${SMTP_USER}
+      - TRACIM_EMAIL__NOTIFICATION__SMTP__PASSWORD=${SMTP_PASSWORD}
+      - TRACIM_EMAIL__NOTIFICATION__FROM__EMAIL=${SMTP_FROM}
     deploy:
       labels:
         - traefik.port=80
