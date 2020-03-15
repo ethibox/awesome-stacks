@@ -992,6 +992,10 @@
         },
         "env": [
             {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
                 "name": "SCHEME",
                 "label": "Protocol",
                 "select": [
@@ -1005,10 +1009,6 @@
                         "value": "https"
                     }
                 ]
-            },
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
             },
             {
                 "name": "VOLUME_PATH",
