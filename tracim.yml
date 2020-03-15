@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  tracim:
+    image: algoo/tracim:${VERSION:-2.6.0}
+    volumes:
+      - ${VOLUME_PATH}data:/var/tracim
+      - ${VOLUME_PATH}config:/etc/tracim
+    environment:
+      - DATABASE_TYPE=postgresql
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=tracim
+      - DATABASE_PASSWORD=myp@ssw0rd
+      - DATABASE_NAME=tracim
+      - START_WEBDAV=0
+      - REPLY_BY_EMAIL=0
+      - TRACIM_WEBSITE__BASE_URL=${SCHEME:-http}://${DOMAIN:-tracim.localhost}
+    deploy:
+      labels:
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-tracim.localhost}
+    networks:
+      - traefik
+      - internal
+
+  postgres:
+    image: postgres:9.6-alpine
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=tracim
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=tracim
+    networks:
+      - internal
+
+volumes:
+  data:
+  config:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

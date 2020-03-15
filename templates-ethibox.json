@@ -981,6 +981,44 @@
     },
     {
         "type": 2,
+        "title": "Tracim",
+        "description": "Tracim",
+        "categories": ["editor"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/tracim_136914.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "tracim.yml"
+        },
+        "env": [
+            {
+                "name": "SCHEME",
+                "label": "Protocol",
+                "select": [
+                    {
+                        "text": "http",
+                        "value": "http",
+                        "default": true
+                    },
+                    {
+                        "text": "https",
+                        "value": "https"
+                    }
+                ]
+            },
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Wekan",
         "description": "Wekan",
         "categories": ["project-management"],
