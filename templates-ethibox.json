@@ -659,10 +659,25 @@
             "stackfile": "peertube.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "PORT",
+                "default": "443",
+                "preset": true
+            },
+            {
+                "name": "HTTPS",
+                "default": "true",
+                "preset": true
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
+            }
         ]
     },
     {
