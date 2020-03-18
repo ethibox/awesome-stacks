@@ -904,6 +904,11 @@
                         "value": "https"
                     }
                 ]
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
             }
         ]
     },
