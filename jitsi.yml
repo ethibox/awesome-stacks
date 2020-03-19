@@ -6,6 +6,7 @@ x-defaults: &defaults
     - TZ=Europe/Paris
     - PUBLIC_URL=${SCHEME:-http}://${DOMAIN:-jitsi.localhost}
     - ENABLE_LETSENCRYPT=0
+    - DOCKER_HOST_ADDRESS=${DOCKER_HOST_ADDRESS}
 
     - XMPP_DOMAIN=meet.jitsi
     - XMPP_SERVER=xmpp.meet.jitsi
@@ -23,7 +24,7 @@ x-defaults: &defaults
     - JVB_AUTH_PASSWORD=passw0rd
     - JVB_STUN_SERVERS=stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302 # TODO: Remove Google
     - JVB_PORT=${JVB_PORT:-10000}
-    - JVB_TCP_HARVESTER_DISABLED=true
+    - JVB_TCP_HARVESTER_DISABLED=${JVB_TCP_HARVESTER_DISABLED:-false}
     - JVB_TCP_PORT=${JVB_TCP_PORT:-4443}
 
     - JICOFO_HOST=${DOMAIN:-jitsi.localhost}
@@ -59,7 +60,7 @@ services:
       labels:
         - traefik.port=80
         - traefik.enable=true
-        - traefik.frontend.rule=Host:${DOMAIN:-jitsi.localhost}
+        - traefik.frontend.rule=Host:${DOMAIN:-jitsi.localhost},${OTHER_DOMAINS}
     networks:
       traefik:
       internal:
