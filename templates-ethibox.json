@@ -63,18 +63,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             },
             {
                 "name": "VOLUME_PATH",
@@ -171,10 +161,15 @@
             "stackfile": "firefly.yml"
         },
         "env": [
-          {
-            "name": "DOMAIN",
-            "label": "Domain name"
-          }
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
+            }
         ]
     },
     {
@@ -195,18 +190,13 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
             }
         ]
     },
@@ -259,23 +249,13 @@
         },
         "env": [
             {
-                "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
-            },
-            {
                 "name": "DOMAIN",
                 "label": "Domain name"
+            },
+            {
+                "name": "SCHEME",
+                "default": "https",
+                "preset": true
             }
         ]
     },
@@ -376,18 +356,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             },
             {
                 "name": "VOLUME_PATH",
@@ -618,6 +588,11 @@
                 "label": "Domain name"
             },
             {
+                "name": "SCHEME",
+                "default": "https",
+                "preset": true
+            },
+            {
                 "name": "VOLUME_PATH",
                 "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
                 "preset": true
@@ -754,18 +729,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             }
         ]
     },
@@ -805,18 +770,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             },
             {
                 "name": "VOLUME_PATH",
@@ -930,18 +885,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             },
             {
                 "name": "VOLUME_PATH",
@@ -1022,18 +967,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             },
             {
                 "name": "VOLUME_PATH",
@@ -1060,18 +995,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             },
             {
                 "name": "VOLUME_PATH",
@@ -1093,23 +1018,18 @@
         },
         "env": [
             {
-                "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
-            },
-            {
                 "name": "DOMAIN",
                 "label": "Domain name"
+            },
+            {
+                "name": "SCHEME",
+                "default": "https",
+                "preset": true
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
             }
         ]
     },
@@ -1131,18 +1051,8 @@
             },
             {
                 "name": "SCHEME",
-                "label": "Protocol",
-                "select": [
-                    {
-                        "text": "http",
-                        "value": "http",
-                        "default": true
-                    },
-                    {
-                        "text": "https",
-                        "value": "https"
-                    }
-                ]
+                "default": "https",
+                "preset": true
             }
         ]
     },
