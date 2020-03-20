@@ -28,7 +28,7 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-18.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-18.0.2-fpm-alpine}
     command:
       - /bin/sh
       - -c
@@ -36,8 +36,10 @@ services:
         sleep 10
         apk add --no-cache sudo
         sudo -u www-data php occ --no-warnings config:system:set trusted_proxies 0 --value="172.xx.0.x"
+        sudo -u www-data php occ --no-warnings config:system:set overwriteprotocol --value="$$SCHEME"
         php-fpm
     environment:
+      - SCHEME=${SCHEME:-http}
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
       - MYSQL_USER=${MYSQL_USER:-nextcloud}
