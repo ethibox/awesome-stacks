@@ -823,6 +823,29 @@
     },
     {
         "type": 2,
+        "title": "Registry",
+        "description": "Registry",
+        "categories": ["docker"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/docker_66240.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "registry.yml"
+        },
+        "env": [
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Riot.im",
         "description": "Riot.im",
         "categories": ["chat"],
