@@ -1,3 +1,5 @@
+# prosodyctl --config /config/prosody.cfg.lua register username meet.jitsi password
+
 version: '3.7'
 
 x-defaults: &defaults
@@ -7,6 +9,10 @@ x-defaults: &defaults
     - PUBLIC_URL=${SCHEME:-http}://${DOMAIN:-jitsi.localhost}
     - ENABLE_LETSENCRYPT=0
     - DOCKER_HOST_ADDRESS=${DOCKER_HOST_ADDRESS}
+
+    - ENABLE_AUTH=${ENABLE_AUTH:-1}
+    - AUTH_TYPE=${AUTH_TYPE:-internal}
+    - ENABLE_GUESTS=${ENABLE_GUESTS:-1}
 
     - XMPP_DOMAIN=meet.jitsi
     - XMPP_SERVER=xmpp.meet.jitsi
@@ -27,8 +33,6 @@ x-defaults: &defaults
     - JVB_TCP_HARVESTER_DISABLED=${JVB_TCP_HARVESTER_DISABLED:-false}
     - JVB_TCP_PORT=${JVB_TCP_PORT:-4443}
 
-    - JICOFO_HOST=${DOMAIN:-jitsi.localhost}
-    - JICOFO_HOSTNAME=${DOMAIN:-jitsi.localhost}
     - JICOFO_COMPONENT_SECRET=s3cr37
     - JICOFO_AUTH_USER=focus
     - JICOFO_AUTH_PASSWORD=passw0rd
