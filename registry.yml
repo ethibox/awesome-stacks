@@ -7,6 +7,8 @@ services:
       REGISTRY_AUTH_HTPASSWD_PATH: /run/secrets/registry-htpasswd
       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
       REGISTRY_AUTH: htpasswd
+    volumes:
+      - ${VOLUME_PATH}registry:/var/lib/registry
     deploy:
       labels:
         traefik.port: 5000
@@ -21,6 +23,9 @@ services:
 secrets:
   registry-htpasswd:
     external: true
+
+volumes:
+  registry:
 
 networks:
   default:
