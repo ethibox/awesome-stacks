@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  web:
+    image: ethibox/grav:latest
+    volumes:
+      - ${VOLUME_PATH}grav:/var/www/html
+    deploy:
+      labels:
+        - traefik.port=80
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-grav.localhost}
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
+
+volumes:
+  grav:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
