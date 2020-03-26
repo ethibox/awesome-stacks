@@ -2,11 +2,19 @@ version: '3.7'
 
 services:
   web:
-    image: ghost:${VERSION:-3.3.0-alpine}
+    image: ghost:${VERSION:-3.12.0-alpine}
     volumes:
       - ${VOLUME_PATH}ghost:/var/lib/ghost/content
     environment:
+      - NODE_ENV=${NODE_ENV:-production}
       - url=${SCHEME:-http}://${DOMAIN:-ghost.localhost}
+      - mail__transport=${MAIL_TRANSPORT:-SMTP}
+      - mail__from=${SMTP_FROM}
+      - mail__options__host=${SMTP_HOST}
+      - mail__options__name=${SMTP_HOST}
+      - mail__options__port=${SMTP_PORT:-587}
+      - mail__options__auth__user=${SMTP_USER}
+      - mail__options__auth__pass=${SMTP_PASSWORD}
     deploy:
       labels:
         traefik.port: 2368
