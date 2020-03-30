@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   kanboard:
-    image: kanboard/kanboard:${VERSION:-v1.2.12}
+    image: kanboard/kanboard:${VERSION:-v1.2.13}
     volumes:
       - ${VOLUME_PATH}data:/var/www/app/data
       - ${VOLUME_PATH}plugins:/var/www/app/plugins
