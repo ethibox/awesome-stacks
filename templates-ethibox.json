@@ -756,8 +756,28 @@
                 "label": "Domain name"
             },
             {
+                "name": "APP_ENV",
+                "default": "production",
+                "preset": true
+            },
+            {
+                "name": "ACTIVITY_PUB",
+                "default": "true",
+                "preset": true
+            },
+            {
+                "name": "REMOTE_FOLLOW",
+                "default": "true",
+                "preset": true
+            },
+            {
                 "name": "SCHEME",
                 "default": "https",
+                "preset": true
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
                 "preset": true
             }
         ]
