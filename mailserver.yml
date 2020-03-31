@@ -1,23 +1,23 @@
-version: '3'
+version: '3.7'
 
 services:
-  mail:
+  mailserver:
     image: tvial/docker-mailserver:latest
     ports:
       - target: 25
         published: 25
         protocol: tcp
         mode: host
-      - "143:143"
-      - "587:587"
-      - "993:993"
+      - 143:143
+      - 587:587
+      - 993:993
     volumes:
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/maildata:/var/mail
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/mailstate:/var/mail-state
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/config/:/tmp/docker-mailserver/
-      - ${VOLUME_PATH:-/mnt/data}/{{ index .Service.Labels "com.docker.stack.namespace" }}/certs/:/certs/
+      - ${VOLUME_PATH}maildata:/var/mail
+      - ${VOLUME_PATH}mailstate:/var/mail-state
+      - ${VOLUME_PATH}config:/tmp/docker-mailserver/
+      - ${VOLUME_PATH}certs:/certs/
     environment:
-      - OVERRIDE_HOSTNAME=mail.ethibox.fr
+      - OVERRIDE_HOSTNAME=${DOMAIN:-mail.domaine.fr}
       - ENABLE_SPAMASSASSIN=1
       - ENABLE_CLAMAV=0
       - ENABLE_FAIL2BAN=1
@@ -25,11 +25,25 @@ services:
       - ONE_DIR=1
       - DMS_DEBUG=0
       - SSL_TYPE=manual
-      - SSL_CERT_PATH=/certs/certs/mail.ethibox.fr.crt
-      - SSL_KEY_PATH=/certs/private/mail.ethibox.fr.key
+      - SSL_CERT_PATH=/certs/certs/${DOMAIN:-mail.domaine.fr}.crt
+      - SSL_KEY_PATH=/certs/private/${DOMAIN:-mail.domaine.fr}.key
+      - POSTFIX_MESSAGE_SIZE_LIMIT=${POSTFIX_MESSAGE_SIZE_LIMIT:-20480000}
+      # - SRS_SECRET=${SRS_SECRET}
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
     deploy:
+      mode: ${MODE:-replicated}
       placement:
         constraints: [node.role==manager]
+
+volumes:
+  config:
+  certs:
+  maildata:
+  mailstate:
+
+networks:
+  traefik:
+    external: true
+    name: traefik-net
