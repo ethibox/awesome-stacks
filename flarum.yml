@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  flarum:
+    image: mondedie/flarum:${VERSION:-stable-v0.1.0-beta.12}
+    environment:
+      - FORUM_URL=${SCHEME:-http}://${DOMAIN:-flarum.localhost}
+      - FLARUM_ADMIN_USER=${FLARUM_ADMIN_USER:-admin}
+      - FLARUM_ADMIN_PASS=${FLARUM_ADMIN_PASS:-myp@ssw0rd}
+      - FLARUM_ADMIN_MAIL=${FLARUM_ADMIN_MAIL:-noreply@ethibox.fr}
+      - FLARUM_TITLE=${FLARUM_TITLE:-Flarum}
+      - DB_HOST=mariadb
+      - DB_USER=flarum
+      - DB_NAME=flarum
+      - DB_PASS=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}assets:/flarum/app/public/assets
+      - ${VOLUME_PATH}extensions:/flarum/app/extensions
+    deploy:
+      labels:
+        - traefik.port=8888
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-flarum.localhost}
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.3.14
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=flarum
+      - MYSQL_USER=flarum
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  assets:
+  extensions:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
