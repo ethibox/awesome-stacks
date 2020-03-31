@@ -281,6 +281,14 @@
                 "preset": true
             },
             {
+                "name": "FLARUM_ADMIN_PASS",
+                "label": "Admin password"
+            },
+            {
+                "name": "FLARUM_ADMIN_MAIL",
+                "label": "Admin email"
+            },
+            {
                 "name": "VOLUME_PATH",
                 "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
                 "preset": true

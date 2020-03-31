@@ -3,6 +3,16 @@ version: '3.7'
 services:
   flarum:
     image: mondedie/flarum:${VERSION:-stable-v0.1.0-beta.12}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache mysql-client
+        while ! mysqladmin ping -h"$$DB_HOST" --silent; do
+            echo "Wait Mysql..."
+            sleep 1
+        done
+        /usr/local/bin/startup
     environment:
       - FORUM_URL=${SCHEME:-http}://${DOMAIN:-flarum.localhost}
       - FLARUM_ADMIN_USER=${FLARUM_ADMIN_USER:-admin}
