@@ -19,6 +19,11 @@ services:
       - APACHE_RUN_USER=#1000
       - FRAMADATE_DEVMODE=${FRAMADATE_DEVMODE:-0}
       - SMTP_SERVER=${SMTP_SERVER:-localhost:25}
+      - SMTP_AUTH=${SMTP_AUTH:-false} # Enable SMTP authentication
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SECURE=${SMTP_SECURE:-false} # Enable encryption (false, tls or ssl)
+      - SMTP_PORT=${SMTP_PORT:-25}
     volumes:
       - ${VOLUME_PATH}data:/var/www/framadate
     deploy:
