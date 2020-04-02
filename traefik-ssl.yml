@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   traefik:
-    image: traefik:${VERSION:-v1.7.21-alpine}
+    image: traefik:${VERSION:-v1.7.24-alpine}
     ports:
       - target: 80 # http://bit.ly/2SfiOhk
         published: 80
@@ -42,11 +42,12 @@ services:
       - traefik
 
   consul:
-    image: consul:1.7.1
+    image: consul:1.7.2
     command: agent -server -bootstrap-expect=1
     environment:
       - CONSUL_BIND_INTERFACE=eth0
       - CONSUL_CLIENT_INTERFACE=eth0
+      - CONSUL_KV_MAX_VALUE_SIZE=1024
     volumes:
       - ${VOLUME_PATH}consul:/consul/data
     networks:
