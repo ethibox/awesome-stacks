@@ -29,9 +29,9 @@ x-defaults: &defaults
     - JVB_AUTH_USER=jvb
     - JVB_AUTH_PASSWORD=passw0rd
     - JVB_STUN_SERVERS=stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302 # TODO: Remove Google
-    - JVB_PORT=${JVB_PORT:-10000}
-    - JVB_TCP_HARVESTER_DISABLED=${JVB_TCP_HARVESTER_DISABLED:-false}
+    - JVB_PORT=${JVB_UDP_PORT:-10000}
     - JVB_TCP_PORT=${JVB_TCP_PORT:-4443}
+    - JVB_TCP_HARVESTER_DISABLED=${JVB_TCP_HARVESTER_DISABLED:-false}
 
     - JICOFO_COMPONENT_SECRET=s3cr37
     - JICOFO_AUTH_USER=focus
@@ -93,8 +93,8 @@ services:
     <<: *defaults
     image: jitsi/jvb
     ports:
-      - target: ${JVB_PORT:-10000}
-        published: ${JVB_PORT:-10000}
+      - target: ${JVB_UDP_PORT:-10000}
+        published: ${JVB_UDP_PORT:-10000}
         protocol: udp
         mode: host
       - target: ${JVB_TCP_PORT:-4443}
@@ -103,6 +103,9 @@ services:
         mode: host
     volumes:
       - ${VOLUME_PATH}jvb:/config
+    deploy:
+      update_config:
+        order: stop-first
     networks:
       - internal
       - traefik
