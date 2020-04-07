@@ -27,28 +27,28 @@ x-defaults: &defaults
 
     - JVB_BREWERY_MUC=jvbbrewery
     - JVB_AUTH_USER=jvb
-    - JVB_AUTH_PASSWORD=passw0rd
+    - JVB_AUTH_PASSWORD=myp@ssw0rd
     - JVB_STUN_SERVERS=stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302 # TODO: Remove Google
     - JVB_PORT=${JVB_UDP_PORT:-10000}
     - JVB_TCP_PORT=${JVB_TCP_PORT:-4443}
     - JVB_TCP_HARVESTER_DISABLED=${JVB_TCP_HARVESTER_DISABLED:-false}
 
-    - JICOFO_COMPONENT_SECRET=s3cr37
+    - JICOFO_COMPONENT_SECRET=mys3cr37
     - JICOFO_AUTH_USER=focus
-    - JICOFO_AUTH_PASSWORD=passw0rd
+    - JICOFO_AUTH_PASSWORD=myp@ssw0rd
     - JIGASI_XMPP_USER=jigasi
-    - JIGASI_XMPP_PASSWORD=passw0rd
+    - JIGASI_XMPP_PASSWORD=myp@ssw0rd
     - JIGASI_BREWERY_MUC=jigasibrewery
     - JIGASI_PORT_MIN=20000
     - JIGASI_PORT_MAX=20050
 
     - XMPP_RECORDER_DOMAIN=recorder.meet.jitsi
     - JIBRI_RECORDER_USER=recorder
-    - JIBRI_RECORDER_PASSWORD=passw0rd
+    - JIBRI_RECORDER_PASSWORD=myp@ssw0rd
     - JIBRI_RECORDING_DIR=/config/recordings
     - JIBRI_FINALIZE_RECORDING_SCRIPT_PATH=/config/finalize.sh
     - JIBRI_XMPP_USER=jibri
-    - JIBRI_XMPP_PASSWORD=passw0rd
+    - JIBRI_XMPP_PASSWORD=myp@ssw0rd
     - JIBRI_BREWERY_MUC=jibribrewery
     - JIBRI_PENDING_TIMEOUT=90
     - JIBRI_STRIP_DOMAIN_JID=muc
