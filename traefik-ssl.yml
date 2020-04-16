@@ -38,11 +38,11 @@ services:
 
   consul:
     image: consul:1.7.2
-    command: agent -server -bootstrap-expect=1
+    command: agent -server -bootstrap-expect=1 -client=0.0.0.0
     environment:
       CONSUL_BIND_INTERFACE: eth0
       CONSUL_CLIENT_INTERFACE: eth0
-      CONSUL_LOCAL_CONFIG: '{ "limits": { "txn_max_req_len": 1024000, "kv_max_value_size": 1024000 } }' # To fix : StoreConfig error: Unexpected response code: 413 (Request body(526197 bytes) too large, max size: 524288 bytes
+      CONSUL_LOCAL_CONFIG: '{ "limits": { "txn_max_req_len": 2048000, "kv_max_value_size": 2048000 } }' # To fix : StoreConfig error: Unexpected response code: 413 (Request body(526197 bytes) too large, max size: 524288 bytes
     volumes:
       - ${VOLUME_PATH}consul:/consul/data
     networks:
