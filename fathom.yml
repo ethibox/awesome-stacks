@@ -1,9 +1,11 @@
+# ./fathom user add --email=<email> --password=<password>
+
 version: '3.7'
 
 services:
   init:
     image: usefathom/fathom:${VERSION:-latest}
-    command: cp -n /app/fathom /mnt/
+    command: cp -r /app/fathom /mnt/
     volumes:
       - ${VOLUME_PATH}fathom:/mnt
     deploy:
