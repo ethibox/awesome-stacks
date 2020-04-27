@@ -4,7 +4,7 @@ version: '3.7'
 
 services:
   web:
-    image: vectorim/riot-web:${VERSION:-v1.5.12}
+    image: vectorim/riot-web:${VERSION:-v1.5.15}
     volumes:
       - ${VOLUME_PATH}config:/etc/riot-web/
     deploy:
