@@ -1,27 +1,32 @@
 version: '3.7'
 
+x-defaults: &defaults
+  environment:
+    - POSTGRESQL_HOST=postgresql
+    - POSTGRESQL_ROOT_USER=postgres
+    - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=discourse
+    - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=discourse
+    - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=myp@ssw0rd
+    - DISCOURSE_POSTGRESQL_NAME=discourse
+    - DISCOURSE_POSTGRESQL_USERNAME=discourse
+    - DISCOURSE_POSTGRESQL_PASSWORD=myp@ssw0rd
+    - DISCOURSE_HOSTNAME=${DOMAIN:-discourse.localhost}
+    - DISCOURSE_USERNAME=${DISCOURSE_USERNAME:-admin}
+    - DISCOURSE_PASSWORD=${DISCOURSE_PASSWORD:-myp@ssw0rd}
+    - DISCOURSE_EMAIL=${DISCOURSE_EMAIL:-admin@example.com}
+    - DISCOURSE_HOST=discourse
+    - DISCOURSE_PORT=3000
+    - SMTP_HOST=${SMTP_HOST}
+    - SMTP_PORT=${SMTP_PORT}
+    - SMTP_USER=${SMTP_USER}
+    - SMTP_PASSWORD=${SMTP_PASSWORD}
+    - SMTP_TLS=${SMTP_TLS:-yes}
+    - SMTP_AUTH=${SMTP_AUTH:-login}
+
 services:
   discourse:
-    image: bitnami/discourse:${VERSION:-2.4.1}
-    environment:
-      - POSTGRESQL_HOST=postgresql
-      - POSTGRESQL_ROOT_USER=postgres
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=discourse
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=discourse
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=myp@ssw0rd
-      - DISCOURSE_POSTGRESQL_NAME=discourse
-      - DISCOURSE_POSTGRESQL_USERNAME=discourse
-      - DISCOURSE_POSTGRESQL_PASSWORD=myp@ssw0rd
-      - DISCOURSE_HOSTNAME=${DOMAIN:-discourse.localhost}
-      - DISCOURSE_USERNAME=${DISCOURSE_USERNAME:-admin}
-      - DISCOURSE_PASSWORD=${DISCOURSE_PASSWORD:-myp@ssw0rd}
-      - DISCOURSE_EMAIL=${DISCOURSE_EMAIL:-admin@example.com}
-      - SMTP_HOST=${SMTP_HOST}
-      - SMTP_PORT=${SMTP_PORT}
-      - SMTP_USER=${SMTP_USER}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - SMTP_TLS=${SMTP_TLS:-yes}
-      - SMTP_AUTH=${SMTP_AUTH:-login}
+    <<: *defaults
+    image: bitnami/discourse:${VERSION:-2.4.2}
     volumes:
         - ${VOLUME_PATH}data:/bitnami
     deploy:
@@ -34,17 +39,11 @@ services:
       - internal
 
   sidekiq:
-    image: bitnami/discourse:${VERSION:-2.4.1}
+    <<: *defaults
+    image: bitnami/discourse:${VERSION:-2.4.2}
     command: nami start --foreground discourse-sidekiq
     volumes:
       - ${VOLUME_PATH}sidekiq:/bitnami
-    environment:
-      - DISCOURSE_POSTGRESQL_NAME=discourse
-      - DISCOURSE_POSTGRESQL_USERNAME=discourse
-      - DISCOURSE_POSTGRESQL_PASSWORD=myp@ssw0rd
-      - DISCOURSE_HOST=discourse
-      - DISCOURSE_PORT=3000
-      - DISCOURSE_HOSTNAME=${DOMAIN:-discourse.localhost}
     networks:
       - internal
 
