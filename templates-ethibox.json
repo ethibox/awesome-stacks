@@ -965,6 +965,11 @@
                 "label": "Domain name"
             },
             {
+                "name": "SCHEME",
+                "default": "https",
+                "preset": true
+            },
+            {
                 "name": "VOLUME_PATH",
                 "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
                 "preset": true
