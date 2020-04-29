@@ -29,7 +29,7 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-18.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-18.0.4-fpm-alpine}
     command:
       - /bin/sh
       - -c
@@ -47,7 +47,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER:-admin}
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
-      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost} nginx
+      - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost} nginx ${TRUSTED_DOMAINS}
       - NEXTCLOUD_UPDATE=1
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
@@ -67,7 +67,7 @@ services:
       - internal
 
   collabora:
-    image: collabora/code:4.0.9.4
+    image: collabora/code:4.2.2.2
     environment:
       - extra_params=--o:ssl.enable=false --o:ssl.termination=true
       - SLEEPFORDEBUGGER=0
