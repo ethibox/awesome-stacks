@@ -36,11 +36,14 @@ services:
       - |
         sleep 10
         apk add --no-cache sudo
+        sudo -u www-data php occ --no-warnings db:add-missing-indices
+        sudo -u www-data php occ --no-warnings db:convert-filecache-bigint
+        sudo -u www-data php occ --no-warnings config:system:set trusted_proxies 0 --value="172.xx.0.x"
+        sudo -u www-data php occ --no-warnings config:system:set overwriteprotocol --value="${SCHEME:-http}"
+        sudo -u www-data php occ --no-warnings config:system:set overwrite.cli.url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
         sudo -u www-data php occ --no-warnings app:install richdocuments
         sudo -u www-data php occ --no-warnings app:enable richdocuments
         sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
-        sudo -u www-data php occ --no-warnings config:system:set overwriteprotocol --value="${SCHEME:-http}"
-        sudo -u www-data php occ --no-warnings config:system:set overwrite.cli.url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
         php-fpm
     environment:
       - MYSQL_HOST=mariadb

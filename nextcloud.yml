@@ -35,11 +35,13 @@ services:
       - |
         sleep 10
         apk add --no-cache sudo
+        sudo -u www-data php occ --no-warnings db:add-missing-indices
+        sudo -u www-data php occ --no-warnings db:convert-filecache-bigint
         sudo -u www-data php occ --no-warnings config:system:set trusted_proxies 0 --value="172.xx.0.x"
-        sudo -u www-data php occ --no-warnings config:system:set overwriteprotocol --value="$$SCHEME"
+        sudo -u www-data php occ --no-warnings config:system:set overwriteprotocol --value="${SCHEME:-http}"
+        sudo -u www-data php occ --no-warnings config:system:set overwrite.cli.url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
         php-fpm
     environment:
-      - SCHEME=${SCHEME:-http}
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
       - MYSQL_USER=${MYSQL_USER:-nextcloud}
