@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  web:
+    image: minio/minio:${VERSION:-latest}
+    command: server /data
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-myp@ssw0rd}
+    deploy:
+      labels:
+        - traefik.port=9000
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-minio.localhost}
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
