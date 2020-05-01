@@ -40,16 +40,26 @@ services:
         sudo -u www-data php occ --no-warnings config:system:set trusted_proxies 0 --value="172.xx.0.x"
         sudo -u www-data php occ --no-warnings config:system:set overwriteprotocol --value="${SCHEME:-http}"
         sudo -u www-data php occ --no-warnings config:system:set overwrite.cli.url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
+        mkdir -p config && wget -O config/objectstore.config.php https://github.com/ethibox/stacks/raw/master/configs/objectstore.config.php
         php-fpm
     environment:
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
       - MYSQL_USER=${MYSQL_USER:-nextcloud}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
-      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER:-admin}
-      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
       - NEXTCLOUD_TRUSTED_DOMAINS=${DOMAIN:-nextcloud.localhost} nginx ${TRUSTED_DOMAINS}
-      - NEXTCLOUD_UPDATE=1
+      - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
+      - ENABLE_S3=${ENABLE_S3:-false}
+      - S3_BUCKET=${S3_BUCKET}
+      - S3_KEY=${S3_KEY}
+      - S3_SECRET=${S3_SECRET}
+      - S3_REGION=${S3_REGION}
+      - S3_HOSTNAME=${S3_HOSTNAME}
+      - S3_PORT=${S3_PORT:-443}
+      - S3_USE_SSL=${S3_USE_SSL:-true}
+      - S3_AUTOCREATE=${S3_AUTOCREATE:-true}
+      - S3_USE_PATH_STYLE=${S3_USE_PATH_STYLE:-true}
+      - S3_OBJECT_PREFIX=${S3_OBJECT_PREFIX:-urn:oid:}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:

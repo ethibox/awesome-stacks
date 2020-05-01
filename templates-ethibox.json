@@ -75,28 +75,6 @@
     },
     {
         "type": 2,
-        "title": "Collabora",
-        "description": "Collabora",
-        "categories": ["editor"],
-        "platform": "linux",
-        "logo": "https://d2.alternativeto.net/dist/icons/libreoffice-from-collabora_59004.png?width=128&height=128&mode=crop&upscale=false",
-        "repository": {
-            "url": "https://github.com/ethibox/stacks",
-            "stackfile": "collabora.yml"
-        },
-        "env": [
-            {
-                "name": "DOMAIN",
-                "label": "Domain name"
-            },
-            {
-                "name": "NEXTCLOUD_DOMAIN",
-                "label": "Domain name"
-            }
-        ]
-    },
-    {
-        "type": 2,
         "title": "Crater",
         "description": "Crater",
         "categories": ["facturation"],
@@ -701,6 +679,38 @@
             {
                 "name": "DOMAIN",
                 "label": "Domain name"
+            },
+            {
+                "name": "S3_BUCKET",
+                "label": "S3 Bucket Name"
+            },
+            {
+                "name": "S3_KEY",
+                "label": "S3 Key"
+            },
+            {
+                "name": "S3_SECRET",
+                "label": "S3 Secret"
+            },
+            {
+                "name": "ENABLE_S3",
+                "default": "true",
+                "preset": true
+            },
+            {
+                "name": "S3_HOSTNAME",
+                "default": "s3.fr-par.scw.cloud",
+                "preset": true
+            },
+            {
+                "name": "S3_REGION",
+                "default": "fr-par",
+                "preset": true
+            },
+            {
+                "name": "S3_OBJECT_PREFIX",
+                "default": "nextcloud/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/urn:oid:",
+                "preset": true
             },
             {
                 "name": "SCHEME",
