@@ -402,11 +402,6 @@
                 "preset": true
             },
             {
-                "name": "JVB_UDP_PORT",
-                "label": "JVB UDP Port",
-                "default": "10000"
-            },
-            {
                 "name": "JVB_TCP_PORT",
                 "label": "JVB TCP Port",
                 "default": "4443"
