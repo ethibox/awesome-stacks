@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  web:
+    image: statping/statping:${VERSION:-v0.90.37}
+    volumes:
+      - ${VOLUME_PATH}data:/app:cached
+    deploy:
+      labels:
+        - traefik.port=8080
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:${DOMAIN:-statping.localhost}
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
