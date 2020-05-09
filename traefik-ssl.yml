@@ -26,6 +26,7 @@ services:
       - --acme.entryPoint=https
       - --acme.httpChallenge.entryPoint=http
       - --acme.email=${ACME_EMAIL:-noreply@ethibox.fr}
+      - --api
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
