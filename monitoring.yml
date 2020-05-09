@@ -23,15 +23,15 @@ services:
         condition: on-failure
 
   prometheus:
-    image: prom/prometheus:v2.16.0
+    image: prom/prometheus:v2.18.1
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time 5d'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.route-prefix=/prometheus'
-      - '--web.external-url=http://${DOMAIN:-monitoring.localhost}/prometheus'
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --web.route-prefix=/prometheus
+      - --web.external-url=http://${DOMAIN:-monitoring.localhost}/prometheus
     volumes:
       - ${VOLUME_PATH}prometheus:/prometheus
       - ${VOLUME_PATH}config:/etc/prometheus/
@@ -51,7 +51,7 @@ services:
       - traefik
 
   grafana:
-    image: grafana/grafana:6.6.2
+    image: grafana/grafana:6.7.3
     user: root
     volumes:
       - ${VOLUME_PATH}grafana:/var/lib/grafana
