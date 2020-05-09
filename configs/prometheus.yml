@@ -12,10 +12,14 @@ rule_files:
   - alert.rules.yml
 
 scrape_configs:
+  - job_name: traefik
+    static_configs:
+      - targets: ['traefik_traefik:8080']
+
   - job_name: prometheus
     metrics_path: /prometheus/metrics
     static_configs:
-    - targets: ['localhost:9090']
+      - targets: ['localhost:9090']
 
   - job_name: node-exporter
     dns_sd_configs:
