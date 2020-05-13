@@ -28,7 +28,7 @@ services:
       - traefik
 
   app:
-    image: invoiceninja/invoiceninja:${VERSION:-alpine-4.5.17}
+    image: invoiceninja/invoiceninja:${VERSION:-alpine-4.5.18}
     command: /bin/sh -c "chown -R www-data:www-data /var/www/app/ && php-fpm"
     volumes:
       - ${VOLUME_PATH}storage:/var/www/app/storage
