@@ -23,7 +23,7 @@ services:
       - traefik
 
   app:
-    image: wordpress:${VERSION:-5.3.2-fpm-alpine}
+    image: wordpress:${VERSION:-5.4.1-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
