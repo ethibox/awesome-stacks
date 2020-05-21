@@ -726,6 +726,71 @@
     },
     {
         "type": 2,
+        "title": "Nextcloud + Collabora",
+        "description": "Nextcloud + Collabora",
+        "categories": ["cloud"],
+        "platform": "linux",
+        "logo": "https://d2.alternativeto.net/dist/icons/libreoffice-from-collabora_155700.png?width=128&height=128&mode=crop&upscale=false",
+        "repository": {
+            "url": "https://github.com/ethibox/stacks",
+            "stackfile": "nextcloud-collabora.yml"
+        },
+        "env": [
+            {
+                "name": "DOMAIN",
+                "label": "Domain name"
+            },
+            {
+                "name": "SCHEME",
+                "default": "https",
+                "preset": true
+            },
+            {
+                "name": "S3_BUCKET",
+                "label": "S3 Bucket Name"
+            },
+            {
+                "name": "S3_KEY",
+                "label": "S3 Key"
+            },
+            {
+                "name": "S3_SECRET",
+                "label": "S3 Secret"
+            },
+            {
+                "name": "ENABLE_S3",
+                "default": "true",
+                "preset": true
+            },
+            {
+                "name": "S3_HOSTNAME",
+                "default": "s3.fr-par.scw.cloud",
+                "preset": true
+            },
+            {
+                "name": "S3_REGION",
+                "default": "fr-par",
+                "preset": true
+            },
+            {
+                "name": "S3_OBJECT_PREFIX",
+                "default": "nextcloud/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/urn:oid:",
+                "preset": true
+            },
+            {
+                "name": "SCHEME",
+                "default": "https",
+                "preset": true
+            },
+            {
+                "name": "VOLUME_PATH",
+                "default": "/mnt/data/{{ index .Service.Labels \"com.docker.stack.namespace\" }}/",
+                "preset": true
+            }
+        ]
+    },
+    {
+        "type": 2,
         "title": "Onlyoffice",
         "description": "Onlyoffice",
         "categories": ["editor"],
