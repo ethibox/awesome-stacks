@@ -741,11 +741,6 @@
                 "label": "Domain name"
             },
             {
-                "name": "SCHEME",
-                "default": "https",
-                "preset": true
-            },
-            {
                 "name": "S3_BUCKET",
                 "label": "S3 Bucket Name"
             },
