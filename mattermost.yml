@@ -4,7 +4,7 @@ version: "3.7"
 
 services:
   app:
-    image: mattermost/mattermost-prod-app:${VERSION:-5.20.2}
+    image: mattermost/mattermost-prod-app:${VERSION:-5.23.0}
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
       - ${VOLUME_PATH}config:/mattermost/config
