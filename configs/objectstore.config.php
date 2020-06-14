@@ -1,5 +1,5 @@
 <?php
-if (getenv("ENABLE_S3")) {
+if (getenv("ENABLE_S3") === "true") {
 	$CONFIG = array(
 		'objectstore' => array(
 			"class" => "OC\\Files\\ObjectStore\\S3",
