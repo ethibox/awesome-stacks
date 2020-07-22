@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   traefik:
-    image: traefik:${VERSION:-v1.7.24-alpine}
+    image: traefik:${VERSION:-v1.7.25-alpine}
     ports:
       - { target: 80, published: 80, mode: host, protocol: tcp } # http://bit.ly/2SfiOhk
       - { target: 443, published: 443, mode: host, protocol: tcp }
