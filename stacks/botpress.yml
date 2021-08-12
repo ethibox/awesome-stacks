@@ -28,9 +28,9 @@ services:
   postgres:
     image: postgres:12-alpine
     environment:
-      POSTGRES_DB: botpress
-      POSTGRES_USER: botpress
-      POSTGRES_PASSWORD: myp@ssw0rd
+      - POSTGRES_DB=botpress
+      - POSTGRES_USER=botpress
+      - POSTGRES_PASSWORD=myp@ssw0rd
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "botpress"]
     volumes:

@@ -33,9 +33,9 @@ services:
   postgres:
     image: postgres:12-alpine
     environment:
-      POSTGRES_DB: posthog
-      POSTGRES_USER: posthog
-      POSTGRES_PASSWORD: myp@ssw0rd
+      - POSTGRES_DB=posthog
+      - POSTGRES_USER=posthog
+      - POSTGRES_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:

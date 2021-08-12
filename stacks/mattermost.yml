@@ -45,9 +45,9 @@ services:
   postgres:
     image: postgres:12-alpine
     environment:
-      POSTGRES_DB: mattermost
-      POSTGRES_USER: mattermost
-      POSTGRES_PASSWORD: myp@ssw0rd
+      - POSTGRES_DB=mattermost
+      - POSTGRES_USER=mattermost
+      - POSTGRES_PASSWORD=myp@ssw0rd
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "mattermost"]
     volumes:
