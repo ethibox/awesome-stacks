@@ -31,7 +31,7 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:10.3.12
+    image: mariadb:10.5.9
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_USER=${MYSQL_USER:-etherpad}

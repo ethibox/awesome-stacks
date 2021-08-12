@@ -43,7 +43,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.3.14
+    image: mariadb:10.5.9
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
