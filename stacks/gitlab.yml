@@ -1,0 +1,43 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c gitlab.yml gitlab
+
+version: '3.8'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:${VERSION:-13.12.10-ce.0}
+    volumes:
+      - ${VOLUME_PATH}data:/var/opt/gitlab
+      - ${VOLUME_PATH}logs:/var/log/gitlab
+      - ${VOLUME_PATH}config:/etc/gitlab
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.gitlab-${NUMBER:-1}.rule=Host(`${DOMAIN:-gitlab.localhost}`)
+        - traefik.http.routers.gitlab-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.gitlab-${NUMBER:-1}.service=gitlab-${NUMBER:-1}
+        - traefik.http.routers.gitlab-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.gitlab-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - traefik
+      - internal
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    deploy:
+      mode: replicated
+      replicas: 1
+    networks:
+      - internal
+
+volumes:
+  data:
+  logs:
+  config:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

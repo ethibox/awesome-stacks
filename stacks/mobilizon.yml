@@ -1,0 +1,63 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c mobilizon.yml mobilizon
+
+version: '3.8'
+
+services:
+  web:
+    image: framasoft/mobilizon:${VERSION:-1.1.3}
+    volumes:
+      - ${VOLUME_PATH}data:/app
+    environment:
+      - MIX_ENV=${MIX_ENV:-prod}
+      - DOCKER=true
+      - MOBILIZON_INSTANCE_NAME=Mobilizon
+      - MOBILIZON_INSTANCE_HOST=${DOMAIN:-mobilizon.localhost}
+      - MOBILIZON_INSTANCE_EMAIL=${MOBILIZON_INSTANCE_EMAIL:-noreply@ethibox.fr}
+      - MOBILIZON_INSTANCE_REGISTRATIONS_OPEN=true
+      - MOBILIZON_DATABASE_PASSWORD=myp@ssw0rd
+      - MOBILIZON_DATABASE_USERNAME=mobilizon
+      - MOBILIZON_DATABASE_DBNAME=mobilizon
+      - MOBILIZON_DATABASE_HOST=postgres
+    command: >
+      sh -c "cd js &&
+      yarn install &&
+      cd ../ &&
+      mix deps.get &&
+      mix compile &&
+      mix ecto.create &&
+      mix ecto.migrate &&
+      mix phx.server"
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mobilizon.localhost}`)
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.service=mobilizon-${NUMBER:-1}
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mobilizon-${NUMBER:-1}.loadbalancer.server.port=4000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: mdillon/postgis:11
+    environment:
+      POSTGRES_DB: mobilizon
+      POSTGRES_USER: mobilizon
+      POSTGRES_PASSWORD: myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
