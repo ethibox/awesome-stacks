@@ -1,0 +1,56 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c rocketchat.yml rocketchat
+
+version: '3.8'
+
+services:
+  web:
+    image: rocketchat/rocket.chat:${VERSION:-3.17.0}
+    command: bash -c 'for i in `seq 1 30`; do node --max-old-space-size=4096 main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
+    volumes:
+      - ${VOLUME_PATH}uploads:/app/uploads
+    environment:
+      - ROOT_URL=${SCHEME:-http}://${DOMAIN:-rocketchat.localhost}
+      - MONGO_URL=mongodb://mongo:27017/rocketchat?replicaSet=rs01
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local?replicaSet=rs01
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.rocketchat-${NUMBER:-1}.rule=Host(`${DOMAIN:-rocketchat.localhost}`)
+        - traefik.http.routers.rocketchat-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.rocketchat-${NUMBER:-1}.service=rocketchat-${NUMBER:-1}
+        - traefik.http.routers.rocketchat-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.rocketchat-${NUMBER:-1}.middlewares=rocketchat-${NUMBER:-1}
+        - traefik.http.services.rocketchat-${NUMBER:-1}.loadbalancer.server.port=3000
+        - traefik.http.middlewares.rocketchat-${NUMBER:-1}.headers.customFrameOptionsValue=ALLOW
+    networks:
+      - traefik
+      - internal
+
+  mongo:
+    image: mongo:4.0.3
+    command: mongod --smallfiles --oplogSize 128 --replSet rs01
+    volumes:
+      - ${VOLUME_PATH}mongo:/data/db
+    networks:
+      - internal
+
+  mongo-init-replica:
+    image: mongo:4.0.3
+    command: 'mongo mongo/rocketchat --eval "rs.initiate({ _id: ''rs01'', members: [ { _id: 0, host: ''mongo:27017'' } ]})"'
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+volumes:
+  uploads:
+  mongo:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

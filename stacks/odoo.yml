@@ -1,0 +1,59 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c odoo.yml odoo
+
+version: '3.8'
+
+services:
+  web:
+    image: odoo:${VERSION:-14.0}
+    entrypoint: /bin/sh -c '/bin/sh -c "$${@}"'
+    user: root
+    command:
+      - /bin/sh
+      - -c
+      - |
+        curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/14.0/odoo.conf
+        chown -R 101:101 /etc/odoo /var/lib/odoo
+        /entrypoint.sh odoo
+    volumes:
+      - ${VOLUME_PATH}odoo:/var/lib/odoo
+      - ${VOLUME_PATH}config:/etc/odoo
+      - ${VOLUME_PATH}addons:/mnt/extra-addons
+    environment:
+      - USER=odoo
+      - PASSWORD=myp@ssw0rd
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.odoo-${NUMBER:-1}.rule=Host(`${DOMAIN:-odoo.localhost}`)
+        - traefik.http.routers.odoo-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.odoo-${NUMBER:-1}.service=odoo-${NUMBER:-1}
+        - traefik.http.routers.odoo-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.odoo-${NUMBER:-1}.loadbalancer.server.port=8069
+    networks:
+      - internal
+      - traefik
+
+  db:
+    image: postgres:10-alpine
+    volumes:
+      - ${VOLUME_PATH}db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_USER=odoo
+    networks:
+      - internal
+
+volumes:
+  odoo:
+  config:
+  addons:
+  db:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
