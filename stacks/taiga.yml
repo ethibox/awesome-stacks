@@ -43,7 +43,7 @@ services:
       - internal
 
   db:
-    image: postgres:10-alpine
+    image: postgres:12-alpine
     environment:
       - POSTGRES_DB=taiga
       - POSTGRES_USER=postgres

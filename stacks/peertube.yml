@@ -36,7 +36,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:11.2-alpine
+    image: postgres:12-alpine
     environment:
       - POSTGRES_DB=peertube
       - POSTGRES_USER=peertube

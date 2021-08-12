@@ -54,7 +54,7 @@ services:
       - internal
 
   zammad-postgresql:
-    image: postgres:9.6-alpine
+    image: postgres:12-alpine
     volumes:
       - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
     environment:

@@ -31,7 +31,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:11.2-alpine
+    image: postgres:12-alpine
     environment:
       POSTGRES_DB: posthog
       POSTGRES_USER: posthog

@@ -34,7 +34,7 @@ services:
       - traefik
 
   db:
-    image: postgres:10-alpine
+    image: postgres:12-alpine
     volumes:
       - ${VOLUME_PATH}db:/var/lib/postgresql/data
     environment:
