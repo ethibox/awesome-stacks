@@ -1,6 +1,6 @@
 # Awesome Stacks
 
-Deploy 120+ open-source web apps with one Docker command.
+Deploy 75+ open-source web apps with one Docker command.
 
 ## Prerequisites
 
@@ -14,7 +14,10 @@ docker network create --driver=overlay traefik-net
 docker stack deploy -c traefik.yml traefik
 
 # 2. Deploy a stack
-docker stack deploy -c <stack.yml> <name>
+DOMAIN=<mydomain.com> docker stack deploy -c <stack.yml> <name>
+
+# Example
+DOMAIN=ghost.example.com SCHEME=https docker stack deploy -c stacks/ghost.yml ghost
 ```
 
 ## License
