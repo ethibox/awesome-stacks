@@ -39,27 +39,26 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-21-fpm-alpine}
+    image: nextcloud:${VERSION:-22-fpm-alpine}
     command:
       - /bin/sh
       - -c
       - |
         sleep 10
-        apk add --no-cache sudo imagemagick
+        apk add --no-cache sudo imagemagick supervisor
         sed -i -e s/\$${PHP_MEMORY_LIMIT}/2048M/g /usr/local/etc/php/conf.d/nextcloud.ini
         sudo -u www-data php occ --no-warnings db:add-missing-indices -q
         sudo -u www-data php occ --no-warnings db:add-missing-columns -q
         sudo -u www-data php occ --no-warnings db:add-missing-primary-keys -q
         sudo -u www-data php occ --no-warnings db:convert-filecache-bigint -q
         sudo -u www-data php occ --no-warnings background:cron
-        mkdir -p config && wget -O config/custom.config.php https://github.com/johackim/stacks/raw/v2/configs/custom.config.php
-
-        sudo -u www-data php occ --no-warnings app:install richdocuments
-        sudo -u www-data php occ --no-warnings app:enable --force richdocuments
-        sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
-
-        apk add --no-cache supervisor && mkdir /var/log/supervisord /var/run/supervisord
-        wget -O /supervisord.conf https://bit.ly/3afaaIu
+        sudo -u www-data php occ --no-warnings config:system:set default_language --value="fr"
+        # sudo -u www-data php occ --no-warnings app:install richdocuments
+        # sudo -u www-data php occ --no-warnings app:enable --force richdocuments
+        # sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
+        wget -O config/custom.config.php https://github.com/johackim/stacks/raw/v2/configs/custom.config.php
+        wget -O /supervisord.conf https://raw.githubusercontent.com/nextcloud/docker/master/.examples/dockerfiles/cron/fpm-alpine/supervisord.conf
+        mkdir /var/log/supervisord /var/run/supervisord
         /usr/bin/supervisord -c /supervisord.conf
     environment:
       - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
@@ -70,17 +69,17 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
       - FORCE_LANGUAGE=${FORCE_LANGUAGE:-fr}
-      - ENABLE_S3=${ENABLE_S3:-false}
-      - S3_BUCKET=${S3_BUCKET}
-      - S3_KEY=${S3_KEY}
-      - S3_SECRET=${S3_SECRET}
-      - S3_REGION=${S3_REGION}
-      - S3_HOSTNAME=${S3_HOSTNAME}
-      - S3_PORT=${S3_PORT:-443}
-      - S3_USE_SSL=${S3_USE_SSL:-true}
-      - S3_AUTOCREATE=${S3_AUTOCREATE:-true}
-      - S3_USE_PATH_STYLE=${S3_USE_PATH_STYLE:-true}
-      - S3_OBJECT_PREFIX=${S3_OBJECT_PREFIX:-urn:oid:}
+      # - ENABLE_S3=${ENABLE_S3:-true}
+      # - S3_BUCKET=${S3_BUCKET}
+      # - S3_KEY=${S3_KEY}
+      # - S3_SECRET=${S3_SECRET}
+      # - S3_REGION=${S3_REGION}
+      # - S3_HOSTNAME=${S3_HOSTNAME}
+      # - S3_PORT=${S3_PORT:-443}
+      # - S3_USE_SSL=${S3_USE_SSL:-true}
+      # - S3_AUTOCREATE=${S3_AUTOCREATE:-true}
+      # - S3_USE_PATH_STYLE=${S3_USE_PATH_STYLE:-true}
+      # - S3_OBJECT_PREFIX=${S3_OBJECT_PREFIX:-urn:oid:}
       - REDIS_HOST=redis
       - REDIS_HOST_PASSWORD=myp@ssw0rd
     volumes:
