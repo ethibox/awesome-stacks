@@ -9,15 +9,15 @@ Deploy 75+ open-source web apps with one Docker command.
 ## Get started
 
 ```bash
-# 0. Check your HTTP and HTTPS ports
-curl https://ipv4.am.i.mullvad.net/port/80
-curl https://ipv4.am.i.mullvad.net/port/443
-
 # 1. Deploy traefik
 docker network create --driver=overlay traefik-net
 docker stack deploy -c traefik.yml traefik
 
-# 2. Deploy a stack
+# 2. Check your HTTP and HTTPS ports
+curl https://ipv4.am.i.mullvad.net/port/80
+curl https://ipv4.am.i.mullvad.net/port/443
+
+# 3. Deploy a stack
 DOMAIN=<mydomain.com> docker stack deploy -c <stack.yml> <name>
 
 # Example
