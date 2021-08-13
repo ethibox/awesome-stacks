@@ -1,0 +1,54 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c etherpad.yml etherpad
+
+version: '3.8'
+
+services:
+  web:
+    image: etherpad/etherpad:${VERSION:-1.8.14}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm install ep_tables4 ep_copy_paste_images
+        node node_modules/ep_etherpad-lite/node/server.js
+    environment:
+      - NODE_ENV=production
+      - DB_TYPE=mysql
+      - DB_HOST=mariadb
+      - DB_NAME=${MYSQL_DATABASE:-etherpad}
+      - DB_USER=${MYSQL_USER:-etherpad}
+      - DB_PASS=${MYSQL_PASSWORD:-myp@ssw0rd}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.etherpad-${NUMBER:-1}.rule=Host(`${DOMAIN:-etherpad.localhost}`)
+        - traefik.http.routers.etherpad-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.etherpad-${NUMBER:-1}.service=etherpad-${NUMBER:-1}
+        - traefik.http.routers.etherpad-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.etherpad-${NUMBER:-1}.loadbalancer.server.port=9001
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=${MYSQL_USER:-etherpad}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-etherpad}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

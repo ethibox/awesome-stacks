@@ -1,0 +1,29 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c minio.yml minio
+
+version: '3.8'
+
+services:
+  web:
+    image: minio/minio:${VERSION:-latest}
+    command: server /data
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-myp@ssw0rd}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.minio-${NUMBER:-1}.rule=Host(`${DOMAIN:-minio.localhost}`)
+        - traefik.http.routers.minio-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.minio-${NUMBER:-1}.service=minio-${NUMBER:-1}
+        - traefik.http.routers.minio-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.minio-${NUMBER:-1}.loadbalancer.server.port=2368
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

@@ -1,0 +1,41 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c habitica.yml habitica
+
+version: '3.8'
+
+services:
+  server:
+    image: habitica/habitica-auto:${VERSION:-4.81.1}
+    command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
+    environment:
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@example.com}
+      - BASE_URL=${SCHEME:-http}://${DOMAIN:-habitica.localhost}
+      - NODE_DB_URI=mongodb://mongo/habitrpg
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.habitica-${NUMBER:-1}.rule=Host(`${DOMAIN:-habitica.localhost}`)
+        - traefik.http.routers.habitica-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.habitica-${NUMBER:-1}.service=habitica-${NUMBER:-1}
+        - traefik.http.routers.habitica-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.habitica-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - internal
+
+  mongo:
+    image: mongo:4.0.3
+    volumes:
+      - ${VOLUME_PATH}mongo:/data/db
+    networks:
+      - internal
+
+volumes:
+  mongo:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

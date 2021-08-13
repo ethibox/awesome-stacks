@@ -1,0 +1,42 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c wekan.yml wekan
+
+version: '3.8'
+
+services:
+  wekan:
+    image: wekanteam/wekan:${VERSION:-v5.41}
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/wekan
+      - VIRTUAL_HOST=${DOMAIN:-wekan.localhost}
+      - ROOT_URL=${SCHEME:-http}://${DOMAIN:-wekan.localhost}
+      - MAIL_URL=${MAIL_URL}
+      - MAIL_FROM=${MAIL_FROM}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.wekan-${NUMBER:-1}.rule=Host(`${DOMAIN:-wekan.localhost}`)
+        - traefik.http.routers.wekan-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.wekan-${NUMBER:-1}.service=wekan-${NUMBER:-1}
+        - traefik.http.routers.wekan-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.wekan-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - traefik
+      - internal
+
+  mongo:
+    image: mongo:4.0.3
+    volumes:
+      - ${VOLUME_PATH}mongo:/data/db
+    networks:
+      - internal
+
+volumes:
+  mongo:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

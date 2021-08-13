@@ -1,0 +1,63 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c mediawiki.yml mediawiki
+
+version: '3.8'
+
+services:
+  nginx:
+    image: ethibox/nginx-proxy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        if [ -z "$$(ls -A)" ]; then
+          curl -s https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.0.tar.gz | tar zxvf - -C ./ --strip-components=1
+          chown -R 33:33 .
+        fi
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.rule=Host(`${DOMAIN:-mediawiki.localhost}`)
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.service=mediawiki-${NUMBER:-1}
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mediawiki-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: mediawiki:${VERSION:-1.36.1-fpm-alpine}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=mediawiki
+      - MYSQL_USER=mediawiki
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

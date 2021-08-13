@@ -1,0 +1,132 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c nextcloud.yml nextcloud
+
+version: '3.8'
+
+services:
+  nginx:
+    image: ethibox/nginx-proxy:latest
+    # command:
+      # - /bin/sh
+      # - -c
+      # - |
+        # cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf
+        # sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        # nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.nextcloud-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud.localhost}`)
+        - traefik.http.routers.nextcloud-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.nextcloud-${NUMBER:-1}.service=nextcloud-${NUMBER:-1}
+        - traefik.http.routers.nextcloud-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.nextcloud-${NUMBER:-1}.middlewares=nextcloud-${NUMBER:-1},nextcloud-${NUMBER:-1}-redirect,nextcloud-${NUMBER:-1}-redirect2
+        - traefik.http.services.nextcloud-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=${SCHEME:-http}
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.Referrer-Policy=no-referrer
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.Strict-Transport-Security=max-age=31536000
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect.redirectregex.regex=/.well-known/(card|cal)dav
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect.redirectregex.replacement=/remote.php/dav/
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect.redirectregex.permanent=true
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect2.replacepathregex.regex=^(/.well-known.*)
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect2.replacepathregex.replacement=/index.php$${1}
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: nextcloud:${VERSION:-22-fpm-alpine}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        apk add --no-cache sudo imagemagick supervisor
+        sed -i -e s/\$${PHP_MEMORY_LIMIT}/2048M/g /usr/local/etc/php/conf.d/nextcloud.ini
+        sudo -u www-data php occ --no-warnings db:add-missing-indices -q
+        sudo -u www-data php occ --no-warnings db:add-missing-columns -q
+        sudo -u www-data php occ --no-warnings db:add-missing-primary-keys -q
+        sudo -u www-data php occ --no-warnings db:convert-filecache-bigint -q
+        sudo -u www-data php occ --no-warnings background:cron
+        sudo -u www-data php occ --no-warnings config:system:set default_language --value="fr"
+        # sudo -u www-data php occ --no-warnings app:install richdocuments
+        # sudo -u www-data php occ --no-warnings app:enable --force richdocuments
+        # sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
+        wget -O config/custom.config.php https://github.com/johackim/stacks/raw/v2/configs/custom.config.php
+        wget -O /supervisord.conf https://raw.githubusercontent.com/nextcloud/docker/master/.examples/dockerfiles/cron/fpm-alpine/supervisord.conf
+        mkdir /var/log/supervisord /var/run/supervisord
+        /usr/bin/supervisord -c /supervisord.conf
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+      - DOMAIN=${DOMAIN:-nextcloud.localhost}
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
+      - FORCE_LANGUAGE=${FORCE_LANGUAGE:-fr}
+      # - ENABLE_S3=${ENABLE_S3:-true}
+      # - S3_BUCKET=${S3_BUCKET}
+      # - S3_KEY=${S3_KEY}
+      # - S3_SECRET=${S3_SECRET}
+      # - S3_REGION=${S3_REGION}
+      # - S3_HOSTNAME=${S3_HOSTNAME}
+      # - S3_PORT=${S3_PORT:-443}
+      # - S3_USE_SSL=${S3_USE_SSL:-true}
+      # - S3_AUTOCREATE=${S3_AUTOCREATE:-true}
+      # - S3_USE_PATH_STYLE=${S3_USE_PATH_STYLE:-true}
+      # - S3_OBJECT_PREFIX=${S3_OBJECT_PREFIX:-urn:oid:}
+      - REDIS_HOST=redis
+      - REDIS_HOST_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+  redis:
+    image: redis:alpine
+    environment:
+      - REDIS_HOST_PASSWORD=myp@ssw0rd
+    command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'
+    networks:
+      - internal
+
+  # collabora:
+    # image: collabora/code:6.4.9.2
+    # environment:
+      # - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+      # - SLEEPFORDEBUGGER=0
+      # - domain=${DOMAIN:-nextcloud.localhost}
+      # - username=${NEXTCLOUD_ADMIN_USER:-admin}
+      # - password=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
+    # networks:
+      # - internal
+
+volumes:
+  nextcloud:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

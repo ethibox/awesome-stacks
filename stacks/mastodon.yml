@@ -1,0 +1,108 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c mastodon.yml mastodon
+# docker exec -it mastodon_web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
+# docker exec -it mastodon_web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
+
+version: '3.8'
+
+x-defaults: &defaults
+  environment:
+    - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
+    - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
+    - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"DEFAULT_KEY"}
+    - OTP_SECRET=${OTP_SECRET}
+    - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+    - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+    - DB_HOST=postgres
+    - DB_PORT=5432
+    - DB_NAME=mastodon
+    - DB_USER=mastodon
+    - DB_PASS=myp@ssw0rd
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - REDIS_PASSWORD=
+    - SMTP_SERVER=${SMTP_SERVER:-smtp.mailgun.org}
+    - SMTP_PORT=${SMTP_PORT:-587}
+    - SMTP_LOGIN=${SMTP_LOGIN}
+    - SMTP_PASSWORD=${SMTP_PASSWORD}
+    - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
+    - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
+    - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-noreply@example.com}
+
+services:
+  web:
+    <<: *defaults
+    image: tootsuite/mastodon:${VERSION:-v3.4.1}
+    command: bash -c "chown -R 991:991 /mastodon/public/system; rm -f /mastodon/tmp/pids/server.pid; rails db:migrate; rails assets:precompile; rails s -p 3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mastodon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`)
+        - traefik.http.routers.mastodon-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mastodon-${NUMBER:-1}.service=mastodon-${NUMBER:-1}
+        - traefik.http.routers.mastodon-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mastodon-${NUMBER:-1}.loadbalancer.server.port=3000
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 500M
+    volumes:
+      - ${VOLUME_PATH}system:/mastodon/public/system
+    networks:
+      - traefik
+      - internal
+
+  streaming:
+    <<: *defaults
+    image: tootsuite/mastodon:${VERSION:-v3.4.1}
+    command: node ./streaming
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
+    networks:
+      - internal
+
+  sidekiq:
+    <<: *defaults
+    image: tootsuite/mastodon:${VERSION:-v3.4.1}
+    command: bundle exec sidekiq
+    volumes:
+      - ${VOLUME_PATH}system:/mastodon/public/system
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:12-alpine
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    environment:
+      - POSTGRES_DB=mastodon
+      - POSTGRES_USER=mastodon
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:5.0-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  system:
+  redis:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

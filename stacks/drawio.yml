@@ -1,0 +1,20 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c drawio.yml drawio
+
+version: '3.8'
+
+services:
+  web:
+    image: jgraph/drawio:${VERSION:-14.9.6-alpine}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.drawio-${NUMBER:-1}.rule=Host(`${DOMAIN:-drawio.localhost}`)
+        - traefik.http.routers.drawio-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.drawio-${NUMBER:-1}.service=drawio-${NUMBER:-1}
+        - traefik.http.routers.drawio-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.drawio-${NUMBER:-1}.loadbalancer.server.port=8080
+
+networks:
+  default:
+    external: true
+    name: traefik-net

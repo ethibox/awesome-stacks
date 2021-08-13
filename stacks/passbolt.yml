@@ -1,0 +1,67 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c passbolt.yml passbolt
+# docker exec -it passbolt_passbolt su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u your@email.com -f firstname -l lastname -r admin" -s /bin/sh www-data
+
+version: '3.8'
+
+services:
+  passbolt:
+    image: passbolt/passbolt:${VERSION:-3.2.1-2-ce}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        chown -R 33:33 /var/www/passbolt/
+        /usr/bin/wait-for.sh -t 0 mariadb:3306 -- /docker-entrypoint.sh
+    environment:
+      - APP_FULL_BASE_URL=${SCHEME:-http}://${DOMAIN:-passbolt.localhost}
+      - DATASOURCES_DEFAULT_HOST=mariadb
+      - DATASOURCES_DEFAULT_USERNAME=passbolt
+      - DATASOURCES_DEFAULT_PASSWORD=myp@ssw0rd
+      - DATASOURCES_DEFAULT_DATABASE=passbolt
+      - DATASOURCES_DEFAULT_PORT=3306
+      - EMAIL_DEFAULT_FROM=${SMTP_FROM:-noreply@ethibox.fr}
+      - EMAIL_TRANSPORT_DEFAULT_HOST=${SMTP_HOST}
+      - EMAIL_TRANSPORT_DEFAULT_PORT=${SMTP_PORT:-587}
+      - EMAIL_TRANSPORT_DEFAULT_USERNAME=${SMTP_USER}
+      - EMAIL_TRANSPORT_DEFAULT_PASSWORD=${SMTP_PASSWORD}
+    tmpfs:
+      - /run
+    volumes:
+      - ${VOLUME_PATH}gpg:/var/www/passbolt/config/gpg
+      - ${VOLUME_PATH}images:/var/www/passbolt/webroot/img/public
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.passbolt-${NUMBER:-1}.rule=Host(`${DOMAIN:-passbolt.localhost}`)
+        - traefik.http.routers.passbolt-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.passbolt-${NUMBER:-1}.service=passbolt-${NUMBER:-1}
+        - traefik.http.routers.passbolt-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.passbolt-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=passbolt
+      - MYSQL_USER=passbolt
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  gpg:
+  images:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

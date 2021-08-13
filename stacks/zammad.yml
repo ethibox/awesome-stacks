@@ -1,0 +1,102 @@
+# DOMAIN=example.com SCHEME=https docker stack deploy -c zammad.yml zammad
+
+version: '3.8'
+
+services:
+  zammad-nginx:
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-4.1.0-61}
+    command: ["zammad-nginx"]
+    environment:
+      - NGINX_SERVER_SCHEME=${SCHEME:-http}
+    volumes:
+      - ${VOLUME_PATH}zammad:/opt/zammad
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.zammad-${NUMBER:-1}.rule=Host(`${DOMAIN:-zammad.localhost}`)
+        - traefik.http.routers.zammad-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.zammad-${NUMBER:-1}.service=zammad-${NUMBER:-1}
+        - traefik.http.routers.zammad-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.zammad-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.routers.zammad-${NUMBER:-1}.middlewares=zammad-${NUMBER:-1}
+        - traefik.http.middlewares.zammad-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=${SCHEME:-http}
+    networks:
+      - traefik
+      - internal
+
+  zammad-elasticsearch:
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-4.1.0-61}
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - internal
+
+  zammad-init:
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-4.1.0-61}
+    command: ["zammad-init"]
+    volumes:
+      - ${VOLUME_PATH}zammad:/opt/zammad
+    environment:
+      - POSTGRESQL_PASS=myp@ssw0rd
+      - POSTGRESQL_DB=zammad
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+  zammad-memcached:
+    image: memcached:1.5.22-alpine
+    command: memcached -m 256M
+    networks:
+      - internal
+
+  zammad-postgresql:
+    image: postgres:12-alpine
+    volumes:
+      - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=zammad
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=zammad
+    networks:
+      - internal
+
+  zammad-railsserver:
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-4.1.0-61}
+    command: ["zammad-railsserver"]
+    volumes:
+      - ${VOLUME_PATH}zammad:/opt/zammad
+    networks:
+      - internal
+
+  zammad-scheduler:
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-4.1.0-61}
+    command: ["zammad-scheduler"]
+    volumes:
+      - ${VOLUME_PATH}zammad:/opt/zammad
+    networks:
+      - internal
+
+  zammad-websocket:
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-4.1.0-61}
+    command: ["zammad-websocket"]
+    volumes:
+      - ${VOLUME_PATH}zammad:/opt/zammad
+    networks:
+      - internal
+
+volumes:
+  zammad:
+  elasticsearch:
+  postgresql:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
