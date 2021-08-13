@@ -51,7 +51,7 @@ services:
 
   redis:
     <<: *defaults
-    image: redis:alpine
+    image: redis:6-alpine
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
     networks:
       - internal

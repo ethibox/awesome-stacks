@@ -19,7 +19,7 @@ services:
       - traefik
 
   redis:
-    image: redis:latest
+    image: redis:6-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
     networks:

@@ -84,7 +84,7 @@ services:
       - internal
 
   redis:
-    image: redis:4-alpine
+    image: redis:6-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
     networks:

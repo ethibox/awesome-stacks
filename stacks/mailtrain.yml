@@ -41,7 +41,7 @@ services:
       - internal
 
   redis:
-    image: redis:5.0.2-alpine
+    image: redis:6-alpine
     networks:
       - internal
 

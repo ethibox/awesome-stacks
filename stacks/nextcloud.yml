@@ -101,7 +101,7 @@ services:
       - internal
 
   redis:
-    image: redis:alpine
+    image: redis:6-alpine
     environment:
       - REDIS_HOST_PASSWORD=myp@ssw0rd
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'

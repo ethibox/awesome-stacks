@@ -53,7 +53,7 @@ services:
       - internal
 
   redis:
-    image: redis:5.0
+    image: redis:6-alpine
     networks:
       - internal
 

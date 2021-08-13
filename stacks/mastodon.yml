@@ -86,7 +86,7 @@ services:
       - internal
 
   redis:
-    image: redis:5.0-alpine
+    image: redis:6-alpine
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
     volumes:
