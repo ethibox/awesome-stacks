@@ -42,7 +42,7 @@ services:
       - MAIL_USERNAME=${MAIL_USERNAME:-username}
       - MAIL_PASSWORD=${MAIL_PASSWORD:-password}
       - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
-      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-noreply@ethibox.fr}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-admin@example.com}
       - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
 
       - OPEN_REGISTRATION=${OPEN_REGISTRATION:-true}

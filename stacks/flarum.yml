@@ -21,7 +21,7 @@ services:
       - FORUM_URL=${SCHEME:-http}://${DOMAIN:-flarum.localhost}
       - FLARUM_ADMIN_USER=${ADMIN_USER:-admin}
       - FLARUM_ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
-      - FLARUM_ADMIN_MAIL=${ADMIN_EMAIL:-noreply@ethibox.fr}
+      - FLARUM_ADMIN_MAIL=${ADMIN_EMAIL:-admin@example.com}
       - FLARUM_TITLE=${FLARUM_TITLE:-Flarum}
       - DB_HOST=mariadb
       - DB_USER=flarum

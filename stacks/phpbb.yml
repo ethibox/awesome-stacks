@@ -13,7 +13,7 @@ services:
       - PHPBB_DATABASE_PASSWORD=myp@ssw0rd
       - PHPBB_USERNAME=${PHPBB_USERNAME:-admin}
       - PHPBB_PASSWORD=${PHPBB_PASSWORD:-myp@ssw0rd}
-      - PHPBB_EMAIL=${EMAIL:-noreply@ethibox.fr}
+      - PHPBB_EMAIL=${EMAIL:-admin@example.com}
     volumes:
       - ${VOLUME_PATH}phpbb:/bitnami
     deploy:
