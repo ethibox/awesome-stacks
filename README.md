@@ -17,7 +17,7 @@ docker stack deploy -c traefik.yml traefik
 DOMAIN=<mydomain.com> docker stack deploy -c <stack.yml> <name>
 
 # Example
-DOMAIN=ghost.example.com SCHEME=https docker stack deploy -c stacks/ghost.yml ghost
+DOMAIN=ghost.example.com docker stack deploy -c stacks/ghost.yml ghost
 ```
 
 ## License

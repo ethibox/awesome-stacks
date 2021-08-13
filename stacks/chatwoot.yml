@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c chatwoot.yml chatwoot
+# DOMAIN=example.com docker stack deploy -c chatwoot.yml chatwoot
 # docker exec -it chatwoot_web bundle exec rails db:chatwoot_prepare
 # docker exec -it chatwoot_web bundle exec rails db:seed
 
@@ -7,7 +7,7 @@ version: '3.8'
 x-defaults: &defaults
   environment:
     - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"replace_with_lengthy_secure_hex"}  # bundle exec rake secret
-    - FRONTEND_URL=${SCHEME:-http}://${DOMAIN:-chatwoot.localhost}
+    - FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-chatwoot.localhost}
     - NODE_ENV=${NODE_ENV:-production}
     - RAILS_ENV=${RAILS_ENV:-production}
     - POSTGRES_HOST=postgres
@@ -34,7 +34,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.chatwoot-${NUMBER:-1}.rule=Host(`${DOMAIN:-chatwoot.localhost}`)
-        - traefik.http.routers.chatwoot-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.chatwoot-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.chatwoot-${NUMBER:-1}.service=chatwoot-${NUMBER:-1}
         - traefik.http.routers.chatwoot-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.chatwoot-${NUMBER:-1}.loadbalancer.server.port=3000

@@ -1,5 +1,5 @@
 # sudo sysctl -w vm.max_map_count=262144
-# DOMAIN=example.com SCHEME=https docker stack deploy -c magento.yml magento
+# DOMAIN=example.com docker stack deploy -c magento.yml magento
 
 version: '3.8'
 
@@ -20,7 +20,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.magento-${NUMBER:-1}.rule=Host(`${DOMAIN:-magento.localhost}`)
-        - traefik.http.routers.magento-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.magento-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.magento-${NUMBER:-1}.service=magento-${NUMBER:-1}
         - traefik.http.routers.magento-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.magento-${NUMBER:-1}.loadbalancer.server.port=8080

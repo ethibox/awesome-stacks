@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c talk.yml talk
+# DOMAIN=example.com docker stack deploy -c talk.yml talk
 
 version: '3.8'
 
@@ -9,7 +9,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.talk-${NUMBER:-1}.rule=Host(`${DOMAIN:-talk.localhost}`)
-        - traefik.http.routers.talk-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.talk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.talk-${NUMBER:-1}.service=talk-${NUMBER:-1}
         - traefik.http.routers.talk-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.talk-${NUMBER:-1}.loadbalancer.server.port=3000

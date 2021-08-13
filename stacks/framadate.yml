@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c framadate.yml framadate
+# DOMAIN=example.com docker stack deploy -c framadate.yml framadate
 # docker exec -it framadate_framadate git clone https://framagit.org/framasoft/framadate/framadate.git .
 # docker exec -it chown -R 1000:1000 data
 # docker service update --force framadate_framadate
@@ -33,7 +33,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.framadate-${NUMBER:-1}.rule=Host(`${DOMAIN:-framadate.localhost}`)
-        - traefik.http.routers.framadate-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.framadate-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.framadate-${NUMBER:-1}.service=framadate-${NUMBER:-1}
         - traefik.http.routers.framadate-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.framadate-${NUMBER:-1}.loadbalancer.server.port=80

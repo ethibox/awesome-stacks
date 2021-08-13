@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c mobilizon.yml mobilizon
+# DOMAIN=example.com docker stack deploy -c mobilizon.yml mobilizon
 
 version: '3.8'
 
@@ -31,7 +31,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mobilizon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mobilizon.localhost}`)
-        - traefik.http.routers.mobilizon-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.mobilizon-${NUMBER:-1}.service=mobilizon-${NUMBER:-1}
         - traefik.http.routers.mobilizon-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mobilizon-${NUMBER:-1}.loadbalancer.server.port=4000

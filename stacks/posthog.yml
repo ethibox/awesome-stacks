@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c posthog.yml posthog
+# DOMAIN=example.com docker stack deploy -c posthog.yml posthog
 
 version: '3.8'
 
@@ -11,13 +11,13 @@ services:
       - REDIS_URL=redis://redis:6379/
       - SECRET_KEY=${SECRET_KEY:-mys3cr3t}  # openssl rand -hex 32
       - DISABLE_SECURE_SSL_REDIRECT=true
-      - SITE_URL=${SCHEME:-http}://${DOMAIN:-posthog.localhost}
-      - JS_URL=${SCHEME:-http}://${DOMAIN:-posthog.localhost}
+      - SITE_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
+      - JS_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.posthog-${NUMBER:-1}.rule=Host(`${DOMAIN:-posthog.localhost}`)
-        - traefik.http.routers.posthog-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.posthog-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.posthog-${NUMBER:-1}.service=posthog-${NUMBER:-1}
         - traefik.http.routers.posthog-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.posthog-${NUMBER:-1}.loadbalancer.server.port=8000

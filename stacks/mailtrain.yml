@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c mailtrain.yml mailtrain
+# DOMAIN=example.com docker stack deploy -c mailtrain.yml mailtrain
 
 version: '3.8'
 
@@ -10,9 +10,9 @@ services:
       - MYSQL_DATABASE=mailtrain
       - MYSQL_USER=mailtrain
       - MYSQL_PASSWORD=myp@ssw0rd
-      - URL_BASE_PUBLIC=${SCHEME:-http}://${DOMAIN:-mailtrain.localhost}
-      - URL_BASE_SANDBOX=${SCHEME:-http}://${DOMAIN:-mailtrain.localhost}
-      - URL_BASE_TRUSTED=${SCHEME:-http}://${DOMAIN:-mailtrain.localhost}
+      - URL_BASE_PUBLIC=${SCHEME:-https}://${DOMAIN:-mailtrain.localhost}
+      - URL_BASE_SANDBOX=${SCHEME:-https}://${DOMAIN:-mailtrain.localhost}
+      - URL_BASE_TRUSTED=${SCHEME:-https}://${DOMAIN:-mailtrain.localhost}
       - WWW_PROXY=true
     volumes:
       - ${VOLUME_PATH}data:/app/server/files
@@ -20,7 +20,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mailtrain-${NUMBER:-1}.rule=Host(`${DOMAIN:-mailtrain.localhost}`)
-        - traefik.http.routers.mailtrain-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mailtrain-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.mailtrain-${NUMBER:-1}.service=mailtrain-${NUMBER:-1}
         - traefik.http.routers.mailtrain-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mailtrain-${NUMBER:-1}.loadbalancer.server.port=3000

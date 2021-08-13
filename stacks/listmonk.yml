@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c listmonk.yml listmonk
+# DOMAIN=example.com docker stack deploy -c listmonk.yml listmonk
 # docker exec -it listmonk_app ./listmonk --install --yes
 
 version: '3.8'
@@ -25,7 +25,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.listmonk-${NUMBER:-1}.rule=Host(`${DOMAIN:-listmonk.localhost}`)
-        - traefik.http.routers.listmonk-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.listmonk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.listmonk-${NUMBER:-1}.service=listmonk-${NUMBER:-1}
         - traefik.http.routers.listmonk-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.listmonk-${NUMBER:-1}.middlewares=listmonk-${NUMBER:-1}-auth

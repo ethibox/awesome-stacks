@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c cryptpad.yml cryptpad
+# DOMAIN=example.com docker stack deploy -c cryptpad.yml cryptpad
 
 version: '3.8'
 
@@ -20,7 +20,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.cryptpad-${NUMBER:-1}.rule=Host(`${DOMAIN:-cryptpad.localhost}`)
-        - traefik.http.routers.cryptpad-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.cryptpad-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.cryptpad-${NUMBER:-1}.service=cryptpad-${NUMBER:-1}
         - traefik.http.routers.cryptpad-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.cryptpad-${NUMBER:-1}.loadbalancer.server.port=80

@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c invidious.yml invidious
+# DOMAIN=example.com docker stack deploy -c invidious.yml invidious
 
 version: '3.8'
 
@@ -25,7 +25,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.invoiceninja-${NUMBER:-1}.rule=Host(`${DOMAIN:-invoiceninja.localhost}`)
-        - traefik.http.routers.invoiceninja-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.invoiceninja-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.invoiceninja-${NUMBER:-1}.service=invoiceninja-${NUMBER:-1}
         - traefik.http.routers.invoiceninja-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.invoiceninja-${NUMBER:-1}.loadbalancer.server.port=80
@@ -44,7 +44,7 @@ services:
       - APP_LOCALE=fr
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_URL=${SCHEME:-http}://${DOMAIN:-invoiceninja.localhost}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-invoiceninja.localhost}
       - REQUIRE_HTTPS=${REQUIRE_HTTPS:-false}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_CIPHER=AES-256-CBC

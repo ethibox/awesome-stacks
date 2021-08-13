@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c nextcloud.yml nextcloud
+# DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
 
 version: '3.8'
 
@@ -20,12 +20,12 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.nextcloud-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud.localhost}`)
-        - traefik.http.routers.nextcloud-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.nextcloud-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.nextcloud-${NUMBER:-1}.service=nextcloud-${NUMBER:-1}
         - traefik.http.routers.nextcloud-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.nextcloud-${NUMBER:-1}.middlewares=nextcloud-${NUMBER:-1},nextcloud-${NUMBER:-1}-redirect,nextcloud-${NUMBER:-1}-redirect2
         - traefik.http.services.nextcloud-${NUMBER:-1}.loadbalancer.server.port=80
-        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=${SCHEME:-http}
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=${SCHEME:-https}
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.Referrer-Policy=no-referrer
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.Strict-Transport-Security=max-age=31536000
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN
@@ -55,7 +55,7 @@ services:
         sudo -u www-data php occ --no-warnings config:system:set default_language --value="fr"
         # sudo -u www-data php occ --no-warnings app:install richdocuments
         # sudo -u www-data php occ --no-warnings app:enable --force richdocuments
-        # sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-http}://${DOMAIN:-nextcloud.localhost}"
+        # sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-https}://${DOMAIN:-nextcloud.localhost}"
         wget -O config/custom.config.php https://github.com/johackim/stacks/raw/v2/configs/custom.config.php
         wget -O /supervisord.conf https://raw.githubusercontent.com/nextcloud/docker/master/.examples/dockerfiles/cron/fpm-alpine/supervisord.conf
         mkdir /var/log/supervisord /var/run/supervisord

@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c firefly.yml firefly
+# DOMAIN=example.com docker stack deploy -c firefly.yml firefly
 
 version: '3.8'
 
@@ -16,13 +16,13 @@ services:
       - APP_ENV=${APP_ENV:-local}
       - TZ=Europe/Paris
       - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
-      - APP_URL=${SCHEME:-http}://${DOMAIN:-firefly.localhost}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-firefly.localhost}
       - TRUSTED_PROXIES=**
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.firefly-${NUMBER:-1}.rule=Host(`${DOMAIN:-firefly.localhost}`)
-        - traefik.http.routers.firefly-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.firefly-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.firefly-${NUMBER:-1}.service=firefly-${NUMBER:-1}
         - traefik.http.routers.firefly-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.firefly-${NUMBER:-1}.loadbalancer.server.port=8080

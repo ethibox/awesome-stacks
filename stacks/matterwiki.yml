@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c matterwiki.yml matterwiki
+# DOMAIN=example.com docker stack deploy -c matterwiki.yml matterwiki
 
 version: '3.8'
 
@@ -11,7 +11,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.matterwiki-${NUMBER:-1}.rule=Host(`${DOMAIN:-matterwiki.localhost}`)
-        - traefik.http.routers.matterwiki-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.matterwiki-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.matterwiki-${NUMBER:-1}.service=matterwiki-${NUMBER:-1}
         - traefik.http.routers.matterwiki-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.matterwiki-${NUMBER:-1}.loadbalancer.server.port=5000

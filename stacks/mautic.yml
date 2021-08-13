@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c mautic.yml mautic
+# DOMAIN=example.com docker stack deploy -c mautic.yml mautic
 
 version: '3.8'
 
@@ -19,7 +19,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mautic-${NUMBER:-1}.rule=Host(`${DOMAIN:-mautic.localhost}`)
-        - traefik.http.routers.mautic-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mautic-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.mautic-${NUMBER:-1}.service=mautic-${NUMBER:-1}
         - traefik.http.routers.mautic-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mautic-${NUMBER:-1}.loadbalancer.server.port=80

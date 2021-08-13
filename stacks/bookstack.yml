@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c bookstack.yml bookstack
+# DOMAIN=example.com docker stack deploy -c bookstack.yml bookstack
 
 version: '3.8'
 
@@ -6,7 +6,7 @@ services:
   app:
     image: ghcr.io/linuxserver/bookstack:${VERSION:-latest}
     environment:
-      - APP_URL=${SCHEME:-http}://${DOMAIN}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-bookstack.localhost}
       - DB_CONNECTION=mysql
       - DB_HOST=mariadb
       - DB_PORT=3306
@@ -17,7 +17,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.bookstack-${NUMBER:-1}.rule=Host(`${DOMAIN:-bookstack.localhost}`)
-        - traefik.http.routers.bookstack-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.bookstack-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.bookstack-${NUMBER:-1}.service=bookstack-${NUMBER:-1}
         - traefik.http.routers.bookstack-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.bookstack-${NUMBER:-1}.loadbalancer.server.port=80

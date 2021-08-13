@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c mediawiki.yml mediawiki
+# DOMAIN=example.com docker stack deploy -c mediawiki.yml mediawiki
 
 version: '3.8'
 
@@ -23,7 +23,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mediawiki-${NUMBER:-1}.rule=Host(`${DOMAIN:-mediawiki.localhost}`)
-        - traefik.http.routers.mediawiki-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.mediawiki-${NUMBER:-1}.service=mediawiki-${NUMBER:-1}
         - traefik.http.routers.mediawiki-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mediawiki-${NUMBER:-1}.loadbalancer.server.port=80

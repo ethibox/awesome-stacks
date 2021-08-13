@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c habitica.yml habitica
+# DOMAIN=example.com docker stack deploy -c habitica.yml habitica
 
 version: '3.8'
 
@@ -8,13 +8,13 @@ services:
     command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@example.com}
-      - BASE_URL=${SCHEME:-http}://${DOMAIN:-habitica.localhost}
+      - BASE_URL=${SCHEME:-https}://${DOMAIN:-habitica.localhost}
       - NODE_DB_URI=mongodb://mongo/habitrpg
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.habitica-${NUMBER:-1}.rule=Host(`${DOMAIN:-habitica.localhost}`)
-        - traefik.http.routers.habitica-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.habitica-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.habitica-${NUMBER:-1}.service=habitica-${NUMBER:-1}
         - traefik.http.routers.habitica-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.habitica-${NUMBER:-1}.loadbalancer.server.port=3000

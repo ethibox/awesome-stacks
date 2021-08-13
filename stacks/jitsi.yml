@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c jitsi.yml jitsi
+# DOMAIN=example.com docker stack deploy -c jitsi.yml jitsi
 # prosodyctl --config /config/prosody.cfg.lua register username meet.jitsi password
 
 version: '3.8'
@@ -7,7 +7,7 @@ x-defaults: &defaults
   environment:
     - DISABLE_HTTPS=1
     - TZ=Europe/Paris
-    - PUBLIC_URL=${SCHEME:-http}://${DOMAIN:-jitsi.localhost}
+    - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
     - ENABLE_LETSENCRYPT=0
     - DOCKER_HOST_ADDRESS=${DOCKER_HOST_ADDRESS}
 
@@ -58,7 +58,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.jitsi-${NUMBER:-1}.rule=Host(`${DOMAIN:-jitsi.localhost}`)
-        - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.jitsi-${NUMBER:-1}.service=jitsi-${NUMBER:-1}
         - traefik.http.routers.jitsi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.jitsi-${NUMBER:-1}.loadbalancer.server.port=80

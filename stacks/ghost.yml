@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c ghost.yml ghost
+# DOMAIN=example.com docker stack deploy -c ghost.yml ghost
 
 version: '3.8'
 
@@ -9,7 +9,7 @@ services:
       - ${VOLUME_PATH}ghost:/var/lib/ghost/content
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      - url=${SCHEME:-http}://${DOMAIN:-ghost.localhost}
+      - url=${SCHEME:-https}://${DOMAIN:-ghost.localhost}
       - mail__transport=${MAIL_TRANSPORT:-SMTP}
       - mail__from=${SMTP_FROM}
       - mail__options__host=${SMTP_HOST}
@@ -21,7 +21,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.ghost-${NUMBER:-1}.rule=Host(`${DOMAIN:-ghost.localhost}`)
-        - traefik.http.routers.ghost-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.ghost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.ghost-${NUMBER:-1}.service=ghost-${NUMBER:-1}
         - traefik.http.routers.ghost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.ghost-${NUMBER:-1}.loadbalancer.server.port=2368

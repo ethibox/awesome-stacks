@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c peertube.yml peertube
+# DOMAIN=example.com docker stack deploy -c peertube.yml peertube
 
 version: '3.8'
 
@@ -27,7 +27,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.peertube-${NUMBER:-1}.rule=Host(`${DOMAIN:-peertube.localhost}`)
-        - traefik.http.routers.peertube-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.peertube-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.peertube-${NUMBER:-1}.service=peertube-${NUMBER:-1}
         - traefik.http.routers.peertube-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.peertube-${NUMBER:-1}.loadbalancer.server.port=9000

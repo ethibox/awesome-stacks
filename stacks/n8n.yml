@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c n8n.yml n8n
+# DOMAIN=example.com docker stack deploy -c n8n.yml n8n
 
 version: '3.8'
 
@@ -9,10 +9,10 @@ services:
     user: root
     environment:
       - NODE_ENV=production
-      - N8N_PROTOCOL=${SCHEME:-http}
+      - N8N_PROTOCOL=${SCHEME:-https}
       - N8N_HOST=${DOMAIN:-n8n.localhost}
-      - WEBHOOK_TUNNEL_URL=${SCHEME:-http}://${DOMAIN:-n8n.localhost}/
-      - VUE_APP_URL_BASE_API=${SCHEME:-http}://${DOMAIN:-n8n.localhost}/
+      - WEBHOOK_TUNNEL_URL=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
+      - VUE_APP_URL_BASE_API=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
       - DB_TYPE=mariadb
       - DB_MYSQLDB_HOST=mariadb
       - DB_MYSQLDB_PORT=3306
@@ -28,7 +28,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.n8n-${NUMBER:-1}.rule=Host(`${DOMAIN:-n8n.localhost}`)
-        - traefik.http.routers.n8n-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.n8n-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.n8n-${NUMBER:-1}.service=n8n-${NUMBER:-1}
         - traefik.http.routers.n8n-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.n8n-${NUMBER:-1}.loadbalancer.server.port=5678

@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c directus.yml directus
+# DOMAIN=example.com docker stack deploy -c directus.yml directus
 
 version: '3.8'
 
@@ -31,7 +31,7 @@ services:
       - EMAIL_TRANSPORT=${EMAIL_TRANSPORT:-smtp}
       - EMAIL_FROM=${EMAIL_FROM}
       - LOG_LEVEL=${LOG_LEVEL:-info}
-      - PUBLIC_URL=${SCHEME:-http}://${DOMAIN:-directus.localhost}
+      - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-directus.localhost}
     volumes:
       - ${VOLUME_PATH}extensions:/directus/extensions
       - ${VOLUME_PATH}uploads:/directus/uploads
@@ -39,7 +39,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.directus-${NUMBER:-1}.rule=Host(`${DOMAIN:-directus.localhost}`)
-        - traefik.http.routers.directus-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.directus-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.directus-${NUMBER:-1}.service=directus-${NUMBER:-1}
         - traefik.http.routers.directus-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.directus-${NUMBER:-1}.loadbalancer.server.port=8055

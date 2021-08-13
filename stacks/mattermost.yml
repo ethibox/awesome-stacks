@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c mattermost.yml mattermost
+# DOMAIN=example.com docker stack deploy -c mattermost.yml mattermost
 
 version: '3.8'
 
@@ -11,7 +11,7 @@ services:
       - ${VOLUME_PATH}plugins:/mattermost/plugins
     environment:
       - MM_SQLSETTINGS_DATASOURCE=postgres://mattermost:myp@ssw0rd@postgres:5432/mattermost?sslmode=disable&connect_timeout=10
-      - MM_SERVICESETTINGS_SITEURL=${SCHEME:-http}://${DOMAIN:-mattermost.localhost}
+      - MM_SERVICESETTINGS_SITEURL=${SCHEME:-https}://${DOMAIN:-mattermost.localhost}
       - MM_LOCALIZATIONSETTINGS_DEFAULTCLIENTLOCALE=${LOCALE:-fr}
       - MM_LOCALIZATIONSETTINGS_AVAILABLELOCALES=${LOCALE:-fr}
       - MM_EMAILSETTINGS_ENABLEPREVIEWMODEBANNER=FALSE
@@ -34,7 +34,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mattermost-${NUMBER:-1}.rule=Host(`${DOMAIN:-mattermost.localhost}`)
-        - traefik.http.routers.mattermost-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.mattermost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.mattermost-${NUMBER:-1}.service=mattermost-${NUMBER:-1}
         - traefik.http.routers.mattermost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mattermost-${NUMBER:-1}.loadbalancer.server.port=8080

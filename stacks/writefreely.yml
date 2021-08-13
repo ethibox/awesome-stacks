@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c writefreely.yml writefreely
+# DOMAIN=example.com docker stack deploy -c writefreely.yml writefreely
 
 version: '3.8'
 
@@ -12,7 +12,7 @@ services:
       - |
         set -e
         wget -O /go/config.ini https://bit.ly/3asD2gH
-        sed -i -e s%#APP_URL%${SCHEME:-http}://${DOMAIN:-writefreely.localhost}%g /go/config.ini
+        sed -i -e s%#APP_URL%${SCHEME:-https}://${DOMAIN:-writefreely.localhost}%g /go/config.ini
         sed -i -e s/#APP_OPENREGISTRATION/${APP_OPENREGISTRATION:-true}/g /go/config.ini
         sed -i -e s/#APP_FEDERATION/${APP_FEDERATION:-true}/g /go/config.ini
         sed -i -e s/#APP_THEME/${APP_THEME:-write}/g /go/config.ini
@@ -27,7 +27,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.writefreely-${NUMBER:-1}.rule=Host(`${DOMAIN:-writefreely.localhost}`)
-        - traefik.http.routers.writefreely-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.writefreely-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.writefreely-${NUMBER:-1}.service=writefreely-${NUMBER:-1}
         - traefik.http.routers.writefreely-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.writefreely-${NUMBER:-1}.loadbalancer.server.port=8080

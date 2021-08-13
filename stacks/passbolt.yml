@@ -1,4 +1,4 @@
-# DOMAIN=example.com SCHEME=https docker stack deploy -c passbolt.yml passbolt
+# DOMAIN=example.com docker stack deploy -c passbolt.yml passbolt
 # docker exec -it passbolt_passbolt su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u your@email.com -f firstname -l lastname -r admin" -s /bin/sh www-data
 
 version: '3.8'
@@ -13,7 +13,7 @@ services:
         chown -R 33:33 /var/www/passbolt/
         /usr/bin/wait-for.sh -t 0 mariadb:3306 -- /docker-entrypoint.sh
     environment:
-      - APP_FULL_BASE_URL=${SCHEME:-http}://${DOMAIN:-passbolt.localhost}
+      - APP_FULL_BASE_URL=${SCHEME:-https}://${DOMAIN:-passbolt.localhost}
       - DATASOURCES_DEFAULT_HOST=mariadb
       - DATASOURCES_DEFAULT_USERNAME=passbolt
       - DATASOURCES_DEFAULT_PASSWORD=myp@ssw0rd
@@ -33,7 +33,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.passbolt-${NUMBER:-1}.rule=Host(`${DOMAIN:-passbolt.localhost}`)
-        - traefik.http.routers.passbolt-${NUMBER:-1}.entrypoints=${SCHEME:-http}
+        - traefik.http.routers.passbolt-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.passbolt-${NUMBER:-1}.service=passbolt-${NUMBER:-1}
         - traefik.http.routers.passbolt-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.passbolt-${NUMBER:-1}.loadbalancer.server.port=80
