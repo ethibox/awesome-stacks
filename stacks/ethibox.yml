@@ -1,0 +1,51 @@
+# DOMAIN=example.com docker stack deploy -c ethibox.yml ethibox
+
+version: '3.8'
+
+services:
+  web:
+    image: ethibox/ethibox:${VERSION:-1.2.0}
+    volumes:
+      - ${VOLUME_PATH}data:/app/prisma:cached
+    environment:
+      - NODE_ENV=production
+      - MYSQL_DATABASE=ethibox
+      - MYSQL_USER=ethibox
+      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_HOST=mariadb
+      - SECRET=${SECRET:-mys3cr3t}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.ethibox-${NUMBER:-1}.rule=Host(`${DOMAIN:-ethibox.localhost}`)
+        - traefik.http.routers.ethibox-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.ethibox-${NUMBER:-1}.service=ethibox-${NUMBER:-1}
+        - traefik.http.routers.ethibox-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.ethibox-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=ethibox
+      - MYSQL_USER=ethibox
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
