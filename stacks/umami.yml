@@ -1,0 +1,52 @@
+# DOMAIN=example.com docker stack deploy -c umami.yml umami
+
+version: '3.8'
+
+services:
+  umami:
+    image: ghcr.io/mikecao/umami:$[VERSION:-postgresql-latest}
+    environment:
+      - DATABASE_URL=postgresql://umami:myp@ssw0rd@postgres:5432/umami
+      - DATABASE_TYPE=postgresql
+      - HASH_SALT=${HASH_SALT:-replace-me-with-a-random-string}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.umami-${NUMBER:-1}.rule=Host(`${DOMAIN:-umami.localhost}`)
+        - traefik.http.routers.umami-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.umami-${NUMBER:-1}.service=umami-${NUMBER:-1}
+        - traefik.http.routers.umami-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.umami-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        wget -O /docker-entrypoint-initdb.d/schema.postgresql.sql https://raw.githubusercontent.com/mikecao/umami/master/sql/schema.postgresql.sql
+        docker-entrypoint.sh postgres
+    environment:
+      - POSTGRES_DB=umami
+      - POSTGRES_USER=umami
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "umami"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
