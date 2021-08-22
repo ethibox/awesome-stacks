@@ -5,10 +5,9 @@ version: '3.8'
 services:
   web:
     image: odoo:${VERSION:-14.0}
-    entrypoint: /bin/sh -c '/bin/sh -c "$${@}"'
+    entrypoint: /bin/sh
     user: root
     command:
-      - /bin/sh
       - -c
       - |
         curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/14.0/odoo.conf

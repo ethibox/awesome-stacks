@@ -5,9 +5,8 @@ version: '3.8'
 services:
   web:
     image: writeas/writefreely:${VERSION:-0.12.0}
-    entrypoint: /bin/sh -c '/bin/sh -c "$${@}"'
+    entrypoint: /bin/sh
     command:
-      - /bin/sh
       - -c
       - |
         set -e

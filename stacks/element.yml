@@ -31,9 +31,8 @@ services:
 
   synapse:
     image: matrixdotorg/synapse:v1.35.1
-    entrypoint: /bin/sh -c '/bin/sh -c "$${@}"'
+    entrypoint: /bin/sh
     command:
-      - /bin/sh
       - -c
       - |
         sed -i -e 's/#enable_registration: false/enable_registration: '$$ENABLE_REGISTRATION'/g' /data/homeserver.yaml
