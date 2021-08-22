@@ -1,0 +1,46 @@
+# DOMAIN=example.com docker stack deploy -c nocodb.yml nocodb
+
+version: '3.8'
+
+services:
+  nocodb:
+    image: nocodb/nocodb:${VERSION:-latest}
+    environment:
+      - NC_DB=pg://postgres:5432?u=nocodb&p=myp@ssw0rd&d=nocodb
+      - NC_PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-nocodb.localhost}
+      - NC_DISABLE_TELE=true
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.nocodb-${NUMBER:-1}.rule=Host(`${DOMAIN:-nocodb.localhost}`)
+        - traefik.http.routers.nocodb-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.nocodb-${NUMBER:-1}.service=nocodb-${NUMBER:-1}
+        - traefik.http.routers.nocodb-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.nocodb-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=nocodb
+      - POSTGRES_USER=nocodb
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "nocodb", "-d", "nocodb"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
