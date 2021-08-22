@@ -5,13 +5,14 @@ version: '3.8'
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
-    # command:
-      # - /bin/sh
-      # - -c
-      # - |
+    command:
+      - /bin/sh
+      - -c
+      - |
         # cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf
-        # sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
-        # nginx -g 'daemon off;'
+        cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
     environment:
       - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
     volumes:
@@ -52,11 +53,11 @@ services:
         sudo -u www-data php occ --no-warnings db:add-missing-primary-keys -q
         sudo -u www-data php occ --no-warnings db:convert-filecache-bigint -q
         sudo -u www-data php occ --no-warnings background:cron
-        sudo -u www-data php occ --no-warnings config:system:set default_language --value="fr"
+        sudo -u www-data php occ --no-warnings config:system:set force_language --value=$${FORCE_LANGUAGE}
+        sudo -u www-data php occ --no-warnings config:system:set default_phone_region --value=$${FORCE_LANGUAGE}
         # sudo -u www-data php occ --no-warnings app:install richdocuments
         # sudo -u www-data php occ --no-warnings app:enable --force richdocuments
         # sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-https}://${DOMAIN:-nextcloud.localhost}"
-        wget -O config/custom.config.php https://github.com/johackim/stacks/raw/v2/configs/custom.config.php
         wget -O /supervisord.conf https://raw.githubusercontent.com/nextcloud/docker/master/.examples/dockerfiles/cron/fpm-alpine/supervisord.conf
         mkdir /var/log/supervisord /var/run/supervisord
         /usr/bin/supervisord -c /supervisord.conf
@@ -68,20 +69,19 @@ services:
       - MYSQL_USER=${MYSQL_USER:-nextcloud}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
-      - FORCE_LANGUAGE=${FORCE_LANGUAGE:-fr}
-      # - ENABLE_S3=${ENABLE_S3:-true}
-      # - S3_BUCKET=${S3_BUCKET}
-      # - S3_KEY=${S3_KEY}
-      # - S3_SECRET=${S3_SECRET}
-      # - S3_REGION=${S3_REGION}
-      # - S3_HOSTNAME=${S3_HOSTNAME}
-      # - S3_PORT=${S3_PORT:-443}
-      # - S3_USE_SSL=${S3_USE_SSL:-true}
-      # - S3_AUTOCREATE=${S3_AUTOCREATE:-true}
-      # - S3_USE_PATH_STYLE=${S3_USE_PATH_STYLE:-true}
-      # - S3_OBJECT_PREFIX=${S3_OBJECT_PREFIX:-urn:oid:}
+      - FORCE_LANGUAGE=${FORCE_LANGUAGE:-en}
+      - OVERWRITEHOST=${DOMAIN:-nextcloud.localhost}
+      - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-172.xx.0.x}
       - REDIS_HOST=redis
-      - REDIS_HOST_PASSWORD=myp@ssw0rd
+      - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
+      - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
+      - OBJECTSTORE_S3_KEY=${OBJECTSTORE_S3_KEY}
+      - OBJECTSTORE_S3_SECRET=${OBJECTSTORE_S3_SECRET}
+      - OBJECTSTORE_S3_PORT=${OBJECTSTORE_S3_PORT}
+      - OBJECTSTORE_S3_SSL=${OBJECTSTORE_S3_SSL}
+      - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
+      - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -102,14 +102,11 @@ services:
 
   redis:
     image: redis:6-alpine
-    environment:
-      - REDIS_HOST_PASSWORD=myp@ssw0rd
-    command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'
     networks:
       - internal
 
   # collabora:
-    # image: collabora/code:6.4.9.2
+    # image: collabora/code:6.4.10.10
     # environment:
       # - extra_params=--o:ssl.enable=false --o:ssl.termination=true
       # - SLEEPFORDEBUGGER=0
