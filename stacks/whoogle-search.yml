@@ -1,0 +1,20 @@
+# DOMAIN=example.com docker stack deploy -c whoogle-search.yml whoogle-search
+
+version: '3.8'
+
+services:
+  web:
+    image: benbusby/whoogle-search:${VERSION:-latest}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.whoogle-search-${NUMBER:-1}.rule=Host(`${DOMAIN:-whoogle-search.localhost}`)
+        - traefik.http.routers.whoogle-search-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.whoogle-search-${NUMBER:-1}.service=whoogle-search-${NUMBER:-1}
+        - traefik.http.routers.whoogle-search-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.whoogle-search-${NUMBER:-1}.loadbalancer.server.port=5000
+
+networks:
+  default:
+    external: true
+    name: traefik-net
