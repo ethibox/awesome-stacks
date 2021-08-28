@@ -1,0 +1,27 @@
+# DOMAIN=example.com docker stack deploy -c waiting.yml waiting
+
+version: '3.8'
+
+services:
+  waiting:
+    image: nginx:${VERSION:-alpine}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        wget -O /usr/share/nginx/html/index.html https://git.io/JEwvw
+        nginx -g 'daemon off;'
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.waiting-${NUMBER:-1}.rule=Host(`${DOMAIN:-waiting.localhost}`)
+        - traefik.http.routers.waiting-${NUMBER:-1}.priority=0
+        - traefik.http.routers.waiting-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.waiting-${NUMBER:-1}.service=waiting-${NUMBER:-1}
+        - traefik.http.routers.waiting-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.waiting-${NUMBER:-1}.loadbalancer.server.port=80
+
+networks:
+  default:
+    external: true
+    name: traefik-net
