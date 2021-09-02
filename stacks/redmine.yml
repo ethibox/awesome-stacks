@@ -1,0 +1,48 @@
+# DOMAIN=example.com docker stack deploy -c redmine.yml redmine
+
+version: '3.8'
+
+services:
+  web:
+    image: redmine:${VERSION:-4.2.2-alpine}
+    environment:
+      - REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE:-supersecretkey}
+      - REDMINE_DB_POSTGRES=postgres
+      - REDMINE_DB_USERNAME=redmine
+      - REDMINE_DB_DATABASE=redmine
+      - REDMINE_DB_PASSWORD=myp@ssw0rd
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.redmine-${NUMBER:-1}.rule=Host(`${DOMAIN:-redmine.localhost}`)
+        - traefik.http.routers.redmine-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.redmine-${NUMBER:-1}.service=redmine-${NUMBER:-1}
+        - traefik.http.routers.redmine-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.redmine-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - internal
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=redmine
+      - POSTGRES_USER=redmine
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "redmine"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
