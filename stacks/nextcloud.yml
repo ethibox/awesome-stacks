@@ -62,7 +62,6 @@ services:
         mkdir /var/log/supervisord /var/run/supervisord
         /usr/bin/supervisord -c /supervisord.conf
     environment:
-      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
       - DOMAIN=${DOMAIN:-nextcloud.localhost}
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
