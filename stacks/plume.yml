@@ -9,8 +9,8 @@ services:
       - /bin/sh
       - -c
       - |
-        apt update && apt install -y curl
-        curl https://docs.joinplu.me/docker.sample.env > /app/.env
+        apt install -y wget
+        wget -O /app/.env https://docs.joinplu.me/docker.sample.env
         plm migration run
         plm search init
         plm instance new -d $$BASE_URL -n $$INSTANCE_NAME
