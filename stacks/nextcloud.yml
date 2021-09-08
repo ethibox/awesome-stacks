@@ -73,6 +73,7 @@ services:
       - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
       - TRUSTED_PROXIES=${TRUSTED_PROXIES:-172.xx.0.x}
       - REDIS_HOST=redis
+      - REDIS_HOST_PASSWORD=myp@ssw0rd
       - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
       - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
       - OBJECTSTORE_S3_KEY=${OBJECTSTORE_S3_KEY}
@@ -81,6 +82,7 @@ services:
       - OBJECTSTORE_S3_SSL=${OBJECTSTORE_S3_SSL}
       - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
       - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
+      - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -101,6 +103,9 @@ services:
 
   redis:
     image: redis:6-alpine
+    environment:
+      - REDIS_HOST_PASSWORD=myp@ssw0rd
+    command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'
     networks:
       - internal
 
