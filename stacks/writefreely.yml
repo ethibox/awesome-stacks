@@ -10,7 +10,7 @@ services:
       - -c
       - |
         set -e
-        wget -O /go/config.ini https://bit.ly/3asD2gH
+        wget -O /go/config.ini https://git.io/Ju8Wf
         sed -i -e s%#APP_URL%${SCHEME:-https}://${DOMAIN:-writefreely.localhost}%g /go/config.ini
         sed -i -e s/#APP_OPENREGISTRATION/${APP_OPENREGISTRATION:-true}/g /go/config.ini
         sed -i -e s/#APP_FEDERATION/${APP_FEDERATION:-true}/g /go/config.ini
