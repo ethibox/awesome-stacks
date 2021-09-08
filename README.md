@@ -1,6 +1,6 @@
 # Awesome Stacks
 
-Deploy 75+ open-source web apps with one Docker command.
+Deploy 80+ open-source web apps with one Docker command.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Deploy 75+ open-source web apps with one Docker command.
 ```bash
 # 1. Deploy traefik
 docker network create --driver=overlay traefik-net
-docker stack deploy -c traefik.yml traefik
+docker stack deploy -c stacks/traefik.yml traefik
 
 # 2. Check your HTTP and HTTPS ports
 curl https://ipv4.am.i.mullvad.net/port/80
