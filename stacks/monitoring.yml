@@ -54,7 +54,7 @@ services:
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth
-        - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROMETHEUS_USER:-admin}:${PROMETHEUS_PASSWORD:-htpasswd}
+        - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROMETHEUS_USER:-admin}:${PROMETHEUS_PASSWORD:-htpasswd}  # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
     networks:
       - internal
       - traefik
