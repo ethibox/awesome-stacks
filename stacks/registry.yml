@@ -1,0 +1,35 @@
+# DOMAIN=example.com docker stack deploy -c registry.yml registry
+
+version: '3.8'
+
+services:
+  web:
+    image: registry:${VERSION:-2}
+    environment:
+      - REGISTRY_AUTH_HTPASSWD_PATH=/run/secrets/registry-htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_AUTH=htpasswd
+    volumes:
+      - ${VOLUME_PATH}registry:/var/lib/registry
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.registry-${NUMBER:-1}.rule=Host(`${DOMAIN:-registry.localhost}`)
+        - traefik.http.routers.registry-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.registry-${NUMBER:-1}.service=registry-${NUMBER:-1}
+        - traefik.http.routers.registry-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.registry-${NUMBER:-1}.loadbalancer.server.port=5000
+    secrets:
+      - registry-htpasswd
+
+secrets:
+  registry-htpasswd:
+    external: true
+
+volumes:
+  registry:
+
+networks:
+  default:
+    external:
+      name: traefik-net
