@@ -5,11 +5,11 @@ version: '3.8'
 services:
   web:
     image: minio/minio:${VERSION:-latest}
-    command: server /data
+    command: server /data --console-address ":9001"
     volumes:
       - ${VOLUME_PATH}data:/data
     environment:
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minio}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-admin}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-myp@ssw0rd}
     deploy:
       labels:
@@ -18,7 +18,7 @@ services:
         - traefik.http.routers.minio-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.minio-${NUMBER:-1}.service=minio-${NUMBER:-1}
         - traefik.http.routers.minio-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.services.minio-${NUMBER:-1}.loadbalancer.server.port=2368
+        - traefik.http.services.minio-${NUMBER:-1}.loadbalancer.server.port=9001
 
 volumes:
   data:
