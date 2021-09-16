@@ -18,6 +18,8 @@ services:
     environment:
       - OVERRIDE_HOSTNAME=${DOMAIN:-mailserver.localhost}
       - ENABLE_SPAMASSASSIN=1
+      - SPAMASSASSIN_SPAM_TO_INBOX=1
+      - MOVE_SPAM_TO_JUNK=1
       - ENABLE_CLAMAV=0
       - ENABLE_FAIL2BAN=1
       - ENABLE_POSTGREY=0
