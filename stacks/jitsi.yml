@@ -49,7 +49,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: jitsi/web:${VERSION:-stable-5870}
+    image: jitsi/web:${VERSION:-stable-6173}
     healthcheck:
       test: ["CMD", "wget", "-O", "/tmp/test", "http://localhost/http-bind"]
     volumes:
@@ -70,7 +70,7 @@ services:
 
   prosody:
     <<: *defaults
-    image: jitsi/prosody:${VERSION:-stable-5870}
+    image: jitsi/prosody:${VERSION:-stable-6173}
     volumes:
       - ${VOLUME_PATH}prosody:/config
     networks:
@@ -80,7 +80,7 @@ services:
 
   jicofo:
     <<: *defaults
-    image: jitsi/jicofo:${VERSION:-stable-5870}
+    image: jitsi/jicofo:${VERSION:-stable-6173}
     volumes:
       - ${VOLUME_PATH}jicofo:/config
     networks:
@@ -88,7 +88,7 @@ services:
 
   jvb:
     <<: *defaults
-    image: jitsi/jvb:${VERSION:-stable-5870}
+    image: jitsi/jvb:${VERSION:-stable-6173}
     ports:
       - target: ${JVB_UDP_PORT:-10000}
         published: ${JVB_UDP_PORT:-10000}
