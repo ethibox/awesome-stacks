@@ -4,12 +4,13 @@ Deploy 80+ open-source web apps with one Docker command.
 
 ## Prerequisites
 
-- Docker Swarm
+- Docker
 
 ## Get started
 
 ```bash
 # 1. Deploy traefik
+docker swarm init
 docker network create --driver=overlay traefik-net
 docker stack deploy -c stacks/traefik.yml traefik
 
