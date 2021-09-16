@@ -2,9 +2,12 @@
 
 Deploy 80+ open-source web apps with one Docker command.
 
-## Prerequisites
+## Features
 
-- Docker
+- [x] Portainer compatibility
+- [x] Traefik compatibility
+- [x] You can use the env `VOLUME_PATH` to bind a GlusterFS (or NFS) storage created from the host
+- [x] No need to manage configuration files, only `<stack>.yml` files
 
 ## Get started
 
