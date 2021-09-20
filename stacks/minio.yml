@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c minio.yml minio
+# DOMAIN=example.com DOMAIN_CONSOLE=console.example.com docker stack deploy -c minio.yml minio
 
 version: '3.8'
 
@@ -11,6 +11,8 @@ services:
     environment:
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-admin}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-myp@ssw0rd}
+      - MINIO_BROWSER_REDIRECT_URL=${SCHEME:-https}://${DOMAIN_CONSOLE:?}
+      - MINIO_SERVER_URL=${SCHEME:-https}://${DOMAIN:-minio.localhost}
     deploy:
       labels:
         - traefik.enable=true
@@ -18,7 +20,12 @@ services:
         - traefik.http.routers.minio-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.minio-${NUMBER:-1}.service=minio-${NUMBER:-1}
         - traefik.http.routers.minio-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.services.minio-${NUMBER:-1}.loadbalancer.server.port=9001
+        - traefik.http.services.minio-${NUMBER:-1}.loadbalancer.server.port=9000
+        - traefik.http.routers.minio-console-${NUMBER:-1}.rule=Host(`${DOMAIN_CONSOLE:?}`)
+        - traefik.http.routers.minio-console-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.minio-console-${NUMBER:-1}.service=minio-console-${NUMBER:-1}
+        - traefik.http.routers.minio-console-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.minio-console-${NUMBER:-1}.loadbalancer.server.port=9001
 
 volumes:
   data:
