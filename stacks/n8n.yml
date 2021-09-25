@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-0.133.0}
+    image: n8nio/n8n:${VERSION:-0.139.1}
     command: /bin/sh -c "sleep 5; n8n start"
     user: root
     environment:
