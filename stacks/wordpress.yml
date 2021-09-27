@@ -33,8 +33,8 @@ services:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
       - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=myp@ssw0rd
+      - WORDPRESS_DB_USER=${MYSQL_USER:-wordpress}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     networks:
       - internal
 
@@ -43,10 +43,10 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress}
+      - MYSQL_USER=${MYSQL_USER:-wordpress}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     networks:
       - internal
 
