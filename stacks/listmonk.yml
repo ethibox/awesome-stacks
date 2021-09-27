@@ -1,11 +1,10 @@
 # DOMAIN=example.com docker stack deploy -c listmonk.yml listmonk
-# docker exec -it listmonk_app ./listmonk --install --yes
 
 version: '3.8'
 
 services:
   app:
-    image: listmonk/listmonk:${VERSION:-v1.1.0}
+    image: listmonk/listmonk:${VERSION:-v2.0.0}
     command:
       - /bin/sh
       - -c
@@ -15,6 +14,7 @@ services:
         sed -i "s/address = \"localhost:9000\"/address = \"0.0.0.0:9000\"/g" config.toml
         sed -i 's/admin_username = "listmonk"/# admin_username = "listmonk"/g' config.toml
         sed -i 's/admin_password = "myp@ssw0rd"/# admin_password = "myp@ssw0rd"/g' config.toml
+        # ./listmonk --install --yes  # Uncomment on first deploy
         ./listmonk
     environment:
       - POSTGRES_DB=listmonk
