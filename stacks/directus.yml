@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   directus:
-    image: directus/directus:${VERSION:-9.0.0-rc.90}
+    image: directus/directus:${VERSION:-9.0.0-rc.95}
     environment:
       - KEY=${KEY:-255d861b-5ea1-5996-9aa3-922530ec40b1}
       - ACCESS_TOKEN_TTL=${ACCESS_TOKEN_TTL:-15m}
