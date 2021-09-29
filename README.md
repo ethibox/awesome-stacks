@@ -7,7 +7,7 @@ Deploy 80+ open-source web apps with one Docker command.
 - [x] Traefik compatibility
 - [x] Portainer compatibility
 - [x] No need to manage configuration files
-- [x] You can use a distributed storage (GlusterFS, Ceph, NFS) with the env `VOLUME_PATH=/mnt/storage_mountpoint/`
+- [x] Distributed storage compatibility (GlusterFS, Ceph, NFS) with the env `VOLUME_PATH=/mnt/storage_mountpoint/`
 
 ## Get started
 
