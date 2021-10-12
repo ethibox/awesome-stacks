@@ -1,6 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c chatwoot.yml chatwoot
 # docker exec -it chatwoot_web bundle exec rails db:chatwoot_prepare
 # docker exec -it chatwoot_web bundle exec rails db:seed
+# docker exec -it chatwoot_web bundle exec rails db:migrate
 
 version: '3.8'
 
