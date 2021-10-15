@@ -12,7 +12,7 @@ services:
       - DOCKER=true
       - MOBILIZON_INSTANCE_NAME=Mobilizon
       - MOBILIZON_INSTANCE_HOST=${DOMAIN:-mobilizon.localhost}
-      - MOBILIZON_INSTANCE_EMAIL=${MOBILIZON_INSTANCE_EMAIL:-admin@example.com}
+      - MOBILIZON_INSTANCE_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - MOBILIZON_INSTANCE_REGISTRATIONS_OPEN=true
       - MOBILIZON_DATABASE_PASSWORD=myp@ssw0rd
       - MOBILIZON_DATABASE_USERNAME=mobilizon
