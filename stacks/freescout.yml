@@ -1,0 +1,59 @@
+# DOMAIN=example.com docker stack deploy -c freescout.yml freescout
+
+version: '3.8'
+
+services:
+  web:
+    image: tiredofit/freescout:${VERSION:-1.15.16}
+    volumes:
+      - ${VOLUME_PATH}data:/data
+      - ${VOLUME_PATH}logs:/www/logs
+    environment:
+      - VIRTUAL_HOST=${DOMAIN:-freescout.localhost}
+      - VIRTUAL_PORT=80
+      - DB_HOST=mariadb
+      - DB_NAME=freescout
+      - DB_USER=freescout
+      - DB_PASS=myp@ssw0rd
+      - SITE_URL=${SCHEME-https}://${DOMAIN:-freescout.localhost}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ENABLE_SSL_PROXY=TRUE
+      - DISPLAY_ERRORS=FALSE
+      - TIMEZONE=Europe/Paris
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.freescout-${NUMBER:-1}.rule=Host(`${DOMAIN:-freescout.localhost}`)
+        - traefik.http.routers.freescout-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.freescout-${NUMBER:-1}.service=freescout-${NUMBER:-1}
+        - traefik.http.routers.freescout-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.freescout-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-freescout}
+      - MYSQL_USER=${MYSQL_USER:-freescout}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  data:
+  logs:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
