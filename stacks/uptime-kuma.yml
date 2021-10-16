@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: louislam/uptime-kuma:${VERSION:-1.7.0}
+    image: louislam/uptime-kuma:${VERSION:-1.8.0-alpine}
     volumes:
       - ${VOLUME_PATH}data:/app/data
     deploy:
