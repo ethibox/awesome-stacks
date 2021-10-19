@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   appwrite:
-    image: appwrite/appwrite:${VERSION:-0.9.4}
+    image: appwrite/appwrite:${VERSION:-0.11.0}
     volumes:
       - ${VOLUME_PATH}uploads:/storage/uploads
       - ${VOLUME_PATH}cache:/storage/cache
