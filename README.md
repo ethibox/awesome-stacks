@@ -1,6 +1,6 @@
 # Awesome Stacks
 
-Deploy 80+ open-source web apps with one Docker command.
+Deploy 90+ open-source web apps with one Docker command.
 
 ## Features
 
