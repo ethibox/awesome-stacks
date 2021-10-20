@@ -9,8 +9,8 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/data
     environment:
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-admin}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-myp@ssw0rd}
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-myp@ssw0rd}
       - MINIO_BROWSER_REDIRECT_URL=${SCHEME:-https}://${DOMAIN_CONSOLE:?}
       - MINIO_SERVER_URL=${SCHEME:-https}://${DOMAIN:-minio.localhost}
     deploy:
