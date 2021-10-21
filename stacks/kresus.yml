@@ -5,6 +5,8 @@ version: '3.8'
 services:
   web:
     image: bnjbvr/kresus:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}data:/home/user/data
     environment:
       - LOCAL_USER_ID=1000
       - KRESUS_DB_TYPE=postgres
@@ -12,12 +14,12 @@ services:
       - KRESUS_DB_PORT=5432
       - KRESUS_DB_USERNAME=kresus
       - KRESUS_DB_PASSWORD=myp@ssw0rd
-      - KRESUS_EMAIL_TRANSPORT=${EMAIL_TRANSPORT}
-      - KRESUS_EMAIL_FROM=${EMAIL_FROM}
-      - KRESUS_EMAIL_HOST=${EMAIL_HOST}
-      - KRESUS_EMAIL_PORT=${EMAIL_PORT}
-      - KRESUS_EMAIL_USER=${EMAIL_USER}
-      - KRESUS_EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - KRESUS_EMAIL_TRANSPORT=${EMAIL_TRANSPORT:-smtp}
+      - KRESUS_EMAIL_FROM=${SMTP_FROM}
+      - KRESUS_EMAIL_HOST=${SMTP_HOST}
+      - KRESUS_EMAIL_PORT=${SMTP_PORT}
+      - KRESUS_EMAIL_USER=${SMTP_USERNAME}
+      - KRESUS_EMAIL_PASSWORD=${SMTP_PASSWORD}
     deploy:
       labels:
         - traefik.enable=true
@@ -45,6 +47,7 @@ services:
 
 volumes:
   postgres:
+  data:
 
 networks:
   internal:
