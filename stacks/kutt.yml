@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   kutt:
-    image: kutt/kutt:${VERSION:-latest}
+    image: kutt/kutt:${VERSION:-v2.7.3}
     command: ["./wait-for-it.sh", "postgres:5432", "--", "npm", "start"]
     environment:
       - SITE_NAME=${SITE_NAME:-Kutt}
