@@ -1,0 +1,64 @@
+# DOMAIN=example.com docker stack deploy -c kutt.yml kutt
+
+version: '3.8'
+
+services:
+  kutt:
+    image: kutt/kutt:${VERSION:-latest}
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "npm", "start"]
+    environment:
+      - SITE_NAME=${SITE_NAME:-Kutt}
+      - DEFAULT_DOMAIN=${DOMAIN:-kutt.localhost}
+      - JWT_SECRET=${JWT_SECRET-securekey}
+      - MAIL_HOST=${SMTP_HOST}
+      - MAIL_PORT=${SMTP_PORT}
+      - MAIL_USER=${SMTP_USER}
+      - MAIL_PASSWORD=${SMTP_PASSWORD}
+      - DB_HOST=postgres
+      - DB_NAME=kutt
+      - DB_USER=kutt
+      - DB_PASSWORD=myp@ssw0rd
+      - REDIS_HOST=redis
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.kutt-${NUMBER:-1}.rule=Host(`${DOMAIN:-kutt.localhost}`)
+        - traefik.http.routers.kutt-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.kutt-${NUMBER:-1}.service=kutt-${NUMBER:-1}
+        - traefik.http.routers.kutt-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.kutt-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:6.0-alpine
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=kutt
+      - POSTGRES_USER=kutt
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kutt"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  redis:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
