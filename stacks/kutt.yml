@@ -13,6 +13,8 @@ services:
       - MAIL_HOST=${SMTP_HOST}
       - MAIL_PORT=${SMTP_PORT}
       - MAIL_USER=${SMTP_USER}
+      - MAIL_FROM=${MAIL_FROM}
+      - MAIL_SECURE=${MAIL_SECURE:-true}
       - MAIL_PASSWORD=${SMTP_PASSWORD}
       - DB_HOST=postgres
       - DB_NAME=kutt
