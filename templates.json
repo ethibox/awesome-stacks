@@ -1255,6 +1255,24 @@
                 "stackfile": "stacks/wordpress.yml"
             },
             "website": "https://fr.wordpress.com"
+        },
+        {
+            "type": 2,
+            "title": "n8n",
+            "description": "Alternative open-source à Zapier",
+            "categories": [
+                "Automatisation"
+            ],
+            "enabled": true,
+            "price": 19,
+            "trial": 7,
+            "auto": true,
+            "logo": "https://i.imgur.com/HbXTiUF.jpg",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/n8n.yml"
+            },
+            "website": "https://n8n.io/"
         }
     ]
 }

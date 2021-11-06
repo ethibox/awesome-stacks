@@ -4,8 +4,14 @@ version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-0.139.1}
-    command: /bin/sh -c "sleep 5; n8n start"
+    image: n8nio/n8n:${VERSION:-0.148.0}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        sleep 5
+        npm i -g $${NODE_FUNCTION_ALLOW_EXTERNAL:-fs}
+        tini -- /docker-entrypoint.sh n8n start
     user: root
     environment:
       - NODE_ENV=production
@@ -22,6 +28,7 @@ services:
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=${ADMIN_USERNAME:-admin}
       - N8N_BASIC_AUTH_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - NODE_FUNCTION_ALLOW_EXTERNAL=${NODE_FUNCTION_ALLOW_EXTERNAL}
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:
@@ -31,7 +38,10 @@ services:
         - traefik.http.routers.n8n-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.n8n-${NUMBER:-1}.service=n8n-${NUMBER:-1}
         - traefik.http.routers.n8n-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.n8n-${NUMBER:-1}.middlewares=n8n-${NUMBER:-1}
         - traefik.http.services.n8n-${NUMBER:-1}.loadbalancer.server.port=5678
+        - traefik.http.middlewares.n8n-${NUMBER:-1}.headers.customResponseHeaders.Access-Control-Allow-Origin=*
+        - traefik.http.middlewares.n8n-${NUMBER:-1}.headers.customResponseHeaders.Access-Control-Allow-Headers=Content-Type
     networks:
       - traefik
       - internal
