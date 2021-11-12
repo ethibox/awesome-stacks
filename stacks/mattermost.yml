@@ -1,10 +1,11 @@
 # DOMAIN=example.com docker stack deploy -c mattermost.yml mattermost
+# chown -R 2000:2000 config/ data/ plugins/
 
 version: '3.8'
 
 services:
   app:
-    image: mattermost/mattermost-team-edition:${VERSION:-release-5.37}
+    image: mattermost/mattermost-team-edition:${VERSION:-6.0.2}
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
       - ${VOLUME_PATH}config:/mattermost/config
@@ -14,11 +15,11 @@ services:
       - MM_SERVICESETTINGS_SITEURL=${SCHEME:-https}://${DOMAIN:-mattermost.localhost}
       - MM_LOCALIZATIONSETTINGS_DEFAULTCLIENTLOCALE=${LOCALE:-fr}
       - MM_LOCALIZATIONSETTINGS_AVAILABLELOCALES=${LOCALE:-fr}
-      - MM_EMAILSETTINGS_ENABLEPREVIEWMODEBANNER=FALSE
-      - MM_EMAILSETTINGS_SMTPUSERNAME=${SMTP_USERNAME}
-      - MM_EMAILSETTINGS_SMTPPASSWORD=${SMTP_PASSWORD}
-      - MM_EMAILSETTINGS_SMTPSERVER=${SMTP_SERVER}
-      - MM_EMAILSETTINGS_SMTPPORT=${SMTP_PORT}
+      - MM_EMAILSETTINGS_ENABLEPREVIEWMODEBANNER=false
+      # - MM_EMAILSETTINGS_SMTPUSERNAME=${SMTP_USERNAME}
+      # - MM_EMAILSETTINGS_SMTPPASSWORD=${SMTP_PASSWORD}
+      # - MM_EMAILSETTINGS_SMTPSERVER=${SMTP_SERVER}
+      # - MM_EMAILSETTINGS_SMTPPORT=${SMTP_PORT}
       - MM_PLUGINSETTINGS_ENABLEUPLOADS=${ENABLE_PLUGINS:-true}
       - MM_TEAMSETTINGS_MAXUSERSPERTEAM=${MAXUSERSPERTEAM:-100}
       - edition=team
