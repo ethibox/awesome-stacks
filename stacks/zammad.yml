@@ -1,4 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c zammad.yml zammad
+# chown -R 1000:1000 elasticsearch zammad
 
 version: '3.8'
 
