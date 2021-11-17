@@ -20,17 +20,19 @@
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
-                    "preset": true
+                    "label": "Admin email",
+                    "default": "admin@example.com"
                 },
                 {
                     "name": "ADMIN_USERNAME",
                     "label": "Admin username",
-                    "value": "admin",
+                    "default": "admin",
                     "disabled": true
                 },
                 {
                     "name": "ADMIN_PASSWORD",
                     "label": "Admin password",
+                    "default": "myp@ssw0rd",
                     "type": "password",
                     "disabled": true
                 }
@@ -89,12 +91,13 @@
                     "type": "select",
                     "select": [
                         {
-                            "text": "Oui",
-                            "value": "true"
+                            "text": "Non",
+                            "value": "false",
+                            "default": "false"
                         },
                         {
-                            "text": "Non",
-                            "value": "false"
+                            "text": "Oui",
+                            "value": "true"
                         }
                     ]
                 },
@@ -116,7 +119,7 @@
                 },
                 {
                     "name": "SMTP_PORT",
-                    "value": 587,
+                    "default": "587",
                     "preset": true
                 }
             ]
@@ -848,16 +851,17 @@
             "env": [
                 {
                     "name": "HTTPS",
-                    "value": "true",
+                    "default": "true",
                     "preset": true
                 },
                 {
                     "name": "PORT",
-                    "value": "443",
+                    "default": "443",
                     "preset": true
                 },
                 {
                     "name": "ADMIN_PASSWORD",
+                    "default": "myp@ssw0rd",
                     "preset": true
                 },
                 {
@@ -890,7 +894,7 @@
                     "select": [
                         {
                             "text": "false",
-                            "value": "false"
+                            "default": "false"
                         },
                         {
                             "text": "true",
@@ -1263,7 +1267,7 @@
             "categories": [
                 "Automatisation"
             ],
-            "enabled": true,
+            "enabled": false,
             "price": 19,
             "trial": 7,
             "auto": true,
