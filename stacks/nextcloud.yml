@@ -46,7 +46,7 @@ services:
       - -c
       - |
         sleep 10
-        apk add --no-cache sudo imagemagick supervisor
+        apk add --no-cache sudo supervisor
         sed -i -e s/\$${PHP_MEMORY_LIMIT}/2048M/g /usr/local/etc/php/conf.d/nextcloud.ini
         sudo -u www-data php occ --no-warnings db:add-missing-indices -q
         sudo -u www-data php occ --no-warnings db:add-missing-columns -q
