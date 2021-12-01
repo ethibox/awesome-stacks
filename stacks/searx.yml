@@ -5,6 +5,9 @@ version: '3.8'
 services:
   web:
     image: searx/searx:${VERSION:-latest}
+    environment:
+      - BASE_URL=${SCHEME:-https}://${DOMAIN:-searx.localhost}
+      - BIND_ADDRESS=0.0.0.0:8080
     deploy:
       labels:
         - traefik.enable=true
