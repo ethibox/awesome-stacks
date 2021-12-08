@@ -5,6 +5,7 @@ version: '3.8'
 services:
   flarum:
     image: mondedie/flarum:${VERSION:-stable}
+    working_dir: /flarum/app/
     command:
       - /bin/sh
       - -c
@@ -14,8 +15,9 @@ services:
             echo "Wait Mysql..."
             sleep 1
         done
-        echo "qiaeru/lang-french" > /flarum/app/extensions/list
-        echo "fof/user-directory" >> /flarum/app/extensions/list
+        composer require flarum-lang/french -W
+        composer require fof/user-directory -W
+        php flarum cache:clear
         /usr/local/bin/startup
     environment:
       - FORUM_URL=${SCHEME:-https}://${DOMAIN:-flarum.localhost}
