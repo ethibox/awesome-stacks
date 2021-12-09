@@ -1277,6 +1277,24 @@
                 "stackfile": "stacks/n8n.yml"
             },
             "website": "https://n8n.io/"
+        },
+        {
+            "type": 2,
+            "title": "NocoDB",
+            "description": "Alternative open-source à Airtable",
+            "categories": [
+                "Spreadsheet"
+            ],
+            "enabled": false,
+            "price": 19,
+            "trial": 7,
+            "auto": true,
+            "logo": "https://i.imgur.com/430br17.jpg",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/nocodb.yml"
+            },
+            "website": "https://www.nocodb.com/"
         }
     ]
 }
