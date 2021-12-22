@@ -28,13 +28,18 @@ services:
       - traefik
 
   app:
-    image: wordpress:${VERSION:-5.8.0-fpm-alpine}
+    image: wordpress:${VERSION:-5.8.2-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
-      - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=${MYSQL_USER:-wordpress}
-      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-myp@ssw0rd}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('WP_HOME'));
+        define('WP_SITEURL', getenv('WP_SITEURL'));
+      WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
+      WP_SITEURL: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
     networks:
       - internal
 
