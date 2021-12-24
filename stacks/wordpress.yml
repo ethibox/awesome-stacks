@@ -29,6 +29,12 @@ services:
 
   app:
     image: wordpress:${VERSION:-5.8.2-fpm-alpine}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        echo "upload_max_filesize = $$WP_UPLOAD_MAX_FILESIZE" > $$PHP_INI_DIR/conf.d/custom.ini
+        docker-entrypoint.sh php-fpm
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
@@ -40,6 +46,7 @@ services:
         define('WP_SITEURL', getenv('WP_SITEURL'));
       WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
       WP_SITEURL: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
+      WP_UPLOAD_MAX_FILESIZE: ${WP_UPLOAD_MAX_FILESIZE:-256M}
     networks:
       - internal
 
