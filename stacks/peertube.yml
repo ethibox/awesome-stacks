@@ -4,9 +4,12 @@ version: '3.8'
 
 services:
   peertube:
-    image: chocobozzz/peertube:${VERSION:-v4.0.0-bullseye}
-    # ports:
-    # - {target: 1935, published: 1935, mode: host, protocol: tcp}
+    image: chocobozzz/peertube:${VERSION:-v4.1.0-bullseye}
+    ports:
+      - target: ${RTMP_PORT:-1935}
+        published: ${RTMP_PORT:-1935}
+        protocol: tcp
+        mode: host
     environment:
       - PEERTUBE_DB_USERNAME=${POSTGRES_USER:-peertube}
       - PEERTUBE_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
