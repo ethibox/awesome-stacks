@@ -57,6 +57,8 @@ services:
 
       - ACTIVITY_PUB=${ACTIVITY_PUB:-false}
       - REMOTE_FOLLOW=${REMOTE_FOLLOW:-false}
+
+      - INSTANCE_CONTACT_EMAIL=${INSTANCE_CONTACT_EMAIL}
     volumes:
       - ${VOLUME_PATH}data:/var/www/storage
     deploy:
