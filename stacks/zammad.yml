@@ -1,4 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c zammad.yml zammad
+# sudo sysctl -w vm.max_map_count=262144
+# echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
 # chown -R 1000:1000 elasticsearch zammad
 
 version: '3.8'
@@ -31,6 +33,10 @@ services:
       - discovery.type=single-node
     volumes:
       - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
+    deploy:
+      resources:
+        limits:
+          memory: 5G
     networks:
       - internal
 
