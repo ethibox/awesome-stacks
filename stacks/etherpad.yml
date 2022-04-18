@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: etherpad/etherpad:${VERSION:-1.8.14}
+    image: etherpad/etherpad:${VERSION:-1.8.17}
     command:
       - /bin/sh
       - -c
