@@ -31,7 +31,7 @@ services:
       - traefik
 
   app:
-    image: prestashop/prestashop:${VERSION:-1.7.7.6-fpm}
+    image: prestashop/prestashop:${VERSION:-1.7.8.6-fpm}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     environment:
@@ -47,8 +47,8 @@ services:
       - PS_FOLDER_INSTALL=${PS_FOLDER_INSTALL:-install-destroy}
       - PS_FOLDER_ADMIN=${PS_FOLDER_ADMIN:-admin-secure}
       - PS_DEMO_MODE=${PS_DEMO_MODE:-0}
-      - ADMIN_MAIL=admin@example.com
-      - ADMIN_PASSWD=myp@ssw0rd
+      - ADMIN_MAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWD=${ADMIN_PASSWORD:-myp@ssw0rd}
     networks:
       - traefik
       - internal
