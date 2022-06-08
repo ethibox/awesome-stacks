@@ -7,7 +7,7 @@ version: '3.8'
 
 services:
   zammad-nginx:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.0.2-30}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.1.1-42}
     command: ["zammad-nginx"]
     environment:
       - NGINX_SERVER_SCHEME=${SCHEME:-https}
@@ -28,7 +28,7 @@ services:
       - internal
 
   zammad-elasticsearch:
-    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-5.0.2-30}
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-5.1.1-42}
     environment:
       - discovery.type=single-node
     volumes:
@@ -41,7 +41,7 @@ services:
       - internal
 
   zammad-init:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.0.2-30}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.1.1-42}
     command: ["zammad-init"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -72,7 +72,7 @@ services:
       - internal
 
   zammad-railsserver:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.0.2-30}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.1.1-42}
     command: ["zammad-railsserver"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -80,7 +80,7 @@ services:
       - internal
 
   zammad-scheduler:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.0.2-30}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.1.1-42}
     command: ["zammad-scheduler"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
@@ -88,7 +88,7 @@ services:
       - internal
 
   zammad-websocket:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.0.2-30}
+    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.1.1-42}
     command: ["zammad-websocket"]
     volumes:
       - ${VOLUME_PATH}zammad:/opt/zammad
