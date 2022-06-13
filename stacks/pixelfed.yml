@@ -5,7 +5,7 @@ version: '3.8'
 
 services:
   app:
-    image: ethibox/pixelfed:${VERSION:-v0.11.2}
+    image: ethibox/pixelfed:${VERSION:-v0.11.3}
     environment:
       - APP_NAME=${APP_NAME:-PixelFed}
       - APP_ENV=${APP_ENV:-local}
