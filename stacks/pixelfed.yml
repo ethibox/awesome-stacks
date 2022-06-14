@@ -1,5 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c pixelfed.yml pixelfed
 # docker exec -it pixelfed_app php artisan migrate:fresh --force
+# UPDATE users SET is_admin = 1 WHERE id = 1;
 
 version: '3.8'
 
@@ -59,6 +60,8 @@ services:
       - REMOTE_FOLLOW=${REMOTE_FOLLOW:-false}
 
       - INSTANCE_CONTACT_EMAIL=${INSTANCE_CONTACT_EMAIL}
+
+      - ENABLE_CONFIG_CACHE=true
     volumes:
       - ${VOLUME_PATH}data:/var/www/storage
     deploy:
