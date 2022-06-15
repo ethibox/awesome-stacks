@@ -3,7 +3,7 @@
 version: '3.8'
 
 x-defaults: &defaults
-  image: ethibox/lufi:${VERSION:-0.05.14}
+  image: ethibox/lufi:${VERSION:-0.05.18}
   volumes:
     - ${VOLUME_PATH}data:/usr/lufi/data
     - ${VOLUME_PATH}files:/usr/lufi/files
