@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: freshrss/freshrss:${VERSION:-1.18.1-alpine}
+    image: freshrss/freshrss:${VERSION:-1.19.2-alpine}
     volumes:
       - ${VOLUME_PATH}data:/var/www/FreshRSS/data
       - ${VOLUME_PATH}extensions:/var/www/FreshRSS/extensions
