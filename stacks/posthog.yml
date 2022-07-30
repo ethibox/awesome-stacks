@@ -88,9 +88,7 @@ services:
   zookeeper:
     image: zookeeper:3.7.0
     volumes:
-      - ${VOLUME_PATH}zookeeper-datalog:/datalog
-      - ${VOLUME_PATH}zookeeper-data:/data
-      - ${VOLUME_PATH}zookeeper-logs:/logs
+      - ${VOLUME_PATH}zookeeper:/data
     networks:
       - internal
 
@@ -113,9 +111,7 @@ services:
 volumes:
   postgres:
   clickhouse:
-  zookeeper-data:
-  zookeeper-logs:
-  zookeeper-datalog:
+  zookeeper:
 
 networks:
   internal:
