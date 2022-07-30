@@ -4,13 +4,13 @@ version: '3.8'
 
 services:
   web:
-    image: odoo:${VERSION:-14.0}
+    image: odoo:${VERSION:-15.0}
     entrypoint: /bin/sh
     user: root
     command:
       - -c
       - |
-        curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/14.0/odoo.conf
+        curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/$${VERSION:-15.0}/odoo.conf
         chown -R 101:101 /etc/odoo /var/lib/odoo
         /entrypoint.sh odoo
     volumes:
