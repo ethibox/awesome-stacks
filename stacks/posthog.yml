@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: posthog/posthog:${VERSION:-release-1.29.0}
+    image: posthog/posthog:${VERSION:-release-1.38.0-unstable}
     environment:
       - DATABASE_URL=postgres://posthog:myp@ssw0rd@postgres:5432/posthog
       - IS_DOCKER=true
@@ -14,6 +14,9 @@ services:
       - SITE_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
       - JS_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
       - ASYNC_EVENT_PROPERTY_USAGE=1
+      - CLICKHOUSE_HOST=clickhouse
+      - CLICKHOUSE_SECURE=false
+      - CLICKHOUSE_VERIFY=false
     deploy:
       labels:
         - traefik.enable=true
@@ -24,6 +27,41 @@ services:
         - traefik.http.services.posthog-${NUMBER:-1}.loadbalancer.server.port=8000
     networks:
       - traefik
+      - internal
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:22.3
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        apt update
+        apt install -y git
+        git clone https://github.com/PostHog/posthog/
+        mkdir -p /var/lib/clickhouse/format_schemas/
+        cp -r /posthog/posthog/idl/ /
+        cp /posthog/docker/clickhouse/docker-entrypoint-initdb.d/init-db.sh /docker-entrypoint-initdb.d/
+        cp /posthog/docker/clickhouse/config.xml /etc/clickhouse-server/config.xml
+        cp /posthog/docker/clickhouse/users.xml /etc/clickhouse-server/users.xml
+        /entrypoint.sh
+    networks:
+      - internal
+
+  kafka:
+    image: bitnami/kafka:2.8.1-debian-10-r99
+    environment:
+      - KAFKA_BROKER_ID=1001
+      - KAFKA_CFG_RESERVED_BROKER_MAX_ID=1001
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=true
+    networks:
+      - internal
+
+  zookeeper:
+    image: zookeeper:3.7.0
+    networks:
       - internal
 
   redis:
