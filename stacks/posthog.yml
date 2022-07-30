@@ -2,21 +2,33 @@
 
 version: '3.8'
 
+x-posthog: &posthog
+  image: posthog/posthog:${VERSION:-release-1.38.0-unstable}
+  environment:
+    - DATABASE_URL=postgres://posthog:myp@ssw0rd@postgres:5432/posthog
+    - IS_DOCKER=true
+    - IS_BEHIND_PROXY=true
+    - REDIS_URL=redis://redis:6379/
+    - SECRET_KEY=${SECRET_KEY:-mys3cr3t}  # openssl rand -hex 32
+    - DISABLE_SECURE_SSL_REDIRECT=true
+    - SITE_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
+    - JS_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
+    - ASYNC_EVENT_PROPERTY_USAGE=1
+    - CLICKHOUSE_HOST=clickhouse
+    - CLICKHOUSE_SECURE=false
+    - CLICKHOUSE_VERIFY=false
+    - KAFKA_URL=kafka://kafka
+
 services:
   web:
-    image: posthog/posthog:${VERSION:-release-1.38.0-unstable}
-    environment:
-      - DATABASE_URL=postgres://posthog:myp@ssw0rd@postgres:5432/posthog
-      - IS_DOCKER=true
-      - REDIS_URL=redis://redis:6379/
-      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}  # openssl rand -hex 32
-      - DISABLE_SECURE_SSL_REDIRECT=true
-      - SITE_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
-      - JS_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
-      - ASYNC_EVENT_PROPERTY_USAGE=1
-      - CLICKHOUSE_HOST=clickhouse
-      - CLICKHOUSE_SECURE=false
-      - CLICKHOUSE_VERIFY=false
+    <<: *posthog
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        ./bin/migrate
+        ./bin/docker-server
+        ./bin/docker-frontend
     deploy:
       labels:
         - traefik.enable=true
@@ -27,6 +39,18 @@ services:
         - traefik.http.services.posthog-${NUMBER:-1}.loadbalancer.server.port=8000
     networks:
       - traefik
+      - internal
+
+  worker:
+    <<: *posthog
+    command: ./bin/docker-worker-celery --with-scheduler
+    networks:
+      - internal
+
+  plugins:
+    <<: *posthog
+    command: ./bin/plugin-server --no-restart-loop
+    networks:
       - internal
 
   clickhouse:
@@ -44,6 +68,8 @@ services:
         cp /posthog/docker/clickhouse/config.xml /etc/clickhouse-server/config.xml
         cp /posthog/docker/clickhouse/users.xml /etc/clickhouse-server/users.xml
         /entrypoint.sh
+    volumes:
+      - ${VOLUME_PATH}clickhouse:/var/lib/clickhouse
     networks:
       - internal
 
@@ -61,6 +87,10 @@ services:
 
   zookeeper:
     image: zookeeper:3.7.0
+    volumes:
+      - ${VOLUME_PATH}zookeeper-datalog:/datalog
+      - ${VOLUME_PATH}zookeeper-data:/data
+      - ${VOLUME_PATH}zookeeper-logs:/logs
     networks:
       - internal
 
@@ -82,6 +112,10 @@ services:
 
 volumes:
   postgres:
+  clickhouse:
+  zookeeper-data:
+  zookeeper-logs:
+  zookeeper-datalog:
 
 networks:
   internal:
