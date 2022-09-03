@@ -4,13 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: etherpad/etherpad:${VERSION:-1.8.17}
-    command:
-      - /bin/sh
-      - -c
-      - |
-        npm install ep_tables4 ep_image_upload ep_adminpads2
-        node node_modules/ep_etherpad-lite/node/server.js
+    image: ethibox/etherpad:${VERSION:-1.8.18}
     environment:
       - NODE_ENV=production
       - DB_TYPE=mysql
