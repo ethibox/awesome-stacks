@@ -4,11 +4,12 @@ version: '3.8'
 
 services:
   server:
-    image: plumeorg/plume:${VERSION:-v0.6.0}
+    image: plumeorg/plume:${VERSION:-0.7.2}
     command:
       - /bin/sh
       - -c
       - |
+        apt update
         apt install -y wget
         wget -O /app/.env https://docs.joinplu.me/docker.sample.env
         plm migration run
