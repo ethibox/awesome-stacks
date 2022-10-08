@@ -1,0 +1,34 @@
+# DOMAIN=example.com docker stack deploy -c focalboard.yml focalboard
+# chown -R 2000:2000 config/ data/ plugins/
+
+version: '3.8'
+
+services:
+  web:
+    image: mattermost/focalboard:${VERSION:-7.4.1}
+    volumes:
+      - ${VOLUME_PATH}data:/data
+      - ${VOLUME_PATH}config:/opt/focalboard
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.focalboard-${NUMBER:-1}.rule=Host(`${DOMAIN:-focalboard.localhost}`)
+        - traefik.http.routers.focalboard-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.focalboard-${NUMBER:-1}.service=focalboard-${NUMBER:-1}
+        - traefik.http.routers.focalboard-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.focalboard-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  config:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
