@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-0.186.0}
+    image: n8nio/n8n:${VERSION:-0.196.0}
     entrypoint: /bin/sh
     command:
       - -c
@@ -25,7 +25,7 @@ services:
       - DB_MYSQLDB_DATABASE=${MYSQL_DATABASE:-n8n}
       - DB_MYSQLDB_USER=${MYSQL_USER:-n8n}
       - DB_MYSQLDB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
-      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE:-false}
       - N8N_BASIC_AUTH_USER=${ADMIN_USERNAME:-admin}
       - N8N_BASIC_AUTH_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - NODE_FUNCTION_ALLOW_EXTERNAL=${NODE_FUNCTION_ALLOW_EXTERNAL}
