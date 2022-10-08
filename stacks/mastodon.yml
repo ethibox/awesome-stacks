@@ -1,6 +1,8 @@
 # DOMAIN=example.com docker stack deploy -c mastodon.yml mastodon
 # docker exec -it mastodon_web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
 # docker exec -it mastodon_web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
+# tootctl accounts create <username> --email <email> --confirmed --role admin # Add user
+# tootctl media remove # remove all media
 
 version: '3.8'
 
@@ -31,7 +33,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-v3.4.1}
+    image: tootsuite/mastodon:${VERSION:-v3.5.3}
     command: bash -c "chown -R 991:991 /mastodon/public/system; rm -f /mastodon/tmp/pids/server.pid; rails db:migrate; rails assets:precompile; rails s -p 3000"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
@@ -51,16 +53,25 @@ services:
 
   streaming:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-v3.4.1}
+    image: tootsuite/mastodon:${VERSION:-v3.5.3}
     command: node ./streaming
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`) && PathPrefix(`/api/v1/streaming`)
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.service=mastodon-streaming-${NUMBER:-1}
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mastodon-streaming-${NUMBER:-1}.loadbalancer.server.port=4000
     networks:
+      - traefik
       - internal
 
   sidekiq:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-v3.4.1}
+    image: tootsuite/mastodon:${VERSION:-v3.5.3}
     command: bundle exec sidekiq
     volumes:
       - ${VOLUME_PATH}system:/mastodon/public/system
@@ -69,6 +80,7 @@ services:
 
   postgres:
     image: postgres:12-alpine
+    command: postgres -c 'max_connections=250'
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
     environment:
