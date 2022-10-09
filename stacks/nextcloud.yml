@@ -90,7 +90,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-10.5.9}
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_USER=${MYSQL_USER:-nextcloud}
