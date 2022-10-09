@@ -1,0 +1,99 @@
+# DOMAIN=example.com docker stack deploy -c calendso.yml calendso
+
+version: '3.8'
+
+x-calendso: &calendso
+  environment:
+    - NODE_ENV=production
+    - POSTGRES_USER=calendso
+    - POSTGRES_PASSWORD=myp@ssw0rd
+    - POSTGRES_DB=calendso
+    - DATABASE_URL=postgresql://calendso:myp@ssw0rd@postgres:5432/calendso
+    - NEXT_PUBLIC_WEBAPP_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
+    - NEXT_PUBLIC_WEBSITE_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
+    - NEXTAUTH_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
+    - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-mys3cr3t}  # openssl rand -base64 32
+    - MS_GRAPH_CLIENT_ID=${MS_GRAPH_CLIENT_ID}
+    - MS_GRAPH_CLIENT_SECRET=${MS_GRAPH_CLIENT_SECRET}
+    - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID}
+    - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET}
+    - EMAIL_FROM=${EMAIL_FROM:-notifications@example.com}
+    - EMAIL_SERVER_HOST=${EMAIL_SERVER_HOST:-smtp.example.com}
+    - EMAIL_SERVER_PORT=${EMAIL_SERVER_PORT:-587}
+    - EMAIL_SERVER_USER=${EMAIL_SERVER_USER:-email_user}
+    - EMAIL_SERVER_PASSWORD=${EMAIL_SERVER_PASSWORD:-password}
+    - CALENDSO_ENCRYPTION_KEY=${CALENDSO_ENCRYPTION_KEY:-mys3cr3t}  # openssl rand -base64 24
+    - CALCOM_TELEMETRY_DISABLED=${CALCOM_TELEMETRY_DISABLED:-1}
+    - GOOGLE_API_CREDENTIALS=${GOOGLE_API_CREDENTIALS}
+    - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+    - DOMAIN=${DOMAIN:-calendso.localhost}
+
+services:
+  docker:
+    <<: *calendso
+    image: docker:dind
+    entrypoint: /bin/ash
+    command:
+      - -c
+      - |
+        docker image inspect calendso:$${DOMAIN} && exit 0
+        apk add git
+        git clone https://github.com/calcom/docker
+        cd docker
+        git submodule update --init
+        sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/v2/LicenseRequired.tsx
+        docker build \
+        --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
+        --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
+        --build-arg NEXTAUTH_SECRET=$${NEXTAUTH_SECRET} \
+        --build-arg CALENDSO_ENCRYPTION_KEY=$${CALENDSO_ENCRYPTION_KEY} \
+        --build-arg DATABASE_URL=$${DATABASE_URL} \
+        --network $${STACK_NAME}_internal \
+        --no-cache -t calendso:$${DOMAIN} .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+  calendso:
+    <<: *calendso
+    image: calendso:${DOMAIN-calendso.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.calendso-${NUMBER:-1}.rule=Host(`${DOMAIN:-calendso.localhost}`)
+        - traefik.http.routers.calendso-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.calendso-${NUMBER:-1}.service=calendso-${NUMBER:-1}
+        - traefik.http.routers.calendso-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.calendso-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=calendso
+      - POSTGRES_USER=calendso
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "calendso", "-d", "calendso"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
