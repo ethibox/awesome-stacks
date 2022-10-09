@@ -23,7 +23,7 @@ x-defaults: &defaults
 services:
   back:
     <<: *defaults
-    image: dockertaiga/back:${VERSION:-6.3}
+    image: dockertaiga/back:${VERSION:-6.5}
     volumes:
       - ${VOLUME_PATH}media:/taiga-media
     networks:
@@ -31,7 +31,7 @@ services:
 
   front:
     <<: *defaults
-    image: dockertaiga/front:${VERSION:-6.3}
+    image: dockertaiga/front:${VERSION:-6.5}
     networks:
       - internal
 
