@@ -1,5 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c focalboard.yml focalboard
-# chown -R 2000:2000 config/ data/ plugins/
+# chown -R 65534:65534 data/
 
 version: '3.8'
 
@@ -8,7 +8,6 @@ services:
     image: mattermost/focalboard:${VERSION:-7.4.1}
     volumes:
       - ${VOLUME_PATH}data:/data
-      - ${VOLUME_PATH}config:/opt/focalboard
     deploy:
       labels:
         - traefik.enable=true
@@ -22,7 +21,6 @@ services:
       - traefik
 
 volumes:
-  config:
   data:
 
 networks:
