@@ -13,11 +13,12 @@ x-calendso: &calendso
     - NEXT_PUBLIC_WEBSITE_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
     - NEXTAUTH_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
     - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-mys3cr3t}  # openssl rand -base64 32
+    - NEXT_PUBLIC_IS_E2E=true
     - MS_GRAPH_CLIENT_ID=${MS_GRAPH_CLIENT_ID}
     - MS_GRAPH_CLIENT_SECRET=${MS_GRAPH_CLIENT_SECRET}
     - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID}
     - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET}
-    - EMAIL_FROM=${SMTP_FROM:-notifications@example.com}
+    - EMAIL_FROM=${SMTP_FROM:-noreply@example.com}
     - EMAIL_SERVER_HOST=${SMTP_HOST:-smtp.example.com}
     - EMAIL_SERVER_PORT=${SMTP_PORT:-587}
     - EMAIL_SERVER_USER=${SMTP_USER:-email_user}
