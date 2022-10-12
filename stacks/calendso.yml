@@ -17,11 +17,11 @@ x-calendso: &calendso
     - MS_GRAPH_CLIENT_SECRET=${MS_GRAPH_CLIENT_SECRET}
     - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID}
     - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET}
-    - EMAIL_FROM=${EMAIL_FROM:-notifications@example.com}
-    - EMAIL_SERVER_HOST=${EMAIL_SERVER_HOST:-smtp.example.com}
-    - EMAIL_SERVER_PORT=${EMAIL_SERVER_PORT:-587}
-    - EMAIL_SERVER_USER=${EMAIL_SERVER_USER:-email_user}
-    - EMAIL_SERVER_PASSWORD=${EMAIL_SERVER_PASSWORD:-password}
+    - EMAIL_FROM=${SMTP_FROM:-notifications@example.com}
+    - EMAIL_SERVER_HOST=${SMTP_HOST:-smtp.example.com}
+    - EMAIL_SERVER_PORT=${SMTP_PORT:-587}
+    - EMAIL_SERVER_USER=${SMTP_USER:-email_user}
+    - EMAIL_SERVER_PASSWORD=${SMTP_PASSWORD:-password}
     - CALENDSO_ENCRYPTION_KEY=${CALENDSO_ENCRYPTION_KEY:-mys3cr3t}  # openssl rand -base64 24
     - CALCOM_TELEMETRY_DISABLED=${CALCOM_TELEMETRY_DISABLED:-1}
     - GOOGLE_API_CREDENTIALS=${GOOGLE_API_CREDENTIALS}
@@ -42,6 +42,7 @@ services:
         cd docker
         git submodule update --init
         sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/v2/LicenseRequired.tsx
+        sed -i -e 's/cal.com/'$$DOMAIN'/g' calcom/packages/features/ee/teams/pages/team-profile-view.tsx
         docker build \
         --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
         --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
