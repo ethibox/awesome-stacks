@@ -55,7 +55,7 @@ services:
       - DB_DATABASE1=invoiceninja
       - MULTI_DB_ENABLED=false
       - PRECONFIGURED_INSTALL=true
-      - MAIL_HOST=${MAIL_HOST:-mail.service.host}
+      - MAIL_HOST=${MAIL_HOST:-smtp.example.com}
       - MAIL_USERNAME=${MAIL_USERNAME:-username}
       - MAIL_PASSWORD=${MAIL_PASSWORD:-password}
       - MAIL_PORT=${MAIL_PORT:-587}

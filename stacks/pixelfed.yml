@@ -38,7 +38,7 @@ services:
       - REDIS_PORT=6379
 
       - MAIL_DRIVER=${MAIL_DRIVER:-log}
-      - MAIL_HOST=${MAIL_HOST:-mail.service.host}
+      - MAIL_HOST=${MAIL_HOST:-smtp.example.com}
       - MAIL_PORT=${MAIL_PORT:-587}
       - MAIL_USERNAME=${MAIL_USERNAME:-username}
       - MAIL_PASSWORD=${MAIL_PASSWORD:-password}

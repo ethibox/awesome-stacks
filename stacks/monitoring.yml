@@ -9,7 +9,7 @@ services:
     environment:
       - GF_SMTP_ENABLED=true
       - GF_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
-      - GF_SMTP_HOST=${SMTP_HOST:-mail.service.host:587}
+      - GF_SMTP_HOST=${SMTP_HOST:-smtp.example.com:587}
       - GF_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
       - GF_SMTP_USER=${SMTP_USERNAME:-noreply@example.com}
       - GF_SERVER_ROOT_URL=${SCHEME:-https}://${DOMAIN:-grafana.localhost}
