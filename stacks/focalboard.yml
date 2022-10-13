@@ -5,7 +5,7 @@ version: '3.8'
 
 services:
   web:
-    image: mattermost/focalboard:${VERSION:-7.4.1}
+    image: mattermost/focalboard:${VERSION:-7.4.2}
     volumes:
       - ${VOLUME_PATH}data:/data
     deploy:
