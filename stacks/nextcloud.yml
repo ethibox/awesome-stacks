@@ -1,6 +1,31 @@
 # DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
+# Don't install Recommanded apps
 
 version: '3.8'
+
+x-nextcloud: &nextcloud
+  environment:
+    - DOMAIN=${DOMAIN:-nextcloud.localhost}
+    - MYSQL_HOST=mariadb
+    - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+    - MYSQL_USER=${MYSQL_USER:-nextcloud}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
+    - FORCE_LANGUAGE=${FORCE_LANGUAGE:-en}
+    - OVERWRITEHOST=${DOMAIN:-nextcloud.localhost}
+    - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
+    - TRUSTED_PROXIES=${TRUSTED_PROXIES:-172.xx.0.x}
+    - REDIS_HOST=redis
+    - REDIS_HOST_PASSWORD=myp@ssw0rd
+    - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
+    - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
+    - OBJECTSTORE_S3_KEY=${OBJECTSTORE_S3_KEY}
+    - OBJECTSTORE_S3_SECRET=${OBJECTSTORE_S3_SECRET}
+    - OBJECTSTORE_S3_PORT=${OBJECTSTORE_S3_PORT}
+    - OBJECTSTORE_S3_SSL=${OBJECTSTORE_S3_SSL}
+    - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
+    - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
+    - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
 
 services:
   nginx:
@@ -40,49 +65,18 @@ services:
       - traefik
 
   app:
-    image: nextcloud:${VERSION:-24-fpm-alpine}
-    command:
-      - /bin/sh
-      - -c
-      - |
-        sleep 10
-        apk add --no-cache sudo supervisor
-        sed -i -e s/\$${PHP_MEMORY_LIMIT}/2048M/g /usr/local/etc/php/conf.d/nextcloud.ini
-        sudo -u www-data php occ --no-warnings db:add-missing-indices -q
-        sudo -u www-data php occ --no-warnings db:add-missing-columns -q
-        sudo -u www-data php occ --no-warnings db:add-missing-primary-keys -q
-        sudo -u www-data php occ --no-warnings db:convert-filecache-bigint -q
-        sudo -u www-data php occ --no-warnings background:cron
-        sudo -u www-data php occ --no-warnings config:system:set force_language --value=$${FORCE_LANGUAGE}
-        sudo -u www-data php occ --no-warnings config:system:set default_phone_region --value=$${FORCE_LANGUAGE}
-        sudo -u www-data php occ --no-warnings app:install richdocuments
-        sudo -u www-data php occ --no-warnings app:enable --force richdocuments
-        sudo -u www-data php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-https}://${DOMAIN:-nextcloud.localhost}"
-        wget -O /supervisord.conf https://raw.githubusercontent.com/nextcloud/docker/master/.examples/dockerfiles/cron/fpm-alpine/supervisord.conf
-        mkdir /var/log/supervisord /var/run/supervisord
-        /usr/bin/supervisord -c /supervisord.conf
-    environment:
-      - DOMAIN=${DOMAIN:-nextcloud.localhost}
-      - MYSQL_HOST=mariadb
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
-      - MYSQL_USER=${MYSQL_USER:-nextcloud}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
-      - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
-      - FORCE_LANGUAGE=${FORCE_LANGUAGE:-en}
-      - OVERWRITEHOST=${DOMAIN:-nextcloud.localhost}
-      - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
-      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-172.xx.0.x}
-      - REDIS_HOST=redis
-      - REDIS_HOST_PASSWORD=myp@ssw0rd
-      - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
-      - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
-      - OBJECTSTORE_S3_KEY=${OBJECTSTORE_S3_KEY}
-      - OBJECTSTORE_S3_SECRET=${OBJECTSTORE_S3_SECRET}
-      - OBJECTSTORE_S3_PORT=${OBJECTSTORE_S3_PORT}
-      - OBJECTSTORE_S3_SSL=${OBJECTSTORE_S3_SSL}
-      - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
-      - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
-      - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
+    <<: *nextcloud
+    image: nextcloud:${VERSION:-25-fpm-alpine}
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    networks:
+      - internal
+      - traefik
+
+  cron:
+    <<: *nextcloud
+    image: nextcloud:${VERSION:-25-fpm-alpine}
+    entrypoint: /cron.sh
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -110,7 +104,7 @@ services:
       - internal
 
   # collabora:
-    # image: collabora/code:6.4.10.10
+    # image: collabora/code:6.4.14.3
     # environment:
       # - extra_params=--o:ssl.enable=false --o:ssl.termination=true
       # - SLEEPFORDEBUGGER=0
