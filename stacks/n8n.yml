@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-0.196.0}
+    image: n8nio/n8n:${VERSION:-0.201.0}
     entrypoint: /bin/sh
     command:
       - -c
@@ -29,6 +29,12 @@ services:
       - N8N_BASIC_AUTH_USER=${ADMIN_USERNAME:-admin}
       - N8N_BASIC_AUTH_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - NODE_FUNCTION_ALLOW_EXTERNAL=${NODE_FUNCTION_ALLOW_EXTERNAL}
+      - N8N_EMAIL_MODE=${N8N_EMAIL_MODE:-smtp}
+      - N8N_SMTP_HOST=${SMTP_HOST}
+      - N8N_SMTP_PORT-${SMTP_PORT:-584}
+      - N8N_SMTP_USER=${SMTP_USER}
+      - N8N_SMTP_PASS=${SMTP_PASSWORD}
+      - N8N_SMTP_SENDER=${SMTP_FROM:-noreply@example.com}
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:
