@@ -1,5 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c mattermost.yml mattermost
 # chown -R 2000:2000 config/ data/ plugins/
+# ./bin/mmctl --local user create --system-admin --email admin@example.com --username admin --password myp@ssw0rd
 
 version: '3.8'
 
@@ -23,6 +24,7 @@ services:
       - MM_PLUGINSETTINGS_ENABLEUPLOADS=${ENABLE_PLUGINS:-true}
       - MM_TEAMSETTINGS_MAXUSERSPERTEAM=${MAXUSERSPERTEAM:-100}
       - MM_SERVICESETTINGS_ENABLEAPICHANNELDELETION=${ENABLEAPICHANNELDELETION:-true}
+      - MM_SERVICESETTINGS_ENABLELOCALMODE=${MM_SERVICESETTINGS_ENABLELOCALMODE:-true}
       - edition=team
     networks:
       - internal
