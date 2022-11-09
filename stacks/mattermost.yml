@@ -30,7 +30,7 @@ services:
       - internal
 
   web:
-    image: mattermost/mattermost-prod-web:${VERSION:-latest}
+    image: mattermost/mattermost-prod-web:latest
     environment:
       - APP_PORT_NUMBER=8065
       - APP_HOST={{ index .Service.Labels "com.docker.stack.namespace" }}_app
