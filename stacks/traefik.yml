@@ -7,6 +7,7 @@ services:
     image: traefik:${VERSION:-v2.8.3}
     command:
       # - --log.level=DEBUG
+      - --api.dashboard=${API_DASHBOARD:-false}
       - --providers.docker
       - --providers.docker.network=traefik-net
       - --providers.docker.exposedByDefault=false
@@ -32,6 +33,12 @@ services:
       - {target: 443, published: 443, mode: host, protocol: tcp}
     deploy:
       mode: ${MODE:-replicated}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.dashboard.rule=Host(`${DOMAIN:-traefik.localhost}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+        - traefik.http.routers.dashboard.service=api@internal
+        - traefik.http.routers.dashboard.middlewares=auth
+        - traefik.http.services.dummy-svc.loadbalancer.server.port=8080
 
 volumes:
   letsencrypt:
