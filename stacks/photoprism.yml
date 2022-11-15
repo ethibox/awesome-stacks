@@ -1,0 +1,57 @@
+# DOMAIN=example.com docker stack deploy -c photoprism.yml photoprism
+# chown -R 1000:1000 photoprism
+
+version: '3.8'
+
+services:
+  photoprism:
+    image: photoprism/photoprism:${VERSION:-latest}
+    environment:
+      - PHOTOPRISM_UID=${UID:-1000}
+      - PHOTOPRISM_GID=${GID:-1000}
+      - PHOTOPRISM_ADMIN_USER=${ADMIN_USER:-admin}
+      - PHOTOPRISM_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - PHOTOPRISM_AUTH_MODE=password
+      - PHOTOPRISM_SITE_URL=${SCHEME:-https}://${DOMAIN:-photoprism.localhost}
+      - PHOTOPRISM_DATABASE_DRIVER=mysql
+      - PHOTOPRISM_DATABASE_SERVER=mariadb:3306
+      - PHOTOPRISM_DATABASE_NAME=photoprism
+      - PHOTOPRISM_DATABASE_USER=photoprism
+      - PHOTOPRISM_DATABASE_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}photoprism:/go/src/github.com/photoprism/photoprism
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.photoprism-${NUMBER:-1}.rule=Host(`${DOMAIN:-photoprism.localhost}`)
+        - traefik.http.routers.photoprism-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.photoprism-${NUMBER:-1}.service=photoprism-${NUMBER:-1}
+        - traefik.http.routers.photoprism-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.photoprism-${NUMBER:-1}.loadbalancer.server.port=2342
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-10.5.12}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=${MYSQL_USER:-photoprism}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-photoprism}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  photoprism:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
