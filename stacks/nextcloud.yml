@@ -1,5 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
 # Don't install Recommanded apps
+# php occ user:add -g admin <username> # Add admin user
+# php occ app:update --all # Update all apps
 
 version: '3.8'
 
@@ -66,7 +68,7 @@ services:
 
   app:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-25.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-25-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -75,7 +77,7 @@ services:
 
   cron:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-25.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-25-fpm-alpine}
     entrypoint: /cron.sh
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
