@@ -1,4 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c mastodon.yml mastodon
+# chown -R 991:991 system/
 # docker exec -it mastodon_web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
 # docker exec -it mastodon_web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
 # tootctl accounts modify --role Owner <username> # Set owner role
@@ -35,7 +36,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-4.0.0rc2}
+    image: tootsuite/mastodon:${VERSION:-v4.0.2}
     command: bash -c "chown -R 991:991 /mastodon/public/system; rm -f /mastodon/tmp/pids/server.pid; rails db:migrate; rails assets:precompile; rails s -p 3000"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
@@ -55,7 +56,7 @@ services:
 
   streaming:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-4.0.0rc2}
+    image: tootsuite/mastodon:${VERSION:-v4.0.2}
     command: node ./streaming
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
@@ -73,7 +74,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-4.0.0rc2}
+    image: tootsuite/mastodon:${VERSION:-v4.0.2}
     command: bundle exec sidekiq
     volumes:
       - ${VOLUME_PATH}system:/mastodon/public/system
