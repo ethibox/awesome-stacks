@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   grafana:
-    image: grafana/grafana:8.1.2
+    image: grafana/grafana:8.5.15
     user: root
     environment:
       - GF_SMTP_ENABLED=true
@@ -28,7 +28,7 @@ services:
       - traefik
 
   prometheus:
-    image: prom/prometheus:v2.29.2
+    image: prom/prometheus:v2.40.2
     entrypoint: /bin/sh
     command:
       - -c
@@ -54,13 +54,14 @@ services:
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth
-        - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROMETHEUS_USER:-admin}:${PROMETHEUS_PASSWORD:-htpasswd}  # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+        - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROM_USER:-admin}:${PROM_PASSWORD:-htpasswd}
+        # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
     networks:
       - internal
       - traefik
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.40.0
+    image: gcr.io/cadvisor/cadvisor:v0.46.0
     command: -docker_only=true
     volumes:
       - /:/rootfs:ro
@@ -73,7 +74,7 @@ services:
       - internal
 
   node-exporter:
-    image: prom/node-exporter:v1.2.2
+    image: prom/node-exporter:v1.4.0
     hostname: "{{.Node.Hostname}}"
     volumes:
       - /sys:/host/sys:ro
