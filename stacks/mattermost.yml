@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   app:
-    image: mattermost/mattermost-team-edition:${VERSION:-7.1}
+    image: mattermost/mattermost-team-edition:${VERSION:-release-7.5}
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
       - ${VOLUME_PATH}config:/mattermost/config
@@ -47,7 +47,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
     environment:
       - POSTGRES_DB=mattermost
       - POSTGRES_USER=mattermost
