@@ -9,7 +9,8 @@ services:
       - /bin/sh
       - -c
       - |
-        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx-matomo.conf
+        cp /etc/nginx/nginx-matomo.conf /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
         nginx -g 'daemon off;'
     environment:
       - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
@@ -29,7 +30,7 @@ services:
       - traefik
 
   app:
-    image: matomo:${VERSION:-4.10.1-fpm-alpine}
+    image: matomo:${VERSION:-4.12.3-fpm-alpine}
     environment:
       - MATOMO_DATABASE_USERNAME=matomo
       - MATOMO_DATABASE_DBNAME=matomo
@@ -42,7 +43,7 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-10.5.9}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
