@@ -1312,8 +1312,8 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/baserow.yml"
             },
-            "website": "https://baserow.io/"
-        },
+            "website": "https://baserow.io/",
+            "env": [
                 {
                     "name": "SMTP_FROM",
                     "preset": true
@@ -1334,6 +1334,8 @@
                     "name": "SMTP_PORT",
                     "default": "587",
                     "preset": true
+                }
+            ]
         }
     ]
 }
