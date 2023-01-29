@@ -1,4 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c invidious.yml invidious
+# admin@example.com:changeme! # Default account
+# chown -R 1000:82 data/ storage/
+# chown -R 1500:1500 data/ storage/
 
 version: '3.8'
 
@@ -34,7 +37,7 @@ services:
       - traefik
 
   app:
-    image: invoiceninja/invoiceninja:${VERSION:-5.2.17}
+    image: invoiceninja/invoiceninja:${VERSION:-5.5.64}
     cap_add:
       - SYS_ADMIN
     volumes:
