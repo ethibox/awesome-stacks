@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c invidious.yml invidious
-# admin@example.com:changeme! # Default account
 # chown -R 1000:82 data/ storage/
 # chown -R 1500:1500 data/ storage/
 
@@ -20,7 +19,7 @@ services:
     environment:
       - NGINX_ROOT_PATH=/var/www/app/public
       - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
-      - HTTPS=${HTTPS:-0}
+      - HTTPS=${HTTPS:-1}
     volumes:
       - ${VOLUME_PATH}storage:/var/www/app/storage
       - ${VOLUME_PATH}data:/var/www/app/public
@@ -48,7 +47,7 @@ services:
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=${SCHEME:-https}://${DOMAIN:-invoiceninja.localhost}
-      - REQUIRE_HTTPS=${REQUIRE_HTTPS:-false}
+      - REQUIRE_HTTPS=${REQUIRE_HTTPS:-true}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_CIPHER=AES-256-CBC
       - LOCK_SENT_INVOICES=${LOCK_SENT_INVOICES:-false}
@@ -66,6 +65,8 @@ services:
       - MAIL_DRIVER=${MAIL_DRIVER:-smtp}
       - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-admin@example.com}
+      - IN_USER_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - IN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
     networks:
       - internal
 
