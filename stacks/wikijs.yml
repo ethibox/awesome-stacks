@@ -4,14 +4,14 @@ version: '3.8'
 
 services:
   web:
-    image: requarks/wiki:${VERSION:-2.5.278}
+    image: requarks/wiki:${VERSION:-2.5.295}
     environment:
-      - DB_TYPE=postgres
-      - DB_HOST=postgres
-      - DB_PORT=5432
+      - DB_TYPE=mysql
+      - DB_HOST=mariadb
+      - DB_PORT=3306
       - DB_USER=wikijs
-      - DB_PASS=myp@ssw0rd
       - DB_NAME=wikijs
+      - DB_PASS=myp@ssw0rd
     deploy:
       labels:
         - traefik.enable=true
@@ -24,19 +24,20 @@ services:
       - internal
       - traefik
 
-  postgres:
-    image: postgres:12-alpine
-    environment:
-      - POSTGRES_DB=wikijs
-      - POSTGRES_USER=wikijs
-      - POSTGRES_PASSWORD=myp@ssw0rd
+  mariadb:
+    image: mariadb:10.5.9
     volumes:
-      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-wikijs}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-wikijs}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
     networks:
       - internal
 
 volumes:
-  postgres:
+  mariadb:
 
 networks:
   internal:
