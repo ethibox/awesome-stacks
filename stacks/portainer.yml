@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   portainer:
-    image: ${IMAGE:-portainer/portainer-ce}:${VERSION:-2.16.2-alpine}
+    image: ${IMAGE:-portainer/portainer-ce}:${VERSION:-2.17.0-alpine}
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     volumes:
       - ${VOLUME_PATH}portainer:/data
@@ -23,7 +23,7 @@ services:
       - traefik
 
   agent:
-    image: portainer/agent:${VERSION:-2.16.2-alpine}
+    image: portainer/agent:${VERSION:-2.17.0-alpine}
     environment:
       - AGENT_CLUSTER_ADDR=tasks.agent
     volumes:
