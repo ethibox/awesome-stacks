@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: minio/minio:${VERSION:-latest}
+    image: minio/minio:${VERSION:-RELEASE.2022-10-24T18-35-07Z}
     command: server /data --console-address ":9001"
     volumes:
       - ${VOLUME_PATH}data:/data
