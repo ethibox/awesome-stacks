@@ -4,13 +4,20 @@ version: '3.8'
 
 services:
   nocodb:
-    image: nocodb/nocodb:${VERSION:-0.97.0}
+    image: nocodb/nocodb:${VERSION:-0.104.3}
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:8080 || exit 1"]
     environment:
       - NC_DB=pg://postgres:5432?u=nocodb&p=myp@ssw0rd&d=nocodb
       - NC_PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-nocodb.localhost}
       - NC_DISABLE_TELE=true
+      - NC_INVITE_ONLY_SIGNUP=${NC_INVITE_ONLY_SIGNUP:-true}
+      - NC_SMTP_FROM=${SMTP_FROM:-noreply@example.com}
+      - NC_SMTP_HOST=${SMTP_HOST:-smtp.example.com}
+      - NC_SMTP_PORT=${SMTP_PORT:-587}
+      - NC_SMTP_USERNAME=${SMTP_USERNAME:-noreply@example.com}
+      - NC_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
+      - NC_SMTP_SECURE=${SMTP_SECURE:-true}
     deploy:
       labels:
         - traefik.enable=true
