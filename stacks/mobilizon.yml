@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   web:
-    image: framasoft/mobilizon:${VERSION:-2.0.0}
+    image: framasoft/mobilizon:${VERSION:-3.0.3}
     volumes:
       - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
     environment:
@@ -25,7 +25,7 @@ services:
       - MOBILIZON_SMTP_SERVER=${SMTP_HOST}
       - MOBILIZON_SMTP_HOSTNAME=${SMTP_HOST}
       - MOBILIZON_SMTP_PORT=${SMTP_PORT:-587}
-      - MOBILIZON_SMTP_SSL=${SMTP_SSL:-true}
+      - MOBILIZON_SMTP_SSL=${SMTP_SSL:-false}
       - MOBILIZON_SMTP_USERNAME=${SMTP_USERNAME}
       - MOBILIZON_SMTP_PASSWORD=${SMTP_PASSWORD}
     command: >
