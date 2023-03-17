@@ -4,19 +4,21 @@ version: '3.8'
 
 services:
   app:
-    image: listmonk/listmonk:${VERSION:-v2.0.0}
+    image: listmonk/listmonk:${VERSION:-v2.3.0}
     command:
       - /bin/sh
       - -c
       - |
-        sed -i "s/host = \"localhost\"/host = \"postgres\"/g" config.toml
-        sed -i "s/password = \"listmonk\"/password = \"myp@ssw0rd\"/g" config.toml
-        sed -i "s/address = \"localhost:9000\"/address = \"0.0.0.0:9000\"/g" config.toml
-        sed -i 's/admin_username = "listmonk"/# admin_username = "listmonk"/g' config.toml
-        sed -i 's/admin_password = "myp@ssw0rd"/# admin_password = "myp@ssw0rd"/g' config.toml
         # ./listmonk --install --yes  # Uncomment on first deploy
+        rm config.toml
+        ./listmonk --new-config
         ./listmonk
     environment:
+      - LISTMONK_app__admin_username=${ADMIN_USERNAME:-admin}
+      - LISTMONK_app__admin_password=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - LISTMONK_app__address=0.0.0.0:9000
+      - LISTMONK_db__host=postgres
+      - LISTMONK_db__password=myp@ssw0rd
       - POSTGRES_DB=listmonk
       - POSTGRES_USER=listmonk
       - POSTGRES_PASSWORD=myp@ssw0rd
@@ -28,9 +30,7 @@ services:
         - traefik.http.routers.listmonk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.listmonk-${NUMBER:-1}.service=listmonk-${NUMBER:-1}
         - traefik.http.routers.listmonk-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.routers.listmonk-${NUMBER:-1}.middlewares=listmonk-${NUMBER:-1}-auth
         - traefik.http.services.listmonk-${NUMBER:-1}.loadbalancer.server.port=9000
-        - traefik.http.middlewares.listmonk-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-$2y$10$E5lNmViXms.QSoB.9NfhZeXeWuJAiCBBED8HKl9AxmOjwQswS8ema}  # admin:myp@ssw0rd
     networks:
       - internal
       - traefik
