@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   app:
-    image: listmonk/listmonk:${VERSION:-v2.3.0}
+    image: listmonk/listmonk:${VERSION:-v2.4.0}
     command:
       - /bin/sh
       - -c
@@ -12,6 +12,7 @@ services:
         # ./listmonk --install --yes  # Uncomment on first deploy
         rm config.toml
         ./listmonk --new-config
+        # ./listmonk --upgrade --yes # Uncomment to upgrade
         ./listmonk
     environment:
       - LISTMONK_app__admin_username=${ADMIN_USERNAME:-admin}
