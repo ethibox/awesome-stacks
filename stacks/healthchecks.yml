@@ -23,6 +23,7 @@ services:
       - EMAIL_HOST_USER=${SMTP_USER}
       - EMAIL_PORT=${SMTP_PORT:-587}
       - EMAIL_USE_TLS=${SMTP_TLS:-True}
+      - EMAIL_USE_SSL=${SMTP_SSL:-False}
       - EMAIL_USE_VERIFICATION=True
       - PING_EMAIL_DOMAIN=${DOMAIN:-healthchecks.localhost}
       - PING_ENDPOINT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}/ping/
