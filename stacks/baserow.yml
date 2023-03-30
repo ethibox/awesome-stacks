@@ -1,0 +1,33 @@
+# DOMAIN=example.com docker stack deploy -c baserow.yml baserow
+
+version: "3.7"
+services:
+  baserow:
+    image: baserow/baserow:${VERSION:-1.13.3}
+    container_name: baserow
+    labels:
+        - traefik.enable=true
+        - traefik.http.routers.baserow-${NUMBER:-1}.rule=Host(`${DOMAIN:-baserow.localhost}`)
+    environment:
+      - BASEROW_PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-baserow.localhost}
+      - FROM_EMAIL={SMTP_FROM:-admin@example.com}
+      - EMAIL_SMTP=${SMTP_USER}
+      - EMAIL_SMTP_HOST=${SMTP_HOST}
+      - EMAIL_SMTP_PORT=${SMTP_PORT:-587}
+      - EMAIL_SMTP_USER=${SMTP_USER}
+      - EMAIL_SMTP_PASSWORD=${SMTP_PASSWORD}
+    volumes:
+      - ${VOLUME_PATH}baserow:/baserow/data
+    networks:
+      - internal
+      - traefik
+volumes:
+  baserow:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1295,6 +1295,47 @@
                 "stackfile": "stacks/nocodb.yml"
             },
             "website": "https://www.nocodb.com/"
+        },
+        {
+            "type": 2,
+            "title": "Baserow",
+            "description": "Une autre alternative à Airtable, une base de données sans code.",
+            "categories": [
+                "Spreadsheet"
+            ],
+            "enabled": false,
+            "price": 19,
+            "trial": 7,
+            "auto": true,
+            "logo": "https://i.imgur.com/mKCySE7.jpg",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/baserow.yml"
+            },
+            "website": "https://baserow.io/",
+            "env": [
+                {
+                    "name": "SMTP_FROM",
+                    "preset": true
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "preset": true
+                },
+                {
+                    "name": "SMTP_USER",
+                    "preset": true
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "preset": true
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "default": "587",
+                    "preset": true
+                }
+            ]
         }
     ]
 }
