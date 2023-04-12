@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   passbolt:
-    image: passbolt/passbolt:${VERSION:-3.2.1-2-ce}
+    image: passbolt/passbolt:${VERSION:-3.12.0-3-ce}
     command:
       - /bin/sh
       - -c
@@ -30,8 +30,7 @@ services:
     tmpfs:
       - /run
     volumes:
-      - ${VOLUME_PATH}gpg:/var/www/passbolt/config/gpg
-      - ${VOLUME_PATH}images:/var/www/passbolt/webroot/img/public
+      - ${VOLUME_PATH}gpg:/etc/passbolt/gpg
     deploy:
       labels:
         - traefik.enable=true
@@ -58,7 +57,6 @@ services:
 
 volumes:
   gpg:
-  images:
   mariadb:
 
 networks:
