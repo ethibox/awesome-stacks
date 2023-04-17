@@ -36,7 +36,7 @@ services:
       - traefik
 
   app:
-    image: invoiceninja/invoiceninja:${VERSION:-5.5.64}
+    image: invoiceninja/invoiceninja:${VERSION:-5.5.104}
     cap_add:
       - SYS_ADMIN
     volumes:
