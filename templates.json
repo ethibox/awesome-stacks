@@ -5,34 +5,28 @@
             "type": 2,
             "title": "SuiteCRM",
             "description": "Application de gestion de la relation client open-source.",
-            "categories": [
-                "CRM"
-            ],
+            "categories": ["CRM", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/3lvjIbM.png",
+            "website": "https://suitecrm.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/suitecrm.yml"
             },
-            "website": "https://suitecrm.com",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
-                    "label": "Admin email",
-                    "default": "admin@example.com"
+                    "preset": true
                 },
                 {
                     "name": "ADMIN_USERNAME",
                     "label": "Admin username",
-                    "default": "admin",
+                    "value": "admin",
                     "disabled": true
                 },
                 {
                     "name": "ADMIN_PASSWORD",
                     "label": "Admin password",
-                    "default": "myp@ssw0rd",
                     "type": "password",
                     "disabled": true
                 }
@@ -41,18 +35,14 @@
         {
             "title": "Wikijs",
             "description": "Une application wiki open-source, moderne et puissante.",
-            "categories": [
-                "Wiki"
-            ],
+            "categories": ["Wiki", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/a6GELLc.png",
+            "website": "https://wiki.js.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/wikijs.yml"
             },
-            "website": "https://wiki.js.org",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -72,18 +62,14 @@
             "type": 2,
             "title": "Passbolt",
             "description": "Passbolt est un gestionnaire de mot de passe open source pour les équipes. Il permet de partager et de stocker en toute sécurité les informations d'identification.",
-            "categories": [
-                "Gestionnaire de mot de passe"
-            ],
+            "categories": ["Password manager", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/S6GsK8U.png",
+            "website": "https://www.passbolt.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/passbolt.yml"
             },
-            "website": "https://www.passbolt.com",
             "env": [
                 {
                     "name": "PASSBOLT_REGISTRATION_PUBLIC",
@@ -91,13 +77,12 @@
                     "type": "select",
                     "select": [
                         {
-                            "text": "Non",
-                            "value": "false",
-                            "default": "false"
-                        },
-                        {
                             "text": "Oui",
                             "value": "true"
+                        },
+                        {
+                            "text": "Non",
+                            "value": "false"
                         }
                     ]
                 },
@@ -119,7 +104,7 @@
                 },
                 {
                     "name": "SMTP_PORT",
-                    "default": "587",
+                    "value": 587,
                     "preset": true
                 }
             ]
@@ -128,65 +113,52 @@
             "type": 2,
             "title": "Matomo",
             "description": "Matomo est un logiciel libre et open source de mesure de statistiques web.",
-            "categories": [
-                "Analytics"
-            ],
+            "categories": ["Analytics"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/cp7xpLM.jpg",
+            "website": "https://matomo.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/matomo.yml"
-            },
-            "website": "https://matomo.org"
+            }
         },
         {
             "type": 2,
             "title": "Zammad",
             "description": "Zammad est un système de support client / helpdesk open source basé sur le web.",
-            "categories": [
-                "Helpdesk"
-            ],
+            "categories": ["Helpdesk"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/DdGF1Sh.png",
+            "website": "https://zammad.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/zammad.yml"
-            },
-            "website": "https://zammad.org"
+            }
         },
         {
             "type": 2,
             "title": "Invoice-ninja",
             "description": "Invoice Ninja est une application libre et open-source pour la facturation de vos clients.",
-            "categories": [
-                "Facturation"
-            ],
+            "categories": ["Facturation"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/r6TPGAZ.jpg",
+            "website": "https://www.invoiceninja.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/invoiceninja.yml"
             },
-            "website": "https://www.invoiceninja.com",
             "env": [
                 {
-                    "name": "REQUIRE_HTTPS",
-                    "value": "true",
-                    "preset": true
+                    "name": "ADMIN_EMAIL",
+                    "type": "email",
+                    "label": "Admin email",
+                    "disabled": true
                 },
                 {
-                    "name": "HTTPS",
-                    "value": "1",
-                    "preset": true
+                    "name": "ADMIN_PASSWORD",
+                    "type": "password",
+                    "label": "Admin password",
+                    "disabled": true
                 },
                 {
                     "name": "APP_KEY",
@@ -231,6 +203,21 @@
                     "name": "MAIL_FROM_ADDRESS",
                     "label": "SMTP From Address",
                     "type": "email"
+                },
+                {
+                    "name": "LOCK_SENT_INVOICES",
+                    "label": "Autoriser la modification des factures",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "Oui",
+                            "value": "true"
+                        }
+                    ]
                 }
             ]
         },
@@ -238,35 +225,27 @@
             "type": 2,
             "title": "Element",
             "description": "Element est une application de collaboration open-source qui fournit des services de messagerie, de partage de fichiers et de visioconférence.",
-            "categories": [
-                "Tchat"
-            ],
+            "categories": ["Tchat"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/1QrflaM.png",
+            "website": "https://element.io",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/element.yml"
-            },
-            "website": "https://element.io"
+            }
         },
         {
             "type": 2,
             "title": "Mautic",
             "description": "Mautic est un logiciel d'automatisation du marketing (email, social, etc.)",
-            "categories": [
-                "Marketing"
-            ],
+            "categories": ["Marketing", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/8wl7tBF.png",
+            "website": "https://www.mautic.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/mautic.yml"
             },
-            "website": "https://www.mautic.org",
             "env": [
                 {
                     "name": "ADMIN_USERNAME",
@@ -286,37 +265,27 @@
             "type": 2,
             "title": "Onlyoffice",
             "description": "ONLYOFFICE est une suite bureautique open source qui vous permet de gérer vos documents en ligne.",
-            "categories": [
-                "Editeur"
-            ],
+            "categories": ["Editeur"],
             "enabled": false,
-            "price": 29,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/d5JvLcq.png",
+            "website": "https://www.onlyoffice.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/onlyoffice.yml"
-            },
-            "website": "https://www.onlyoffice.com"
+            }
         },
         {
             "type": 2,
             "title": "Prestashop",
             "description": "PrestaShop est un logiciel de e-commerce libre et open-source.",
-            "categories": [
-                "E-commerce"
-            ],
+            "categories": ["E-commerce", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "adminPath": "/admin-secure/",
             "logo": "https://i.imgur.com/qhLnwBy.png",
+            "website": "https://www.prestashop.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/prestashop.yml"
             },
-            "website": "https://www.prestashop.com",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -344,18 +313,14 @@
             "type": 2,
             "title": "Flarum",
             "description": "Flarum est un logiciel de forum nouvelle génération qui rend les discussions en ligne amusantes.",
-            "categories": [
-                "Forum"
-            ],
+            "categories": ["Forum"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/oUlWx8o.png",
+            "website": "https://flarum.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/flarum.yml"
             },
-            "website": "https://flarum.org",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -375,18 +340,14 @@
             "type": 2,
             "title": "Discourse",
             "description": "Discourse est une plateforme de discussion open source construite pour la prochaine décennie de l'Internet.",
-            "categories": [
-                "Forum"
-            ],
+            "categories": ["Forum"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/KXbPDbg.png",
+            "website": "https://www.discourse.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/discourse.yml"
             },
-            "website": "https://www.discourse.org",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -423,35 +384,27 @@
             "type": 2,
             "title": "Dolibarr",
             "description": "Dolibarr ERP & CRM est un progiciel web moderne et facile à utiliser pour la gestion de votre entreprise.",
-            "categories": [
-                "ERP"
-            ],
+            "categories": ["ERP", "Manual"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/ayV1kB4.png",
+            "website": "https://www.dolibarr.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/dolibarr.yml"
-            },
-            "website": "https://www.dolibarr.org"
+            }
         },
         {
             "type": 2,
             "title": "Mediawiki",
             "description": "MediaWiki est un logiciel wiki libre, à l'origine utilisé par Wikipédia.",
-            "categories": [
-                "Wiki"
-            ],
+            "categories": ["Wiki", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/tilc0nt.png",
+            "website": "https://www.mediawiki.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/mediawiki.yml"
             },
-            "website": "https://www.mediawiki.org",
             "env": [
                 {
                     "name": "ADMIN_USERNAME",
@@ -464,6 +417,20 @@
                     "label": "Admin password",
                     "type": "password",
                     "disabled": true
+                },
+                {
+                    "name": "LDAP_SERVER",
+                    "label": "Server LDAP",
+                    "value": "ldap.example.com"
+                },
+                {
+                    "name": "LDAP_USERNAME",
+                    "label": "Utilisateur LDAP",
+                    "value": "cn=read-only-admin,dc=example,dc=com"
+                },
+                {
+                    "name": "LDAP_PASSWORD",
+                    "label": "Mot de passe LDAP"
                 }
             ]
         },
@@ -471,18 +438,14 @@
             "type": 2,
             "title": "Odoo",
             "description": "Odoo est une suite d'applications d'entreprise distribuées de logiciels libres.",
-            "categories": [
-                "ERP"
-            ],
+            "categories": ["ERP", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/70iKt9a.png",
+            "website": "https://www.odoo.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/odoo.yml"
             },
-            "website": "https://www.odoo.com",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -502,24 +465,18 @@
             "type": 2,
             "title": "Taiga",
             "description": "Taiga est une plateforme de gestion de projet Open Source complète pour les startups et les développeurs agiles.",
-            "categories": [
-                "Gestion de projet"
-            ],
+            "categories": ["Gestion de projet"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
-            "adminPath": "/admin/",
             "logo": "https://i.imgur.com/dCk82vq.png",
+            "website": "https://taiga.io",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/taiga.yml"
             },
-            "website": "https://taiga.io",
             "env": [
                 {
                     "name": "TAIGA_SECRET",
-                    "value": "taiga_s3cr3t",
+                    "value": "mys3cr3t",
                     "preset": true
                 },
                 {
@@ -546,19 +503,14 @@
             "type": 2,
             "title": "Fathom",
             "description": "Fathom Analytics fournit des statistiques de sites Web simples et utiles sans suivre ni stocker les données personnelles de vos utilisateurs.",
-            "categories": [
-                "Analytics"
-            ],
+            "categories": ["Analytics"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/I9vDBEy.png",
+            "website": "https://usefathom.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/fathom.yml"
             },
-            "website": "https://usefathom.com",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -578,20 +530,14 @@
             "type": 2,
             "title": "Ghost",
             "description": "Ghost est une plate-forme entièrement open source et hackable pour la création et l'exploitation d'une publication en ligne moderne.",
-            "categories": [
-                "Blog"
-            ],
+            "categories": ["Blog"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "adminPath": "/ghost",
-            "auto": true,
             "logo": "https://i.imgur.com/aVvA5ow.png",
+            "website": "https://ghost.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/ghost.yml"
             },
-            "website": "https://ghost.org",
             "env": [
                 {
                     "name": "SMTP_HOST",
@@ -617,19 +563,14 @@
             "type": 2,
             "title": "Kanboard",
             "description": "Kanboard est un logiciel de gestion de projet Kanban libre et open source.",
-            "categories": [
-                "Gestion de projet"
-            ],
+            "categories": ["Gestion de projet"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/u2k4Aip.png",
+            "website": "https://kanboard.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/kanboard.yml"
             },
-            "website": "https://kanboard.org",
             "env": [
                 {
                     "name": "ADMIN_USERNAME",
@@ -638,11 +579,49 @@
                     "disabled": true
                 },
                 {
-                    "name": "ADMIN_PASSWORD",
+                    "name": "INITIAL_ADMIN_PASSWORD",
                     "label": "Initial admin password",
                     "type": "password",
                     "value": "admin",
                     "disabled": true
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_ENCRYPTION",
+                    "label": "SMTP Encryption",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "No encryption",
+                            "value": "null"
+                        },
+                        {
+                            "text": "SSL",
+                            "value": "ssl"
+                        },
+                        {
+                            "text": "TLS",
+                            "value": "tls"
+                        }
+                    ]
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP Password",
+                    "type": "password"
                 }
             ]
         },
@@ -650,132 +629,136 @@
             "type": 2,
             "title": "Etherpad",
             "description": "Etherpad est un éditeur en ligne Open Source qui permet une édition collaborative en temps réel.",
-            "categories": [
-                "Editeur"
-            ],
+            "categories": ["Editeur"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/adNS6S5.png",
+            "website": "https://etherpad.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/etherpad.yml"
-            },
-            "website": "https://etherpad.org"
+            }
         },
         {
             "type": 2,
             "title": "Mattermost",
             "description": "Mattermost est un service de discussion instantanée Open source. C'est une alternative open source à Slack.",
-            "categories": [
-                "Tchat"
-            ],
+            "categories": ["Tchat"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/aWStYef.png",
+            "website": "https://mattermost.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/mattermost.yml"
-            },
-            "website": "https://mattermost.com"
+            }
         },
         {
             "type": 2,
             "title": "Nextcloud",
             "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore...",
-            "categories": [
-                "Cloud"
-            ],
+            "categories": ["Cloud"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/ecFVnV8.png",
+            "website": "https://nextcloud.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/nextcloud.yml"
             },
-            "website": "https://nextcloud.com"
+            "env": [
+                {
+                    "name": "OBJECTSTORE_S3_HOST",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_BUCKET",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_KEY",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_SECRET",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_REGION",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_SSL",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_USEPATH_STYLE",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_PORT",
+                    "preset": true
+                },
+                {
+                    "name": "OBJECTSTORE_S3_OBJECT_PREFIX",
+                    "preset": true
+                },
+                {
+                    "name": "FORCE_LANGUAGE",
+                    "value": "fr",
+                    "preset": true
+                }
+            ]
         },
         {
             "type": 2,
             "title": "Rocketchat",
             "description": "Rocket.Chat est un logiciel de discussion en ligne.",
-            "categories": [
-                "Tchat"
-            ],
+            "categories": ["Tchat"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/mTR06gP.png",
+            "website": "https://rocket.chat",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/rocketchat.yml"
-            },
-            "website": "https://rocket.chat"
+            }
         },
         {
             "type": 2,
             "title": "Wekan",
             "description": "Wekan est une alternative open-source à Trello.",
-            "categories": [
-                "Gestion de projet"
-            ],
+            "categories": ["Gestion de projet"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/CGvMmHR.png",
+            "website": "https://wekan.github.io",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/wekan.yml"
-            },
-            "website": "https://wekan.github.io"
+            }
         },
         {
             "type": 2,
             "title": "Wallabag",
             "description": "Wallabag est une application libre et open source pour la sauvegarde de vos pages web.",
-            "categories": [
-                "Bookmark"
-            ],
+            "categories": ["Bookmark"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/64kIbPN.png",
+            "website": "https://www.wallabag.it/fr/",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/wallabag.yml"
-            },
-            "website": "https://www.wallabag.it/fr/"
+            }
         },
         {
             "type": 2,
             "title": "Commento",
             "description": "Un système de commentaires rapide et sans ballonnement pour favoriser la discussion sur votre site Web.",
-            "categories": [
-                "Système de commentaires"
-            ],
+            "categories": ["Système de commentaires"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/9FI6uV2.png",
+            "website": "https://commento.io",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/commento.yml"
             },
-            "website": "https://commento.io",
             "env": [
-                {
-                    "name": "COMMENTO_FORBID_NEW_OWNERS",
-                    "label": "Forbid new owners"
-                },
                 {
                     "name": "SMTP_HOST",
                     "label": "Smtp Host"
@@ -793,6 +776,21 @@
                     "name": "SMTP_FROM",
                     "label": "Smtp from Address",
                     "type": "email"
+                },
+                {
+                    "name": "COMMENTO_FORBID_NEW_OWNERS",
+                    "label": "Désactiver les inscriptions de nouveaux utilisateurs",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "Oui",
+                            "value": "true"
+                        }
+                    ]
                 }
             ]
         },
@@ -800,69 +798,125 @@
             "type": 2,
             "title": "Calibre",
             "description": "Calibre Web est une application Web offrant une interface claire pour la navigation, la lecture et le téléchargement de livres électroniques.",
-            "categories": [
-                "Books"
-            ],
+            "categories": ["Books"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/wYmdUN2.png",
+            "website": "https://github.com/janeczku/calibre-web",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/calibre.yml"
-            },
-            "website": "https://github.com/janeczku/calibre-web"
+            }
         },
         {
             "type": 2,
             "title": "Mastodon",
             "description": "Mastodon est une alternative libre et open-source à Twitter.",
-            "categories": [
-                "Réseau social"
-            ],
+            "categories": ["Réseau social", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/DOv1rxd.png",
+            "website": "https://joinmastodon.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/mastodon.yml"
             },
-            "website": "https://joinmastodon.org"
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "admin",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                },
+                {
+                    "name": "SMTP_SERVER",
+                    "label": "SMTP Server"
+                },
+                {
+                    "name": "SMTP_LOGIN",
+                    "label": "SMTP Login"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP Password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_FROM_ADDRESS",
+                    "label": "SMTP From Address",
+                    "type": "email"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "type": "number"
+                },
+                {
+                    "name": "SECRET_KEY_BASE",
+                    "disabled": true,
+                    "preset": true
+                },
+                {
+                    "name": "OTP_SECRET",
+                    "disabled": true,
+                    "preset": true
+                },
+                {
+                    "name": "VAPID_PRIVATE_KEY",
+                    "disabled": true,
+                    "preset": true
+                },
+                {
+                    "name": "VAPID_PUBLIC_KEY",
+                    "disabled": true,
+                    "preset": true
+                }
+            ]
         },
         {
             "type": 2,
             "title": "Peertube",
             "description": "PeerTube est une alternative libre et open-source à YouTube.",
-            "categories": [
-                "Streaming"
-            ],
+            "categories": ["Streaming"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/1DO4t48.png",
+            "website": "https://joinpeertube.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/peertube.yml"
             },
-            "website": "https://joinpeertube.org",
             "env": [
                 {
                     "name": "HTTPS",
-                    "default": "true",
+                    "value": "true",
                     "preset": true
                 },
                 {
                     "name": "PORT",
-                    "default": "443",
+                    "value": "443",
                     "preset": true
                 },
                 {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "root",
+                    "disabled": true
+                },
+                {
                     "name": "ADMIN_PASSWORD",
-                    "default": "myp@ssw0rd",
-                    "preset": true
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_EMAIL",
+                    "type": "email",
+                    "label": "Admin email",
+                    "disabled": true
                 },
                 {
                     "name": "SMTP_HOSTNAME",
@@ -894,7 +948,7 @@
                     "select": [
                         {
                             "text": "false",
-                            "default": "false"
+                            "value": "false"
                         },
                         {
                             "text": "true",
@@ -908,24 +962,15 @@
             "type": 2,
             "title": "Pixelfed",
             "description": "PixelFed est une alternative libre et open-source à Instagram.",
-            "categories": [
-                "Réseau social"
-            ],
+            "categories": ["Réseau social", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/mBVrouU.png",
+            "website": "https://pixelfed.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/pixelfed.yml"
             },
-            "website": "https://pixelfed.org",
             "env": [
-                {
-                    "name": "APP_ENV",
-                    "value": "production",
-                    "preset": true
-                },
                 {
                     "name": "APP_NAME",
                     "label": "App Name"
@@ -975,7 +1020,11 @@
                 },
                 {
                     "name": "MAIL_FROM_NAME",
-                    "label": "Mail From Name",
+                    "label": "Mail From Name"
+                },
+                {
+                    "name": "MAIL_FROM_ADDRESS",
+                    "label": "Mail From Address",
                     "type": "email"
                 },
                 {
@@ -988,6 +1037,12 @@
                             "value": "smtp"
                         }
                     ]
+                },
+                {
+                    "name": "MAIL_PORT",
+                    "label": "Mail Port",
+                    "value": "587",
+                    "type": "number"
                 },
                 {
                     "name": "ENFORCE_EMAIL_VERIFICATION",
@@ -1010,18 +1065,14 @@
             "type": 2,
             "title": "Lufi",
             "description": "Stocke et chiffre vos données dans votre navigateur et vous permet de les télécharger.",
-            "categories": [
-                "Storage"
-            ],
+            "categories": ["Storage"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/Q4r221x.png",
+            "website": "https://framalibre.org/content/lufi",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/lufi.yml"
             },
-            "website": "https://framalibre.org/content/lufi",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -1047,18 +1098,14 @@
             "type": 2,
             "title": "Polr",
             "description": "Un raccourcisseur d'URL open-source simple et rapide",
-            "categories": [
-                "Raccourcisseur d'url"
-            ],
+            "categories": ["Raccourcisseur d'url"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/KXpAzna.png",
+            "website": "https://polrproject.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/polr.yml"
             },
-            "website": "https://polrproject.org",
             "env": [
                 {
                     "name": "ADMIN_EMAIL",
@@ -1084,18 +1131,14 @@
             "type": 2,
             "title": "Jitsi-Meet",
             "description": "Jitsi Meet vous permet de rester en contact avec toutes vos équipes, qu'elles soient familiales, amicales ou collègues.",
-            "categories": [
-                "Tchat vidéo"
-            ],
+            "categories": ["Tchat vidéo", "Manual"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/9vcfCvU.png",
+            "website": "https://meet.jit.si",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/jitsi.yml"
             },
-            "website": "https://meet.jit.si",
             "env": [
                 {
                     "name": "ADMIN_USERNAME",
@@ -1125,20 +1168,14 @@
             "type": 2,
             "title": "Rainloop",
             "description": "Rainloop est un client de messagerie simple, moderne et rapide basé sur le Web.",
-            "categories": [
-                "Webmail"
-            ],
+            "categories": ["Webmail"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
-            "adminPath": "/?admin",
             "logo": "https://i.imgur.com/4y32ar8.png",
+            "website": "https://www.rainloop.net",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/rainloop.yml"
             },
-            "website": "https://www.rainloop.net",
             "env": [
                 {
                     "name": "ADMIN_USERNAME",
@@ -1159,142 +1196,424 @@
             "type": 2,
             "title": "Gogs",
             "description": "Un service Git auto-hébergé.",
-            "categories": [
-                "Git"
-            ],
+            "categories": ["Git"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/pcAst1V.png",
+            "website": "https://gogs.io",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/gogs.yml"
-            },
-            "website": "https://gogs.io"
+            }
         },
         {
             "type": 2,
             "title": "Sentry",
             "description": "Aidez toutes les équipes logicielles à découvrir, trier et prioriser les erreurs en temps réel.",
-            "categories": [
-                "Dev"
-            ],
+            "categories": ["Dev"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/JzBDS4N.png",
+            "website": "https://sentry.io",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/sentry.yml"
-            },
-            "website": "https://sentry.io"
+            }
         },
         {
             "type": 2,
             "title": "CodiMD",
             "description": "CodiMD vous permet de créer des notes collaboratives en temps réel.",
-            "categories": [
-                "Editeur"
-            ],
+            "categories": ["Editeur"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/tJXNcVZ.png",
+            "website": "https://demo.codimd.org",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/codimd.yml"
             },
-            "website": "https://demo.codimd.org"
+            "env": [
+                {
+                    "name": "CMD_ALLOW_EMAIL_REGISTER",
+                    "label": "CMD_ALLOW_EMAIL_REGISTER",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "true",
+                            "value": "true"
+                        },
+                        {
+                            "text": "false",
+                            "value": "false"
+                        }
+                    ]
+                },
+                {
+                    "name": "CMD_DEFAULT_PERMISSION",
+                    "label": "CMD_DEFAULT_PERMISSION",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "editable",
+                            "value": "editable"
+                        },
+                        {
+                            "text": "freely",
+                            "value": "freely"
+                        },
+                        {
+                            "text": "limited",
+                            "value": "limited"
+                        },
+                        {
+                            "text": "locked",
+                            "value": "locked"
+                        },
+                        {
+                            "text": "protected",
+                            "value": "protected"
+                        },
+                        {
+                            "text": "private",
+                            "value": "private"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "type": 2,
             "title": "Pytition",
             "description": "Un outil libre d’auto‐hébergement de pétitions.",
-            "categories": [
-                "Pétitions"
-            ],
+            "categories": ["Pétitions"],
             "enabled": false,
-            "price": 19,
-            "trial": 7,
             "logo": "https://i.imgur.com/7bcUMxB.png",
+            "website": "https://framalibre.org/content/pytition",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/pytition.yml"
-            },
-            "website": "https://framalibre.org/content/pytition"
+            }
         },
         {
             "type": 2,
             "title": "Metabase",
             "description": "Le moyen le plus rapide et le plus simple de partager des données et des analyses au sein de votre entreprise.",
-            "categories": [
-                "Analytics"
-            ],
+            "categories": ["Analytics"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
             "logo": "https://i.imgur.com/AhEp6lV.png",
+            "website": "https://www.metabase.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/metabase.yml"
+            }
+        },
+        {
+            "type": 2,
+            "title": "Posthog",
+            "description": "Open-source analytics",
+            "categories": ["Analytics"],
+            "enabled": false,
+            "logo": "https://i.imgur.com/hTkK25O.png",
+            "website": "https://posthog.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/posthog.yml"
             },
-            "website": "https://www.metabase.com"
+            "env": [
+                {
+                    "name": "SECRET_KEY",
+                    "value": "",
+                    "preset": true
+                }
+            ]
         },
         {
             "type": 2,
             "title": "Wordpress",
             "description": "WordPress est l'application web la plus utilisé au monde pour créer un beau site web.",
-            "categories": [
-                "Blog"
-            ],
+            "categories": ["Blog"],
             "enabled": true,
-            "price": 19,
-            "trial": 7,
-            "adminPath": "/wp-admin",
-            "auto": true,
             "logo": "https://i.imgur.com/7WXHj55.png",
+            "website": "https://fr.wordpress.com",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/wordpress.yml"
+            }
+        },
+        {
+            "type": 2,
+            "title": "FreeScout",
+            "description": "Helpdesk Open-Source",
+            "categories": ["Helpdesk"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/yxKOhHb.jpg",
+            "website": "https://freescout.net/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/freescout.yml"
             },
-            "website": "https://fr.wordpress.com"
+            "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "label": "Admin email",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "type": "password",
+                    "label": "Admin password",
+                    "disabled": true
+                }
+            ]
+        },
+        {
+            "type": 2,
+            "title": "Mobilizon",
+            "description": "",
+            "categories": ["Événements"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/OX6i2Ji.jpg",
+            "website": "https://framalibre.org/content/mobilizon",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/mobilizon.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "label": "SMTP From"
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_SSL",
+                    "label": "SMTP SSL",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "oui",
+                            "value": "true"
+                        }
+                    ]
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP Password",
+                    "type": "password"
+                }
+            ]
+        },
+        {
+            "type": 2,
+            "title": "Kresus",
+            "description": "Votre gestionnaire de finances personnelles pour vérifier vos comptes, de n'importe quelle banque, en un seul endroit.",
+            "categories": ["Finance"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/GHmCIMY.jpg",
+            "website": "https://kresus.org/fr/index.html",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/kresus.yml"
+            },
+            "env": [
+                {
+                    "name": "SMTP_HOST",
+                    "label": "Smtp Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "Smtp Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "Smtp Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "Smtp Password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "Smtp from Address",
+                    "type": "email"
+                }
+            ]
+        },
+        {
+            "type": 2,
+            "title": "Searx",
+            "description": "Moteur de recherche open-source",
+            "categories": ["Moteur de recherche"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/MBpK9LK.jpg",
+            "website": "https://www.searx.me/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/searx.yml"
+            }
         },
         {
             "type": 2,
             "title": "n8n",
             "description": "Alternative open-source à Zapier",
-            "categories": [
-                "Automatisation"
-            ],
-            "enabled": false,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
+            "categories": ["Automatisation"],
+            "enabled": true,
             "logo": "https://i.imgur.com/HbXTiUF.jpg",
+            "website": "https://n8n.io/",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/n8n.yml"
             },
-            "website": "https://n8n.io/"
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "admin",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_USER",
+                    "label": "SMTP User"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": 587,
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From",
+                    "type": "email"
+                }
+            ]
         },
         {
             "type": 2,
             "title": "NocoDB",
             "description": "Alternative open-source à Airtable",
-            "categories": [
-                "Spreadsheet"
-            ],
-            "enabled": false,
-            "price": 19,
-            "trial": 7,
-            "auto": true,
+            "categories": ["Spreadsheet"],
+            "enabled": true,
             "logo": "https://i.imgur.com/430br17.jpg",
+            "website": "https://www.nocodb.com/",
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/nocodb.yml"
             },
-            "website": "https://www.nocodb.com/"
+            "env": [
+                {
+                    "name": "NC_INVITE_ONLY_SIGNUP",
+                    "label": "Les utilisateurs peuvent s'inscrire",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Oui",
+                            "value": "true"
+                        },
+                        {
+                            "text": "Non",
+                            "value": "false"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": 2,
+            "title": "Calendso",
+            "description": "Alternative open-source à Calendly",
+            "categories": ["Calendar"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/OA6qh1g.jpg",
+            "website": "https://cal.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/calendso.yml"
+            },
+            "env": [
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_USER",
+                    "label": "SMTP User"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From",
+                    "type": "email"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": 587,
+                    "type": "number"
+                }
+            ]
+        },
+        {
+            "type": 2,
+            "title": "Chatwoot",
+            "description": "Alternative open-source à Intercom",
+            "categories": ["Livechat"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/WoW73Oc.jpg",
+            "website": "https://www.chatwoot.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/chatwoot.yml"
+            }
+        },
+        {
+            "type": 2,
+            "title": "Focalboard",
+            "description": "Alternative open-source à Trello",
+            "categories": ["Gestion de projet"],
+            "enabled": true,
+            "logo": "https://i.imgur.com/yg1cgZ2.jpg",
+            "website": "https://www.focalboard.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/focalboard.yml"
+            }
         }
     ]
 }
