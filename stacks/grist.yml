@@ -1,0 +1,27 @@
+# DOMAIN=example.com docker stack deploy -c grist.yml grist
+
+version: '3.8'
+
+services:
+  web:
+    image: gristlabs/grist:${VERSION:-1.0.9}
+    volumes:
+      - ${VOLUME_PATH}grist:/persist
+    environment:
+      - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.grist-${NUMBER:-1}.rule=Host(`${DOMAIN:-grist.localhost}`)
+        - traefik.http.routers.grist-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grist-${NUMBER:-1}.service=grist-${NUMBER:-1}
+        - traefik.http.routers.grist-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.grist-${NUMBER:-1}.loadbalancer.server.port=8484
+
+volumes:
+  grist:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
