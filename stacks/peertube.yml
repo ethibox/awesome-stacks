@@ -6,7 +6,7 @@ services:
   peertube:
     image: chocobozzz/peertube:${VERSION:-v4.3.0-bullseye}
     ports:
-      - target: ${RTMP_PORT:-1935}
+      - target: 1935
         published: ${RTMP_PORT:-1935}
         protocol: tcp
         mode: host
