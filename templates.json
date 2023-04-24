@@ -480,11 +480,6 @@
                     "preset": true
                 },
                 {
-                    "name": "TAIGA_PORT",
-                    "value": "443",
-                    "preset": true
-                },
-                {
                     "name": "ADMIN_USERNAME",
                     "label": "Admin username",
                     "value": "admin",
@@ -702,8 +697,18 @@
                 },
                 {
                     "name": "FORCE_LANGUAGE",
-                    "value": "fr",
-                    "preset": true
+                    "label": "Language",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Fr",
+                            "value": "fr"
+                        },
+                        {
+                            "text": "En",
+                            "value": "en"
+                        }
+                    ]
                 }
             ]
         },
@@ -857,22 +862,18 @@
                 },
                 {
                     "name": "SECRET_KEY_BASE",
-                    "disabled": true,
                     "preset": true
                 },
                 {
                     "name": "OTP_SECRET",
-                    "disabled": true,
                     "preset": true
                 },
                 {
                     "name": "VAPID_PRIVATE_KEY",
-                    "disabled": true,
                     "preset": true
                 },
                 {
                     "name": "VAPID_PUBLIC_KEY",
-                    "disabled": true,
                     "preset": true
                 }
             ]
@@ -881,7 +882,7 @@
             "type": 2,
             "title": "Peertube",
             "description": "PeerTube est une alternative libre et open-source à YouTube.",
-            "categories": ["Streaming"],
+            "categories": ["Streaming", "Manual"],
             "enabled": true,
             "logo": "https://i.imgur.com/1DO4t48.png",
             "website": "https://joinpeertube.org",
@@ -890,16 +891,6 @@
                 "stackfile": "stacks/peertube.yml"
             },
             "env": [
-                {
-                    "name": "HTTPS",
-                    "value": "true",
-                    "preset": true
-                },
-                {
-                    "name": "PORT",
-                    "value": "443",
-                    "preset": true
-                },
                 {
                     "name": "ADMIN_USERNAME",
                     "label": "Admin username",
@@ -1320,7 +1311,6 @@
             "env": [
                 {
                     "name": "SECRET_KEY",
-                    "value": "",
                     "preset": true
                 }
             ]
