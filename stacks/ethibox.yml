@@ -12,7 +12,6 @@ x-ethibox: &ethibox
     - DATABASE_TYPE=${DATABASE_TYPE:-mariadb}
     - WEBHOOK_URL=${WEBHOOK_URL}
     - ROOT_DOMAIN=${ROOT_DOMAIN:-localhost}
-    - NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH}
     - JWT_SECRET=${JWT_SECRET}
 
 services:
