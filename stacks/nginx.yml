@@ -1,0 +1,26 @@
+# DOMAIN=example.com docker stack deploy -c nginx.yml nginx
+
+version: '3.8'
+
+services:
+  nginx:
+    image: ${IMAGE:-nginx:latest}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.nginx-${NUMBER:-1}.rule=Host(`${DOMAIN:-nginx.localhost}`)
+        - traefik.http.routers.nginx-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.nginx-${NUMBER:-1}.service=nginx-${NUMBER:-1}
+        - traefik.http.routers.nginx-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.nginx-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
