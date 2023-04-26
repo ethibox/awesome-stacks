@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   kutt:
-    image: kutt/kutt:${VERSION:-v2.7.3}
+    image: kutt/kutt:${VERSION:-v2.7.4}
     command: ["./wait-for-it.sh", "postgres:5432", "--", "npm", "start"]
     environment:
       - SITE_NAME=${SITE_NAME:-Kutt}
@@ -21,6 +21,7 @@ services:
       - DB_USER=kutt
       - DB_PASSWORD=myp@ssw0rd
       - REDIS_HOST=redis
+      - DISALLOW_REGISTRATION=${DISALLOW_REGISTRATION:-false}
     deploy:
       labels:
         - traefik.enable=true
