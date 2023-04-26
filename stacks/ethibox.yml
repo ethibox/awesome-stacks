@@ -31,7 +31,7 @@ services:
 
   cron:
     <<: *ethibox
-    command: node_modules/.bin/babel-node --config-file ./lib/babel.config.cron.js lib/cron.js
+    command: lib/cron.cjs
     networks:
       - internal
 
