@@ -9,7 +9,7 @@ services:
     image: ethibox/pixelfed:${VERSION:-v0.11.3}
     environment:
       - APP_NAME=${APP_NAME:-PixelFed}
-      - APP_ENV=${APP_ENV:-local}
+      - APP_ENV=${APP_ENV:-production}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=${SCHEME:-https}://${DOMAIN:-pixelfed.localhost}
