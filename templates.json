@@ -1718,6 +1718,21 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/focalboard.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Ntfy",
+            "description": "Alternative open-source à Pushbullet",
+            "categories": ["Notifications"],
+            "enabled": false,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/xklY3FN.png",
+            "website": "https://ntfy.sh/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/ntfy.yml"
+            }
         }
     ]
 }

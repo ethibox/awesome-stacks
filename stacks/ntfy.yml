@@ -1,0 +1,41 @@
+# DOMAIN=example.com docker stack deploy -c ntfy.yml ntfy
+
+version: '3.8'
+
+services:
+  web:
+    image: binwiederhier/ntfy:${VERSION:-v2.4.0}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        touch /var/lib/ntfy/user.db
+        echo 'auth-file: "/var/lib/ntfy/user.db"' > /etc/ntfy/server.yml
+        echo 'auth-default-access: "deny-all"' >> /etc/ntfy/server.yml
+        ntfy user add --role=admin $${ADMIN_USERNAME}
+        ntfy serve
+    environment:
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - NTFY_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}config:/etc/ntfy
+      - ${VOLUME_PATH}data:/var/lib/ntfy
+      - ${VOLUME_PATH}cache:/var/cache/ntfy
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.ntfy-${NUMBER:-1}.rule=Host(`${DOMAIN:-ntfy.localhost}`)
+        - traefik.http.routers.ntfy-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.ntfy-${NUMBER:-1}.service=ntfy-${NUMBER:-1}
+        - traefik.http.routers.ntfy-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.ntfy-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  config:
+  cache:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
