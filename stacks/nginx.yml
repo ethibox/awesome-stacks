@@ -12,7 +12,7 @@ services:
         - traefik.http.routers.nginx-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.nginx-${NUMBER:-1}.service=nginx-${NUMBER:-1}
         - traefik.http.routers.nginx-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.services.nginx-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.services.nginx-${NUMBER:-1}.loadbalancer.server.port=${PORT:-80}
     networks:
       - internal
       - traefik
