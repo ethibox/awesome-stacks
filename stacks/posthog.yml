@@ -3,7 +3,7 @@
 version: '3.8'
 
 x-posthog: &posthog
-  image: posthog/posthog:${VERSION:-release-1.38.0-unstable}
+  image: posthog/posthog:${VERSION:-release-1.43.0}
   environment:
     - DATABASE_URL=postgres://posthog:myp@ssw0rd@postgres:5432/posthog
     - IS_DOCKER=true
@@ -54,7 +54,7 @@ services:
       - internal
 
   clickhouse:
-    image: clickhouse/clickhouse-server:22.3
+    image: clickhouse/clickhouse-server:22.8
     entrypoint: /bin/sh
     command:
       - -c
