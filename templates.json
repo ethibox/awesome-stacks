@@ -455,18 +455,17 @@
                     "disabled": true
                 },
                 {
-                    "name": "LDAP_SERVER",
-                    "label": "Server LDAP",
-                    "value": "ldap.example.com"
+                    "name": "OPENID_PROVIDERURL",
+                    "label": "OpenID Provider URL"
                 },
                 {
-                    "name": "LDAP_USERNAME",
-                    "label": "Utilisateur LDAP",
-                    "value": "cn=read-only-admin,dc=example,dc=com"
+                    "name": "OPENID_CLIENTID",
+                    "label": "OpenID Client ID"
                 },
                 {
-                    "name": "LDAP_PASSWORD",
-                    "label": "Mot de passe LDAP"
+                    "name": "OPENID_CLIENTSECRET",
+                    "label": "OpenID Client Secret",
+                    "type": "password"
                 }
             ]
         },
