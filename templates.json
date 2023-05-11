@@ -526,7 +526,7 @@
                     "disabled": true
                 },
                 {
-                    "name": "ADMIN_PASSWORD",
+                    "name": "INITIAL_ADMIN_PASSWORD",
                     "label": "Initial admin password",
                     "type": "password",
                     "value": "123123",
@@ -1256,7 +1256,7 @@
                     "disabled": true
                 },
                 {
-                    "name": "ADMIN_PASSWORD",
+                    "name": "INITIAL_ADMIN_PASSWORD",
                     "label": "Initial admin password",
                     "type": "password",
                     "value": "12345",
