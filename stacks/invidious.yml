@@ -17,7 +17,7 @@ services:
           port: 5432
           dbname: invidious
         full_refresh: false
-        https_only: false
+        https_only: true
         popular_enabled: false
         default_user_preferences:
           default_home: Trending
