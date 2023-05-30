@@ -5,8 +5,8 @@ version: '3.8'
 services:
   waiting:
     image: nginx:${VERSION:-alpine}
+    entrypoint: /bin/sh
     command:
-      - /bin/sh
       - -c
       - |
         wget -O /usr/share/nginx/html/index.html https://git.io/JEwvw
@@ -15,11 +15,15 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.waiting-${NUMBER:-1}.rule=Host(`${DOMAIN:-waiting.localhost}`)
-        - traefik.http.routers.waiting-${NUMBER:-1}.priority=0
+        - traefik.http.routers.waiting-${NUMBER:-1}.priority=10
         - traefik.http.routers.waiting-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.waiting-${NUMBER:-1}.service=waiting-${NUMBER:-1}
         - traefik.http.routers.waiting-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.waiting-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.routers.waiting-${NUMBER:-1}.middlewares=waiting-${NUMBER:-1}
+        - traefik.http.middlewares.waiting-${NUMBER:-1}.redirectregex.regex=^https?:\/\/(.+?)\/(.+)$$
+        - traefik.http.middlewares.waiting-${NUMBER:-1}.redirectregex.replacement=https://$${1}/
+        - traefik.http.middlewares.waiting-${NUMBER:-1}.redirectregex.permanent=false
 
 networks:
   default:
