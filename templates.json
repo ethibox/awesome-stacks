@@ -702,6 +702,7 @@
             "title": "Nextcloud",
             "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore...",
             "categories": ["Cloud"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
