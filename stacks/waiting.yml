@@ -15,7 +15,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.waiting-${NUMBER:-1}.rule=Host(`${DOMAIN:-waiting.localhost}`)
-        - traefik.http.routers.waiting-${NUMBER:-1}.priority=10
+        - traefik.http.routers.waiting-${NUMBER:-1}.priority=50
         - traefik.http.routers.waiting-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.waiting-${NUMBER:-1}.service=waiting-${NUMBER:-1}
         - traefik.http.routers.waiting-${NUMBER:-1}.tls.certresolver=letsencrypt
