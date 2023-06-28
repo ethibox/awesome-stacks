@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-0.228.2}
+    image: n8nio/n8n:${VERSION:-0.233.1}
     entrypoint: /bin/sh
     command:
       - -c
@@ -17,7 +17,7 @@ services:
       - NODE_ENV=production
       - N8N_PROTOCOL=${SCHEME:-https}
       - N8N_HOST=${DOMAIN:-n8n.localhost}
-      - WEBHOOK_TUNNEL_URL=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
+      - WEBHOOK_URL=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
       - VUE_APP_URL_BASE_API=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
       - DB_TYPE=mariadb
       - DB_MYSQLDB_HOST=mariadb
