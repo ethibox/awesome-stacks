@@ -1767,6 +1767,35 @@
                     "disabled": true
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Nocobase",
+            "description": "Plateforme no-code open-source",
+            "categories": ["Low-code"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/S1zp24t.png",
+            "website": "https://www.nocobase.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/nocobase.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "type": "email",
+                    "label": "Admin email",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }
