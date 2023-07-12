@@ -7,6 +7,8 @@ services:
     image: ethibox/invidious:${VERSION:-latest}
     environment:
       INVIDIOUS_CONFIG: |
+        hmac_key: ${HMAC_KEY:-random_hmac_key}
+        domain: ${DOMAIN:-invidious.localhost}
         channel_threads: 1
         check_tables: true
         feed_threads: 1
