@@ -1,0 +1,26 @@
+# DOMAIN=example.com docker stack deploy -c ipfs.yml ipfs
+
+version: '3.8'
+
+services:
+  web:
+    image: ipfs/kubo:${VERSION:-v0.21.0}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
+        /sbin/tini -- /usr/local/bin/start_ipfs daemon --migrate=true --agent-version-suffix=docker
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.ipfs-${NUMBER:-1}.rule=Host(`${DOMAIN:-ipfs.localhost}`)
+        - traefik.http.routers.ipfs-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.ipfs-${NUMBER:-1}.service=ipfs-${NUMBER:-1}
+        - traefik.http.routers.ipfs-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.ipfs-${NUMBER:-1}.loadbalancer.server.port=8080
+
+networks:
+  default:
+    external: true
+    name: traefik-net
