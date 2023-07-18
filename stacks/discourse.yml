@@ -13,18 +13,19 @@ x-defaults: &defaults
     - DISCOURSE_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     - DISCOURSE_HOST=${DOMAIN:-discourse.localhost}
     - DISCOURSE_PORT=3000
-    - SMTP_HOST=${SMTP_HOST}
-    - SMTP_PORT=${SMTP_PORT}
-    - SMTP_USER=${SMTP_USER}
-    - SMTP_PASSWORD=${SMTP_PASSWORD}
-    - SMTP_TLS=${SMTP_TLS:-yes}
-    - SMTP_AUTH=${SMTP_AUTH:-login}
+    - DISCOURSE_SMTP_HOST=${SMTP_HOST}
+    - DISCOURSE_SMTP_PORT=${SMTP_PORT}
+    - DISCOURSE_SMTP_USER=${SMTP_USER}
+    - DISCOURSE_SMTP_PASSWORD=${SMTP_PASSWORD}
+    - DISCOURSE_SMTP_AUTH=${SMTP_AUTH:-login}
+    - DISCOURSE_SMTP_PROTOCOL=${SMTP_PROTOCOL:-tls}
+    - DISCOURSE_SMTP_ENABLE_START_TLS=${SMTP_TLS:-true}
     - ALLOW_EMPTY_PASSWORD=yes
 
 services:
   discourse:
     <<: *defaults
-    image: bitnami/discourse:${VERSION:-2.8.9}
+    image: bitnami/discourse:${VERSION:-3.0.5}
     volumes:
       - ${VOLUME_PATH}data:/bitnami
     deploy:
@@ -41,7 +42,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: bitnami/discourse:${VERSION:-2.8.9}
+    image: bitnami/discourse:${VERSION:-3.0.5}
     command: /opt/bitnami/scripts/discourse-sidekiq/run.sh
     volumes:
       - ${VOLUME_PATH}sidekiq:/bitnami
