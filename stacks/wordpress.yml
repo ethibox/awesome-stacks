@@ -28,12 +28,13 @@ services:
       - traefik
 
   app:
-    image: wordpress:${VERSION:-6.1.1-fpm-alpine}
+    image: wordpress:${VERSION:-6.3.0-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
       - |
         echo "upload_max_filesize = $$WP_UPLOAD_MAX_FILESIZE" > $$PHP_INI_DIR/conf.d/custom.ini
+        echo "memory_limit = $$WP_MEMORY_LIMIT" >> $$PHP_INI_DIR/conf.d/custom.ini
         docker-entrypoint.sh php-fpm
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
@@ -47,6 +48,7 @@ services:
       WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
       WP_SITEURL: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
       WP_UPLOAD_MAX_FILESIZE: ${WP_UPLOAD_MAX_FILESIZE:-256M}
+      WP_MEMORY_LIMIT: ${WP_MEMORY_LIMIT:-256M}
     networks:
       - internal
 
