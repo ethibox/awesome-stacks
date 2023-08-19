@@ -1796,6 +1796,37 @@
                     "disabled": true
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Bookstack",
+            "description": "Application de gestion des connaissances open source",
+            "categories": ["Connaissances"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/JJ4LnUD.png",
+            "website": "https://bookstackapp.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/bookstack.yml"
+            },
+            "env": [
+                {
+                    "name": "INITIAL_ADMIN_EMAIL",
+                    "label": "Initial admin email",
+                    "type": "email",
+                    "value": "admin@admin.com",
+                    "disabled": true
+                },
+                {
+                    "name": "INITIAL_ADMIN_PASSWORD",
+                    "label": "Initial admin password",
+                    "type": "password",
+                    "value": "password",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }
