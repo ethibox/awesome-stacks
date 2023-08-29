@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c gogocarto.yml gogocarto
+# git clone https://gitlab.com/Seballot/gogocarto/ .
+# make init
+# chown -R www-data:www-data .
+
+version: '3.8'
+
+services:
+  gogocarto:
+    image: ethibox/gogocarto:${VERSION:-latest}
+    environment:
+      - APP_ENV=${APP_ENV:-prod}
+      - APP_DEBUG=${APP_DEBUG:-0}
+      - BASE_PROTOCOL=${SCHEME:-https}
+      - BASE_URL=${DOMAIN:-gogocarto.localhost}
+      - MAILER_URL=${MAILER_URL:-smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=}
+      - FROM_EMAIL=${FROM_EMAIL:-noreply@example.com}
+      - CONTACT_EMAIL=${CONTACT_EMAIL:-noreply@example.com}
+    volumes:
+      - ${VOLUME_PATH}gogocarto:/var/www
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.gogocarto-${NUMBER:-1}.rule=Host(`${DOMAIN:-gogocarto.localhost}`)
+        - traefik.http.routers.gogocarto-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.gogocarto-${NUMBER:-1}.service=gogocarto-${NUMBER:-1}
+        - traefik.http.routers.gogocarto-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.gogocarto-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - traefik
+      - internal
+
+  mongo:
+    image: mongo:4.0.3
+    volumes:
+      - ${VOLUME_PATH}mongo:/data/db
+    networks:
+      - internal
+
+volumes:
+  mongo:
+  gogocarto:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
