@@ -2,14 +2,17 @@
 
 version: '3.8'
 
+x-habitica: &habitica
+  image: ethibox/habitica:${VERSION:-latest}
+  environment:
+    - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@example.com}
+    - BASE_URL=http://server:3000
+    - NODE_DB_URI=mongodb://mongo/habitrpg
+
 services:
-  server:
-    image: habitica/habitica-auto:${VERSION:-4.81.1}
-    command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
-    environment:
-      - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@example.com}
-      - BASE_URL=${SCHEME:-https}://${DOMAIN:-habitica.localhost}
-      - NODE_DB_URI=mongodb://mongo/habitrpg
+  web:
+    <<: *habitica
+    command: npm run client:dev
     deploy:
       labels:
         - traefik.enable=true
@@ -17,9 +20,15 @@ services:
         - traefik.http.routers.habitica-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.habitica-${NUMBER:-1}.service=habitica-${NUMBER:-1}
         - traefik.http.routers.habitica-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.services.habitica-${NUMBER:-1}.loadbalancer.server.port=3000
+        - traefik.http.services.habitica-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - traefik
+      - internal
+
+  server:
+    <<: *habitica
+    command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
+    networks:
       - internal
 
   mongo:
