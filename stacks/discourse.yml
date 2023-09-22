@@ -25,7 +25,7 @@ x-defaults: &defaults
 services:
   discourse:
     <<: *defaults
-    image: bitnami/discourse:${VERSION:-3.1.0}
+    image: bitnami/discourse:${VERSION:-3.1.1}
     volumes:
       - ${VOLUME_PATH}data:/bitnami
     deploy:
@@ -42,7 +42,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: bitnami/discourse:${VERSION:-3.1.0}
+    image: bitnami/discourse:${VERSION:-3.1.1}
     command: /opt/bitnami/scripts/discourse-sidekiq/run.sh
     volumes:
       - ${VOLUME_PATH}sidekiq:/bitnami
