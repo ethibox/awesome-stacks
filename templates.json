@@ -695,7 +695,24 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/mattermost.yml"
-            }
+            },
+            "env": [
+                {
+                    "name": "LOCALE",
+                    "label": "Language",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Fr",
+                            "value": "fr"
+                        },
+                        {
+                            "text": "En",
+                            "value": "en"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "type": 2,
