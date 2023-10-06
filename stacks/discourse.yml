@@ -21,6 +21,9 @@ x-defaults: &defaults
     - DISCOURSE_SMTP_PROTOCOL=${SMTP_PROTOCOL:-tls}
     - DISCOURSE_SMTP_ENABLE_START_TLS=${SMTP_TLS:-true}
     - ALLOW_EMPTY_PASSWORD=yes
+    - GITLAB_APP_ID=${GITLAB_APP_ID}
+    - GITLAB_SECRET=${GITLAB_SECRET}
+    - GITLAB_URL=${GITLAB_URL}
 
 services:
   discourse:

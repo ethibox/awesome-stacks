@@ -407,6 +407,19 @@
                     "name": "SMTP_PORT",
                     "label": "Smtp Port",
                     "type": "number"
+                },
+                {
+                    "name": "GITLAB_APP_ID",
+                    "label": "Gitlab App ID"
+                },
+                {
+                    "name": "GITLAB_SECRET",
+                    "label": "Gitlab Secret",
+                    "type": "password"
+                },
+                {
+                    "name": "GITLAB_URL",
+                    "label": "Gitlab URL"
                 }
             ]
         },
