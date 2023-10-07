@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   metabase:
-    image: metabase/metabase:${VERSION:-v0.46.2}
+    image: metabase/metabase:${VERSION:-v0.47.3}
     deploy:
       labels:
         - traefik.enable=true
