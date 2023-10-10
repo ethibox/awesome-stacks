@@ -24,6 +24,7 @@ x-defaults: &defaults
     - GITLAB_APP_ID=${GITLAB_APP_ID}
     - GITLAB_SECRET=${GITLAB_SECRET}
     - GITLAB_URL=${GITLAB_URL}
+    - BITNAMI_DEBUG=${BITNAMI_DEBUG:-false}
 
 services:
   discourse:
