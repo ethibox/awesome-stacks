@@ -409,6 +409,21 @@
                     "type": "number"
                 },
                 {
+                    "name": "SMTP_AUTH",
+                    "label": "SMTP authentication method",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "login",
+                            "value": "login"
+                        },
+                        {
+                            "text": "plain",
+                            "value": "plain"
+                        }
+                    ]
+                },
+                {
                     "name": "GITLAB_APP_ID",
                     "label": "Gitlab App ID"
                 },
