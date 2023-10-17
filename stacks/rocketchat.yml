@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: rocketchat/rocket.chat:${VERSION:-6.2.10}
+    image: rocketchat/rocket.chat:${VERSION:-6.4.1}
     command: bash -c 'for i in `seq 1 30`; do node --max-old-space-size=4096 main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
     volumes:
       - ${VOLUME_PATH}uploads:/app/uploads
@@ -27,7 +27,7 @@ services:
       - internal
 
   mongo:
-    image: mongo:${MONGO_VERSION:-4.4}
+    image: mongo:${MONGO_VERSION:-5.0}
     command: mongod --oplogSize 128 --replSet rs01
     volumes:
       - ${VOLUME_PATH}mongo:/data/db
@@ -35,7 +35,7 @@ services:
       - internal
 
   mongo-init-replica:
-    image: mongo:${MONGO_VERSION:-4.4}
+    image: mongo:${MONGO_VERSION:-5.0}
     command: 'mongo mongo/rocketchat --eval "rs.initiate({ _id: ''rs01'', members: [ { _id: 0, host: ''mongo:27017'' } ]})"'
     deploy:
       restart_policy:
