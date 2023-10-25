@@ -13,6 +13,8 @@ services:
       - DB_DATABASE=bookstack
       - DB_USERNAME=bookstack
       - DB_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}data:/config
     deploy:
       labels:
         - traefik.enable=true
@@ -39,6 +41,7 @@ services:
 
 volumes:
   mariadb:
+  data:
 
 networks:
   internal:
