@@ -1,16 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c odoo.yml odoo
+# odoo --stop-after-init --no-xmlrpc --no-http -c /etc/odoo/odoo.conf --db_host db --database odoo --db_user odoo --db_password myp@ssw0rd -u all # Upgrade
 
 version: '3.8'
 
 services:
   web:
-    image: odoo:${VERSION:-15.0}
+    image: odoo:${VERSION:-16.0}
     entrypoint: /bin/sh
     user: root
     command:
       - -c
       - |
-        curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/$${VERSION:-15.0}/odoo.conf
+        curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/$${VERSION:-16.0}/odoo.conf
         chown -R 101:101 /etc/odoo /var/lib/odoo
         /entrypoint.sh odoo
     volumes:
@@ -34,20 +35,22 @@ services:
 
   db:
     image: postgres:${POSTGRES_VERSION:-12-alpine}
-    volumes:
-      - ${VOLUME_PATH}db:/var/lib/postgresql/data
     environment:
+      - POSTGRES_USER=odoo
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=myp@ssw0rd
-      - POSTGRES_USER=odoo
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "odoo"]
+    volumes:
+      - ${VOLUME_PATH}db:/var/lib/postgresql/data
     networks:
       - internal
 
 volumes:
+  db:
   odoo:
   config:
   addons:
-  db:
 
 networks:
   internal:
