@@ -35,6 +35,7 @@ services:
       - |
         echo "upload_max_filesize = $$WP_UPLOAD_MAX_FILESIZE" > $$PHP_INI_DIR/conf.d/custom.ini
         echo "memory_limit = $$WP_MEMORY_LIMIT" >> $$PHP_INI_DIR/conf.d/custom.ini
+        echo "post_max_size = $$WP_POST_MAX_SIZE" >> $$PHP_INI_DIR/conf.d/custom.ini
         docker-entrypoint.sh php-fpm
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
@@ -50,6 +51,7 @@ services:
       WP_SITEURL: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
       WP_UPLOAD_MAX_FILESIZE: ${WP_UPLOAD_MAX_FILESIZE:-256M}
       WP_MEMORY_LIMIT: ${WP_MEMORY_LIMIT:-256M}
+      WP_POST_MAX_SIZE: ${WP_POST_MAX_SIZE:-256M}
     networks:
       - internal
 
