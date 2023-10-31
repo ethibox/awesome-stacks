@@ -28,7 +28,7 @@ services:
       - traefik
 
   app:
-    image: wordpress:${VERSION:-6.3.0-fpm-alpine}
+    image: wordpress:${VERSION:-6-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
@@ -42,6 +42,7 @@ services:
       WORDPRESS_DB_HOST: mariadb
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-myp@ssw0rd}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_HOME', getenv('WP_HOME'));
         define('WP_SITEURL', getenv('WP_SITEURL'));
