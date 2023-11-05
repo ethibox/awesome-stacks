@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: tiredofit/freescout:${VERSION:-1.15.16}
+    image: tiredofit/freescout:${VERSION:-php7.4-1.17.42}
     volumes:
       - ${VOLUME_PATH}data:/data
       - ${VOLUME_PATH}logs:/www/logs
@@ -18,8 +18,8 @@ services:
       - SITE_URL=${SCHEME-https}://${DOMAIN:-freescout.localhost}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
-      - ENABLE_SSL_PROXY=TRUE
-      - DISPLAY_ERRORS=FALSE
+      - ENABLE_SSL_PROXY=${ENABLE_SSL_PROXY:-true}
+      - DISPLAY_ERRORS=${DISPLAY_ERRORS:-false}
       - TIMEZONE=Europe/Paris
     deploy:
       labels:
