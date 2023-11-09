@@ -20,6 +20,7 @@ x-defaults: &defaults
     - DISCOURSE_SMTP_AUTH=${SMTP_AUTH:-login}
     - DISCOURSE_SMTP_PROTOCOL=${SMTP_PROTOCOL:-tls}
     - DISCOURSE_SMTP_ENABLE_START_TLS=${SMTP_TLS:-true}
+    - DISCOURSE_NOTIFICATION_EMAIL=${SMTP_FROM:-noreply@example.com}
     - ALLOW_EMPTY_PASSWORD=yes
     - GITLAB_APP_ID=${GITLAB_APP_ID}
     - GITLAB_SECRET=${GITLAB_SECRET}
@@ -29,7 +30,7 @@ x-defaults: &defaults
 services:
   discourse:
     <<: *defaults
-    image: bitnami/discourse:${VERSION:-3.1.1}
+    image: bitnami/discourse:${VERSION:-3.1.3}
     volumes:
       - ${VOLUME_PATH}data:/bitnami
     deploy:
@@ -46,7 +47,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: bitnami/discourse:${VERSION:-3.1.1}
+    image: bitnami/discourse:${VERSION:-3.1.3}
     command: /opt/bitnami/scripts/discourse-sidekiq/run.sh
     volumes:
       - ${VOLUME_PATH}sidekiq:/bitnami

@@ -409,6 +409,11 @@
                     "type": "number"
                 },
                 {
+                    "name": "SMTP_FROM",
+                    "label": "Smtp From",
+                    "type": "email"
+                },
+                {
                     "name": "SMTP_AUTH",
                     "label": "SMTP authentication method",
                     "type": "select",
