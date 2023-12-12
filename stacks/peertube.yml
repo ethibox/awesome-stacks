@@ -5,7 +5,7 @@ version: '3.8'
 
 services:
   peertube:
-    image: chocobozzz/peertube:${VERSION:-v5.2.1-bullseye}
+    image: chocobozzz/peertube:${VERSION:-v6.0.2-bookworm}
     ports:
       - target: 1935
         published: ${RTMP_PORT:-1935}
