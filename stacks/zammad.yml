@@ -1,18 +1,36 @@
 # DOMAIN=example.com docker stack deploy -c zammad.yml zammad
 # sudo sysctl -w vm.max_map_count=262144
 # echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
-# chown -R 1000:1000 elasticsearch zammad
+# chown -R 1000:1000 elasticsearch storage var
 
 version: '3.8'
 
+x-zammad: &zammad
+  image: zammad/zammad-docker-compose:${VERSION:-6.2.0-10}
+  volumes:
+    - ${VOLUME_PATH}storage:/opt/zammad/storage
+    - ${VOLUME_PATH}var:/opt/zammad/var
+  environment:
+    - NGINX_SERVER_SCHEME=${SCHEME:-https}
+    - POSTGRESQL_DB=zammad
+    - POSTGRESQL_USER=zammad
+    - POSTGRESQL_PASS=myp%40ssw0rd
+    - POSTGRESQL_HOST=zammad-postgresql
+    - REDIS_URL=redis://zammad-redis:6379
+  networks:
+    - internal
+
 services:
+  zammad-init:
+    <<: *zammad
+    command: ["zammad-init"]
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   zammad-nginx:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.2.1-48}
+    <<: *zammad
     command: ["zammad-nginx"]
-    environment:
-      - NGINX_SERVER_SCHEME=${SCHEME:-https}
-    volumes:
-      - ${VOLUME_PATH}zammad:/opt/zammad
     deploy:
       labels:
         - traefik.enable=true
@@ -28,7 +46,7 @@ services:
       - internal
 
   zammad-elasticsearch:
-    image: zammad/zammad-docker-compose:zammad-elasticsearch-${VERSION:-5.2.1-48}
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-5.2.3-32
     environment:
       - discovery.type=single-node
     volumes:
@@ -40,64 +58,49 @@ services:
     networks:
       - internal
 
-  zammad-init:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.2.1-48}
-    command: ["zammad-init"]
-    volumes:
-      - ${VOLUME_PATH}zammad:/opt/zammad
-    environment:
-      - POSTGRESQL_PASS=myp@ssw0rd
-      - POSTGRESQL_DB=zammad
-    deploy:
-      restart_policy:
-        condition: on-failure
-    networks:
-      - internal
-
   zammad-memcached:
-    image: memcached:1.5.22-alpine
+    image: memcached:1.6.20-alpine
     command: memcached -m 256M
     networks:
       - internal
 
   zammad-postgresql:
-    image: postgres:12-alpine
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
     command: postgres -c 'max_connections=250'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "zammad"]
     volumes:
       - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
     environment:
+      - POSTGRES_DB=zammad
       - POSTGRES_USER=zammad
       - POSTGRES_PASSWORD=myp@ssw0rd
-      - POSTGRES_DB=zammad
+    networks:
+      - internal
+
+  zammad-redis:
+    image: redis:${REDIS_VERSION:-7.0.5-alpine}
+    volumes:
+      - ${VOLUME_PATH}redis:/data
     networks:
       - internal
 
   zammad-railsserver:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.2.1-48}
+    <<: *zammad
     command: ["zammad-railsserver"]
-    volumes:
-      - ${VOLUME_PATH}zammad:/opt/zammad
-    networks:
-      - internal
 
   zammad-scheduler:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.2.1-48}
+    <<: *zammad
     command: ["zammad-scheduler"]
-    volumes:
-      - ${VOLUME_PATH}zammad:/opt/zammad
-    networks:
-      - internal
 
   zammad-websocket:
-    image: zammad/zammad-docker-compose:zammad-${VERSION:-5.2.1-48}
+    <<: *zammad
     command: ["zammad-websocket"]
-    volumes:
-      - ${VOLUME_PATH}zammad:/opt/zammad
-    networks:
-      - internal
 
 volumes:
-  zammad:
+  var:
+  redis:
+  storage:
   elasticsearch:
   postgresql:
 
