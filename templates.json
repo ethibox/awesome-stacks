@@ -1894,6 +1894,21 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/gogocarto.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Appsmith",
+            "description": "Appsmith est un outil Nocode open-source pour créer des applications web et des tableaux de bord.",
+            "categories": ["Low-code"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/BAY6klX.png",
+            "website": "https://appsmith.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/appsmith.yml"
+            }
         }
     ]
 }

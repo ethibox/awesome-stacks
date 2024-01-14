@@ -1,0 +1,25 @@
+# DOMAIN=example.com docker stack deploy -c appsmith.yml appsmith
+
+version: '3.8'
+
+services:
+  web:
+    image: appsmith/appsmith-ce:${VERSION:-v1.9.58}
+    volumes:
+      - ${VOLUME_PATH}data:/stacks:/appsmith-stacks
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.appsmith-${NUMBER:-1}.rule=Host(`${DOMAIN:-appsmith.localhost}`)
+        - traefik.http.routers.appsmith-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.appsmith-${NUMBER:-1}.service=appsmith-${NUMBER:-1}
+        - traefik.http.routers.appsmith-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.appsmith-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
