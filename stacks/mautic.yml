@@ -28,7 +28,7 @@ services:
       - traefik
 
   app:
-    image: mautic/mautic:${VERSION:-v3-fpm}
+    image: mautic/mautic:${VERSION:-v4-fpm}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     environment:
