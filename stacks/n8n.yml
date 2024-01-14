@@ -1,10 +1,11 @@
 # DOMAIN=example.com docker stack deploy -c n8n.yml n8n
+# chown -R 1000:1000 n8n
 
 version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-1.2.1}
+    image: n8nio/n8n:${VERSION:-1.22.6}
     environment:
       - NODE_ENV=production
       - N8N_PROTOCOL=${SCHEME:-https}

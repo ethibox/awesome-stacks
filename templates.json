@@ -1619,6 +1619,7 @@
             "title": "n8n",
             "description": "Alternative open-source à Zapier",
             "categories": ["Automatisation"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
@@ -1657,7 +1658,7 @@
                 {
                     "name": "SMTP_PORT",
                     "label": "SMTP Port",
-                    "value": 587,
+                    "value": "587",
                     "type": "number"
                 },
                 {
