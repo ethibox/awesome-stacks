@@ -6,6 +6,11 @@ services:
   strapi:
     image: ${IMAGE:-strapi/strapi}:${VERSION:-latest}
     environment:
+      - APP_KEYS=${APP_KEYS}
+      - API_TOKEN_SALT=${API_TOKEN_SALT}
+      - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+      - TRANSFER_TOKEN_SALT=${TRANSFER_TOKEN_SALT}
+      - JWT_SECRET=${JWT_SECRET}
       - DATABASE_CLIENT=mysql
       - DATABASE_HOST=mariadb
       - DATABASE_PORT=3306
