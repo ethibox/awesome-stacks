@@ -24,8 +24,6 @@ services:
 
   agent:
     image: portainer/agent:${VERSION:-2.19.4-alpine}
-    environment:
-      - AGENT_CLUSTER_ADDR=tasks.agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
