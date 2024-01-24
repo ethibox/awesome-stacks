@@ -2,14 +2,14 @@
 
 Deploy 110+ open-source web apps with one Docker command.
 
-## Features
+## ✨ Features
 
 - [x] Traefik compatibility
 - [x] Portainer compatibility
 - [x] No need to manage configuration files
 - [x] Distributed storage compatibility (GlusterFS, Ceph, NFS) with the env `VOLUME_PATH=/mnt/storage_mountpoint/`
 
-## Get started
+## 🚀 Get started
 
 ```bash
 # 1. Deploy traefik
@@ -28,7 +28,7 @@ DOMAIN=<mydomain.com> docker stack deploy -c <stack.yml> <name>
 DOMAIN=ghost.example.com docker stack deploy -c stacks/ghost.yml ghost
 ```
 
-## Support me
+## 🎁 Support me
 
 I'd love to work on this project, but my time on this earth is limited, support my work to give me more time!
 
@@ -42,7 +42,7 @@ Please support me with a one-time or a monthly donation and help me continue my 
 [![Mastodon](https://img.shields.io/mastodon/follow/1631?domain=https%3A%2F%2Fmastodon.ethibox.fr&style=social)](https://mastodon.ethibox.fr/@johackim)
 [![Twitter](https://img.shields.io/twitter/follow/_johackim?style=social)](https://twitter.com/_johackim)
 
-## License
+## 📜 License
 
 This project is licensed under the GNU GPL v3.0 - see the [LICENSE.txt](https://raw.githubusercontent.com/ethibox/awesome-stacks/master/LICENSE.txt) file for details
 
