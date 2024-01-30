@@ -4,7 +4,10 @@ version: '3.8'
 
 services:
   gitlab:
-    image: gitlab/gitlab-ce:${VERSION:-13.12.10-ce.0}
+    image: gitlab/gitlab-ce:${VERSION:-16.5.8-ce.0}
+    environment:
+      - GITLAB_ROOT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - GITLAB_ROOT_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}data:/var/opt/gitlab
       - ${VOLUME_PATH}logs:/var/log/gitlab
