@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   app:
-    image: listmonk/listmonk:${VERSION:-v2.5.1}
+    image: listmonk/listmonk:${VERSION:-v3.0.0}
     command:
       - /bin/sh
       - -c
