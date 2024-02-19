@@ -1,0 +1,29 @@
+# DOMAIN=example.com docker stack deploy -c collabora.yml collabora
+
+version: '3.8'
+
+services:
+  collabora:
+    image: collabora/code:${VERSION:-23.05.9.1.1}
+    environment:
+      - domain=${ALLOWED_DOMAINS:-.*}
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.collabora-${NUMBER:-1}.rule=Host(`${DOMAIN:-collabora.localhost}`)
+        - traefik.http.routers.collabora-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.collabora-${NUMBER:-1}.service=collabora-${NUMBER:-1}
+        - traefik.http.routers.collabora-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.collabora-${NUMBER:-1}.loadbalancer.server.port=9980
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
