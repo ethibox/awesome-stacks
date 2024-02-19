@@ -4,7 +4,8 @@
 # php occ app:update --all # Update all apps
 # php occ --no-warnings app:install richdocuments
 # php occ --no-warnings app:enable --force richdocuments
-# php occ --no-warnings config:app:set richdocuments wopi_url --value="${SCHEME:-https}://${DOMAIN:-nextcloud.localhost}"
+# php occ --no-warnings config:app:set richdocuments wopi_url --value="https://collabora.localhost"
+# php occ --no-warnings config:app:set richdocuments wopi_allowlist --value=10.0.0.0/8
 
 version: '3.8'
 
@@ -39,8 +40,7 @@ services:
       - /bin/sh
       - -c
       - |
-        cp /etc/nginx/nginx-collabora.conf /etc/nginx/nginx.conf
-        # cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf
+        cp /etc/nginx/nginx-nextcloud.conf /etc/nginx/nginx.conf
         sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
         nginx -g 'daemon off;'
     environment:
@@ -107,17 +107,6 @@ services:
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'
     networks:
       - internal
-
-  # collabora:
-    # image: collabora/code:6.4.14.3
-    # environment:
-      # - extra_params=--o:ssl.enable=false --o:ssl.termination=true
-      # - SLEEPFORDEBUGGER=0
-      # - domain=${DOMAIN:-nextcloud.localhost}
-      # - username=${NEXTCLOUD_ADMIN_USER:-admin}
-      # - password=${NEXTCLOUD_ADMIN_PASSWORD:-myp@ssw0rd}
-    # networks:
-      # - internal
 
 volumes:
   nextcloud:
