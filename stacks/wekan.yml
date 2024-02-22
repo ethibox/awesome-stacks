@@ -4,13 +4,13 @@ version: '3.8'
 
 services:
   wekan:
-    image: wekanteam/wekan:${VERSION:-v5.71}
+    image: wekanteam/wekan:${VERSION:-v7.31}
     environment:
       - MONGO_URL=mongodb://mongo:27017/wekan
       - VIRTUAL_HOST=${DOMAIN:-wekan.localhost}
       - ROOT_URL=${SCHEME:-https}://${DOMAIN:-wekan.localhost}
-      - MAIL_URL=${MAIL_URL}
-      - MAIL_FROM=${MAIL_FROM}
+      - MAIL_URL=${MAIL_URL} # smtp://user:password@example.com:587
+      - MAIL_FROM=${MAIL_FROM} # noreply@example.com
     deploy:
       labels:
         - traefik.enable=true
