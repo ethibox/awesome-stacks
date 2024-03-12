@@ -1,25 +1,42 @@
 # DOMAIN=example.com docker stack deploy -c pytition.yml pytition
+# python3 /code/pytition/manage.py createsuperuser
 
 version: '3.8'
 
 services:
   web:
-    image: ethibox/pytition:${VERSION:-2.3}
+    image: ethibox/pytition:${VERSION:-2.6}
     command:
       - /bin/sh
       - -c
       - |
-        apt-get update && apt-get install -y netcat
+        apt-get update && apt-get install -y netcat-traditional
         while ! nc -z db 5432; do echo "waiting for postgres to start..." && sleep 1; done;
         cp /code/pytition/pytition/settings/config_example.py /config/docker_config.py
         touch /config/__init__.py
         sed -i -e 's/localhost/'$$DOMAIN'/g' /config/docker_config.py
         /code/dev/generate_docker_config.sh
+        sed -i '/EMAIL_HOST/d' /config/docker_config.py
+        sed -i '/EMAIL_PORT/d' /config/docker_config.py
+        echo 'CSRF_TRUSTED_ORIGINS=["'$$CSRF_TRUSTED_ORIGINS'"]' >> /config/docker_config.py
+        echo 'EMAIL_HOST="'$$EMAIL_HOST'"' >> /config/docker_config.py
+        echo 'EMAIL_PORT='$$EMAIL_PORT'' >> /config/docker_config.py
+        echo 'EMAIL_HOST_USER="'$$EMAIL_HOST_USER'"' >> /config/docker_config.py
+        echo 'EMAIL_HOST_PASSWORD="'$$EMAIL_HOST_PASSWORD'"' >> /config/docker_config.py
+        echo 'EMAIL_USE_TLS='$$EMAIL_USE_TLS'' >> /config/docker_config.py
+        echo 'DEFAULT_FROM_EMAIL="'$$DEFAULT_FROM_EMAIL'"' >> /config/docker_config.py
         python3 /code/pytition/manage.py migrate
         python3 /code/pytition/manage.py collectstatic
         python3 /code/pytition/manage.py compilemessages
         python pytition/manage.py runserver 0.0.0.0:8000
     environment:
+      - EMAIL_HOST=${SMTP_HOST}
+      - EMAIL_PORT=${SMTP_PORT:-587}
+      - EMAIL_HOST_USER=${SMTP_USER}
+      - EMAIL_USE_TLS=${SMTP_TLS:-True}
+      - EMAIL_HOST_PASSWORD=${SMTP_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
+      - CSRF_TRUSTED_ORIGINS=${SCHEME:-https}://${DOMAIN:-pytition.localhost}
       - DJANGO_SETTINGS_MODULE=config.docker_config
       - PYTHONPATH=/
       - DOMAIN=${DOMAIN:-pytition.localhost}
@@ -39,7 +56,7 @@ services:
       - traefik
 
   db:
-    image: postgres:12-alpine
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
     volumes:
       - ${VOLUME_PATH}db:/var/lib/postgresql/data
     environment:
