@@ -6,7 +6,7 @@ services:
   web:
     image: ghcr.io/open-webui/open-webui:main
     environment:
-      - OLLAMA_API_BASE_URL=${OLLAMA_API_BASE_URL:-http://ollama:11434/api}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
       - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
     volumes:
       - ${VOLUME_PATH}data:/app/backend/data
