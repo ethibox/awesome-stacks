@@ -1,0 +1,58 @@
+# DOMAIN=example.com docker stack deploy -c glitchtip.yml glitchtip
+# ./manage.py migrate
+
+version: '3.8'
+
+services:
+  web:
+    image: glitchtip/glitchtip:${VERSION:-v3.4}
+    environment:
+      - GLITCHTIP_DOMAIN=${SCHEME:-https}://${DOMAIN:-glitchtip.localhost}
+      - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
+      - EMAIL_URL=smtp://${SMTP_USER}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT}
+      - DEFAULT_FROM_EMAIL=${SMTP_FROM}
+    volumes: 
+      - ${VOLUME_PATH}uploads:/code/uploads
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.glitchtip-${NUMBER:-1}.rule=Host(`${DOMAIN:-glitchtip.localhost}`)
+        - traefik.http.routers.glitchtip-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.glitchtip-${NUMBER:-1}.service=glitchtip-${NUMBER:-1}
+        - traefik.http.routers.glitchtip-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.glitchtip-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - traefik
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=glitchtip
+      - POSTGRES_USER=glitchtip
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "glitchtip"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  uploads:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
