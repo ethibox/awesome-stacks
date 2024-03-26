@@ -5,7 +5,7 @@ version: '3.8'
 
 services:
   kanboard:
-    image: kanboard/kanboard:${VERSION:-v1.2.23}
+    image: kanboard/kanboard:${VERSION:-v1.2.35}
     environment:
       - PLUGIN_INSTALLER=true
       - MAIL_TRANSPORT=${MAIL_TRANSPORT:-smtp}
