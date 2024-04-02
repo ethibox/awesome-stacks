@@ -73,7 +73,7 @@ services:
 
   app:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-28-fpm-alpine}
+    image: nextcloud:${VERSION:-28.0.4-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -82,7 +82,7 @@ services:
 
   cron:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-28-fpm-alpine}
+    image: nextcloud:${VERSION:-28.0.4-fpm-alpine}
     entrypoint: /cron.sh
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
