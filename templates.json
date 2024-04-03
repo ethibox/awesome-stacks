@@ -448,8 +448,7 @@
             "title": "Dolibarr",
             "description": "Dolibarr ERP & CRM est un progiciel web moderne et facile à utiliser pour la gestion de votre entreprise.",
             "categories": ["ERP"],
-            "manual": true,
-            "enabled": false,
+            "enabled": true,
             "trial": 7,
             "price": 19,
             "logo": "https://i.imgur.com/ayV1kB4.png",
@@ -457,7 +456,22 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/dolibarr.yml"
-            }
+            },
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "admin",
+                    "disabled": true
+                },
+                {
+                    "name": "INITIAL_ADMIN_PASSWORD",
+                    "label": "Initial admin password",
+                    "type": "password",
+                    "value": "dolibarr",
+                    "disabled": true
+                }
+            ]
         },
         {
             "type": 2,
@@ -1909,6 +1923,36 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/appsmith.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Dokos",
+            "description": "Plateforme de gestion d'entreprise open-source",
+            "categories": ["ERP"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/wxofSzi.png",
+            "website": "https://dokos.io/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/dokos.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "Administrator",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }
