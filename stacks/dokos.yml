@@ -1,4 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c dokos.yml dokos
+# chown -R 1000:1000 sites/
 # bench new-site dokos.localhost
 
 version: '3.8'
@@ -9,6 +10,7 @@ services:
     entrypoint: /bin/sh -c
     command:
       - >
+        ls -1 apps > sites/apps.txt;
         bench set-config -g db_host mariadb;
         bench set-config -gp db_port 3306;
         bench set-config -g redis_cache "redis://redis-cache";
