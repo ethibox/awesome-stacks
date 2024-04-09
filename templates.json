@@ -1953,6 +1953,22 @@
                     "disabled": true
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Plausible",
+            "description": "Plausible est une alternative open-source à Google Analytics",
+            "categories": ["Analytics"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/HzPfjFr.png",
+            "website": "https://plausible.io/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/plausible.yml"
+            }
         }
     ]
 }
