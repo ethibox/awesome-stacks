@@ -1,18 +1,20 @@
 # DOMAIN=example.com docker stack deploy -c glitchtip.yml glitchtip
-# ./manage.py migrate
 
 version: '3.8'
 
+x-glitchtip: &glitchtip
+  image: glitchtip/glitchtip:${VERSION:-v4.0}
+  environment:
+    - GLITCHTIP_DOMAIN=${SCHEME:-https}://${DOMAIN:-glitchtip.localhost}
+    - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
+    - EMAIL_URL=smtp://${SMTP_USER}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT}
+    - DEFAULT_FROM_EMAIL=${SMTP_FROM}
+  volumes:
+    - ${VOLUME_PATH}uploads:/code/uploads
+
 services:
   web:
-    image: glitchtip/glitchtip:${VERSION:-v3.4}
-    environment:
-      - GLITCHTIP_DOMAIN=${SCHEME:-https}://${DOMAIN:-glitchtip.localhost}
-      - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
-      - EMAIL_URL=smtp://${SMTP_USER}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT}
-      - DEFAULT_FROM_EMAIL=${SMTP_FROM}
-    volumes: 
-      - ${VOLUME_PATH}uploads:/code/uploads
+    <<: *glitchtip
     deploy:
       labels:
         - traefik.enable=true
@@ -23,6 +25,21 @@ services:
         - traefik.http.services.glitchtip-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - traefik
+      - internal
+
+  worker:
+    <<: *glitchtip
+    command: ./bin/run-celery-with-beat.sh
+    networks:
+      - internal
+
+  migrate:
+    <<: *glitchtip
+    command: ./manage.py migrate
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
       - internal
 
   redis:
