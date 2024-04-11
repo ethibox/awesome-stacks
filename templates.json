@@ -1890,6 +1890,36 @@
                     "type": "password",
                     "value": "password",
                     "disabled": true
+                },
+                {
+                    "name": "ALLOW_ROBOTS",
+                    "label": "Autoriser les robots",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Oui",
+                            "value": "true"
+                        },
+                        {
+                            "text": "Non",
+                            "value": "false"
+                        }
+                    ]
+                },
+                {
+                    "name": "APP_VIEWS_BOOKS",
+                    "label": "Vue des livres par défaut",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Grille",
+                            "value": "grid"
+                        },
+                        {
+                            "text": "Liste",
+                            "value": "list"
+                        }
+                    ]
                 }
             ]
         },
