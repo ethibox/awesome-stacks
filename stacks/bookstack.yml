@@ -7,14 +7,16 @@ services:
     image: ghcr.io/linuxserver/bookstack:${VERSION:-latest}
     environment:
       - APP_URL=${SCHEME:-https}://${DOMAIN:-bookstack.localhost}
+      - ALLOW_ROBOTS=${ALLOW_ROBOTS:-true}
       - APP_VIEWS_BOOKS=${APP_VIEWS_BOOKS:-grid}
+      - APP_VIEWS_BOOKSHELF=${APP_VIEWS_BOOKS:-grid}
+      - APP_VIEWS_BOOKSHELVES=${APP_VIEWS_BOOKS:-grid}
       - DB_CONNECTION=mysql
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_DATABASE=bookstack
       - DB_USERNAME=bookstack
       - DB_PASSWORD=myp@ssw0rd
-      - ALLOW_ROBOTS=${ALLOW_ROBOTS:-true}
     volumes:
       - ${VOLUME_PATH}data:/config
     deploy:
