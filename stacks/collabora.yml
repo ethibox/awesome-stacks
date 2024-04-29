@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   collabora:
-    image: collabora/code:${VERSION:-23.05.9.1.1}
+    image: collabora/code:${VERSION:-24.04.1.4.1}
     environment:
       - domain=${ALLOWED_DOMAINS:-.*}
       - extra_params=--o:ssl.enable=false --o:ssl.termination=true
