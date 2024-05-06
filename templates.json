@@ -226,16 +226,16 @@
                 },
                 {
                     "name": "LOCK_SENT_INVOICES",
-                    "label": "Autoriser la modification des factures",
+                    "label": "Restreindre la modification des factures",
                     "type": "select",
                     "select": [
                         {
-                            "text": "Non",
-                            "value": "false"
-                        },
-                        {
                             "text": "Oui",
                             "value": "true"
+                        },
+                        {
+                            "text": "Non",
+                            "value": "false"
                         }
                     ]
                 }
