@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   web:
-    image: framasoft/mobilizon:${VERSION:-3.0.3}
+    image: framasoft/mobilizon:${VERSION:-4.1.0}
     volumes:
       - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
     environment:
