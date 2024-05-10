@@ -862,7 +862,33 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/wekan.yml"
-            }
+            },
+            "env": [
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP Password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From Address",
+                    "type": "email"
+                }
+            ]
         },
         {
             "type": 2,
