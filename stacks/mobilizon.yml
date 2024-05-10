@@ -1,17 +1,16 @@
 # DOMAIN=example.com docker stack deploy -c mobilizon.yml mobilizon
-# UPDATE "users" SET "role" = 'administrator' WHERE "email" = '<admin@example.com>';
+# mobilizon_ctl users.new "admin@example.com" --admin --password "myp@ssw0rd"
 # chown -R 65534:65534 uploads/
+# Don't change domain name
 
 version: '3.8'
 
 services:
   web:
     image: framasoft/mobilizon:${VERSION:-4.1.0}
-    volumes:
-      - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
     environment:
-      - MIX_ENV=${MIX_ENV:-prod}
       - DOCKER=true
+      - MIX_ENV=${MIX_ENV:-prod}
       - MOBILIZON_INSTANCE_NAME=Mobilizon
       - MOBILIZON_INSTANCE_HOST=${DOMAIN:-mobilizon.localhost}
       - MOBILIZON_INSTANCE_EMAIL=${ADMIN_EMAIL:-admin@example.com}
@@ -28,15 +27,8 @@ services:
       - MOBILIZON_SMTP_SSL=${SMTP_SSL:-false}
       - MOBILIZON_SMTP_USERNAME=${SMTP_USERNAME}
       - MOBILIZON_SMTP_PASSWORD=${SMTP_PASSWORD}
-    command: >
-      sh -c "cd js &&
-      yarn install &&
-      cd ../ &&
-      mix deps.get &&
-      mix compile &&
-      mix ecto.create &&
-      mix ecto.migrate &&
-      mix phx.server"
+    volumes:
+      - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
     deploy:
       labels:
         - traefik.enable=true
@@ -50,7 +42,7 @@ services:
       - traefik
 
   postgres:
-    image: mdillon/postgis:11
+    image: postgis/postgis:${POSTGIS_VERSION:-16-3.4}
     environment:
       - POSTGRES_DB=mobilizon
       - POSTGRES_USER=mobilizon
