@@ -1,57 +1,23 @@
 # DOMAIN=example.com docker stack deploy -c jitsi.yml jitsi
 # prosodyctl --config /config/prosody.cfg.lua register username meet.jitsi password
 
-version: '3.8'
-
 x-defaults: &defaults
   environment:
-    - DISABLE_HTTPS=1
     - TZ=Europe/Paris
+    - JVB_UDP_PORT=${JVB_UDP_PORT:-10000}
+    - JVB_ADVERTISE_IPS=${JVB_ADVERTISE_IPS}
+    - ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX=1
     - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
-    - ENABLE_LETSENCRYPT=0
-    - DOCKER_HOST_ADDRESS=${DOCKER_HOST_ADDRESS}
-
-    - ENABLE_AUTH=${ENABLE_AUTH:-1}
-    - AUTH_TYPE=${AUTH_TYPE:-internal}
-    - ENABLE_GUESTS=${ENABLE_GUESTS:-1}
-
-    - XMPP_DOMAIN=meet.jitsi
-    - XMPP_SERVER=xmpp.meet.jitsi
-    - XMPP_BOSH_URL_BASE=http://xmpp.meet.jitsi:5280
-    - XMPP_AUTH_DOMAIN=auth.meet.jitsi
-    - XMPP_MUC_DOMAIN=muc.meet.jitsi
-    - XMPP_INTERNAL_MUC_DOMAIN=internal-muc.meet.jitsi
-    - XMPP_GUEST_DOMAIN=guest.meet.jitsi
-    - XMPP_MODULES=
-    - XMPP_MUC_MODULES=
-    - XMPP_INTERNAL_MUC_MODULES=
-
-    - JVB_BREWERY_MUC=jvbbrewery
-    - JVB_AUTH_USER=jvb
-    - JVB_AUTH_PASSWORD=myp@ssw0rd
-    - JVB_STUN_SERVERS=meet-jit-si-turnrelay.jitsi.net:443
-    - JVB_TCP_PORT=${JVB_TCP_PORT:-4443}
-    - JVB_PORT=${JVB_UDP_PORT:-10000}
-    - JVB_TCP_MAPPED_PORT=${JVB_TCP_PORT:-4443}
-    - JVB_TCP_HARVESTER_DISABLED=${JVB_TCP_HARVESTER_DISABLED:-false}
-
-    - JICOFO_COMPONENT_SECRET=mys3cr37
-    - JICOFO_AUTH_USER=focus
-    - JICOFO_AUTH_PASSWORD=myp@ssw0rd
-    - JIGASI_XMPP_USER=jigasi
-    - JIGASI_XMPP_PASSWORD=myp@ssw0rd
-    - JIGASI_BREWERY_MUC=jigasibrewery
-    - JIGASI_PORT_MIN=20000
-    - JIGASI_PORT_MAX=20050
-
-    - XMPP_RECORDER_DOMAIN=recorder.meet.jitsi
+    - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
+    - JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD}
+    - JIGASI_XMPP_PASSWORD=${JIGASI_XMPP_PASSWORD}
+    - JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD}
+    - JIBRI_XMPP_PASSWORD=${JIBRI_XMPP_PASSWORD}
 
 services:
   web:
     <<: *defaults
-    image: jitsi/web:${VERSION:-stable-7648-3}
-    healthcheck:
-      test: ["CMD", "wget", "-O", "/tmp/test", "http://localhost/http-bind"]
+    image: jitsi/web:${VERSION:-stable}
     volumes:
       - ${VOLUME_PATH}web:/config
     deploy:
@@ -63,24 +29,22 @@ services:
         - traefik.http.routers.jitsi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.jitsi-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
-      traefik:
-      internal:
-        aliases:
-          - meet.jitsi
+      - traefik
+      - internal
 
   prosody:
     <<: *defaults
-    image: jitsi/prosody:${VERSION:-stable-7648-3}
+    image: jitsi/prosody:${VERSION:-stable}
     volumes:
       - ${VOLUME_PATH}prosody:/config
     networks:
       internal:
         aliases:
-          - xmpp.meet.jitsi
+          - ${XMPP_SERVER:-xmpp.meet.jitsi}
 
   jicofo:
     <<: *defaults
-    image: jitsi/jicofo:${VERSION:-stable-7648-3}
+    image: jitsi/jicofo:${VERSION:-stable}
     volumes:
       - ${VOLUME_PATH}jicofo:/config
     networks:
@@ -88,32 +52,22 @@ services:
 
   jvb:
     <<: *defaults
-    image: jitsi/jvb:${VERSION:-stable-7648-3}
+    image: jitsi/jvb:${VERSION:-stable}
+    volumes:
+      - ${VOLUME_PATH}jvb:/config
     ports:
       - target: ${JVB_UDP_PORT:-10000}
         published: ${JVB_UDP_PORT:-10000}
         protocol: udp
         mode: host
-      - target: ${JVB_TCP_PORT:-4443}
-        published: ${JVB_TCP_PORT:-4443}
-        protocol: tcp
-        mode: host
-    volumes:
-      - ${VOLUME_PATH}jvb:/config
-    deploy:
-      update_config:
-        order: stop-first
     networks:
-      traefik:
-      internal:
-        aliases:
-          - xmpp.meet.jitsi
+      - internal
 
 volumes:
   web:
-  prosody:
-  jicofo:
   jvb:
+  jicofo:
+  prosody:
 
 networks:
   internal:
