@@ -9,6 +9,7 @@ services:
       - REGISTRY_AUTH_HTPASSWD_PATH=/run/secrets/registry-htpasswd
       - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
       - REGISTRY_AUTH=htpasswd
+      - REGISTRY_STORAGE_DELETE_ENABLED=${REGISTRY_STORAGE_DELETE_ENABLED:-true}
     volumes:
       - ${VOLUME_PATH}registry:/var/lib/registry
     deploy:
