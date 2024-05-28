@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   grafana:
-    image: grafana/grafana:9.5.1
+    image: grafana/grafana:${GRAFANA_VERSION:-9.5.1}
     user: root
     environment:
       - GF_SMTP_ENABLED=true
@@ -34,7 +34,9 @@ services:
       - -c
       - |
         chown -R 65534:root /prometheus /etc/prometheus
-        wget --no-cache -qnc https://git.io/JucIT -O /etc/prometheus/prometheus.yml
+        if [ ! -f /etc/prometheus/prometheus.yml ]; then
+          wget --no-cache -q https://git.io/JucIT -O /etc/prometheus/prometheus.yml
+        fi
         prometheus --config.file=/etc/prometheus/prometheus.yml \
         --storage.tsdb.path=/prometheus \
         --storage.tsdb.retention.time=7d \
