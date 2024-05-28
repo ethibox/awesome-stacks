@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   app:
-    image: ghcr.io/linuxserver/bookstack:${VERSION:-latest}
+    image: linuxserver/bookstack:${VERSION:-24.05.1}
     environment:
       - APP_URL=${SCHEME:-https}://${DOMAIN:-bookstack.localhost}
       - ALLOW_ROBOTS=${ALLOW_ROBOTS:-true}
