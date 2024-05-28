@@ -7,7 +7,7 @@ version: '3.8'
 
 services:
   web:
-    image: framasoft/mobilizon:${VERSION:-4.1.0}
+    image: ${IMAGE:-framasoft/mobilizon}:${VERSION:-4.1.0}
     environment:
       - DOCKER=true
       - MIX_ENV=${MIX_ENV:-prod}
