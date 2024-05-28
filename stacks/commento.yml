@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   server:
-    image: registry.gitlab.com/commento/commento:${VERSION:-latest}
+    image: ${IMAGE:-registry.gitlab.com/commento/commento}:${VERSION:-latest}
     environment:
       - COMMENTO_ORIGIN=${SCHEME:-https}://${DOMAIN:-commento.localhost}
       - COMMENTO_PORT=8080
@@ -28,7 +28,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
     environment:
       - POSTGRES_DB=commento
       - POSTGRES_USER=commento
