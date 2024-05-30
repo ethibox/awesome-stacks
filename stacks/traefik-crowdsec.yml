@@ -1,0 +1,54 @@
+# docker stack deploy -c traefik.yml traefik
+
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:${VERSION:-v2.11.3}
+    command:
+      # - --log.level=DEBUG
+      - --accesslog=true
+      - --accesslog.filepath=/var/log/traefik/access.log
+      - --providers.docker
+      - --providers.docker.network=traefik-net
+      - --providers.docker.exposedByDefault=false
+      - --providers.docker.swarmMode=true
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --entrypoints.https.http.middlewares=crowdsec-bouncer@docker
+      - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.https.address=:443
+      - --entrypoints.http.address=:80
+      - --entrypoints.http.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.http.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.http.http.redirections.entryPoint.to=https
+      - --entrypoints.http.http.redirections.entryPoint.scheme=https
+      - --entrypoints.http.http.redirections.entrypoint.permanent=true
+      - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+    volumes:
+      - ${VOLUME_PATH}logs:/var/log/traefik/
+      - ${VOLUME_PATH}letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - {target: 80, published: 80, mode: host, protocol: tcp}
+      - {target: 443, published: 443, mode: host, protocol: tcp}
+    deploy:
+      mode: ${MODE:-replicated}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.traefik.entrypoints=https
+        - traefik.http.routers.traefik.middlewares=crowdsec-bouncer
+        - traefik.http.services.traefik.loadbalancer.server.port=8080
+        - traefik.http.middlewares.crowdsec-bouncer.forwardauth.address=http://crowdsec-bouncer:8080/api/v1/forwardAuth
+        - traefik.http.middlewares.crowdsec-bouncer.forwardauth.trustForwardHeader=true
+
+volumes:
+  letsencrypt:
+  logs:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
