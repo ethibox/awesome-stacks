@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   traefik:
-    image: traefik:${VERSION:-v2.10.7}
+    image: traefik:${VERSION:-v2.11.3}
     command:
       # - --log.level=DEBUG
       - --providers.docker
@@ -12,12 +12,12 @@ services:
       - --providers.docker.exposedByDefault=false
       - --providers.docker.swarmMode=true
       - --providers.docker.endpoint=unix:///var/run/docker.sock
-      - --entrypoints.http.address=:80
+      - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.address=:443
-      - --entryPoints.http.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
-      - --entryPoints.http.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
-      - --entryPoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
-      - --entryPoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.http.address=:80
+      - --entrypoints.http.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.http.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.http.http.redirections.entryPoint.to=https
       - --entrypoints.http.http.redirections.entryPoint.scheme=https
       - --entrypoints.http.http.redirections.entrypoint.permanent=true
