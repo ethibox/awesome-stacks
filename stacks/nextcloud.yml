@@ -1,9 +1,8 @@
 # DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
-# Don't install recommended apps
 # php occ user:add -g admin <username> # Add admin user
 # php occ app:update --all # Update all apps
 # php occ --no-warnings app:install richdocuments
-# php occ --no-warnings app:enable --force richdocuments
+# php occ --no-warnings app:enable richdocuments
 # php occ --no-warnings config:app:set richdocuments wopi_url --value="https://collabora.localhost"
 # php occ --no-warnings config:app:set richdocuments wopi_allowlist --value=10.0.0.0/8
 # php occ --no-warnings config:system:set maintenance_window_start --type=integer --value=1
@@ -73,7 +72,7 @@ services:
 
   app:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-29.0.0-fpm-alpine}
+    image: nextcloud:${VERSION:-29.0.1-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -82,7 +81,7 @@ services:
 
   cron:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-29.0.0-fpm-alpine}
+    image: nextcloud:${VERSION:-29.0.1-fpm-alpine}
     entrypoint: /cron.sh
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
