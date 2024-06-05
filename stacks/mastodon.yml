@@ -38,7 +38,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-v4.2.8}
+    image: tootsuite/mastodon:${VERSION:-v4.2.9}
     command: bash -c "chown -R 991:991 /mastodon/public/system; rm -f /mastodon/tmp/pids/server.pid; rails db:migrate; rails assets:precompile; rails s -p 3000"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
@@ -58,7 +58,7 @@ services:
 
   streaming:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-v4.2.8}
+    image: tootsuite/mastodon:${VERSION:-v4.2.9}
     command: node ./streaming
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
@@ -76,7 +76,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: tootsuite/mastodon:${VERSION:-v4.2.8}
+    image: tootsuite/mastodon:${VERSION:-v4.2.9}
     command: bundle exec sidekiq
     volumes:
       - ${VOLUME_PATH}system:/mastodon/public/system
