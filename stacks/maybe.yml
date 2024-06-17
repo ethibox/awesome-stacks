@@ -1,0 +1,55 @@
+# DOMAIN=example.com docker stack deploy -c maybe.yml maybe
+
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/maybe-finance/maybe:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}storage:/rails/storage
+    environment:
+      - SELF_HOSTING_ENABLED=true
+      - RAILS_FORCE_SSL=false
+      - RAILS_ASSUME_SSL=false
+      - GOOD_JOB_EXECUTION_MODE=async
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t}
+      - DB_HOST=postgres
+      - POSTGRES_DB=maybe
+      - POSTGRES_USER=maybe
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.maybe-${NUMBER:-1}.rule=Host(`${DOMAIN:-maybe.localhost}`)
+        - traefik.http.routers.maybe-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.maybe-${NUMBER:-1}.service=maybe-${NUMBER:-1}
+        - traefik.http.routers.maybe-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.maybe-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=maybe
+      - POSTGRES_USER=maybe
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "maybe"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  storage:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
