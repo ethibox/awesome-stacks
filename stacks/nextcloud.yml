@@ -20,7 +20,7 @@ x-nextcloud: &nextcloud
     - FORCE_LANGUAGE=${FORCE_LANGUAGE:-en}
     - OVERWRITEHOST=${DOMAIN:-nextcloud.localhost}
     - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
-    - TRUSTED_PROXIES=${TRUSTED_PROXIES:-172.xx.0.x}
+    - TRUSTED_PROXIES=${TRUSTED_PROXIES:-10.0.0.0/8 172.16.0.0/12}
     - REDIS_HOST=redis
     - REDIS_HOST_PASSWORD=myp@ssw0rd
     - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
@@ -72,7 +72,7 @@ services:
 
   app:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-29.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-29.0.2-fpm-alpine}
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     networks:
@@ -81,7 +81,7 @@ services:
 
   cron:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-29.0.1-fpm-alpine}
+    image: nextcloud:${VERSION:-29.0.2-fpm-alpine}
     entrypoint: /cron.sh
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
