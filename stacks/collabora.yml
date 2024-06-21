@@ -4,10 +4,10 @@ version: '3.8'
 
 services:
   collabora:
-    image: collabora/code:${VERSION:-24.04.3.1.1}
+    image: collabora/code:${VERSION:-24.04.4.2.1}
     environment:
       - domain=${ALLOWED_DOMAINS:-.*}
-      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false
     deploy:
       labels:
         - traefik.enable=true
