@@ -2,6 +2,7 @@
 # git clone https://gitlab.com/Seballot/gogocarto/ .
 # make init
 # chown -R www-data:www-data .
+# https://gogocarto.localhost/project/initialize
 
 version: '3.8'
 
@@ -13,8 +14,8 @@ services:
       - APP_DEBUG=${APP_DEBUG:-0}
       - BASE_PROTOCOL=${SCHEME:-https}
       - BASE_URL=${DOMAIN:-gogocarto.localhost}
-      - MAILER_URL=${MAILER_URL:-smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=}
-      - FROM_EMAIL=${FROM_EMAIL:-noreply@example.com}
+      - MAILER_URL=smtp://${SMTP_HOST}:${SMTP_PORT:-587}?encryption=${SMTP_ENCRYPTION:-tls}&auth_mode=login&username=${SMTP_USERNAME}&password=${SMTP_PASSWORD}
+      - FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
       - CONTACT_EMAIL=${CONTACT_EMAIL:-noreply@example.com}
     volumes:
       - ${VOLUME_PATH}gogocarto:/var/www
