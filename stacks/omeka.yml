@@ -1,0 +1,49 @@
+# DOMAIN=example.com docker stack deploy -c omeka.yml omeka
+
+version: '3.8'
+
+services:
+  omeka:
+    image: ethibox/omeka:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}files:/var/www/html/files
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST:-mariadb}
+      - MYSQL_USER=${MYSQL_USER:-omeka}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-omeka}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.omeka-${NUMBER:-1}.rule=Host(`${DOMAIN:-omeka.localhost}`)
+        - traefik.http.routers.omeka-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.omeka-${NUMBER:-1}.service=omeka-${NUMBER:-1}
+        - traefik.http.routers.omeka-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.omeka-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-omeka}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-omeka}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  files:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
