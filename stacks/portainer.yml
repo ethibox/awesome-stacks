@@ -8,6 +8,7 @@ services:
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     volumes:
       - ${VOLUME_PATH}portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       labels:
         - traefik.enable=true
