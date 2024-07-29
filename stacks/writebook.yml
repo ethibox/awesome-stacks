@@ -1,0 +1,28 @@
+# DOMAIN=example.com docker stack deploy -c writebook.yml writebook
+# chown -R 1000:1000 storage/
+
+version: '3.8'
+
+services:
+  web:
+    image: ethibox/writebook:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}storage:/rails/storage
+    environment:
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.writebook-${NUMBER:-1}.rule=Host(`${DOMAIN:-writebook.localhost}`)
+        - traefik.http.routers.writebook-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.writebook-${NUMBER:-1}.service=writebook-${NUMBER:-1}
+        - traefik.http.routers.writebook-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.writebook-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  storage:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
