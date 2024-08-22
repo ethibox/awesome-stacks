@@ -1,0 +1,52 @@
+# DOMAIN=example.com docker stack deploy -c shynet.yml shynet
+# ./manage.py registeradmin <your email>
+
+version: '3.8'
+
+services:
+  web:
+    image: milesmcc/shynet:${VERSION:-v0.13.1}
+    environment:
+      - DB_NAME=shynet
+      - DB_USER=shynet
+      - DB_HOST=postgres
+      - DB_PASSWORD=myp@ssw0rd
+      - ALLOWED_HOSTS=${DOMAIN:-shynet.localhost}
+      - ACCOUNT_SIGNUPS_ENABLED=${ACCOUNT_SIGNUPS_ENABLED:-False}
+      - ACCOUNT_EMAIL_VERIFICATION=${ACCOUNT_EMAIL_VERIFICATION:-none}
+      - CSRF_TRUSTED_ORIGINS=${SCHEME:-https}://${DOMAIN:-shynet.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.shynet-${NUMBER:-1}.rule=Host(`${DOMAIN:-shynet.localhost}`)
+        - traefik.http.routers.shynet-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.shynet-${NUMBER:-1}.service=shynet-${NUMBER:-1}
+        - traefik.http.routers.shynet-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.shynet-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=shynet
+      - POSTGRES_USER=shynet
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "shynet"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
