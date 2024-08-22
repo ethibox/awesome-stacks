@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   umami:
-    image: ghcr.io/mikecao/umami:${VERSION:-postgresql-latest}
+    image: docker.umami.is/umami-software/umami:${VERSION:-postgresql-latest}
     environment:
       - DATABASE_TYPE=postgresql
       - DATABASE_URL=postgresql://umami:myp@ssw0rd@postgres:5432/umami
@@ -23,12 +23,6 @@ services:
 
   postgres:
     image: postgres:12-alpine
-    entrypoint: /bin/sh
-    command:
-      - -c
-      - |
-        wget -O /docker-entrypoint-initdb.d/schema.postgresql.sql https://raw.githubusercontent.com/mikecao/umami/master/sql/schema.postgresql.sql
-        docker-entrypoint.sh postgres
     environment:
       - POSTGRES_DB=umami
       - POSTGRES_USER=umami
