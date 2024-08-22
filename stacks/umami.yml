@@ -4,10 +4,10 @@ version: '3.8'
 
 services:
   umami:
-    image: ghcr.io/mikecao/umami:$[VERSION:-postgresql-latest}
+    image: ghcr.io/mikecao/umami:${VERSION:-postgresql-latest}
     environment:
-      - DATABASE_URL=postgresql://umami:myp@ssw0rd@postgres:5432/umami
       - DATABASE_TYPE=postgresql
+      - DATABASE_URL=postgresql://umami:myp@ssw0rd@postgres:5432/umami
       - HASH_SALT=${HASH_SALT:-replace-me-with-a-random-string}
     deploy:
       labels:
