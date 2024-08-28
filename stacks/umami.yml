@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   umami:
-    image: docker.umami.is/umami-software/umami:${VERSION:-postgresql-latest}
+    image: docker.umami.is/umami-software/umami:${VERSION:-postgresql-v2.13.2}
     environment:
       - DATABASE_TYPE=postgresql
       - DATABASE_URL=postgresql://umami:myp@ssw0rd@postgres:5432/umami
