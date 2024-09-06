@@ -1,4 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c omeka.yml omeka
+# chown -R 33:33 files
 
 version: '3.8'
 

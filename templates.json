@@ -2034,6 +2034,22 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/annif.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Omeka",
+            "description": "Plateforme de publication destiné aux universités.",
+            "categories": ["Publication"],
+            "manual": true,
+            "enabled": false,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/tpZBUI6.png",
+            "website": "https://omeka.org/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/omeka.yml"
+            }
         }
     ]
 }
