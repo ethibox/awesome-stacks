@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c invidious.yml invidious
+# DOMAIN=example.com docker stack deploy -c invoiceninja.yml invoiceninja
 # chown -R 1000:82 data/ storage/
 # chown -R 1500:1500 data/ storage/
 
