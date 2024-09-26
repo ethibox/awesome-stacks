@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   passbolt:
-    image: passbolt/passbolt:${VERSION:-3.12.0-3-ce}
+    image: passbolt/passbolt:${VERSION:-4.9.1-1-ce}
     command:
       - /bin/sh
       - -c
