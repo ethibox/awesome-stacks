@@ -7,12 +7,7 @@ version: '3.8'
 services:
   passbolt:
     image: passbolt/passbolt:${VERSION:-4.9.1-1-ce}
-    command:
-      - /bin/sh
-      - -c
-      - |
-        chown -R 33:33 /var/www/passbolt/
-        /usr/bin/wait-for.sh -t 0 mariadb:3306 -- /docker-entrypoint.sh
+    command: "/usr/bin/wait-for.sh -t 0 mariadb:3306 -- /docker-entrypoint.sh"
     environment:
       - APP_FULL_BASE_URL=${SCHEME:-https}://${DOMAIN:-passbolt.localhost}
       - DATASOURCES_DEFAULT_HOST=mariadb
@@ -27,10 +22,9 @@ services:
       - EMAIL_TRANSPORT_DEFAULT_USERNAME=${SMTP_USER}
       - EMAIL_TRANSPORT_DEFAULT_PASSWORD=${SMTP_PASSWORD}
       - EMAIL_TRANSPORT_DEFAULT_TLS=${SMTP_TLS:-true}
-    tmpfs:
-      - /run
     volumes:
       - ${VOLUME_PATH}gpg:/etc/passbolt/gpg
+      - ${VOLUME_PATH}jwt:/etc/passbolt/jwt
     deploy:
       labels:
         - traefik.enable=true
@@ -44,7 +38,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-10.5.9}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
@@ -56,8 +50,9 @@ services:
       - internal
 
 volumes:
-  gpg:
   mariadb:
+  gpg:
+  jwt:
 
 networks:
   internal:
