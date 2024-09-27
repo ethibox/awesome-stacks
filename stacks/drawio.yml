@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   web:
-    image: jgraph/drawio:${VERSION:-24.4.4}
+    image: jgraph/drawio:${VERSION:-24.7.8}
     deploy:
       labels:
         - traefik.enable=true
