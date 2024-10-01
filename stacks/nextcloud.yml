@@ -10,6 +10,7 @@
 version: '3.8'
 
 x-nextcloud: &nextcloud
+  image: nextcloud:${VERSION:-29.0.7-fpm-alpine}
   environment:
     - DOMAIN=${DOMAIN:-nextcloud.localhost}
     - MYSQL_HOST=mariadb
@@ -32,6 +33,11 @@ x-nextcloud: &nextcloud
     - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
     - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
     - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
+  volumes:
+    - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+  networks:
+    - internal
+    - traefik
 
 services:
   nginx:
@@ -72,22 +78,10 @@ services:
 
   app:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-29.0.6-fpm-alpine}
-    volumes:
-      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
-    networks:
-      - internal
-      - traefik
 
   cron:
     <<: *nextcloud
-    image: nextcloud:${VERSION:-29.0.6-fpm-alpine}
     entrypoint: /cron.sh
-    volumes:
-      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
-    networks:
-      - internal
-      - traefik
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.5.9}
