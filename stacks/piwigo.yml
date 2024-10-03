@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c piwigo.yml piwigo
+
+version: '3.8'
+
+services:
+  piwigo:
+    image: lscr.io/linuxserver/piwigo:${VERSION:-14.5.0}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-Etc/UTC}
+    volumes:
+      - ${VOLUME_PATH}config:/config
+      - ${VOLUME_PATH}gallery:/gallery
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.piwigo-${NUMBER:-1}.rule=Host(`${DOMAIN:-piwigo.localhost}`)
+        - traefik.http.routers.piwigo-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.piwigo-${NUMBER:-1}.service=piwigo-${NUMBER:-1}
+        - traefik.http.routers.piwigo-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.piwigo-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-piwigo}
+      - MYSQL_USER=${MYSQL_USER:-piwigo}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  config:
+  gallery:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

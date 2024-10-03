@@ -2049,6 +2049,36 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/omeka.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Piwigo",
+            "description": "Gestionnaire de photos open-source",
+            "categories": ["Photos"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/KhMOja6.png",
+            "website": "https://fr.piwigo.org/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/piwigo.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "admin",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }
