@@ -4,32 +4,57 @@ Deploy 120+ open-source web apps with one Docker command.
 
 ## ✨ Features
 
-- **Easy to use**: Deploy your favorite apps with one command
-- **Zero config** : No need to configure anything, just deploy
-- **Secure**: Use Traefik and Let's Encrypt to secure your apps
-- **Customizable**: Change the domain, the volume path, the version, etc.
-- **Portainer support**: Use `templates.json` to deploy apps with Portainer
+- 🚀 **Easy to use**: Deploy your favorite apps with one command
+- ⚡ **Zero config** : No need to configure anything, just deploy
+- 🔒 **Secure**: Use Traefik and Let's Encrypt to secure your apps
+- 🔧 **Customizable**: Change the domain, the volume path, the version, etc.
+- 🛳️ **Portainer support**: Use `templates.json` to deploy apps with Portainer
 
 ## 📋 Requirements
 
-- Docker swarm
+- Docker Swarm
 - Traefik
 
-## 🚀 Get started
+## 🚀 Installation
+
+1. Install Docker
 
 ```bash
-# 1. Setup Docker Swarm
-docker swarm init
+apt install -y docker.io
+```
 
-# 2. Deploy Traefik
+2. Initialize Docker Swarm
+
+```bash
+docker swarm init
+```
+
+3. Deploy Traefik
+
+```bash
 docker network create -d overlay traefik-net
 docker stack deploy -c stacks/traefik.yml traefik
-
-# 3. Deploy a stack (ex: Nextcloud)
-DOMAIN=nextcloud.localhost docker stack deploy -c stacks/nextcoud.yml nextcloud
-
-# Go to https://nextcloud.localhost
 ```
+
+## 📦 Usage
+
+Deploy your apps with one command, for example, to deploy [Nextcloud](./stacks/nextcloud.yml):
+
+```bash
+docker stack deploy -c stacks/nextcoud.yml nextcloud
+```
+
+Go to https://nextcloud.localhost and enjoy your app!
+
+## 🔧 Customization
+
+You can customize the domain, the volume path or the version of your apps with environment variables, for example (with [Ghost](./stacks/ghost.yml)):
+
+```bash
+DOMAIN=example.com VERSION=5 VOLUME_PATH=/mnt/ docker stack deploy -c stacks/ghost.yml ghost
+```
+
+Refer to the `.yml` files in the `stacks` directory to explore all available environment variables and customization options for each app if needed.
 
 ## 🎁 Support me
 
