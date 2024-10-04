@@ -38,7 +38,9 @@ docker stack deploy -c stacks/traefik.yml traefik
 
 ## 📦 Usage
 
-Deploy your apps with one command, for example, to deploy [Nextcloud](./stacks/nextcloud.yml):
+Deploy your apps with one command!
+
+Here an example with [Nextcloud](./stacks/nextcloud.yml):
 
 ```bash
 docker stack deploy -c stacks/nextcoud.yml nextcloud
@@ -48,13 +50,17 @@ Go to https://nextcloud.localhost and enjoy your app!
 
 ## 🔧 Customization
 
-You can customize the domain, the volume path or the version of your apps with environment variables, for example (with [Ghost](./stacks/ghost.yml)):
+You can customize the domain, the volume path or the version of your apps with environment variables.
+
+Here an example with [Ghost](./stacks/ghost.yml):
 
 ```bash
 DOMAIN=example.com VERSION=5 VOLUME_PATH=/mnt/ docker stack deploy -c stacks/ghost.yml ghost
 ```
 
-Refer to the `.yml` files in the `stacks` directory to explore all available environment variables and customization options for each app if needed.
+Go to https://example.com and enjoy your app!
+
+Refer to the `.yml` files in the [stacks](./stacks) directory to explore all available environment variables and customization options for each app if needed.
 
 ## 🎁 Support me
 
