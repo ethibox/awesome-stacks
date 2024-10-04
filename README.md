@@ -1,31 +1,34 @@
 # Awesome Stacks
 
-Deploy 110+ open-source web apps with one Docker command.
+Deploy 120+ open-source web apps with one Docker command.
 
 ## ✨ Features
 
-- [x] Traefik compatibility
-- [x] Portainer compatibility
-- [x] No need to manage configuration files
-- [x] Distributed storage compatibility (GlusterFS, Ceph, NFS) with the env `VOLUME_PATH=/mnt/storage_mountpoint/`
+- **Easy to use**: Deploy your favorite apps with one command
+- **Zero config** : No need to configure anything, just deploy
+- **Secure**: Use Traefik and Let's Encrypt to secure your apps
+- **Customizable**: Change the domain, the volume path, the version, etc.
+- **Portainer support**: Use `templates.json` to deploy apps with Portainer
+
+## 📋 Requirements
+
+- Docker swarm
+- Traefik
 
 ## 🚀 Get started
 
 ```bash
-# 1. Deploy traefik
+# 1. Setup Docker Swarm
 docker swarm init
-docker network create --driver=overlay traefik-net
+
+# 2. Deploy Traefik
+docker network create -d overlay traefik-net
 docker stack deploy -c stacks/traefik.yml traefik
 
-# 2. Check your HTTP and HTTPS ports
-curl https://ipv4.am.i.mullvad.net/port/80
-curl https://ipv4.am.i.mullvad.net/port/443
+# 3. Deploy a stack (ex: Nextcloud)
+DOMAIN=nextcloud.localhost docker stack deploy -c stacks/nextcoud.yml nextcloud
 
-# 3. Deploy a stack
-DOMAIN=<mydomain.com> docker stack deploy -c <stack.yml> <name>
-
-# Example
-DOMAIN=ghost.example.com docker stack deploy -c stacks/ghost.yml ghost
+# Go to https://nextcloud.localhost
 ```
 
 ## 🎁 Support me
