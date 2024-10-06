@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c portainer.yml portainer
 
-version: '3.8'
-
 services:
   portainer:
     image: ${IMAGE:-portainer/portainer-ce}:${VERSION:-2.21.2-alpine}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c listmonk.yml listmonk
 
-version: '3.8'
-
 services:
   app:
     image: listmonk/listmonk:${VERSION:-v3.0.0}

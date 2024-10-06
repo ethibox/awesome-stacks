@@ -2,8 +2,6 @@
 # chown -R 2000:2000 config/ data/ plugins/
 # ./bin/mmctl --local user create --system-admin --email admin@example.com --username admin --password myp@ssw0rd
 
-version: '3.8'
-
 services:
   app:
     image: ${IMAGE:-mattermost/mattermost-team-edition}:${VERSION:-9.11.2}

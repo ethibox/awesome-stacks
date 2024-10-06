@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c crowdsec.yml crowdsec
 
-version: '3.8'
-
 services:
   crowdsec:
     image: crowdsecurity/crowdsec:${VERSION:-v1.6.1-2}

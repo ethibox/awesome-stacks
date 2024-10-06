@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c searxng.yml searxng
 
-version: '3.8'
-
 services:
   web:
     image: searxng/searxng:${VERSION:-latest}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c registry.yml registry
 
-version: '3.8'
-
 services:
   web:
     image: registry:${VERSION:-2}

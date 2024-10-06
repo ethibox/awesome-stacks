@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c prestashop.yml prestashop
 
-version: '3.8'
-
 services:
   nginx:
     image: ethibox/nginx-proxy:latest

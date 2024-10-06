@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c mautic.yml mautic
 # Remove Site URL "index.php" part on https://mautic.localhost/s/config/edit
 
-version: '3.8'
-
 services:
   nginx:
     image: ethibox/nginx-proxy:latest

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c polr.yml polr
 
-version: '3.8'
-
 services:
   polr:
     image: ajanvier/polr:${VERSION:-2.3.0}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c yeswiki.yml yeswiki
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/yeswiki:${VERSION:-latest}

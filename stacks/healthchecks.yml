@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c healthchecks.yml healthchecks
 
-version: '3.8'
-
 services:
   app:
     image: healthchecks/healthchecks:${VERSION:-v2.7}

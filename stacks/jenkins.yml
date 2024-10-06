@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c jenkins.yml jenkins
 
-version: '3.8'
-
 services:
   web:
     image: jenkinsci/blueocean:${VERSION:-1.24.8}

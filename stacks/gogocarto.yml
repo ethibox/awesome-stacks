@@ -4,8 +4,6 @@
 # chown -R www-data:www-data .
 # https://gogocarto.localhost/project/initialize
 
-version: '3.8'
-
 services:
   gogocarto:
     image: ethibox/gogocarto:${VERSION:-latest}

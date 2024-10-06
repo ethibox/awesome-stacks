@@ -2,8 +2,6 @@
 # odoo --stop-after-init --no-xmlrpc --no-http -c /etc/odoo/odoo.conf --db_host db --database odoo --db_user odoo --db_password myp@ssw0rd -u all # Upgrade
 # proxy_mode = True
 
-version: '3.8'
-
 services:
   web:
     image: odoo:${VERSION:-17.0}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c hedgedoc.yml hedgedoc
 
-version: '3.8'
-
 services:
   app:
     image: linuxserver/hedgedoc:${VERSION:-1.8.2-ls25}

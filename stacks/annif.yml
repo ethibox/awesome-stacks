@@ -3,8 +3,6 @@
 # cp projects.cfg.dist projects.cfg
 # chown -R 1000:1000 annif
 
-version: '3.8'
-
 services:
   nginx:
     image: nginx:latest

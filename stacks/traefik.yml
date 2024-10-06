@@ -1,7 +1,5 @@
 # docker stack deploy -c traefik.yml traefik
 
-version: '3.8'
-
 services:
   traefik:
     image: traefik:${VERSION:-v2.11.3}

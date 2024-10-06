@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c nocodb.yml nocodb
 
-version: '3.8'
-
 services:
   nocodb:
     image: nocodb/nocodb:${VERSION:-0.207.0}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c gogs.yml gogs
 
-version: '3.8'
-
 services:
   gogs:
     image: gogs/gogs:${VERSION:-0.12.3}

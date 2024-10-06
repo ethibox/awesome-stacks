@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c nginx.yml nginx
 
-version: '3.8'
-
 services:
   nginx:
     image: ${IMAGE:-nginx:latest}

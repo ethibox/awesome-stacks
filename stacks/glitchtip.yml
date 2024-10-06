@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c glitchtip.yml glitchtip
 
-version: '3.8'
-
 x-glitchtip: &glitchtip
   image: glitchtip/glitchtip:${VERSION:-v4.0}
   environment:

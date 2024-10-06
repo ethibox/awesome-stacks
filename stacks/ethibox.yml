@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c ethibox.yml ethibox
 
-version: '3.8'
-
 x-ethibox: &ethibox
   image: ${IMAGE:-ethibox/ethibox}:${VERSION:-latest}
   environment:

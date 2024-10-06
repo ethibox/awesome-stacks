@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c posthog.yml posthog
 
-version: '3.8'
-
 x-posthog: &posthog
   image: posthog/posthog:${VERSION:-release-1.43.0}
   environment:

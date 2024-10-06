@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c freshrss.yml freshrss.yml
 
-version: '3.8'
-
 services:
   web:
     image: freshrss/freshrss:${VERSION:-1.19.2-alpine}

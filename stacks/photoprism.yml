@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c photoprism.yml photoprism
 # chown -R 1000:1000 photoprism
 
-version: '3.8'
-
 services:
   photoprism:
     image: photoprism/photoprism:${VERSION:-latest}

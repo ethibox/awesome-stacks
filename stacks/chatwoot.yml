@@ -3,8 +3,6 @@
 # docker exec -it chatwoot_web bundle exec rails db:seed
 # docker exec -it chatwoot_web bundle exec rails db:migrate
 
-version: '3.8'
-
 x-defaults: &defaults
   environment:
     - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"replace_with_lengthy_secure_hex"}  # bundle exec rake secret

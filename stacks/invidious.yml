@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c invidious.yml invidious
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/invidious:${VERSION:-latest}

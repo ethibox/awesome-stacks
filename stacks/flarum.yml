@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c flarum.yml flarum
 
-version: '3.8'
-
 services:
   flarum:
     image: mondedie/flarum:${VERSION:-stable}

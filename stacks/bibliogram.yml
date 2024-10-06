@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c bibliogram.yml bibliogram
 
-version: '3.8'
-
 services:
   web:
     image: cloudrac3r/bibliogram:${VERSION:-latest}

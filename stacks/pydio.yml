@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c pydio.yml pydio
 
-version: '3.8'
-
 services:
   pydio:
     image: pydio/cells:${VERSION:-2.2.9}

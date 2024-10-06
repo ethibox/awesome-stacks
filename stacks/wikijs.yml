@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c wikijs.yml wikijs
 
-version: '3.8'
-
 services:
   web:
     image: requarks/wiki:${VERSION:-2.5.297}

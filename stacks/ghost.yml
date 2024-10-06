@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c ghost.yml ghost
 
-version: '3.8'
-
 services:
   web:
     image: ghost:${VERSION:-4.11.0-alpine}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c huginn.yml huginn
 
-version: '3.8'
-
 services:
   web:
     image: huginn/huginn:${VERSION:-latest}

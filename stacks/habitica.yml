@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c habitica.yml habitica
 
-version: '3.8'
-
 x-habitica: &habitica
   image: ethibox/habitica:${VERSION:-latest}
   environment:

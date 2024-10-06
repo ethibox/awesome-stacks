@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c nocobase.yml nocobase
 
-version: '3.8'
-
 services:
   web:
     image: nocobase/nocobase:${VERSION:-1.0.0-alpha.6}

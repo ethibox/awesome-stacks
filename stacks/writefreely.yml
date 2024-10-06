@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c writefreely.yml writefreely
 
-version: '3.8'
-
 services:
   web:
     image: writeas/writefreely:${VERSION:-0.12.0}

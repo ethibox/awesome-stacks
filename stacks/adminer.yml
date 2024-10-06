@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c adminer.yml adminer
 
-version: '3.8'
-
 services:
   adminer:
     image: adminer:${VERSION:-4.8.1}

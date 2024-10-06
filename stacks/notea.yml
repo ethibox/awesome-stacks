@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c notea.yml notea
 
-version: '3.8'
-
 services:
   web:
     image: cinwell/notea:${VERSION:-0.3.6}

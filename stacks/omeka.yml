@@ -3,8 +3,6 @@
 # chown -R 33:33 config
 # add database.ini & local.config.php in /config
 
-version: '3.8'
-
 services:
   omeka:
     image: ethibox/omeka:${VERSION:-latest}

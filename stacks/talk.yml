@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c talk.yml talk
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/talk:${VERSION:-latest}

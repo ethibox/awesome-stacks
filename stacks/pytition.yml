@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c pytition.yml pytition
 # python3 /code/pytition/manage.py createsuperuser
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/pytition:${VERSION:-latest}

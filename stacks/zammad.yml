@@ -3,8 +3,6 @@
 # echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
 # chown -R 1000:1000 elasticsearch storage var
 
-version: '3.8'
-
 x-zammad: &zammad
   image: zammad/zammad-docker-compose:${VERSION:-6.2.0-10}
   volumes:

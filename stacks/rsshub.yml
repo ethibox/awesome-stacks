@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c rsshub.yml rsshub
 
-version: '3.8'
-
 services:
   web:
     image: diygod/rsshub:${VERSION:-latest}

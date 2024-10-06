@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c dolibarr.yml dolibarr
 
-version: '3.8'
-
 services:
   dolibarr:
     image: upshift/dolibarr:${VERSION:-13.0.4}

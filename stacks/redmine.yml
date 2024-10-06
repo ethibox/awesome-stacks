@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c redmine.yml redmine
 
-version: '3.8'
-
 services:
   web:
     image: redmine:${VERSION:-4.2.2-alpine}

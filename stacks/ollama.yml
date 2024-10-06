@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c ollama.yml ollama
 
-version: '3.8'
-
 services:
   web:
     image: ghcr.io/open-webui/open-webui:main

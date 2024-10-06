@@ -2,8 +2,6 @@
 # chown -R 1000:1000 sites/
 # bench new-site dokos.localhost
 
-version: '3.8'
-
 services:
   init:
     image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}

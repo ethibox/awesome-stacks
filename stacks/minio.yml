@@ -1,7 +1,5 @@
 # DOMAIN=example.com DOMAIN_CONSOLE=console.example.com docker stack deploy -c minio.yml minio
 
-version: '3.8'
-
 services:
   web:
     image: minio/minio:${VERSION:-RELEASE.2024-05-10T01-41-38Z}

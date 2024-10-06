@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c nitter.yml nitter
 
-version: '3.8'
-
 services:
   web:
     image: zedeus/nitter:${VERSION:-latest}

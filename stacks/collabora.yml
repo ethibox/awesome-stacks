@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c collabora.yml collabora
 
-version: '3.8'
-
 services:
   collabora:
     image: collabora/code:${VERSION:-24.04.4.2.1}

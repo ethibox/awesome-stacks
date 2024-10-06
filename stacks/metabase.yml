@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c metabase.yml metabase
 
-version: '3.8'
-
 services:
   metabase:
     image: metabase/metabase:${VERSION:-v0.48.3}

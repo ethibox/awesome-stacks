@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c ntfy.yml ntfy
 
-version: '3.8'
-
 services:
   web:
     image: binwiederhier/ntfy:${VERSION:-v2.4.0}

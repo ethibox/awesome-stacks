@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c shynet.yml shynet
 # ./manage.py registeradmin <your email>
 
-version: '3.8'
-
 services:
   web:
     image: milesmcc/shynet:${VERSION:-v0.13.1}

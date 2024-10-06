@@ -9,8 +9,6 @@
 # tootctl cache clear # Clear cache
 # tootctl accounts modify --disable-2fa <username> # Disable 2FA
 
-version: '3.8'
-
 x-defaults: &defaults
   image: tootsuite/mastodon:${VERSION:-v4.2.13}
   environment:

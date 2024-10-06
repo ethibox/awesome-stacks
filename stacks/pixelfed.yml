@@ -2,8 +2,6 @@
 # docker exec -it pixelfed_app php artisan migrate:fresh --force
 # UPDATE users SET is_admin = 1 WHERE id = 1;
 
-version: '3.8'
-
 services:
   app:
     image: ethibox/pixelfed:${VERSION:-v0.11.3}

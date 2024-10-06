@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c firefly.yml firefly
 
-version: '3.8'
-
 services:
   app:
     image: fireflyiii/core:${VERSION:-version-5.5.13}

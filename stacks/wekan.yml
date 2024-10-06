@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c wekan.yml wekan
 
-version: '3.8'
-
 services:
   wekan:
     image: wekanteam/wekan:${VERSION:-v7.60}

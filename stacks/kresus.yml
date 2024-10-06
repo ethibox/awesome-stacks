@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c kresus.yml kresus
 
-version: '3.8'
-
 services:
   web:
     image: bnjbvr/kresus:${VERSION:-latest}

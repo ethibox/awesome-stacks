@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c jellyfin.yml jellyfin
 
-version: '3.8'
-
 services:
   web:
     image: jellyfin/jellyfin:${VERSION:-latest}

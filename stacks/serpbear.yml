@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c serpbear.yml serpbear
 
-version: '3.8'
-
 services:
   web:
     image: towfiqi/serpbear:${VERSION:-2.0.2}

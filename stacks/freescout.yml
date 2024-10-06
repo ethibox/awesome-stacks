@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c freescout.yml freescout
 
-version: '3.8'
-
 services:
   web:
     image: tiredofit/freescout:${VERSION:-php8.1-1.17.72}

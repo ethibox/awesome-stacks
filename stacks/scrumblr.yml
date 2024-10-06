@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c scrumblr.yml scrumblr
 
-version: '3.8'
-
 services:
   scrumblr:
     image: timmit/scrumblr:${VERSION:-latest}

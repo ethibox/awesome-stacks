@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c gitlab.yml gitlab
 
-version: '3.8'
-
 services:
   gitlab:
     image: gitlab/gitlab-ce:${VERSION:-16.11.0-ce.0}

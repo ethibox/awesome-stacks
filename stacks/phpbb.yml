@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c phpbb.yml phpbb
 
-version: '3.8'
-
 services:
   phpbb:
     image: bitnami/phpbb:${VERSION:-3.3.4}

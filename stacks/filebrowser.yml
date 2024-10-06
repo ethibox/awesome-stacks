@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c filebrowser.yml filebrowser
 
-version: '3.8'
-
 services:
   filebrowser:
     image: filebrowser/filebrowser:${VERSION:-s6}

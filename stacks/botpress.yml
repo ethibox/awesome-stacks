@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c botpress.yml botpress
 
-version: '3.8'
-
 services:
   web:
     image: botpress/server:${VERSION:-v12_24_0}

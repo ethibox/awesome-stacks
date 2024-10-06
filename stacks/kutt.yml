@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c kutt.yml kutt
 
-version: '3.8'
-
 services:
   kutt:
     image: kutt/kutt:${VERSION:-v2.7.4}

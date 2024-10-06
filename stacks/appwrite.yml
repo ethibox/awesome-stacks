@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c appwrite.yml appwrite
 
-version: '3.8'
-
 services:
   appwrite:
     image: appwrite/appwrite:${VERSION:-0.11.0}

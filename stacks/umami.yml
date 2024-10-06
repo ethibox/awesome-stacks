@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c umami.yml umami
 
-version: '3.8'
-
 services:
   umami:
     image: docker.umami.is/umami-software/umami:${VERSION:-postgresql-v2.13.2}

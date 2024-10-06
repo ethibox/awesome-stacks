@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c signaturepdf.yml signaturepdf
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/signaturepdf:${VERSION:-latest}

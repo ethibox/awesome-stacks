@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c wallabag.yml wallabag
 
-version: '3.8'
-
 services:
   web:
     image: wallabag/wallabag:${VERSION:-2.4.2}

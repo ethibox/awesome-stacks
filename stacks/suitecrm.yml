@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c suitecrm.yml suitecrm
 
-version: '3.8'
-
 services:
   suitecrm:
     image: bitnami/suitecrm:${VERSION:-8.1.3}

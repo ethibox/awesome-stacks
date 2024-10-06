@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c fathom.yml fathom
 
-version: '3.8'
-
 services:
   web:
     image: usefathom/fathom:${VERSION:-latest}

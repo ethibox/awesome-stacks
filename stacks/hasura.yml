@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c hasura.yml hasura
 
-version: '3.8'
-
 services:
   graphql-engine:
     image: hasura/graphql-engine:${VERSION:-v2.0.6}

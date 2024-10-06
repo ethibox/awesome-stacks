@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c maybe.yml maybe
 
-version: '3.8'
-
 services:
   app:
     image: ghcr.io/maybe-finance/maybe:${VERSION:-latest}

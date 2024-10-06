@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c etherpad.yml etherpad
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/etherpad:${VERSION:-1.8.18}

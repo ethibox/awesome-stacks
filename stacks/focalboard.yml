@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c focalboard.yml focalboard
 # chown -R 65534:65534 data/
 
-version: '3.8'
-
 services:
   web:
     image: mattermost/focalboard:${VERSION:-7.4.2}

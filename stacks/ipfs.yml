@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c ipfs.yml ipfs
 # ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
 
-version: '3.8'
-
 services:
   web:
     image: ipfs/kubo:${VERSION:-v0.21.0}

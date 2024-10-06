@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c calendso.yml calendso
 
-version: '3.8'
-
 x-calendso: &calendso
   environment:
     - NODE_ENV=production

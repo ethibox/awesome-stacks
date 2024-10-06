@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c writebook.yml writebook
 # chown -R 1000:1000 storage/
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/writebook:${VERSION:-latest}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c commento.yml commento
 
-version: '3.8'
-
 services:
   server:
     image: ${IMAGE:-registry.gitlab.com/commento/commento}:${VERSION:-latest}

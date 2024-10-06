@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c rocketchat.yml rocketchat
 
-version: '3.8'
-
 services:
   web:
     image: rocketchat/rocket.chat:${VERSION:-6.12.1}

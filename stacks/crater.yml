@@ -4,8 +4,6 @@
 # docker service update --force crater_app chmod -R 777 html/storage/
 # docker service update --force crater_app chmod -R 777 html/bootstrap/cache/
 
-version: '3.8'
-
 services:
   nginx:
     image: ethibox/nginx-proxy:latest

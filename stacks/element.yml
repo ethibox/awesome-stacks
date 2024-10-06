@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c element.yml element
 
-version: '3.8'
-
 services:
   web:
     image: vectorim/riot-web:${VERSION:-v1.7.33}

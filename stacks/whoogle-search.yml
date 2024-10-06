@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c whoogle-search.yml whoogle-search
 
-version: '3.8'
-
 services:
   web:
     image: benbusby/whoogle-search:${VERSION:-latest}

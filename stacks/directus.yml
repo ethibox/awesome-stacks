@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c directus.yml directus
 
-version: '3.8'
-
 services:
   directus:
     image: directus/directus:${VERSION:-9.0.0-rc.95}

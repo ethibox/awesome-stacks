@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c bookstack.yml bookstack
 
-version: '3.8'
-
 services:
   app:
     image: linuxserver/bookstack:${VERSION:-24.05.2}

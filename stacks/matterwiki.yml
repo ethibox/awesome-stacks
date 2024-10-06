@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c matterwiki.yml matterwiki
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/matterwiki:${VERSION:-latest}

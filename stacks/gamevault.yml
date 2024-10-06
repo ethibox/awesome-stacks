@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c gamevault.yml gamevault
 
-version: '3.8'
-
 services:
   app:
     image: ethibox/gamevault:${VERSION:-latest}

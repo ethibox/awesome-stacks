@@ -3,8 +3,6 @@
 # docker exec -it chown -R 1000:1000 data
 # docker service update --force framadate_framadate
 
-version: '3.8'
-
 services:
   framadate:
     image: ethibox/framadate:${VERSION:-latest}

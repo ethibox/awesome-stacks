@@ -7,8 +7,6 @@
 # php occ --no-warnings config:app:set richdocuments wopi_allowlist --value=10.0.0.0/8
 # php occ --no-warnings config:system:set maintenance_window_start --type=integer --value=1
 
-version: '3.8'
-
 x-nextcloud: &nextcloud
   image: nextcloud:${VERSION:-29.0.7-fpm-alpine}
   environment:

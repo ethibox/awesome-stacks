@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c plume.yml plume
 
-version: '3.8'
-
 services:
   server:
     image: plumeorg/plume:${VERSION:-0.7.2}

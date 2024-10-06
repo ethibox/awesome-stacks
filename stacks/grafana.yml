@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c grafana.yml grafana
 
-version: '3.8'
-
 services:
   grafana:
     image: grafana/grafana:${VERSION:-8.1.1}

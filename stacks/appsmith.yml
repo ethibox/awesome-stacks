@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c appsmith.yml appsmith
 
-version: '3.8'
-
 services:
   web:
     image: appsmith/appsmith-ce:${VERSION:-v1.9.58}

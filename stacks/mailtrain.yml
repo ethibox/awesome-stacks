@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c mailtrain.yml mailtrain
 
-version: '3.8'
-
 services:
   mailtrain:
     image: mailtrain/mailtrain:${VERSION:-latest}

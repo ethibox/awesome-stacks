@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c monitoring.yml monitoring
 
-version: '3.8'
-
 services:
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION:-9.5.1}

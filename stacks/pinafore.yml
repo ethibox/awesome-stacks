@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c pinafore.yml pinafore
 
-version: '3.8'
-
 services:
   web:
     image: ethibox/pinafore:${VERSION:-latest}

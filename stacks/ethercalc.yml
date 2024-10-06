@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c ethercalc ethercalc
 
-version: '3.8'
-
 services:
   web:
     image: audreyt/ethercalc:${VERSION:-latest}

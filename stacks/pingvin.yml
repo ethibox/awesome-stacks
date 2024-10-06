@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c pingvin.yml pingvin
 
-version: '3.8'
-
 services:
   web:
     image: stonith404/pingvin-share:${VERSION:-v0.29.0}

@@ -1,8 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c taiga.yml taiga
 # Default password -> admin:123123
 
-version: '3.8'
-
 x-defaults: &defaults
   environment:
     - TAIGA_HOST=${DOMAIN:-taiga.localhost}

@@ -1,8 +1,6 @@
 # sudo sysctl -w vm.max_map_count=262144
 # DOMAIN=example.com docker stack deploy -c magento.yml magento
 
-version: '3.8'
-
 services:
   magento:
     image: bitnami/magento:${VERSION:-2.4.2}

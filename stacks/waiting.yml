@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c waiting.yml waiting
 
-version: '3.8'
-
 services:
   waiting:
     image: nginx:${VERSION:-alpine}

@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c cryptpad.yml cryptpad
 
-version: '3.8'
-
 services:
   cryptpad:
     image: promasu/cryptpad:${VERSION:-v4.9.0-nginx-alpine}

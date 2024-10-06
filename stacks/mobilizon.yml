@@ -3,8 +3,6 @@
 # chown -R 65534:65534 uploads/
 # Don't change domain name
 
-version: '3.8'
-
 services:
   web:
     image: ${IMAGE:-framasoft/mobilizon}:${VERSION:-4.1.0}

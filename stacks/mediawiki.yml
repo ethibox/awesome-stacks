@@ -2,8 +2,6 @@
 # chown -R 33:33 data/
 # wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.1.tar.gz
 
-version: '3.8'
-
 services:
   app:
     image: mediawiki:${VERSION:-1.40.0}

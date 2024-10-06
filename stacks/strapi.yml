@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c strapi.yml strapi
 
-version: '3.8'
-
 services:
   strapi:
     image: ${IMAGE:-strapi/strapi}:${VERSION:-latest}

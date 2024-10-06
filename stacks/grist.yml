@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c grist.yml grist
 
-version: '3.8'
-
 services:
   web:
     image: gristlabs/grist:${VERSION:-1.1.15}

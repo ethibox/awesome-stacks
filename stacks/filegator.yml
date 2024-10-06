@@ -1,7 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c filegator.yml filegator
 
-version: '3.8'
-
 services:
   filegator:
     image: filegator/filegator:${VERSION:-v7.10.1}
