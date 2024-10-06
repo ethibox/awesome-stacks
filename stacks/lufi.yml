@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c lufi.yml lufi
+
+version: '3.8'
+
+x-defaults: &defaults
+  image: ethibox/lufi:${VERSION:-0.05.18}
+  volumes:
+    - ${VOLUME_PATH}data:/usr/lufi/data
+    - ${VOLUME_PATH}files:/usr/lufi/files
+  environment:
+    - CONTACT=${CONTACT:-contact@example.com}
+    - DEFAULT_DELAY=${DEFAULT_DELAY:-1}
+    - MAX_DELAY=${MAX_DELAY:-0}
+    - MAX_FILE_SIZE=${MAX_FILE_SIZE:-10000000000}
+    - SECRET=${SECRET:-mys3cr3t}
+
+services:
+  web:
+    <<: *defaults
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.lufi-${NUMBER:-1}.rule=Host(`${DOMAIN:-lufi.localhost}`)
+        - traefik.http.routers.lufi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.lufi-${NUMBER:-1}.service=lufi-${NUMBER:-1}
+        - traefik.http.routers.lufi-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.lufi-${NUMBER:-1}.loadbalancer.server.port=8081
+
+  cron:
+    <<: *defaults
+    healthcheck:
+      disable: true
+    command:
+      - /bin/sh
+      - -c
+      - |
+        while true; do
+        carton exec script/lufi cron cleanfiles --mode production
+        carton exec script/lufi cron cleanbdd --mode production
+        sleep 3600
+        done
+
+volumes:
+  data:
+  files:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

@@ -1,0 +1,53 @@
+# DOMAIN=example.com docker stack deploy -c phpbb.yml phpbb
+
+version: '3.8'
+
+services:
+  phpbb:
+    image: bitnami/phpbb:${VERSION:-3.3.4}
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - PHPBB_DATABASE_USER=root
+      - PHPBB_DATABASE_NAME=phpbb
+      - PHPBB_DATABASE_PASSWORD=myp@ssw0rd
+      - PHPBB_USERNAME=${PHPBB_USERNAME:-admin}
+      - PHPBB_PASSWORD=${PHPBB_PASSWORD:-myp@ssw0rd}
+      - PHPBB_EMAIL=${EMAIL:-admin@example.com}
+    volumes:
+      - ${VOLUME_PATH}phpbb:/bitnami
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.phpbb-${NUMBER:-1}.rule=Host(`${DOMAIN:-phpbb.localhost}`)
+        - traefik.http.routers.phpbb-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.phpbb-${NUMBER:-1}.service=phpbb-${NUMBER:-1}
+        - traefik.http.routers.phpbb-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.phpbb-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=phpbb
+      - MYSQL_USER=phpbb
+      - MYSQL_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  phpbb:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

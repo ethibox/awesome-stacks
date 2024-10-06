@@ -1,0 +1,31 @@
+# DOMAIN=example.com docker stack deploy -c filegator.yml filegator
+
+version: '3.8'
+
+services:
+  filegator:
+    image: filegator/filegator:${VERSION:-v7.10.1}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/filegator/repository
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.filegator-${NUMBER:-1}.rule=Host(`${DOMAIN:-filegator.localhost}`)
+        - traefik.http.routers.filegator-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.filegator-${NUMBER:-1}.service=filegator-${NUMBER:-1}
+        - traefik.http.routers.filegator-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.filegator-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

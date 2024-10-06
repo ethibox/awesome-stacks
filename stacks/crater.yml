@@ -1,0 +1,67 @@
+# DOMAIN=example.com docker stack deploy -c crater.yml crater
+# docker exec -u crater -it crater_crater git clone https://github.com/bytefury/crater .
+# docker exec -u crater -it composer install -d html
+# docker service update --force crater_app chmod -R 777 html/storage/
+# docker service update --force crater_app chmod -R 777 html/bootstrap/cache/
+
+version: '3.8'
+
+services:
+  nginx:
+    image: ethibox/nginx-proxy:latest
+    command:
+      - /bin/sh
+      - -c
+      - |
+        envsubst '$$NGINX_ROOT_PATH' < /etc/nginx/nginx.template > /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+      - NGINX_ROOT_PATH=/var/www/html/public
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.crater-${NUMBER:-1}.rule=Host(`${DOMAIN:-crater.localhost}`)
+        - traefik.http.routers.crater-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.crater-${NUMBER:-1}.service=crater-${NUMBER:-1}
+        - traefik.http.routers.crater-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.crater-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: ethibox/crater:${VERSION:-4.2.0}
+    environment:
+      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=crater
+      - MYSQL_USER=crater
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

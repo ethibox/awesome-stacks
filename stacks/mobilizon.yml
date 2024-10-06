@@ -1,0 +1,65 @@
+# DOMAIN=example.com docker stack deploy -c mobilizon.yml mobilizon
+# mobilizon_ctl users.new "admin@example.com" --admin --password "myp@ssw0rd"
+# chown -R 65534:65534 uploads/
+# Don't change domain name
+
+version: '3.8'
+
+services:
+  web:
+    image: ${IMAGE:-framasoft/mobilizon}:${VERSION:-4.1.0}
+    environment:
+      - DOCKER=true
+      - MIX_ENV=${MIX_ENV:-prod}
+      - MOBILIZON_INSTANCE_NAME=Mobilizon
+      - MOBILIZON_INSTANCE_HOST=${DOMAIN:-mobilizon.localhost}
+      - MOBILIZON_INSTANCE_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - MOBILIZON_REPLY_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - MOBILIZON_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - MOBILIZON_INSTANCE_REGISTRATIONS_OPEN=true
+      - MOBILIZON_DATABASE_PASSWORD=myp@ssw0rd
+      - MOBILIZON_DATABASE_USERNAME=mobilizon
+      - MOBILIZON_DATABASE_DBNAME=mobilizon
+      - MOBILIZON_DATABASE_HOST=postgres
+      - MOBILIZON_SMTP_SERVER=${SMTP_HOST}
+      - MOBILIZON_SMTP_HOSTNAME=${SMTP_HOST}
+      - MOBILIZON_SMTP_PORT=${SMTP_PORT:-587}
+      - MOBILIZON_SMTP_SSL=${SMTP_SSL:-false}
+      - MOBILIZON_SMTP_USERNAME=${SMTP_USERNAME}
+      - MOBILIZON_SMTP_PASSWORD=${SMTP_PASSWORD}
+    volumes:
+      - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mobilizon.localhost}`)
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.service=mobilizon-${NUMBER:-1}
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mobilizon-${NUMBER:-1}.loadbalancer.server.port=4000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgis/postgis:${POSTGIS_VERSION:-16-3.4}
+    environment:
+      - POSTGRES_DB=mobilizon
+      - POSTGRES_USER=mobilizon
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  uploads:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,122 @@
+# DOMAIN=example.com docker stack deploy -c posthog.yml posthog
+
+version: '3.8'
+
+x-posthog: &posthog
+  image: posthog/posthog:${VERSION:-release-1.43.0}
+  environment:
+    - DATABASE_URL=postgres://posthog:myp@ssw0rd@postgres:5432/posthog
+    - IS_DOCKER=true
+    - IS_BEHIND_PROXY=true
+    - REDIS_URL=redis://redis:6379/
+    - SECRET_KEY=${SECRET_KEY:-mys3cr3t}  # openssl rand -hex 32
+    - DISABLE_SECURE_SSL_REDIRECT=true
+    - SITE_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
+    - JS_URL=${SCHEME:-https}://${DOMAIN:-posthog.localhost}
+    - ASYNC_EVENT_PROPERTY_USAGE=1
+    - CLICKHOUSE_HOST=clickhouse
+    - CLICKHOUSE_SECURE=false
+    - CLICKHOUSE_VERIFY=false
+    - KAFKA_URL=kafka://kafka
+
+services:
+  web:
+    <<: *posthog
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        ./bin/migrate
+        ./bin/docker-server
+        ./bin/docker-frontend
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.posthog-${NUMBER:-1}.rule=Host(`${DOMAIN:-posthog.localhost}`)
+        - traefik.http.routers.posthog-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.posthog-${NUMBER:-1}.service=posthog-${NUMBER:-1}
+        - traefik.http.routers.posthog-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.posthog-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - traefik
+      - internal
+
+  worker:
+    <<: *posthog
+    command: ./bin/docker-worker-celery --with-scheduler
+    networks:
+      - internal
+
+  plugins:
+    <<: *posthog
+    command: ./bin/plugin-server --no-restart-loop
+    networks:
+      - internal
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:22.8
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        apt update
+        apt install -y git
+        git clone https://github.com/PostHog/posthog/
+        mkdir -p /var/lib/clickhouse/format_schemas/
+        cp -r /posthog/posthog/idl/ /
+        cp /posthog/docker/clickhouse/docker-entrypoint-initdb.d/init-db.sh /docker-entrypoint-initdb.d/
+        cp /posthog/docker/clickhouse/config.xml /etc/clickhouse-server/config.xml
+        cp /posthog/docker/clickhouse/users.xml /etc/clickhouse-server/users.xml
+        /entrypoint.sh
+    volumes:
+      - ${VOLUME_PATH}clickhouse:/var/lib/clickhouse
+    networks:
+      - internal
+
+  kafka:
+    image: bitnami/kafka:2.8.1-debian-10-r99
+    environment:
+      - KAFKA_BROKER_ID=1001
+      - KAFKA_CFG_RESERVED_BROKER_MAX_ID=1001
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=true
+    networks:
+      - internal
+
+  zookeeper:
+    image: zookeeper:3.7.0
+    volumes:
+      - ${VOLUME_PATH}zookeeper:/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=posthog
+      - POSTGRES_USER=posthog
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  clickhouse:
+  zookeeper:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

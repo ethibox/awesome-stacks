@@ -1,0 +1,55 @@
+# DOMAIN=example.com docker stack deploy -c nocobase.yml nocobase
+
+version: '3.8'
+
+services:
+  web:
+    image: nocobase/nocobase:${VERSION:-1.0.0-alpha.6}
+    environment:
+      - APP_ENV=production
+      - INIT_ROOT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - INIT_ROOT_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - INIT_ROOT_NICKNAME=${ADMIN_NICKNAME:-Admin}
+      - DB_DIALECT=postgres
+      - DB_HOST=postgres
+      - DB_DATABASE=nocobase
+      - DB_USER=nocobase
+      - DB_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}storage:/app/nocobase/storage
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.nocobase-${NUMBER:-1}.rule=Host(`${DOMAIN:-nocobase.localhost}`)
+        - traefik.http.routers.nocobase-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.nocobase-${NUMBER:-1}.service=nocobase-${NUMBER:-1}
+        - traefik.http.routers.nocobase-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.nocobase-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=nocobase
+      - POSTGRES_USER=nocobase
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "nocobase"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  storage:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

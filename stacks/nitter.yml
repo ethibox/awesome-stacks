@@ -1,0 +1,20 @@
+# DOMAIN=example.com docker stack deploy -c nitter.yml nitter
+
+version: '3.8'
+
+services:
+  web:
+    image: zedeus/nitter:${VERSION:-latest}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.nitter-${NUMBER:-1}.rule=Host(`${DOMAIN:-nitter.localhost}`)
+        - traefik.http.routers.nitter-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.nitter-${NUMBER:-1}.service=nitter-${NUMBER:-1}
+        - traefik.http.routers.nitter-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.nitter-${NUMBER:-1}.loadbalancer.server.port=8080
+
+networks:
+  default:
+    external: true
+    name: traefik-net

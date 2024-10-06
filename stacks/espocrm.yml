@@ -1,0 +1,51 @@
+# DOMAIN=example.com docker stack deploy -c espocrm.yml espocrm
+
+version: '3.8'
+
+services:
+  app:
+    image: espocrm/espocrm:${VERSION:-7-apache}
+    volumes:
+      - ${VOLUME_PATH}espocrm:/var/www/html:cached
+    environment:
+      - ESPOCRM_SITE_URL=${SCHEME:-https}://${DOMAIN:-espocrm.localhost}
+      - ESPOCRM_DATABASE_HOST=mariadb
+      - ESPOCRM_DATABASE_USER=espocrm
+      - ESPOCRM_DATABASE_PASSWORD=myp@ssw0rd
+      - ESPOCRM_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ESPOCRM_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.espocrm-${NUMBER:-1}.rule=Host(`${DOMAIN:-espocrm.localhost}`)
+        - traefik.http.routers.espocrm-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.espocrm-${NUMBER:-1}.service=espocrm-${NUMBER:-1}
+        - traefik.http.routers.espocrm-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.espocrm-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-espocrm}
+      - MYSQL_USER=${MYSQL_USER:-espocrm}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  espocrm:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,36 @@
+# DOMAIN=example.com docker stack deploy -c kanboard.yml kanboard
+# php cli user:reset-password <username> # Change user password
+
+version: '3.8'
+
+services:
+  kanboard:
+    image: kanboard/kanboard:${VERSION:-v1.2.40}
+    environment:
+      - PLUGIN_INSTALLER=true
+      - MAIL_TRANSPORT=${MAIL_TRANSPORT:-smtp}
+      - MAIL_SMTP_HOSTNAME=${SMTP_HOST}
+      - MAIL_SMTP_PORT=${SMTP_PORT:-587}
+      - MAIL_SMTP_USERNAME=${SMTP_USERNAME}
+      - MAIL_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - MAIL_SMTP_ENCRYPTION=${SMTP_ENCRYPTION}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/app/data
+      - ${VOLUME_PATH}plugins:/var/www/app/plugins
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.kanboard-${NUMBER:-1}.rule=Host(`${DOMAIN:-kanboard.localhost}`)
+        - traefik.http.routers.kanboard-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.kanboard-${NUMBER:-1}.service=kanboard-${NUMBER:-1}
+        - traefik.http.routers.kanboard-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.kanboard-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  data:
+  plugins:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

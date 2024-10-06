@@ -1,0 +1,51 @@
+# DOMAIN=example.com docker stack deploy -c hedgedoc.yml hedgedoc
+
+version: '3.8'
+
+services:
+  app:
+    image: linuxserver/hedgedoc:${VERSION:-1.8.2-ls25}
+    volumes:
+      - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
+    environment:
+      - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
+      - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
+      - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
+      - CMD_DB_URL=postgres://hedgedoc:myp@ssw0rd@postgres:5432/hedgedoc
+      - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
+      - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
+      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:-myhedgedocs3cr3t}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.hedgedoc-${NUMBER:-1}.rule=Host(`${DOMAIN:-hedgedoc.localhost}`)
+        - traefik.http.routers.hedgedoc-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.hedgedoc-${NUMBER:-1}.service=hedgedoc-${NUMBER:-1}
+        - traefik.http.routers.hedgedoc-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.hedgedoc-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=hedgedoc
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DB=hedgedoc
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  uploads:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

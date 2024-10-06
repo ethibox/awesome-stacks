@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c commento.yml commento
+
+version: '3.8'
+
+services:
+  server:
+    image: ${IMAGE:-registry.gitlab.com/commento/commento}:${VERSION:-latest}
+    environment:
+      - COMMENTO_ORIGIN=${SCHEME:-https}://${DOMAIN:-commento.localhost}
+      - COMMENTO_PORT=8080
+      - COMMENTO_POSTGRES=postgres://commento:myp@ssw0rd@postgres:5432/commento?sslmode=disable
+      - COMMENTO_FORBID_NEW_OWNERS=${COMMENTO_FORBID_NEW_OWNERS:-false}
+      - COMMENTO_SMTP_HOST=${SMTP_HOST:-smtp.example.com}
+      - COMMENTO_SMTP_PORT=${SMTP_PORT:-587}
+      - COMMENTO_SMTP_USERNAME=${SMTP_USERNAME:-noreply@example.com}
+      - COMMENTO_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
+      - COMMENTO_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.commento-${NUMBER:-1}.rule=Host(`${DOMAIN:-commento.localhost}`)
+        - traefik.http.routers.commento-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.commento-${NUMBER:-1}.service=commento-${NUMBER:-1}
+        - traefik.http.routers.commento-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.commento-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=commento
+      - POSTGRES_USER=commento
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

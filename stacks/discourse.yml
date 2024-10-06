@@ -1,0 +1,87 @@
+# DOMAIN=example.com docker stack deploy -c discourse.yml discourse
+
+version: '3.8'
+
+x-defaults: &defaults
+  image: bitnami/discourse:${VERSION:-3.3.1}
+  environment:
+    DISCOURSE_DATABASE_HOST: postgres
+    DISCOURSE_DATABASE_NAME: discourse
+    DISCOURSE_DATABASE_USER: discourse
+    DISCOURSE_DATABASE_PASSWORD: myp@ssw0rd
+    DISCOURSE_USERNAME: ${ADMIN_USERNAME:-admin}
+    DISCOURSE_PASSWORD: ${ADMIN_PASSWORD:-myp@ssw0rd}
+    DISCOURSE_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+    DISCOURSE_HOST: ${DOMAIN:-discourse.localhost}
+    DISCOURSE_PORT: 3000
+    DISCOURSE_SMTP_HOST: ${SMTP_HOST}
+    DISCOURSE_SMTP_PORT: ${SMTP_PORT}
+    DISCOURSE_SMTP_USER: ${SMTP_USER}
+    DISCOURSE_SMTP_PASSWORD: ${SMTP_PASSWORD}
+    DISCOURSE_SMTP_AUTH: ${SMTP_AUTH:-login}
+    DISCOURSE_SMTP_PROTOCOL: ${SMTP_PROTOCOL:-tls}
+    DISCOURSE_SMTP_ENABLE_START_TLS: ${SMTP_TLS:-true}
+    DISCOURSE_NOTIFICATION_EMAIL: ${SMTP_FROM:-noreply@example.com}
+    ALLOW_EMPTY_PASSWORD: "yes"
+    GITLAB_APP_ID: ${GITLAB_APP_ID}
+    GITLAB_SECRET: ${GITLAB_SECRET}
+    GITLAB_URL: ${GITLAB_URL}
+    BITNAMI_DEBUG: ${BITNAMI_DEBUG:-false}
+    DISCOURSE_EXTRA_CONF_CONTENT: |
+        force_https = true
+
+services:
+  discourse:
+    <<: *defaults
+    volumes:
+      - ${VOLUME_PATH}data:/bitnami
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.discourse-${NUMBER:-1}.rule=Host(`${DOMAIN:-discourse.localhost}`)
+        - traefik.http.routers.discourse-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.discourse-${NUMBER:-1}.service=discourse-${NUMBER:-1}
+        - traefik.http.routers.discourse-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.discourse-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - internal
+
+  sidekiq:
+    <<: *defaults
+    command: /opt/bitnami/scripts/discourse-sidekiq/run.sh
+    volumes:
+      - ${VOLUME_PATH}sidekiq:/bitnami
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=discourse
+      - POSTGRES_USER=discourse
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  data:
+  sidekiq:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

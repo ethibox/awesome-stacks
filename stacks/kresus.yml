@@ -1,0 +1,58 @@
+# DOMAIN=example.com docker stack deploy -c kresus.yml kresus
+
+version: '3.8'
+
+services:
+  web:
+    image: bnjbvr/kresus:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}data:/home/user/data
+    environment:
+      - LOCAL_USER_ID=1000
+      - KRESUS_DB_TYPE=postgres
+      - KRESUS_DB_HOST=postgres
+      - KRESUS_DB_PORT=5432
+      - KRESUS_DB_USERNAME=kresus
+      - KRESUS_DB_PASSWORD=myp@ssw0rd
+      - KRESUS_EMAIL_TRANSPORT=${EMAIL_TRANSPORT:-smtp}
+      - KRESUS_EMAIL_FROM=${SMTP_FROM}
+      - KRESUS_EMAIL_HOST=${SMTP_HOST}
+      - KRESUS_EMAIL_PORT=${SMTP_PORT}
+      - KRESUS_EMAIL_USER=${SMTP_USERNAME}
+      - KRESUS_EMAIL_PASSWORD=${SMTP_PASSWORD}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.kresus-${NUMBER:-1}.rule=Host(`${DOMAIN:-kresus.localhost}`)
+        - traefik.http.routers.kresus-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.kresus-${NUMBER:-1}.service=kresus-${NUMBER:-1}
+        - traefik.http.routers.kresus-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.kresus-${NUMBER:-1}.loadbalancer.server.port=9876
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=kresus
+      - POSTGRES_USER=kresus
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kresus"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

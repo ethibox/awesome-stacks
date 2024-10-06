@@ -1,0 +1,36 @@
+# DOMAIN=example.com docker stack deploy -c fathom.yml fathom
+
+version: '3.8'
+
+services:
+  web:
+    image: usefathom/fathom:${VERSION:-latest}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        ./fathom user add --email=${ADMIN_EMAIL} --password=${ADMIN_PASSWORD}
+        ./fathom server
+    environment:
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}fathom:/app
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.fathom-${NUMBER:-1}.rule=Host(`${DOMAIN:-fathom.localhost}`)
+        - traefik.http.routers.fathom-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.fathom-${NUMBER:-1}.service=fathom-${NUMBER:-1}
+        - traefik.http.routers.fathom-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.fathom-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - traefik
+
+volumes:
+  fathom:
+
+networks:
+  traefik:
+    external: true
+    name: traefik-net

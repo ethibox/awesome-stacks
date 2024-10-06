@@ -1,0 +1,29 @@
+# DOMAIN=example.com docker stack deploy -c adminer.yml adminer
+
+version: '3.8'
+
+services:
+  adminer:
+    image: adminer:${VERSION:-4.8.1}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.adminer-${NUMBER:-1}.rule=Host(`${DOMAIN:-adminer.localhost}`)
+        - traefik.http.routers.adminer-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.adminer-${NUMBER:-1}.service=adminer-${NUMBER:-1}
+        - traefik.http.routers.adminer-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.adminer-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.routers.adminer-${NUMBER:-1}.middlewares=adminer-${NUMBER:-1}-auth
+        - traefik.http.middlewares.adminer-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd}
+        # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

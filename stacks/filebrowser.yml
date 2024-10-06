@@ -1,0 +1,29 @@
+# DOMAIN=example.com docker stack deploy -c filebrowser.yml filebrowser
+
+version: '3.8'
+
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:${VERSION:-s6}
+    volumes:
+      - ${VOLUME_PATH}data:/srv
+      - ${VOLUME_PATH}config:/config
+      - ${VOLUME_PATH}database:/database
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.filebrowser-${NUMBER:-1}.rule=Host(`${DOMAIN:-filebrowser.localhost}`)
+        - traefik.http.routers.filebrowser-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.filebrowser-${NUMBER:-1}.service=filebrowser-${NUMBER:-1}
+        - traefik.http.routers.filebrowser-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.filebrowser-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  data:
+  config:
+  database:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

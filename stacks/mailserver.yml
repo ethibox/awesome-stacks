@@ -1,0 +1,45 @@
+# DOMAIN=example.com docker stack deploy -c mailserver.yml mailserver
+
+version: '3.8'
+
+services:
+  mailserver:
+    image: mailserver/docker-mailserver:${VERSION:-latest}
+    ports:
+      - {target: 25, published: 25, mode: host, protocol: tcp}
+      - {target: 143, published: 143, mode: host, protocol: tcp}
+      - {target: 587, published: 587, mode: host, protocol: tcp}
+      - {target: 993, published: 993, mode: host, protocol: tcp}
+    volumes:
+      - ${VOLUME_PATH}maildata:/var/mail
+      - ${VOLUME_PATH}mailstate:/var/mail-state
+      - ${VOLUME_PATH}config:/tmp/docker-mailserver/
+      - ${VOLUME_PATH}certs:/certs/
+    environment:
+      - OVERRIDE_HOSTNAME=${DOMAIN:-mailserver.localhost}
+      - ENABLE_SPAMASSASSIN=1
+      - SPAMASSASSIN_SPAM_TO_INBOX=1
+      - MOVE_SPAM_TO_JUNK=1
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=0
+      - ONE_DIR=1
+      - DMS_DEBUG=0
+      - SSL_TYPE=manual
+      - SSL_CERT_PATH=/certs/certs/${DOMAIN:-mailserver.localhost}.crt
+      - SSL_KEY_PATH=/certs/private/${DOMAIN:-mailserver.localhost}.key
+      - POSTFIX_MESSAGE_SIZE_LIMIT=${POSTFIX_MESSAGE_SIZE_LIMIT:-20480000}
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+
+volumes:
+  config:
+  certs:
+  maildata:
+  mailstate:
+
+networks:
+  traefik:
+    external: true
+    name: traefik-net

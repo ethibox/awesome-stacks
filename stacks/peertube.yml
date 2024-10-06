@@ -1,0 +1,72 @@
+# DOMAIN=example.com docker stack deploy -c peertube.yml peertube
+# for id in $(fdfind -j1 "\-0.mp4" ../data/videos/ -x echo {/} | sed s/-0.mp4//g); do npm run create-transcoding-job -- -v $id; sleep 5; done;
+
+version: '3.8'
+
+services:
+  peertube:
+    image: chocobozzz/peertube:${VERSION:-v6.3.0-bookworm}
+    ports:
+      - target: 1935
+        published: ${RTMP_PORT:-1935}
+        protocol: tcp
+        mode: host
+    environment:
+      - PEERTUBE_DB_USERNAME=${POSTGRES_USER:-peertube}
+      - PEERTUBE_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - PEERTUBE_WEBSERVER_HOSTNAME=${DOMAIN:-peertube.localhost}
+      - PEERTUBE_WEBSERVER_PORT=${PORT:-443}
+      - PEERTUBE_WEBSERVER_HTTPS=${HTTPS:-true}
+      - PEERTUBE_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - PEERTUBE_SMTP_USERNAME=${SMTP_USERNAME}
+      - PEERTUBE_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - PEERTUBE_SMTP_HOSTNAME=${SMTP_HOSTNAME}
+      - PEERTUBE_SMTP_PORT=${SMTP_PORT:-25}
+      - PEERTUBE_SMTP_FROM=${SMTP_FROM}
+      - PEERTUBE_SMTP_TLS=${SMTP_TLS:-true}
+      - PEERTUBE_SMTP_DISABLE_STARTTLS=false
+      - PEERTUBE_SECRET=${PEERTUBE_SECRET:-mys3cr3t} # openssl rand -hex 32
+      - PT_INITIAL_ROOT_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}data:/data
+      - ${VOLUME_PATH}config:/config
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.peertube-${NUMBER:-1}.rule=Host(`${DOMAIN:-peertube.localhost}`)
+        - traefik.http.routers.peertube-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.peertube-${NUMBER:-1}.service=peertube-${NUMBER:-1}
+        - traefik.http.routers.peertube-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.peertube-${NUMBER:-1}.loadbalancer.server.port=9000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-peertube}
+      - POSTGRES_USER=${POSTGRES_USER:-peertube}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+
+volumes:
+  data:
+  config:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

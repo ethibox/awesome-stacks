@@ -1,0 +1,48 @@
+# DOMAIN=example.com docker stack deploy -c freshrss.yml freshrss.yml
+
+version: '3.8'
+
+services:
+  web:
+    image: freshrss/freshrss:${VERSION:-1.19.2-alpine}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/FreshRSS/data
+      - ${VOLUME_PATH}extensions:/var/www/FreshRSS/extensions
+    environment:
+      - CRON_MIN=*/20
+      - TZ=Europe/Paris
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.freshrss-${NUMBER:-1}.rule=Host(`${DOMAIN:-freshrss.localhost}`)
+        - traefik.http.routers.freshrss-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.freshrss-${NUMBER:-1}.service=freshrss-${NUMBER:-1}
+        - traefik.http.routers.freshrss-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.freshrss-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=freshrss
+      - POSTGRES_USER=freshrss
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  data:
+  extensions:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

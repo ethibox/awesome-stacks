@@ -1,0 +1,34 @@
+# DOMAIN=example.com docker stack deploy -c filestash.yml filestash
+# chown -R 1000:1000 data
+
+version: '3.8'
+
+services:
+  app:
+    image: machines/filestash:${VERSION:-latest}
+    environment:
+      - APPLICATION_URL=${SCHEME:-https}://${DOMAIN:-filestash.localhost}
+    volumes:
+      - ${VOLUME_PATH}data:/app/data/state/
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.filestash-${NUMBER:-1}.rule=Host(`${DOMAIN:-filestash.localhost}`)
+        - traefik.http.routers.filestash-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.filestash-${NUMBER:-1}.service=filestash-${NUMBER:-1}
+        - traefik.http.routers.filestash-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.filestash-${NUMBER:-1}.loadbalancer.server.port=8334
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

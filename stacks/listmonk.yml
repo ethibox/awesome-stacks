@@ -1,0 +1,67 @@
+# DOMAIN=example.com docker stack deploy -c listmonk.yml listmonk
+
+version: '3.8'
+
+services:
+  app:
+    image: listmonk/listmonk:${VERSION:-v3.0.0}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        if [ "$$INSTALL" = "true" ]; then
+          ./listmonk --install --yes
+        fi
+        rm config.toml
+        ./listmonk --new-config
+        if [ "$$UPGRADE" = "true" ]; then
+          ./listmonk --upgrade --yes
+        fi
+        ./listmonk
+    environment:
+      - LISTMONK_app__admin_username=${ADMIN_USERNAME:-admin}
+      - LISTMONK_app__admin_password=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - LISTMONK_app__address=0.0.0.0:9000
+      - LISTMONK_db__host=postgres
+      - LISTMONK_db__password=myp@ssw0rd
+      - POSTGRES_DB=listmonk
+      - POSTGRES_USER=listmonk
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - DB_HOST=postgres
+      - INSTALL=${INSTALL:-false}
+      - UPGRADE=${UPGRADE:-false}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.listmonk-${NUMBER:-1}.rule=Host(`${DOMAIN:-listmonk.localhost}`)
+        - traefik.http.routers.listmonk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.listmonk-${NUMBER:-1}.service=listmonk-${NUMBER:-1}
+        - traefik.http.routers.listmonk-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.listmonk-${NUMBER:-1}.loadbalancer.server.port=9000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=listmonk
+      - POSTGRES_USER=listmonk
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "listmonk"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,47 @@
+# DOMAIN=example.com docker stack deploy -c huginn.yml huginn
+
+version: '3.8'
+
+services:
+  web:
+    image: huginn/huginn:${VERSION:-latest}
+    environment:
+      - DATABASE_HOST=mariadb
+      - HUGINN_DATABASE_NAME=huginn
+      - HUGINN_DATABASE_USERNAME=huginn
+      - HUGINN_DATABASE_PASSWORD=myp@ssw0rd
+      - DO_NOT_SEED=true
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.huginn-${NUMBER:-1}.rule=Host(`${DOMAIN:-huginn.localhost}`)
+        - traefik.http.routers.huginn-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.huginn-${NUMBER:-1}.service=huginn-${NUMBER:-1}
+        - traefik.http.routers.huginn-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.huginn-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=huginn
+      - MYSQL_USER=huginn
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

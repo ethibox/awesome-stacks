@@ -1,0 +1,25 @@
+# DOMAIN=example.com docker stack deploy -c matterwiki.yml matterwiki
+
+version: '3.8'
+
+services:
+  web:
+    image: ethibox/matterwiki:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}data:/server/db
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.matterwiki-${NUMBER:-1}.rule=Host(`${DOMAIN:-matterwiki.localhost}`)
+        - traefik.http.routers.matterwiki-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.matterwiki-${NUMBER:-1}.service=matterwiki-${NUMBER:-1}
+        - traefik.http.routers.matterwiki-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.matterwiki-${NUMBER:-1}.loadbalancer.server.port=5000
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

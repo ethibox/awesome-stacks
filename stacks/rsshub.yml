@@ -1,0 +1,20 @@
+# DOMAIN=example.com docker stack deploy -c rsshub.yml rsshub
+
+version: '3.8'
+
+services:
+  web:
+    image: diygod/rsshub:${VERSION:-latest}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.rsshub-${NUMBER:-1}.rule=Host(`${DOMAIN:-rsshub.localhost}`)
+        - traefik.http.routers.rsshub-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.rsshub-${NUMBER:-1}.service=rsshub-${NUMBER:-1}
+        - traefik.http.routers.rsshub-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.rsshub-${NUMBER:-1}.loadbalancer.server.port=1200
+
+networks:
+  default:
+    external: true
+    name: traefik-net

@@ -1,0 +1,45 @@
+# DOMAIN=example.com docker stack deploy -c portainer.yml portainer
+
+version: '3.8'
+
+services:
+  portainer:
+    image: ${IMAGE:-portainer/portainer-ce}:${VERSION:-2.21.2-alpine}
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    volumes:
+      - ${VOLUME_PATH}portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.portainer-${NUMBER:-1}.rule=Host(`${DOMAIN:-portainer.localhost}`)
+        - traefik.http.routers.portainer-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.portainer-${NUMBER:-1}.service=portainer-${NUMBER:-1}
+        - traefik.http.routers.portainer-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.portainer-${NUMBER:-1}.loadbalancer.server.port=9000
+      mode: replicated
+      replicas: 1
+    networks:
+      - internal
+      - traefik
+
+  agent:
+    image: portainer/agent:${VERSION:-2.21.2-alpine}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    deploy:
+      mode: global
+    networks:
+      - internal
+
+volumes:
+  portainer:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

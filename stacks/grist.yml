@@ -1,0 +1,31 @@
+# DOMAIN=example.com docker stack deploy -c grist.yml grist
+
+version: '3.8'
+
+services:
+  web:
+    image: gristlabs/grist:${VERSION:-1.1.15}
+    volumes:
+      - ${VOLUME_PATH}grist:/persist
+    environment:
+      - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
+      - GRIST_DEFAULT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.grist-${NUMBER:-1}.rule=Host(`${DOMAIN:-grist.localhost}`)
+        - traefik.http.routers.grist-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grist-${NUMBER:-1}.service=grist-${NUMBER:-1}
+        - traefik.http.routers.grist-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.grist-${NUMBER:-1}.loadbalancer.server.port=8484
+        - traefik.http.routers.grist-${NUMBER:-1}.middlewares=grist-${NUMBER:-1}-auth
+        - traefik.http.middlewares.grist-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd}
+        # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+
+volumes:
+  grist:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

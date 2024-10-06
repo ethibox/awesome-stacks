@@ -1,0 +1,75 @@
+# DOMAIN=example.com docker stack deploy -c mattermost.yml mattermost
+# chown -R 2000:2000 config/ data/ plugins/
+# ./bin/mmctl --local user create --system-admin --email admin@example.com --username admin --password myp@ssw0rd
+
+version: '3.8'
+
+services:
+  app:
+    image: ${IMAGE:-mattermost/mattermost-team-edition}:${VERSION:-9.11.2}
+    volumes:
+      - ${VOLUME_PATH}data:/mattermost/data
+      - ${VOLUME_PATH}config:/mattermost/config
+      - ${VOLUME_PATH}plugins:/mattermost/plugins
+    environment:
+      - MM_SQLSETTINGS_DATASOURCE=postgres://mattermost:myp@ssw0rd@postgres:5432/mattermost?sslmode=disable&connect_timeout=10
+      - MM_SERVICESETTINGS_SITEURL=${SCHEME:-https}://${DOMAIN:-mattermost.localhost}
+      - MM_LOCALIZATIONSETTINGS_DEFAULTCLIENTLOCALE=${LOCALE:-fr}
+      - MM_LOCALIZATIONSETTINGS_AVAILABLELOCALES=fr,en,de
+      - MM_EMAILSETTINGS_ENABLEPREVIEWMODEBANNER=false
+      # - MM_EMAILSETTINGS_SMTPUSERNAME=${SMTP_USERNAME}
+      # - MM_EMAILSETTINGS_SMTPPASSWORD=${SMTP_PASSWORD}
+      # - MM_EMAILSETTINGS_SMTPSERVER=${SMTP_SERVER}
+      # - MM_EMAILSETTINGS_SMTPPORT=${SMTP_PORT}
+      - MM_PLUGINSETTINGS_ENABLEUPLOADS=${ENABLE_PLUGINS:-true}
+      - MM_TEAMSETTINGS_MAXUSERSPERTEAM=${MAXUSERSPERTEAM:-100}
+      - MM_SERVICESETTINGS_ENABLEAPICHANNELDELETION=${ENABLEAPICHANNELDELETION:-true}
+      - MM_SERVICESETTINGS_ENABLELOCALMODE=${MM_SERVICESETTINGS_ENABLELOCALMODE:-true}
+      - MM_FILESETTINGS_MAXFILESIZE=${MM_FILESETTINGS_MAXFILESIZE:-104857600}
+      - edition=team
+    networks:
+      - internal
+
+  web:
+    image: mattermost/mattermost-prod-web:latest
+    environment:
+      - APP_PORT_NUMBER=8065
+      - APP_HOST={{ index .Service.Labels "com.docker.stack.namespace" }}_app
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mattermost-${NUMBER:-1}.rule=Host(`${DOMAIN:-mattermost.localhost}`)
+        - traefik.http.routers.mattermost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mattermost-${NUMBER:-1}.service=mattermost-${NUMBER:-1}
+        - traefik.http.routers.mattermost-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mattermost-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=mattermost
+      - POSTGRES_USER=mattermost
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "mattermost"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  data:
+  config:
+  plugins:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

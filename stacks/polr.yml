@@ -1,0 +1,54 @@
+# DOMAIN=example.com docker stack deploy -c polr.yml polr
+
+version: '3.8'
+
+services:
+  polr:
+    image: ajanvier/polr:${VERSION:-2.3.0}
+    environment:
+      - DB_HOST=mariadb
+      - DB_DATABASE=polr
+      - DB_USERNAME=polr
+      - DB_PASSWORD=myp@ssw0rd
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - APP_NAME=${APP_NAME:-My Polr}
+      - APP_PROTOCOL=${SCHEME:-https}://
+      - APP_ADDRESS=${DOMAIN:-polr.localhost}
+      - SETTING_ADV_ANALYTICS=${SETTING_ADV_ANALYTICS:-false}
+      - POLR_ALLOW_ACCT_CREATION=${POLR_ALLOW_ACCT_CREATION:-false}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.polr-${NUMBER:-1}.rule=Host(`${DOMAIN:-polr.localhost}`)
+        - traefik.http.routers.polr-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.polr-${NUMBER:-1}.service=polr-${NUMBER:-1}
+        - traefik.http.routers.polr-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.polr-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=polr
+      - MYSQL_USER=polr
+      - MYSQL_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

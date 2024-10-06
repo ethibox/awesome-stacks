@@ -1,0 +1,78 @@
+# DOMAIN=example.com docker stack deploy -c prestashop.yml prestashop
+
+version: '3.8'
+
+services:
+  nginx:
+    image: ethibox/nginx-proxy:latest
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cp /etc/nginx/nginx-prestashop.conf /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        sed -i -e 's/fastcgi_pass backend;/fastcgi_pass backend;\n            fastcgi_param HTTPS '$$HTTPS';/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+      - HTTPS=${HTTPS:-1}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.prestashop-${NUMBER:-1}.rule=Host(`${DOMAIN:-prestashop.localhost}`)
+        - traefik.http.routers.prestashop-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.prestashop-${NUMBER:-1}.service=prestashop-${NUMBER:-1}
+        - traefik.http.routers.prestashop-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.prestashop-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: prestashop/prestashop:${VERSION:-1.7.8.6-fpm}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    environment:
+      - DB_SERVER=mariadb
+      - DB_USER=prestashop
+      - DB_PASSWD=myp@ssw0rd
+      - DB_NAME=prestashop
+      - PS_DOMAIN=${DOMAIN:-prestashop.localhost}
+      - PS_HANDLE_DYNAMIC_DOMAIN=${PS_HANDLE_DYNAMIC_DOMAIN:-0}
+      - PS_LANGUAGE=${PS_LANGUAGE:-fr}
+      - PS_INSTALL_AUTO=${PS_INSTALL_AUTO:-1}
+      - PS_ENABLE_SSL=${PS_ENABLE_SSL:-1}
+      - PS_FOLDER_INSTALL=${PS_FOLDER_INSTALL:-install-destroy}
+      - PS_FOLDER_ADMIN=${PS_FOLDER_ADMIN:-admin-secure}
+      - PS_DEMO_MODE=${PS_DEMO_MODE:-0}
+      - ADMIN_MAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=prestashop
+      - MYSQL_USER=prestashop
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

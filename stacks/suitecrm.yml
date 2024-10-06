@@ -1,0 +1,53 @@
+# DOMAIN=example.com docker stack deploy -c suitecrm.yml suitecrm
+
+version: '3.8'
+
+services:
+  suitecrm:
+    image: bitnami/suitecrm:${VERSION:-8.1.3}
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - SUITECRM_DATABASE_USER=suitecrm
+      - SUITECRM_DATABASE_NAME=suitecrm
+      - SUITECRM_DATABASE_PASSWORD=myp@ssw0rd
+      - SUITECRM_USERNAME=${ADMIN_USERNAME:-admin}
+      - SUITECRM_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - SUITECRM_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+    volumes:
+      - ${VOLUME_PATH}data:/bitnami
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.suitecrm-${NUMBER:-1}.rule=Host(`${DOMAIN:-suitecrm.localhost}`)
+        - traefik.http.routers.suitecrm-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.suitecrm-${NUMBER:-1}.service=suitecrm-${NUMBER:-1}
+        - traefik.http.routers.suitecrm-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.suitecrm-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=suitecrm
+      - MYSQL_USER=suitecrm
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

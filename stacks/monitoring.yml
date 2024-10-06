@@ -1,0 +1,116 @@
+# DOMAIN=example.com docker stack deploy -c monitoring.yml monitoring
+
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION:-9.5.1}
+    user: root
+    environment:
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
+      - GF_SMTP_HOST=${SMTP_HOST:-smtp.example.com:587}
+      - GF_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
+      - GF_SMTP_USER=${SMTP_USERNAME:-noreply@example.com}
+      - GF_SERVER_ROOT_URL=${SCHEME:-https}://${DOMAIN:-grafana.localhost}
+    volumes:
+      - ${VOLUME_PATH}grafana:/var/lib/grafana
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
+        - traefik.http.routers.grafana-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grafana-${NUMBER:-1}.service=grafana-${NUMBER:-1}
+        - traefik.http.routers.grafana-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.grafana-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  prometheus:
+    image: prom/prometheus:v2.43.0
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        chown -R 65534:root /prometheus /etc/prometheus
+        if [ ! -f /etc/prometheus/prometheus.yml ]; then
+          wget --no-cache -q https://git.io/JucIT -O /etc/prometheus/prometheus.yml
+        fi
+        prometheus --config.file=/etc/prometheus/prometheus.yml \
+        --storage.tsdb.path=/prometheus \
+        --storage.tsdb.retention.time=7d \
+        --storage.tsdb.retention.size=1GB \
+        --web.console.libraries=/usr/share/prometheus/console_libraries \
+        --web.console.templates=/usr/share/prometheus/consoles \
+        --web.route-prefix=/prometheus \
+        --web.external-url=${SCHEME:-https}://${DOMAIN:-grafana.localhost}/prometheus
+    volumes:
+      - ${VOLUME_PATH}prometheus:/prometheus
+      - ${VOLUME_PATH}config:/etc/prometheus/
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.grafana-prom-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`) && PathPrefix(`/prometheus/`)
+        - traefik.http.routers.grafana-prom-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grafana-prom-${NUMBER:-1}.service=grafana-prom-${NUMBER:-1}
+        - traefik.http.routers.grafana-prom-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
+        - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth
+        - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROM_USER:-admin}:${PROM_PASSWORD:-htpasswd}
+        # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+    networks:
+      - internal
+      - traefik
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    command: -docker_only=true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    deploy:
+      mode: global
+    networks:
+      - internal
+
+  node-exporter:
+    image: prom/node-exporter:v1.5.0
+    hostname: "{{.Node.Hostname}}"
+    volumes:
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /proc:/host/proc:ro
+      - /etc/hostname:/etc/hostname
+      - /mnt:/mnt:ro
+    environment:
+      - NODE_ID={{.Node.ID}}
+    command:
+      - '--path.sysfs=/host/sys'
+      - '--path.procfs=/host/proc'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--no-collector.ipvs'
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
+    networks:
+      - internal
+
+volumes:
+  config:
+  grafana:
+  prometheus:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

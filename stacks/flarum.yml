@@ -1,0 +1,70 @@
+# DOMAIN=example.com docker stack deploy -c flarum.yml flarum
+
+version: '3.8'
+
+services:
+  flarum:
+    image: mondedie/flarum:${VERSION:-stable}
+    working_dir: /flarum/app/
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache mysql-client
+        while ! mysqladmin ping -h"$$DB_HOST" --silent; do
+            echo "Wait Mysql..."
+            sleep 1
+        done
+        composer require flarum-lang/french -W
+        composer require fof/user-directory -W
+        php flarum cache:clear
+        /usr/local/bin/startup
+    environment:
+      - FORUM_URL=${SCHEME:-https}://${DOMAIN:-flarum.localhost}
+      - FLARUM_ADMIN_USER=${ADMIN_USER:-admin}
+      - FLARUM_ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - FLARUM_ADMIN_MAIL=${ADMIN_EMAIL:-admin@example.com}
+      - FLARUM_TITLE=${FLARUM_TITLE:-Flarum}
+      - DB_HOST=mariadb
+      - DB_USER=flarum
+      - DB_NAME=flarum
+      - DB_PASS=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}assets:/flarum/app/public/assets
+      - ${VOLUME_PATH}extensions:/flarum/app/extensions
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.flarum-${NUMBER:-1}.rule=Host(`${DOMAIN:-flarum.localhost}`)
+        - traefik.http.routers.flarum-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.flarum-${NUMBER:-1}.service=flarum-${NUMBER:-1}
+        - traefik.http.routers.flarum-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.flarum-${NUMBER:-1}.loadbalancer.server.port=8888
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=flarum
+      - MYSQL_USER=flarum
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  assets:
+  extensions:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

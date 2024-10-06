@@ -1,0 +1,53 @@
+# DOMAIN=example.com docker stack deploy -c strapi.yml strapi
+
+version: '3.8'
+
+services:
+  strapi:
+    image: ${IMAGE:-strapi/strapi}:${VERSION:-latest}
+    environment:
+      - APP_KEYS=${APP_KEYS}
+      - API_TOKEN_SALT=${API_TOKEN_SALT}
+      - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+      - TRANSFER_TOKEN_SALT=${TRANSFER_TOKEN_SALT}
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_CLIENT=mysql
+      - DATABASE_HOST=mariadb
+      - DATABASE_PORT=3306
+      - DATABASE_USERNAME=strapi
+      - DATABASE_PASSWORD=myp@ssw0rd
+      - DATABASE_NAME=strapi
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.strapi-${NUMBER:-1}.rule=Host(`${DOMAIN:-strapi.localhost}`)
+        - traefik.http.routers.strapi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.strapi-${NUMBER:-1}.service=strapi-${NUMBER:-1}
+        - traefik.http.routers.strapi-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.strapi-${NUMBER:-1}.loadbalancer.server.port=1337
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-strapi}
+      - MYSQL_USER=${MYSQL_USER:-strapi}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

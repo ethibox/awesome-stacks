@@ -1,0 +1,79 @@
+# DOMAIN=example.com docker stack deploy -c directus.yml directus
+
+version: '3.8'
+
+services:
+  directus:
+    image: directus/directus:${VERSION:-9.0.0-rc.95}
+    environment:
+      - KEY=${KEY:-255d861b-5ea1-5996-9aa3-922530ec40b1}
+      - ACCESS_TOKEN_TTL=${ACCESS_TOKEN_TTL:-15m}
+      - SECRET=${SECRET:-6116487b-cda1-52c2-b5b5-c8022c45e263}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - DB_CLIENT=mysql
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=directus
+      - DB_USER=directus
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_CHARSET=utf8mb4
+      - DB_POOL_MIN=number:0
+      - CACHE_ENABLED=true
+      - CACHE_STORE=redis
+      - CACHE_REDIS=redis://redis:6379
+      - EMAIL_SMTP_HOST=${EMAIL_SMTP_HOST}
+      - EMAIL_SMTP_PORT=${EMAIL_SMTP_PORT:-587}
+      - EMAIL_SMTP_USER=${EMAIL_SMTP_USER}
+      - EMAIL_SMTP_PASSWORD=${EMAIL_SMTP_PASSWORD}
+      - EMAIL_SMTP_SECURE=${EMAIL_SMTP_SECURE:-false}
+      - EMAIL_SMTP_POOL=${EMAIL_SMTP_POOL:-false}
+      - EMAIL_TRANSPORT=${EMAIL_TRANSPORT:-smtp}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-directus.localhost}
+    volumes:
+      - ${VOLUME_PATH}extensions:/directus/extensions
+      - ${VOLUME_PATH}uploads:/directus/uploads
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.directus-${NUMBER:-1}.rule=Host(`${DOMAIN:-directus.localhost}`)
+        - traefik.http.routers.directus-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.directus-${NUMBER:-1}.service=directus-${NUMBER:-1}
+        - traefik.http.routers.directus-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.directus-${NUMBER:-1}.loadbalancer.server.port=8055
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=directus
+      - MYSQL_USER=directus
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  extensions:
+  uploads:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

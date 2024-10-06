@@ -1,0 +1,42 @@
+# DOMAIN=example.com docker stack deploy -c ollama.yml ollama
+
+version: '3.8'
+
+services:
+  web:
+    image: ghcr.io/open-webui/open-webui:main
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+    volumes:
+      - ${VOLUME_PATH}data:/app/backend/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.ollama-${NUMBER:-1}.rule=Host(`${DOMAIN:-ollama.localhost}`)
+        - traefik.http.routers.ollama-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.ollama-${NUMBER:-1}.service=ollama-${NUMBER:-1}
+        - traefik.http.routers.ollama-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.ollama-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ${VOLUME_PATH}ollama:/root/.ollama
+    networks:
+      - internal
+
+volumes:
+  data:
+  ollama:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

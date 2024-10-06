@@ -1,0 +1,24 @@
+# DOMAIN=example.com docker stack deploy -c jellyfin.yml jellyfin
+
+version: '3.8'
+
+services:
+  web:
+    image: jellyfin/jellyfin:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}config:/config
+      - ${VOLUME_PATH}cache:/cache
+      - ${VOLUME_PATH}media:/media
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.jellyfin-${NUMBER:-1}.rule=Host(`${DOMAIN:-jellyfin.localhost}`)
+        - traefik.http.routers.jellyfin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.jellyfin-${NUMBER:-1}.service=jellyfin-${NUMBER:-1}
+        - traefik.http.routers.jellyfin-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.jellyfin-${NUMBER:-1}.loadbalancer.server.port=8096
+
+networks:
+  default:
+    external: true
+    name: traefik-net

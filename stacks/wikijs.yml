@@ -1,0 +1,48 @@
+# DOMAIN=example.com docker stack deploy -c wikijs.yml wikijs
+
+version: '3.8'
+
+services:
+  web:
+    image: requarks/wiki:${VERSION:-2.5.297}
+    environment:
+      - DB_TYPE=mysql
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USER=wikijs
+      - DB_NAME=wikijs
+      - DB_PASS=myp@ssw0rd
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.wikijs-${NUMBER:-1}.rule=Host(`${DOMAIN:-wikijs.localhost}`)
+        - traefik.http.routers.wikijs-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.wikijs-${NUMBER:-1}.service=wikijs-${NUMBER:-1}
+        - traefik.http.routers.wikijs-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.wikijs-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-wikijs}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-wikijs}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,78 @@
+# DOMAIN=example.com docker stack deploy -c jitsi.yml jitsi
+# prosodyctl --config /config/prosody.cfg.lua register username meet.jitsi password
+
+x-defaults: &defaults
+  environment:
+    - TZ=Europe/Paris
+    - JVB_UDP_PORT=${JVB_UDP_PORT:-10000}
+    - JVB_ADVERTISE_IPS=${JVB_ADVERTISE_IPS}
+    - ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX=1
+    - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
+    - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
+    - JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD}
+    - JIGASI_XMPP_PASSWORD=${JIGASI_XMPP_PASSWORD}
+    - JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD}
+    - JIBRI_XMPP_PASSWORD=${JIBRI_XMPP_PASSWORD}
+
+services:
+  web:
+    <<: *defaults
+    image: jitsi/web:${VERSION:-stable}
+    volumes:
+      - ${VOLUME_PATH}web:/config
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.jitsi-${NUMBER:-1}.rule=Host(`${DOMAIN:-jitsi.localhost}`)
+        - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.jitsi-${NUMBER:-1}.service=jitsi-${NUMBER:-1}
+        - traefik.http.routers.jitsi-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.jitsi-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - traefik
+      - internal
+
+  prosody:
+    <<: *defaults
+    image: jitsi/prosody:${VERSION:-stable}
+    volumes:
+      - ${VOLUME_PATH}prosody:/config
+    networks:
+      internal:
+        aliases:
+          - ${XMPP_SERVER:-xmpp.meet.jitsi}
+
+  jicofo:
+    <<: *defaults
+    image: jitsi/jicofo:${VERSION:-stable}
+    volumes:
+      - ${VOLUME_PATH}jicofo:/config
+    networks:
+      - internal
+
+  jvb:
+    <<: *defaults
+    image: jitsi/jvb:${VERSION:-stable}
+    volumes:
+      - ${VOLUME_PATH}jvb:/config
+    ports:
+      - target: ${JVB_UDP_PORT:-10000}
+        published: ${JVB_UDP_PORT:-10000}
+        protocol: udp
+        mode: host
+    networks:
+      - internal
+
+volumes:
+  web:
+  jvb:
+  jicofo:
+  prosody:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

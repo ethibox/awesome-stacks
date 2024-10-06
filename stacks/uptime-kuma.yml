@@ -1,0 +1,25 @@
+# DOMAIN=example.com docker stack deploy -c uptime-kuma.yml uptime-kuma
+
+version: '3.8'
+
+services:
+  web:
+    image: louislam/uptime-kuma:${VERSION:-1.8.0-alpine}
+    volumes:
+      - ${VOLUME_PATH}data:/app/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.uptime-kuma-${NUMBER:-1}.rule=Host(`${DOMAIN:-uptime-kuma.localhost}`)
+        - traefik.http.routers.uptime-kuma-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.uptime-kuma-${NUMBER:-1}.service=uptime-kuma-${NUMBER:-1}
+        - traefik.http.routers.uptime-kuma-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.uptime-kuma-${NUMBER:-1}.loadbalancer.server.port=3001
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

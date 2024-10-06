@@ -1,0 +1,118 @@
+# DOMAIN=example.com docker stack deploy -c mastodon.yml mastodon
+# chown -R 991:991 system/
+# docker exec -it mastodon_web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
+# docker exec -it mastodon_web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
+# tootctl accounts modify --role Owner <username> # Set owner role
+# tootctl accounts create <username> --email <email> --confirmed --role Admin # Add user
+# tootctl media remove # Remove all media
+# tootctl media remove-orphans # Remove orphan files
+# tootctl cache clear # Clear cache
+# tootctl accounts modify --disable-2fa <username> # Disable 2FA
+
+version: '3.8'
+
+x-defaults: &defaults
+  image: tootsuite/mastodon:${VERSION:-v4.2.13}
+  environment:
+    - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
+    - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
+    - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"DEFAULT_KEY"}
+    - OTP_SECRET=${OTP_SECRET}
+    - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+    - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+    - DB_HOST=${POSTGRES_HOST:-postgres}
+    - DB_PORT=${POSTGRES_PORT:-5432}
+    - DB_NAME=${POSTGRES_DB:-mastodon}
+    - DB_USER=${POSTGRES_USER:-mastodon}
+    - DB_PASS=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - REDIS_PASSWORD=
+    - SMTP_SERVER=${SMTP_SERVER:-smtp.mailgun.org}
+    - SMTP_PORT=${SMTP_PORT:-587}
+    - SMTP_LOGIN=${SMTP_LOGIN}
+    - SMTP_PASSWORD=${SMTP_PASSWORD}
+    - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
+    - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
+    - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-noreply@example.com}
+
+services:
+  web:
+    <<: *defaults
+    command: bash -c "chown -R 991:991 /mastodon/public/system; rm -f /mastodon/tmp/pids/server.pid; rails db:migrate; rails assets:precompile; rails s -p 3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mastodon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`)
+        - traefik.http.routers.mastodon-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mastodon-${NUMBER:-1}.service=mastodon-${NUMBER:-1}
+        - traefik.http.routers.mastodon-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mastodon-${NUMBER:-1}.loadbalancer.server.port=3000
+    volumes:
+      - ${VOLUME_PATH}system:/mastodon/public/system
+    networks:
+      - traefik
+      - internal
+
+  streaming:
+    <<: *defaults
+    command: node ./streaming
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`) && PathPrefix(`/api/v1/streaming`)
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.service=mastodon-streaming-${NUMBER:-1}
+        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mastodon-streaming-${NUMBER:-1}.loadbalancer.server.port=4000
+    networks:
+      - traefik
+      - internal
+
+  sidekiq:
+    <<: *defaults
+    command: bundle exec sidekiq
+    volumes:
+      - ${VOLUME_PATH}system:/mastodon/public/system
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    command: postgres -c 'max_connections=250'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-mastodon}
+      - POSTGRES_USER=${POSTGRES_USER:-mastodon}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  system:
+  redis:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

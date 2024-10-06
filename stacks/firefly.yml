@@ -1,0 +1,56 @@
+# DOMAIN=example.com docker stack deploy -c firefly.yml firefly
+
+version: '3.8'
+
+services:
+  app:
+    image: fireflyiii/core:${VERSION:-version-5.5.13}
+    environment:
+      - DB_HOST=postgres
+      - DB_DATABASE=firefly
+      - DB_USERNAME=firefly
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_CONNECTION=pgsql
+      - DB_PORT=5432
+      - APP_KEY=${APP_KEY:-S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly}
+      - APP_ENV=${APP_ENV:-local}
+      - TZ=Europe/Paris
+      - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-firefly.localhost}
+      - TRUSTED_PROXIES=**
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.firefly-${NUMBER:-1}.rule=Host(`${DOMAIN:-firefly.localhost}`)
+        - traefik.http.routers.firefly-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.firefly-${NUMBER:-1}.service=firefly-${NUMBER:-1}
+        - traefik.http.routers.firefly-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.firefly-${NUMBER:-1}.loadbalancer.server.port=8080
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/firefly-iii/storage/
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=firefly
+      - POSTGRES_USER=firefly
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  storage:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

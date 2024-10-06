@@ -1,0 +1,39 @@
+# DOMAIN=example.com docker stack deploy -c cryptpad.yml cryptpad
+
+version: '3.8'
+
+services:
+  cryptpad:
+    image: promasu/cryptpad:${VERSION:-v4.9.0-nginx-alpine}
+    environment:
+      - CPAD_MAIN_DOMAIN=${DOMAIN:-cryptpad.localhost}
+      - CPAD_HTTP2_DISABLE=true
+      - CPAD_SANDBOX_DOMAIN=sandbox.${DOMAIN:-cryptpad.localhost}
+    volumes:
+      - ${VOLUME_PATH}blob:/cryptpad/blob
+      - ${VOLUME_PATH}block:/cryptpad/block
+      - ${VOLUME_PATH}customize:/cryptpad/customize
+      - ${VOLUME_PATH}data:/cryptpad/data
+      - ${VOLUME_PATH}files:/cryptpad/datastore
+      - ${VOLUME_PATH}config:/cryptpad/config
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.cryptpad-${NUMBER:-1}.rule=Host(`${DOMAIN:-cryptpad.localhost}`)
+        - traefik.http.routers.cryptpad-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.cryptpad-${NUMBER:-1}.service=cryptpad-${NUMBER:-1}
+        - traefik.http.routers.cryptpad-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.cryptpad-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  blob:
+  block:
+  customize:
+  data:
+  files:
+  config:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

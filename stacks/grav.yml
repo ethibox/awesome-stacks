@@ -1,0 +1,25 @@
+# DOMAIN=example.com docker stack deploy -c grav.yml grav
+
+version: '3.8'
+
+services:
+  web:
+    image: ethibox/grav:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}grav:/var/www/html
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.grav-${NUMBER:-1}.rule=Host(`${DOMAIN:-grav.localhost}`)
+        - traefik.http.routers.grav-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grav-${NUMBER:-1}.service=grav-${NUMBER:-1}
+        - traefik.http.routers.grav-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.grav-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  grav:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

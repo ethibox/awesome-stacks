@@ -1,0 +1,62 @@
+# DOMAIN=example.com docker stack deploy -c writefreely.yml writefreely
+
+version: '3.8'
+
+services:
+  web:
+    image: writeas/writefreely:${VERSION:-0.12.0}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        set -e
+        wget -O /go/config.ini https://git.io/Ju8Wf
+        if [ "${DISABLE_ROBOTS:-false}" = "true" ]; then
+          wget -O /go/static/robots.txt https://pastebin.com/raw/tqR8CFkZ
+        fi
+        sed -i -e s%#APP_URL%${SCHEME:-https}://${DOMAIN:-writefreely.localhost}%g /go/config.ini
+        sed -i -e s/#APP_OPENREGISTRATION/${APP_OPENREGISTRATION:-true}/g /go/config.ini
+        sed -i -e s/#APP_FEDERATION/${APP_FEDERATION:-true}/g /go/config.ini
+        sed -i -e s/#APP_THEME/${APP_THEME:-write}/g /go/config.ini
+        sed -i -e s/#APP_TITLE/${APP_TITLE:-Writefreely}/g /go/config.ini
+        sed -i -e s/#APP_WEBFONT/${APP_WEBFONT:-true}/g /go/config.ini
+        cmd/writefreely/writefreely --init-db
+        cmd/writefreely/writefreely --gen-keys
+        cmd/writefreely/writefreely
+    volumes:
+      - ${VOLUME_PATH}keys:/go/keys
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.writefreely-${NUMBER:-1}.rule=Host(`${DOMAIN:-writefreely.localhost}`)
+        - traefik.http.routers.writefreely-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.writefreely-${NUMBER:-1}.service=writefreely-${NUMBER:-1}
+        - traefik.http.routers.writefreely-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.writefreely-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=writefreely
+      - MYSQL_USER=writefreely
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  keys:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

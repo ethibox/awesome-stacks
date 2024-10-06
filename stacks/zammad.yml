@@ -1,0 +1,113 @@
+# DOMAIN=example.com docker stack deploy -c zammad.yml zammad
+# sudo sysctl -w vm.max_map_count=262144
+# echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
+# chown -R 1000:1000 elasticsearch storage var
+
+version: '3.8'
+
+x-zammad: &zammad
+  image: zammad/zammad-docker-compose:${VERSION:-6.2.0-10}
+  volumes:
+    - ${VOLUME_PATH}storage:/opt/zammad/storage
+    - ${VOLUME_PATH}var:/opt/zammad/var
+  environment:
+    - NGINX_SERVER_SCHEME=${SCHEME:-https}
+    - POSTGRESQL_DB=zammad
+    - POSTGRESQL_USER=zammad
+    - POSTGRESQL_PASS=myp%40ssw0rd
+    - POSTGRESQL_HOST=zammad-postgresql
+    - REDIS_URL=redis://zammad-redis:6379
+  networks:
+    - internal
+
+services:
+  zammad-init:
+    <<: *zammad
+    command: ["zammad-init"]
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  zammad-nginx:
+    <<: *zammad
+    command: ["zammad-nginx"]
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.zammad-${NUMBER:-1}.rule=Host(`${DOMAIN:-zammad.localhost}`)
+        - traefik.http.routers.zammad-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.zammad-${NUMBER:-1}.service=zammad-${NUMBER:-1}
+        - traefik.http.routers.zammad-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.zammad-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.routers.zammad-${NUMBER:-1}.middlewares=zammad-${NUMBER:-1}
+        - traefik.http.middlewares.zammad-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=${SCHEME:-https}
+    networks:
+      - traefik
+      - internal
+
+  zammad-elasticsearch:
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-5.2.3-32
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+    networks:
+      - internal
+
+  zammad-memcached:
+    image: memcached:1.6.20-alpine
+    command: memcached -m 256M
+    networks:
+      - internal
+
+  zammad-postgresql:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    command: postgres -c 'max_connections=250'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "zammad"]
+    volumes:
+      - ${VOLUME_PATH}postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=zammad
+      - POSTGRES_USER=zammad
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+  zammad-redis:
+    image: redis:${REDIS_VERSION:-7.0.5-alpine}
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+  zammad-railsserver:
+    <<: *zammad
+    command: ["zammad-railsserver"]
+
+  zammad-scheduler:
+    <<: *zammad
+    command: ["zammad-scheduler"]
+
+  zammad-websocket:
+    <<: *zammad
+    command: ["zammad-websocket"]
+
+volumes:
+  var:
+  redis:
+  storage:
+  elasticsearch:
+  postgresql:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

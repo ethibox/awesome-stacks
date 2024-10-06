@@ -1,0 +1,66 @@
+# DOMAIN=example.com docker stack deploy -c mailtrain.yml mailtrain
+
+version: '3.8'
+
+services:
+  mailtrain:
+    image: mailtrain/mailtrain:${VERSION:-latest}
+    environment:
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=mailtrain
+      - MYSQL_USER=mailtrain
+      - MYSQL_PASSWORD=myp@ssw0rd
+      - URL_BASE_PUBLIC=${SCHEME:-https}://${DOMAIN:-mailtrain.localhost}
+      - URL_BASE_SANDBOX=${SCHEME:-https}://${DOMAIN:-mailtrain.localhost}
+      - URL_BASE_TRUSTED=${SCHEME:-https}://${DOMAIN:-mailtrain.localhost}
+      - WWW_PROXY=true
+    volumes:
+      - ${VOLUME_PATH}data:/app/server/files
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mailtrain-${NUMBER:-1}.rule=Host(`${DOMAIN:-mailtrain.localhost}`)
+        - traefik.http.routers.mailtrain-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mailtrain-${NUMBER:-1}.service=mailtrain-${NUMBER:-1}
+        - traefik.http.routers.mailtrain-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mailtrain-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=mailtrain
+      - MYSQL_USER=mailtrain
+      - MYSQL_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mysql:/var/lib/mysql
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+
+  mongo:
+    image: mongo:4-xenial
+    volumes:
+      - ${VOLUME_PATH}mongo:/data/db
+    networks:
+      - internal
+
+volumes:
+  data:
+  mysql:
+  mongo:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

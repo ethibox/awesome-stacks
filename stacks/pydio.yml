@@ -1,0 +1,48 @@
+# DOMAIN=example.com docker stack deploy -c pydio.yml pydio
+
+version: '3.8'
+
+services:
+  pydio:
+    image: pydio/cells:${VERSION:-2.2.9}
+    volumes:
+      - ${VOLUME_PATH}data:/var/cells:cached
+    environment:
+      - CELLS_BIND=0.0.0.0:8080
+      - CELLS_EXTERNAL=${SCHEME:-https}://${DOMAIN:-pydio.localhost}
+      - CELLS_NO_TLS=1
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.pydio-${NUMBER:-1}.rule=Host(`${DOMAIN:-pydio.localhost}`)
+        - traefik.http.routers.pydio-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.pydio-${NUMBER:-1}.service=pydio-${NUMBER:-1}
+        - traefik.http.routers.pydio-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.pydio-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=pydio
+      - MYSQL_USER=pydio
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

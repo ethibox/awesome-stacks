@@ -1,0 +1,64 @@
+# DOMAIN=example.com docker stack deploy -c plume.yml plume
+
+version: '3.8'
+
+services:
+  server:
+    image: plumeorg/plume:${VERSION:-0.7.2}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apt update
+        apt install -y wget
+        wget -O /app/.env https://docs.joinplu.me/docker.sample.env
+        plm migration run
+        plm search init
+        plm instance new -d $$BASE_URL -n $$INSTANCE_NAME
+        plm users new -n 'admin' -N 'admin' -b 'Administrateur' -e $$ADMIN_EMAIL -p $$ADMIN_PASSWORD --admin
+        plume
+    environment:
+      - BASE_URL=${DOMAIN:-plume.localhost}
+      - MAIL_SERVER=${MAIL_SERVER:-example.org}
+      - ROCKET_SECRET_KEY=${ROCKET_SECRET_KEY:-Hw5KPcdin+w8YNvUB9/0ZQgf1N5PVnPOnj4fGTBcgF0=}
+      - INSTANCE_NAME=${INSTANCE_NAME:-Plume}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@domain.name}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}media:/app/static/media
+      - ${VOLUME_PATH}search_index:/app/search_index
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.plume-${NUMBER:-1}.rule=Host(`${DOMAIN:-plume.localhost}`)
+        - traefik.http.routers.plume-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.plume-${NUMBER:-1}.service=plume-${NUMBER:-1}
+        - traefik.http.routers.plume-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.plume-${NUMBER:-1}.loadbalancer.server.port=7878
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=plume
+      - POSTGRES_USER=plume
+      - POSTGRES_PASSWORD=passw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  search_index:
+  postgres:
+  media:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

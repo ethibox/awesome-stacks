@@ -1,0 +1,48 @@
+# DOMAIN=example.com docker stack deploy -c metabase.yml metabase
+
+version: '3.8'
+
+services:
+  metabase:
+    image: metabase/metabase:${VERSION:-v0.48.3}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.metabase-${NUMBER:-1}.rule=Host(`${DOMAIN:-metabase.localhost}`)
+        - traefik.http.routers.metabase-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.metabase-${NUMBER:-1}.service=metabase-${NUMBER:-1}
+        - traefik.http.routers.metabase-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.metabase-${NUMBER:-1}.loadbalancer.server.port=3000
+    environment:
+      - MB_DB_TYPE=mysql
+      - MB_DB_HOST=mariadb
+      - MB_DB_DBNAME=metabase
+      - MB_DB_PORT=3306
+      - MB_DB_USER=metabase
+      - MB_DB_PASS=myp@ssw0rd
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_USER=metabase
+      - MYSQL_DATABASE=metabase
+      - MYSQL_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

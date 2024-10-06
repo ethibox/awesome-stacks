@@ -1,0 +1,81 @@
+# DOMAIN=example.com docker stack deploy -c element.yml element
+
+version: '3.8'
+
+services:
+  web:
+    image: vectorim/riot-web:${VERSION:-v1.7.33}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sed -i -e 's#https://matrix-client.matrix.org#'$$SCHEME'://'$$DOMAIN'#g' /app/config.json
+        sed -i -e 's/matrix.org/'$$DOMAIN'/g' /app/config.json
+        sed -i -e 's/"breadcrumbs": true/"breadcrumbs": true,\n        "language": "'$$LANGUAGE'"/g' /app/config.json
+        nginx -g 'daemon off;'
+    environment:
+      - DOMAIN=${DOMAIN:-element.localhost}
+      - SCHEME=${SCHEME:-https}
+      - LANGUAGE=${LANGUAGE:-fr_FR}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.element-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`)
+        - traefik.http.routers.element-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.element-${NUMBER:-1}.service=element-${NUMBER:-1}
+        - traefik.http.routers.element-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.element-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - traefik
+      - internal
+
+  synapse:
+    image: matrixdotorg/synapse:v1.35.1
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        sed -i -e 's/#enable_registration: false/enable_registration: '$$ENABLE_REGISTRATION'/g' /data/homeserver.yaml
+        sed -i -e 's/log_config:/#log_config:/g' /data/homeserver.yaml
+        /start.py
+    environment:
+      - ENABLE_REGISTRATION=${ENABLE_REGISTRATION:-true}
+    volumes:
+      - ${VOLUME_PATH}synapse:/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.element-synapse-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/_matrix`)
+        - traefik.http.routers.element-synapse-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.element-synapse-${NUMBER:-1}.service=element-synapse-${NUMBER:-1}
+        - traefik.http.routers.element-synapse-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.element-synapse-${NUMBER:-1}.loadbalancer.server.port=8008
+    networks:
+      - traefik
+      - internal
+
+  synapse-init:
+    image: matrixdotorg/synapse:v1.35.1
+    command: generate
+    volumes:
+      - ${VOLUME_PATH}synapse:/data
+    environment:
+      - SYNAPSE_SERVER_NAME=${DOMAIN:-element.localhost}
+      - SYNAPSE_REPORT_STATS=no
+      - SYNAPSE_NO_TLS=yes
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+volumes:
+  synapse:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,51 @@
+# DOMAIN=example.com docker stack deploy -c botpress.yml botpress
+
+version: '3.8'
+
+services:
+  web:
+    image: botpress/server:${VERSION:-v12_24_0}
+    volumes:
+      - ${VOLUME_PATH}botpress:/botpress/data
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=botpress
+      - PG_PASSWORD=myp@ssw0rd
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.botpress-${NUMBER:-1}.rule=Host(`${DOMAIN:-botpress.localhost}`)
+        - traefik.http.routers.botpress-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.botpress-${NUMBER:-1}.service=botpress-${NUMBER:-1}
+        - traefik.http.routers.botpress-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.botpress-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - internal
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=botpress
+      - POSTGRES_USER=botpress
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "botpress"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  botpress:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,86 @@
+# DOMAIN=example.com docker stack deploy -c appwrite.yml appwrite
+
+version: '3.8'
+
+services:
+  appwrite:
+    image: appwrite/appwrite:${VERSION:-0.11.0}
+    volumes:
+      - ${VOLUME_PATH}uploads:/storage/uploads
+      - ${VOLUME_PATH}cache:/storage/cache
+      - ${VOLUME_PATH}config:/storage/config
+    environment:
+      - _APP_ENV=production
+      - _APP_OPENSSL_KEY_V1=your-secret-key
+      - _APP_DOMAIN=localhost
+      - _APP_DOMAIN_TARGET=localhost
+      - _APP_REDIS_HOST=redis
+      - _APP_REDIS_PORT=6379
+      - _APP_DB_HOST=mariadb
+      - _APP_DB_PORT=3306
+      - _APP_DB_SCHEMA=appwrite
+      - _APP_DB_USER=user
+      - _APP_DB_PASS=password
+      - _APP_INFLUXDB_HOST=influxdb
+      - _APP_INFLUXDB_PORT=8086
+      - _APP_STATSD_HOST=telegraf
+      - _APP_STATSD_PORT=8125
+      - _APP_SMTP_HOST=smtp
+      - _APP_SMTP_PORT=25
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.appwrite-${NUMBER:-1}.rule=Host(`${DOMAIN:-appwrite.localhost}`)
+        - traefik.http.routers.appwrite-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.appwrite-${NUMBER:-1}.service=appwrite-${NUMBER:-1}
+        - traefik.http.routers.appwrite-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.appwrite-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: appwrite/mariadb:1.5.0
+    command: 'mysqld --innodb-flush-method=fsync'
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootsecretpassword
+      - MYSQL_DATABASE=appwrite
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+
+  influxdb:
+    image: influxdb:1.6
+    volumes:
+      - ${VOLUME_PATH}influxdb:/var/lib/influxdb
+    networks:
+      - internal
+
+  telegraf:
+    image: appwrite/telegraf:1.2.0
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  redis:
+  cache:
+  uploads:
+  influxdb:
+  config:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

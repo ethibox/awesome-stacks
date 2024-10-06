@@ -1,0 +1,70 @@
+# DOMAIN=example.com docker stack deploy -c healthchecks.yml healthchecks
+
+version: '3.8'
+
+services:
+  app:
+    image: healthchecks/healthchecks:${VERSION:-v2.7}
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; uwsgi /opt/healthchecks/docker/uwsgi.ini'
+    environment:
+      - ALLOWED_HOSTS=${DOMAIN:-healthchecks.localhost}
+      - DB=postgres
+      - DB_CONN_MAX_AGE=0
+      - DB_HOST=postgres
+      - DB_USER=healthchecks
+      - DB_NAME=healthchecks
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_PORT=5432
+      - DB_SSLMODE=prefer
+      - DEBUG=${DEBUG:-False}
+      - DEFAULT_FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
+      - EMAIL_HOST=${SMTP_HOST:-smtp.example.com}
+      - EMAIL_HOST_PASSWORD=${SMTP_PASSWORD}
+      - EMAIL_HOST_USER=${SMTP_USER}
+      - EMAIL_PORT=${SMTP_PORT:-587}
+      - EMAIL_USE_TLS=${SMTP_TLS:-True}
+      - EMAIL_USE_SSL=${SMTP_SSL:-False}
+      - EMAIL_USE_VERIFICATION=True
+      - PING_EMAIL_DOMAIN=${DOMAIN:-healthchecks.localhost}
+      - PING_ENDPOINT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}/ping/
+      - REGISTRATION_OPEN=${REGISTRATION_OPEN:-True}
+      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - SITE_LOGO_URL=https://healthchecks.io/static/img/logo-full-ua.svg
+      - SITE_NAME=Healthchecks
+      - SITE_ROOT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}
+      - WEBHOOKS_ENABLED=True
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.healthchecks-${NUMBER:-1}.rule=Host(`${DOMAIN:-healthchecks.localhost}`)
+        - traefik.http.routers.healthchecks-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.healthchecks-${NUMBER:-1}.service=healthchecks-${NUMBER:-1}
+        - traefik.http.routers.healthchecks-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.healthchecks-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=healthchecks
+      - POSTGRES_USER=healthchecks
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "healthchecks"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

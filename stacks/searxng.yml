@@ -1,0 +1,23 @@
+# DOMAIN=example.com docker stack deploy -c searxng.yml searxng
+
+version: '3.8'
+
+services:
+  web:
+    image: searxng/searxng:${VERSION:-latest}
+    environment:
+      - BASE_URL=${SCHEME:-https}://${DOMAIN:-searxng.localhost}
+      - BIND_ADDRESS=0.0.0.0:8080
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.searxng-${NUMBER:-1}.rule=Host(`${DOMAIN:-searxng.localhost}`)
+        - traefik.http.routers.searxng-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.searxng-${NUMBER:-1}.service=searxng-${NUMBER:-1}
+        - traefik.http.routers.searxng-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.searxng-${NUMBER:-1}.loadbalancer.server.port=8080
+
+networks:
+  default:
+    external: true
+    name: traefik-net

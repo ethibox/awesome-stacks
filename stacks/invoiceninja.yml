@@ -1,0 +1,96 @@
+# DOMAIN=example.com docker stack deploy -c invoiceninja.yml invoiceninja
+# chown -R 1000:82 data/ storage/
+# chown -R 1500:1500 data/ storage/
+
+version: '3.8'
+
+services:
+  nginx:
+    image: ethibox/nginx-proxy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        chown -R 1500:82 /var/www/app/
+        envsubst '$$NGINX_ROOT_PATH' < /etc/nginx/nginx.template > /etc/nginx/nginx.conf
+        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
+        sed -i -e 's/fastcgi_pass backend;/fastcgi_pass backend;\n            fastcgi_param HTTPS '$$HTTPS';/g' /etc/nginx/nginx.conf
+        nginx -g 'daemon off;'
+    environment:
+      - NGINX_ROOT_PATH=/var/www/app/public
+      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
+      - HTTPS=${HTTPS:-1}
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/app/storage
+      - ${VOLUME_PATH}data:/var/www/app/public
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.invoiceninja-${NUMBER:-1}.rule=Host(`${DOMAIN:-invoiceninja.localhost}`)
+        - traefik.http.routers.invoiceninja-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.invoiceninja-${NUMBER:-1}.service=invoiceninja-${NUMBER:-1}
+        - traefik.http.routers.invoiceninja-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.invoiceninja-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  app:
+    image: invoiceninja/invoiceninja:${VERSION:-5.5.104}
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/app/storage:rw,delegated
+      - ${VOLUME_PATH}data:/var/www/app/public:rw,delegated
+    environment:
+      - APP_LOCALE=fr
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-invoiceninja.localhost}
+      - REQUIRE_HTTPS=${REQUIRE_HTTPS:-true}
+      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
+      - APP_CIPHER=AES-256-CBC
+      - LOCK_SENT_INVOICES=${LOCK_SENT_INVOICES:-false}
+      - DB_USERNAME1=invoiceninja
+      - DB_PASSWORD1=myp@ssw0rd
+      - DB_HOST1=mariadb
+      - DB_DATABASE1=invoiceninja
+      - MULTI_DB_ENABLED=false
+      - PRECONFIGURED_INSTALL=true
+      - MAIL_HOST=${MAIL_HOST:-smtp.example.com}
+      - MAIL_USERNAME=${MAIL_USERNAME:-username}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-password}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
+      - MAIL_DRIVER=${MAIL_DRIVER:-smtp}
+      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-"My name"}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-admin@example.com}
+      - IN_USER_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - IN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=invoiceninja
+      - MYSQL_USER=invoiceninja
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  data:
+  storage:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

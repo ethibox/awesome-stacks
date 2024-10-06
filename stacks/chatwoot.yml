@@ -1,0 +1,82 @@
+# DOMAIN=example.com docker stack deploy -c chatwoot.yml chatwoot
+# docker exec -it chatwoot_web bundle exec rails db:chatwoot_prepare
+# docker exec -it chatwoot_web bundle exec rails db:seed
+# docker exec -it chatwoot_web bundle exec rails db:migrate
+
+version: '3.8'
+
+x-defaults: &defaults
+  environment:
+    - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"replace_with_lengthy_secure_hex"}  # bundle exec rake secret
+    - FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-chatwoot.localhost}
+    - NODE_ENV=${NODE_ENV:-production}
+    - RAILS_ENV=${RAILS_ENV:-production}
+    - POSTGRES_HOST=postgres
+    - POSTGRES_USERNAME=chatwoot
+    - POSTGRES_DATABASE=chatwoot
+    - POSTGRES_PASSWORD=myp@ssw0rd
+    - REDIS_URL=redis://redis:6379
+    - REDIS_PASSWORD=myp@ssw0rd
+    - SMTP_ADDRESS=${SMTP_ADDRESS}
+    - SMTP_AUTHENTICATION=plain
+    - SMTP_DOMAIN=${SMTP_DOMAIN}
+    - SMTP_ENABLE_STARTTLS_AUTO=true
+    - SMTP_PORT=${SMTP_PORT:-587}
+    - SMTP_USERNAME=${SMTP_USERNAME}
+    - SMTP_PASSWORD=${SMTP_PASSWORD}
+
+services:
+  web:
+    <<: *defaults
+    image: chatwoot/chatwoot:${VERSION:-v2.9.1}
+    entrypoint: docker/entrypoints/rails.sh
+    command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.chatwoot-${NUMBER:-1}.rule=Host(`${DOMAIN:-chatwoot.localhost}`)
+        - traefik.http.routers.chatwoot-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.chatwoot-${NUMBER:-1}.service=chatwoot-${NUMBER:-1}
+        - traefik.http.routers.chatwoot-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.chatwoot-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  sidekiq:
+    <<: *defaults
+    image: chatwoot/chatwoot:${VERSION:-v2.9.1}
+    command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+    networks:
+      - internal
+
+  redis:
+    <<: *defaults
+    image: redis:6-alpine
+    command: /bin/sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=chatwoot
+      - POSTGRES_USER=chatwoot
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "chatwoot"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

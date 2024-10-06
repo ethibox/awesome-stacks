@@ -1,0 +1,111 @@
+# DOMAIN=example.com docker stack deploy -c dokos.yml dokos
+# chown -R 1000:1000 sites/
+# bench new-site dokos.localhost
+
+version: '3.8'
+
+services:
+  init:
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    entrypoint: /bin/sh -c
+    command:
+      - >
+        ls -1 apps > sites/apps.txt;
+        bench set-config -g db_host mariadb;
+        bench set-config -gp db_port 3306;
+        bench set-config -g redis_cache "redis://redis-cache";
+        bench set-config -g redis_queue "redis://redis-queue";
+        bench set-config -g redis_socketio "redis://redis-socketio";
+        bench set-config -gp socketio_port 9000;
+    volumes:
+      - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+  web:
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    command: nginx-entrypoint.sh
+    environment:
+      - BACKEND=backend:8000
+      - SOCKETIO=websocket:9000
+      - FRAPPE_SITE_NAME_HEADER=${DOMAIN:-dokos.localhost}
+    volumes:
+      - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.dokos-${NUMBER:-1}.rule=Host(`${DOMAIN:-dokos.localhost}`)
+        - traefik.http.routers.dokos-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.dokos-${NUMBER:-1}.service=dokos-${NUMBER:-1}
+        - traefik.http.routers.dokos-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.dokos-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  backend:
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
+    networks:
+      - internal
+
+  websocket:
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    command: node /home/frappe/frappe-bench/apps/frappe/socketio.js
+    volumes:
+      - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
+    networks:
+      - internal
+
+  scheduler:
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    command: bench schedule
+    volumes:
+      - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
+    networks:
+      - internal
+
+  redis-queue:
+    image: redis:6.2-alpine
+    networks:
+      - internal
+
+  redis-cache:
+    image: redis:6.2-alpine
+    networks:
+      - internal
+
+  redis-socketio:
+    image: redis:6.2-alpine
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:10.6
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+    environment:
+      - MARIADB_ROOT_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  sites:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

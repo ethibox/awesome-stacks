@@ -1,0 +1,28 @@
+# DOMAIN=example.com docker stack deploy -c wallabag.yml wallabag
+
+version: '3.8'
+
+services:
+  web:
+    image: wallabag/wallabag:${VERSION:-2.4.2}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/wallabag/data
+    environment:
+      - SYMFONY__ENV__DOMAIN_NAME=${SCHEME:-https}://${DOMAIN:-wallabag.localhost}
+      - SYMFONY__ENV__FOSUSER_CONFIRMATION=false
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.wallabag-${NUMBER:-1}.rule=Host(`${DOMAIN:-wallabag.localhost}`)
+        - traefik.http.routers.wallabag-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.wallabag-${NUMBER:-1}.service=wallabag-${NUMBER:-1}
+        - traefik.http.routers.wallabag-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.wallabag-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

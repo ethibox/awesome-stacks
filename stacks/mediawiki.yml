@@ -1,0 +1,46 @@
+# DOMAIN=example.com docker stack deploy -c mediawiki.yml mediawiki
+# chown -R 33:33 data/
+# wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.1.tar.gz
+
+version: '3.8'
+
+services:
+  app:
+    image: mediawiki:${VERSION:-1.40.0}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.rule=Host(`${DOMAIN:-mediawiki.localhost}`)
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.service=mediawiki-${NUMBER:-1}
+        - traefik.http.routers.mediawiki-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.mediawiki-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=mediawiki
+      - MYSQL_USER=mediawiki
+      - MYSQL_PASSWORD=myp@ssw0rd
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

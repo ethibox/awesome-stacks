@@ -1,0 +1,63 @@
+# sudo sysctl -w vm.max_map_count=262144
+# DOMAIN=example.com docker stack deploy -c magento.yml magento
+
+version: '3.8'
+
+services:
+  magento:
+    image: bitnami/magento:${VERSION:-2.4.2}
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - MAGENTO_DATABASE_USER=magento
+      - MAGENTO_DATABASE_PASSWORD=myp@ssw0rd
+      - MAGENTO_DATABASE_NAME=magento
+      - MAGENTO_HOST=${DOMAIN:-magento.localhost}
+      - MAGENTO_MODE=production
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT_NUMBER=9200
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.magento-${NUMBER:-1}.rule=Host(`${DOMAIN:-magento.localhost}`)
+        - traefik.http.routers.magento-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.magento-${NUMBER:-1}.service=magento-${NUMBER:-1}
+        - traefik.http.routers.magento-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.magento-${NUMBER:-1}.loadbalancer.server.port=8080
+    volumes:
+      - ${VOLUME_PATH}magento:/bitnami
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:10.5.9
+    environment:
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_USER=magento
+      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=magento
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+  elasticsearch:
+    image: elasticsearch:7.14.0
+    volumes:
+      - ${VOLUME_PATH}elasticsearch:/bitnami/elasticsearch/data
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  magento:
+  elasticsearch:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,35 @@
+# DOMAIN=example.com docker stack deploy -c calibre.yml calibre
+
+version: '3.8'
+
+services:
+  calibre:
+    image: linuxserver/calibre-web:${VERSION:-latest}
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - DOCKER_MODS=linuxserver/calibre-web:calibre
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.calibre-${NUMBER:-1}.rule=Host(`${DOMAIN:-calibre.localhost}`)
+        - traefik.http.routers.calibre-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.calibre-${NUMBER:-1}.service=calibre-${NUMBER:-1}
+        - traefik.http.routers.calibre-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.calibre-${NUMBER:-1}.loadbalancer.server.port=8083
+    volumes:
+      - ${VOLUME_PATH}config:/config
+      - ${VOLUME_PATH}books:/books
+
+volumes:
+  config:
+  books:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  default:
+    external: true
+    name: traefik-net

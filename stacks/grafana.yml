@@ -1,0 +1,25 @@
+# DOMAIN=example.com docker stack deploy -c grafana.yml grafana
+
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana:${VERSION:-8.1.1}
+    volumes:
+      - ${VOLUME_PATH}grafana:/var/lib/grafana
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
+        - traefik.http.routers.grafana-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grafana-${NUMBER:-1}.service=grafana-${NUMBER:-1}
+        - traefik.http.routers.grafana-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.grafana-${NUMBER:-1}.loadbalancer.server.port=3000
+
+volumes:
+  grafana:
+
+networks:
+  default:
+    external: true
+    name: traefik-net

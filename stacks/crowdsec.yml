@@ -1,0 +1,38 @@
+# DOMAIN=example.com docker stack deploy -c crowdsec.yml crowdsec
+
+version: '3.8'
+
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:${VERSION:-v1.6.1-2}
+    environment:
+      - COLLECTIONS=${COLLECTIONS:-crowdsecurity/traefik}
+      - CUSTOM_HOSTNAME=${CUSTOM_HOSTNAME:-crowdsec}
+    volumes:
+      - ${VOLUME_PATH}config:/etc/crowdsec
+      - ${VOLUME_PATH}data:/var/lib/crowdsec/data/
+      - /var/log/traefik:/var/log/traefik:ro
+    networks:
+      - traefik
+      - internal
+
+  crowdsec-bouncer:
+    image: fbonalair/traefik-crowdsec-bouncer:latest
+    environment:
+      - CROWDSEC_BOUNCER_API_KEY=${CROWDSEC_BOUNCER_API_KEY}
+      - CROWDSEC_AGENT_HOST=crowdsec:8080
+    networks:
+      - traefik
+      - internal
+
+volumes:
+  data:
+  config:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -1,0 +1,45 @@
+# DOMAIN=example.com docker stack deploy -c hasura.yml hasura
+
+version: '3.8'
+
+services:
+  graphql-engine:
+    image: hasura/graphql-engine:${VERSION:-v2.0.6}
+    environment:
+      - HASURA_GRAPHQL_DATABASE_URL=postgres://hasura:mypassw0rd@postgres:5432/hasura
+      - HASURA_GRAPHQL_ENABLE_CONSOLE=true
+      - HASURA_GRAPHQL_DEV_MODE=true
+      - HASURA_GRAPHQL_ENABLED_LOG_TYPES=startup, http-log, webhook-log, websocket-log, query-log
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.hasura-${NUMBER:-1}.rule=Host(`${DOMAIN:-hasura.localhost}`)
+        - traefik.http.routers.hasura-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.hasura-${NUMBER:-1}.service=hasura-${NUMBER:-1}
+        - traefik.http.routers.hasura-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.hasura-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=hasura
+      - POSTGRES_USER=hasura
+      - POSTGRES_PASSWORD=mypassw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

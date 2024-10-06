@@ -1,0 +1,37 @@
+# DOMAIN=example.com docker stack deploy -c scrumblr.yml scrumblr
+
+version: '3.8'
+
+services:
+  scrumblr:
+    image: timmit/scrumblr:${VERSION:-latest}
+    command: --redis redis:6379
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.scrumblr-${NUMBER:-1}.rule=Host(`${DOMAIN:-scrumblr.localhost}`)
+        - traefik.http.routers.scrumblr-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.scrumblr-${NUMBER:-1}.service=scrumblr-${NUMBER:-1}
+        - traefik.http.routers.scrumblr-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.scrumblr-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:6-alpine
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  redis:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

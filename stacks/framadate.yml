@@ -1,0 +1,67 @@
+# DOMAIN=example.com docker stack deploy -c framadate.yml framadate
+# docker exec -it framadate_framadate git clone https://framagit.org/framasoft/framadate/framadate.git .
+# docker exec -it chown -R 1000:1000 data
+# docker service update --force framadate_framadate
+
+version: '3.8'
+
+services:
+  framadate:
+    image: ethibox/framadate:${VERSION:-latest}
+    environment:
+      - ENV=${ENV:-prod}
+      - APP_NAME=Framadate
+      - DOMAIN=${DOMAIN:-framadate.localhost}
+      - ADMIN_MAIL=${ADMIN_MAIL:-admin@example.com}
+      - MYSQL_USER=framadate
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DB=framadate
+      - MYSQL_HOST=mariadb
+      - MYSQL_PORT=3306
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - APACHE_RUN_USER=#1000
+      - FRAMADATE_DEVMODE=${FRAMADATE_DEVMODE:-0}
+      - SMTP_SERVER=${SMTP_SERVER:-localhost:25}
+      - SMTP_AUTH=${SMTP_AUTH:-false}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SECURE=${SMTP_SECURE:-false} # (false, tls or ssl)
+      - SMTP_PORT=${SMTP_PORT:-25}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/framadate
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.framadate-${NUMBER:-1}.rule=Host(`${DOMAIN:-framadate.localhost}`)
+        - traefik.http.routers.framadate-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.framadate-${NUMBER:-1}.service=framadate-${NUMBER:-1}
+        - traefik.http.routers.framadate-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.framadate-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-10.5.9}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MYSQL_USER=framadate
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_DATABASE=framadate
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    networks:
+      - internal
+
+volumes:
+  data:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

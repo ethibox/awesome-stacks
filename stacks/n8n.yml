@@ -1,0 +1,68 @@
+# DOMAIN=example.com docker stack deploy -c n8n.yml n8n
+# chown -R 1000:1000 n8n
+
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:${VERSION:-1.61.0}
+    environment:
+      - NODE_ENV=production
+      - N8N_PROTOCOL=${SCHEME:-https}
+      - N8N_HOST=${DOMAIN:-n8n.localhost}
+      - WEBHOOK_URL=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
+      - VUE_APP_URL_BASE_API=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSGRES_DATABASE:-n8n}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-n8n}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - NODE_FUNCTION_ALLOW_EXTERNAL=${NODE_FUNCTION_ALLOW_EXTERNAL}
+      - N8N_EMAIL_MODE=${N8N_EMAIL_MODE:-smtp}
+      - N8N_SMTP_HOST=${SMTP_HOST}
+      - N8N_SMTP_PORT-${SMTP_PORT:-584}
+      - N8N_SMTP_USER=${SMTP_USER}
+      - N8N_SMTP_PASS=${SMTP_PASSWORD}
+      - N8N_SMTP_SENDER=${SMTP_FROM:-noreply@example.com}
+    volumes:
+      - ${VOLUME_PATH}n8n:/home/node/.n8n
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.n8n-${NUMBER:-1}.rule=Host(`${DOMAIN:-n8n.localhost}`)
+        - traefik.http.routers.n8n-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.n8n-${NUMBER:-1}.service=n8n-${NUMBER:-1}
+        - traefik.http.routers.n8n-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.n8n-${NUMBER:-1}.middlewares=n8n-${NUMBER:-1}
+        - traefik.http.services.n8n-${NUMBER:-1}.loadbalancer.server.port=5678
+        - traefik.http.middlewares.n8n-${NUMBER:-1}.headers.customResponseHeaders.Access-Control-Allow-Origin=*
+        - traefik.http.middlewares.n8n-${NUMBER:-1}.headers.customResponseHeaders.Access-Control-Allow-Headers=Content-Type
+    networks:
+      - traefik
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=n8n
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "n8n"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  n8n:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

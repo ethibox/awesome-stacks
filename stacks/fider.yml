@@ -1,0 +1,52 @@
+# DOMAIN=example.com docker stack deploy -c fider.yml fider
+
+version: '3.8'
+
+services:
+  app:
+    image: getfider/fider:${VERSION:-main}
+    environment:
+      - BASE_URL=${SCHEME:-https}://${DOMAIN:-fider.localhost}
+      - DATABASE_URL=postgres://fider:myp@ssw0rd@postgres:5432/fider?sslmode=disable
+      - JWT_SECRET=${JWT_SECRET:-VERY_STRONG_SECRET_SHOULD_BE_USED_HERE}
+      - EMAIL_NOREPLY=${SMTP_FROM:-noreply@example.com}
+      - EMAIL_SMTP_HOST=${SMTP_HOST:-smtp.example.com}
+      - EMAIL_SMTP_PORT=${SMTP_PORT:-587}
+      - EMAIL_SMTP_USERNAME=${SMTP_USERNAME:-noreply@example.com}
+      - EMAIL_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
+      - EMAIL_SMTP_ENABLE_STARTTLS=${SMTP_TLS:-true}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.fider-${NUMBER:-1}.rule=Host(`${DOMAIN:-fider.localhost}`)
+        - traefik.http.routers.fider-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.fider-${NUMBER:-1}.service=fider-${NUMBER:-1}
+        - traefik.http.routers.fider-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.fider-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=fider
+      - POSTGRES_USER=fider
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "fider"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

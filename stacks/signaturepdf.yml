@@ -1,0 +1,26 @@
+# DOMAIN=example.com docker stack deploy -c signaturepdf.yml signaturepdf
+
+version: '3.8'
+
+services:
+  web:
+    image: ethibox/signaturepdf:${VERSION:-latest}
+    environment:
+      - SERVERNAME=${DOMAIN:-signaturepdf.localhost}
+      - UPLOAD_MAX_FILESIZE=${UPLOAD_MAX_FILESIZE:-50M}
+      - POST_MAX_SIZE=${POST_MAX_SIZE:-50M}
+      - MAX_FILE_UPLOADS=${MAX_FILE_UPLOADS:-300}
+      - PDF_STORAGE_PATH=/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.signaturepdf-${NUMBER:-1}.rule=Host(`${DOMAIN:-signaturepdf.localhost}`)
+        - traefik.http.routers.signaturepdf-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.signaturepdf-${NUMBER:-1}.service=signaturepdf-${NUMBER:-1}
+        - traefik.http.routers.signaturepdf-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.signaturepdf-${NUMBER:-1}.loadbalancer.server.port=80
+
+networks:
+  default:
+    external: true
+    name: traefik-net
