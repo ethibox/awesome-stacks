@@ -1,23 +1,13 @@
 # DOMAIN=example.com docker stack deploy -c invoiceninja.yml invoiceninja
-# chown -R 1000:82 data/ storage/
 # chown -R 1500:1500 data/ storage/
 
 services:
   nginx:
-    image: ethibox/nginx-proxy
-    command:
-      - /bin/sh
-      - -c
-      - |
-        chown -R 1500:82 /var/www/app/
-        envsubst '$$NGINX_ROOT_PATH' < /etc/nginx/nginx.template > /etc/nginx/nginx.conf
-        sed -i -e 's/app:9000/'$$STACK_NAME'_app:9000/g' /etc/nginx/nginx.conf
-        sed -i -e 's/fastcgi_pass backend;/fastcgi_pass backend;\n            fastcgi_param HTTPS '$$HTTPS';/g' /etc/nginx/nginx.conf
-        nginx -g 'daemon off;'
+    image: ethibox/nginx-proxy:latest
     environment:
-      - NGINX_ROOT_PATH=/var/www/app/public
-      - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
       - HTTPS=${HTTPS:-1}
+      - NGINX_ROOT_PATH=/var/www/app/public
+      - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
     volumes:
       - ${VOLUME_PATH}storage:/var/www/app/storage
       - ${VOLUME_PATH}data:/var/www/app/public
