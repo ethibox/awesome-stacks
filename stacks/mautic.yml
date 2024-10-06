@@ -5,7 +5,7 @@ version: '3.8'
 
 services:
   nginx:
-    image: ethibox/nginx-proxy
+    image: ethibox/nginx-proxy:latest
     environment:
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
     volumes:
