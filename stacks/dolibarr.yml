@@ -2,12 +2,14 @@
 
 services:
   dolibarr:
-    image: upshift/dolibarr:${VERSION:-13.0.4}
+    image: dolibarr/dolibarr:${VERSION:-20.0.0}
     environment:
       - DOLI_DB_HOST=mariadb
       - DOLI_DB_NAME=dolibarr
       - DOLI_DB_USER=dolibarr
       - DOLI_DB_PASSWORD=myp@ssw0rd
+      - DOLI_ADMIN_LOGIN=${ADMIN_USERNAME:-admin}
+      - DOLI_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html
       - ${VOLUME_PATH}documents:/var/www/documents
@@ -36,8 +38,8 @@ services:
       - internal
 
 volumes:
-  mariadb:
   data:
+  mariadb:
   documents:
 
 networks:
