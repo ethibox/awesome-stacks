@@ -4,7 +4,7 @@ services:
   traefik:
     image: traefik:${VERSION:-v2.11.3}
     command:
-      # - --log.level=DEBUG
+      - --log.level=${LOGLEVEL:-ERROR}
       - --providers.docker
       - --providers.docker.network=traefik-net
       - --providers.docker.exposedByDefault=false
