@@ -2,7 +2,7 @@
 
 services:
   dolibarr:
-    image: dolibarr/dolibarr:${VERSION:-20.0.0}
+    image: ${IMAGE:-dolibarr/dolibarr}:${VERSION:-20.0.0}
     environment:
       - DOLI_DB_HOST=mariadb
       - DOLI_DB_NAME=dolibarr
