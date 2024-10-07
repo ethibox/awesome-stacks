@@ -3,7 +3,7 @@
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-1.61.0}
+    image: n8nio/n8n:${VERSION:-1.62.2}
     environment:
       - NODE_ENV=production
       - N8N_PROTOCOL=${SCHEME:-https}
@@ -17,12 +17,17 @@ services:
       - DB_POSTGRESDB_USER=${POSTGRES_USER:-n8n}
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - NODE_FUNCTION_ALLOW_EXTERNAL=${NODE_FUNCTION_ALLOW_EXTERNAL}
+      - NODE_FUNCTION_ALLOW_BUILTIN=${NODE_FUNCTION_ALLOW_BUILTIN}
       - N8N_EMAIL_MODE=${N8N_EMAIL_MODE:-smtp}
       - N8N_SMTP_HOST=${SMTP_HOST}
       - N8N_SMTP_PORT-${SMTP_PORT:-584}
       - N8N_SMTP_USER=${SMTP_USER}
       - N8N_SMTP_PASS=${SMTP_PASSWORD}
       - N8N_SMTP_SENDER=${SMTP_FROM:-noreply@example.com}
+      - N8N_LOG_LEVEL=${N8N_LOG_LEVEL:-info}
+      - N8N_PAYLOAD_SIZE_MAX=${N8N_PAYLOAD_SIZE_MAX:-16}
+      - N8N_FORMDATA_FILE_SIZE_MAX=${N8N_FORMDATA_FILE_SIZE_MAX:-200}
+      - N8N_DEFAULT_BINARY_DATA_MODE=${N8N_DEFAULT_BINARY_DATA_MODE:-default}
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:
