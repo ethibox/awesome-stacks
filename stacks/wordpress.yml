@@ -32,7 +32,8 @@ services:
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
-      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DEBUG: ${WORDPRESS_DEBUG:-false}
+      WORDPRESS_DB_HOST: ${MYSQL_HOST:-mariadb}
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-myp@ssw0rd}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
