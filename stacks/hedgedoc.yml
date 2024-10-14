@@ -2,17 +2,17 @@
 
 services:
   app:
-    image: linuxserver/hedgedoc:${VERSION:-1.8.2-ls25}
+    image: linuxserver/hedgedoc:${VERSION:-1.10.0}
     volumes:
       - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
     environment:
+      - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
       - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
+      - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
       - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
       - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
-      - CMD_DB_URL=postgres://hedgedoc:myp@ssw0rd@postgres:5432/hedgedoc
-      - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
-      - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
       - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:-myhedgedocs3cr3t}
+      - CMD_DB_URL=postgres://hedgedoc:myp@ssw0rd@postgres:5432/hedgedoc
     deploy:
       labels:
         - traefik.enable=true
@@ -28,9 +28,9 @@ services:
   postgres:
     image: postgres:12-alpine
     environment:
+      - POSTGRES_DB=hedgedoc
       - POSTGRES_USER=hedgedoc
       - POSTGRES_PASSWORD=myp@ssw0rd
-      - POSTGRES_DB=hedgedoc
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
