@@ -32,12 +32,12 @@ services:
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
-      WORDPRESS_DEBUG: ${WORDPRESS_DEBUG:-false}
       WORDPRESS_DB_HOST: ${MYSQL_HOST:-mariadb}
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-myp@ssw0rd}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
       WORDPRESS_CONFIG_EXTRA: |
+        define('DISABLE_WP_CRON', true);
         define('WP_HOME', getenv('WP_HOME'));
         define('WP_SITEURL', getenv('WP_SITEURL'));
       WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
@@ -48,8 +48,22 @@ services:
     networks:
       - internal
 
+  cron:
+    image: alpine:latest
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        apk add --no-cache curl
+        echo '* * * * * curl -s http://nginx/wp-cron.php?doing_wp_cron' | crontab -
+        crond -f
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - internal
+
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-10.5.9}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
