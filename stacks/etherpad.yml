@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: etherpad/etherpad:${VERSION:-2.2.5}
+    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-2.2.5}
     environment:
       - NODE_ENV=production
       - DB_TYPE=mysql
