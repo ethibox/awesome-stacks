@@ -722,6 +722,7 @@
             "title": "Etherpad",
             "description": "Etherpad est un éditeur en ligne Open Source qui permet une édition collaborative en temps réel.",
             "categories": ["Editeur"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
