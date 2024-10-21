@@ -1,6 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c omeka.yml omeka
-# chown -R 33:33 files
-# chown -R 33:33 config
+# chown -R 33:33 files config modules
 # add database.ini & local.config.php in /config
 
 services:
@@ -9,6 +8,7 @@ services:
     volumes:
       - ${VOLUME_PATH}files:/var/www/html/files
       - ${VOLUME_PATH}config:/var/www/html/config
+      - ${VOLUME_PATH}modules:/var/www/html/modules
     environment:
       - MYSQL_HOST=${MYSQL_HOST:-mariadb}
       - MYSQL_USER=${MYSQL_USER:-omeka}
@@ -41,6 +41,7 @@ services:
 volumes:
   files:
   config:
+  modules:
   mariadb:
 
 networks:
