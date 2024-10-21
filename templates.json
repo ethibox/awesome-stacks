@@ -1993,7 +1993,7 @@
             "description": "Plateforme de gestion d'entreprise open-source",
             "categories": ["ERP"],
             "manual": true,
-            "enabled": true,
+            "enabled": false,
             "trial": 7,
             "price": 19,
             "logo": "https://i.imgur.com/wxofSzi.png",
