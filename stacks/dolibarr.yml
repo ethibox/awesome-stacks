@@ -1,8 +1,10 @@
 # DOMAIN=example.com docker stack deploy -c dolibarr.yml dolibarr
+# chown -R 33:33 data documents
+# wget https://github.com/Dolibarr/dolibarr/archive/20.0.1.tar.gz
 
 services:
   dolibarr:
-    image: ${IMAGE:-dolibarr/dolibarr}:${VERSION:-20.0.0}
+    image: ${IMAGE:-dolibarr/dolibarr}:${VERSION:-20.0.1}
     environment:
       - DOLI_DB_HOST=mariadb
       - DOLI_DB_NAME=dolibarr

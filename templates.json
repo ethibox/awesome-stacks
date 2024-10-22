@@ -849,6 +849,7 @@
             "title": "Dolibarr",
             "description": "Dolibarr ERP & CRM est un progiciel web moderne et facile à utiliser pour la gestion de votre entreprise.",
             "categories": ["ERP"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
@@ -866,10 +867,9 @@
                     "disabled": true
                 },
                 {
-                    "name": "INITIAL_ADMIN_PASSWORD",
-                    "label": "Initial admin password",
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
                     "type": "password",
-                    "value": "dolibarr",
                     "disabled": true
                 }
             ]
