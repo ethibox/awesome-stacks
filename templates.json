@@ -383,6 +383,7 @@
             "title": "Zammad",
             "description": "Zammad est un système de support client / helpdesk open source basé sur le web.",
             "categories": ["Helpdesk"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
