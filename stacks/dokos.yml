@@ -1,10 +1,11 @@
 # DOMAIN=example.com docker stack deploy -c dokos.yml dokos
 # chown -R 1000:1000 sites/
-# bench new-site dokos.localhost
+# bench new-site --db-host mariadb dokos.localhost
+# Create common_site_config.json with default redis config
 
 services:
   init:
-    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-v4.28.1}
     entrypoint: /bin/sh -c
     command:
       - >
@@ -24,7 +25,7 @@ services:
       - internal
 
   web:
-    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-v4.28.1}
     command: nginx-entrypoint.sh
     environment:
       - BACKEND=backend:8000
@@ -45,14 +46,14 @@ services:
       - traefik
 
   backend:
-    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-v4.28.1}
     volumes:
       - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
     networks:
       - internal
 
   websocket:
-    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-v4.28.1}
     command: node /home/frappe/frappe-bench/apps/frappe/socketio.js
     volumes:
       - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
@@ -60,7 +61,7 @@ services:
       - internal
 
   scheduler:
-    image: registry.gitlab.com/dokos/dokos:${VERSION:-latest}
+    image: registry.gitlab.com/dokos/dokos:${VERSION:-v4.28.1}
     command: bench schedule
     volumes:
       - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
