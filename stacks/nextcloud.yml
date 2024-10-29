@@ -8,7 +8,7 @@
 # php occ --no-warnings config:system:set maintenance_window_start --type=integer --value=1
 
 x-nextcloud: &nextcloud
-  image: nextcloud:${VERSION:-29.0.7-fpm-alpine}
+  image: nextcloud:${VERSION:-29.0.8-fpm-alpine}
   environment:
     - DOMAIN=${DOMAIN:-nextcloud.localhost}
     - MYSQL_HOST=mariadb
@@ -31,6 +31,8 @@ x-nextcloud: &nextcloud
     - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
     - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
     - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
+    - NC_default_phone_region=${NC_default_phone_region:-FR}
+    - NC_maintenance_window_start=1
   volumes:
     - ${VOLUME_PATH}nextcloud:/var/www/html:cached
   networks:
@@ -58,6 +60,7 @@ services:
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.Referrer-Policy=no-referrer
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.Strict-Transport-Security=max-age=31536000
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN
+        - traefik.http.middlewares.nextcloud-${NUMBER:-1}.headers.customResponseHeaders.X-Robots-Tag=noindex,nofollow
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect.redirectregex.regex=/.well-known/(card|cal)dav
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect.redirectregex.replacement=/remote.php/dav/
         - traefik.http.middlewares.nextcloud-${NUMBER:-1}-redirect.redirectregex.permanent=true
