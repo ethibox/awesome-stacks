@@ -3,7 +3,7 @@
 
 services:
   peertube:
-    image: chocobozzz/peertube:${VERSION:-v6.3.2-bookworm}
+    image: chocobozzz/peertube:${VERSION:-v6.3.3-bookworm}
     ports:
       - target: 1935
         published: ${RTMP_PORT:-1935}
