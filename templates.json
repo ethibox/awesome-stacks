@@ -1494,7 +1494,7 @@
             "title": "Rainloop",
             "description": "Rainloop est un client de messagerie simple, moderne et rapide basé sur le Web.",
             "categories": ["Webmail"],
-            "enabled": true,
+            "enabled": false,
             "trial": 7,
             "price": 19,
             "logo": "https://i.imgur.com/4y32ar8.png",
