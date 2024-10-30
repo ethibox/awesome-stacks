@@ -2,7 +2,7 @@
 
 services:
   mailserver:
-    image: mailserver/docker-mailserver:${VERSION:-latest}
+    image: mailserver/docker-mailserver:${VERSION:-14.0.0}
     ports:
       - {target: 25, published: 25, mode: host, protocol: tcp}
       - {target: 143, published: 143, mode: host, protocol: tcp}
