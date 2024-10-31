@@ -4,7 +4,7 @@
 # chown -R 1000:1000 elasticsearch storage var
 
 x-zammad: &zammad
-  image: zammad/zammad-docker-compose:${VERSION:-6.3.1-199}
+  image: zammad/zammad-docker-compose:${VERSION:-6.3.1-201}
   volumes:
     - ${VOLUME_PATH}storage:/opt/zammad/storage
     - ${VOLUME_PATH}var:/opt/zammad/var
@@ -14,7 +14,10 @@ x-zammad: &zammad
     - POSTGRESQL_USER=zammad
     - POSTGRESQL_PASS=myp%40ssw0rd
     - POSTGRESQL_HOST=zammad-postgresql
+    - POSTGRESQL_OPTIONS=${POSTGRESQL_OPTIONS:-?pool=50}
+    - MEMCACHE_SERVERS=${MEMCACHE_SERVERS:-zammad-memcached:11211}
     - REDIS_URL=redis://zammad-redis:6379
+    - TZ=${TZ:-Europe/Paris}
   networks:
     - internal
 
@@ -57,7 +60,7 @@ services:
       - internal
 
   zammad-memcached:
-    image: memcached:1.6.20-alpine
+    image: memcached:1.6.31-alpine
     command: memcached -m 256M
     networks:
       - internal
@@ -77,7 +80,7 @@ services:
       - internal
 
   zammad-redis:
-    image: redis:${REDIS_VERSION:-7.0.5-alpine}
+    image: redis:${REDIS_VERSION:-7-alpine}
     volumes:
       - ${VOLUME_PATH}redis:/data
     networks:
