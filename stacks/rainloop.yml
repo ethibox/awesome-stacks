@@ -14,6 +14,9 @@ services:
         - traefik.http.routers.rainloop-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.rainloop-${NUMBER:-1}.loadbalancer.server.port=8888
 
+volumes:
+  rainloop:
+
 networks:
   default:
     external: true
