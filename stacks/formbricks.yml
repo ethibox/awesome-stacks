@@ -1,0 +1,61 @@
+# DOMAIN=example.com docker stack deploy -c formbricks.yml formbricks
+
+services:
+  formbricks:
+    image: formbricks/formbricks:${VERSION:-2.6.0}
+    environment:
+      - WEBAPP_URL=${SCHEME:-https}://${DOMAIN:-formbricks.localhost}
+      - DATABASE_URL=postgresql://formbricks:myp@ssw0rd@postgres:5432/formbricks?schema=public
+      - MAIL_FROM=${SMTP_FROM:-noreply@example.com}
+      - SMTP_HOST=${SMTP_HOST:-smtp.example.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USERNAME:-noreply@example.com}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
+      - SMTP_SECURE_ENABLED=${SMTP_SECURE_ENABLED:-0}
+      - SHORT_URL_BASE=${SHORT_URL_BASE}
+      - EMAIL_VERIFICATION_DISABLED=${EMAIL_VERIFICATION_DISABLED:-1}
+      - PASSWORD_RESET_DISABLED=${PASSWORD_RESET_DISABLED:-0}
+      - EMAIL_AUTH_DISABLED=${EMAIL_AUTH_DISABLED:-0}
+      - SIGNUP_DISABLED=${SIGNUP_DISABLED:-0}
+      - INVITE_DISABLED=${INVITE_DISABLED:-0}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-1a2b9258b1a3157a30bba3e90220d91e0693bde3abf0e0818a09a089970ff1dc}
+      - CRON_SECRET=${CRON_SECRET:-88f0dcc1cfa2df4509813b4b827585de32fd433fc39d4f3e8123ed21581cc3ec}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-158d27dd4af4c94971fd555453ba9da4609921f3376af23252529bfc63eae8fb}
+    volumes:
+      - ${VOLUME_PATH}uploads:/home/nextjs/apps/web/uploads/
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.formbricks-${NUMBER:-1}.rule=Host(`${DOMAIN:-formbricks.localhost}`)
+        - traefik.http.routers.formbricks-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.formbricks-${NUMBER:-1}.service=formbricks-${NUMBER:-1}
+        - traefik.http.routers.formbricks-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.formbricks-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=formbricks
+      - POSTGRES_USER=formbricks
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "formbricks"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  uploads:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

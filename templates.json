@@ -380,6 +380,77 @@
         },
         {
             "type": 2,
+            "title": "Formbricks",
+            "description": "Formbricks est un outil de création de formulaires en ligne.",
+            "categories": ["Formulaire"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/GK6PrCY.png",
+            "website": "https://formbricks.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/formbricks.yml"
+            },
+            "env": [
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From",
+                    "type": "email"
+                },
+                {
+                    "name": "EMAIL_VERIFICATION_DISABLED",
+                    "label": "Disable email verification",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "No",
+                            "value": "0"
+                        },
+                        {
+                            "text": "Yes",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "name": "SIGNUP_DISABLED",
+                    "label": "Disable signup",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "No",
+                            "value": "0"
+                        },
+                        {
+                            "text": "Yes",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": 2,
             "title": "Zammad",
             "description": "Zammad est un système de support client / helpdesk open source basé sur le web.",
             "categories": ["Helpdesk"],
