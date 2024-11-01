@@ -12,7 +12,7 @@ services:
       - ${VOLUME_PATH}maildata:/var/mail
       - ${VOLUME_PATH}mailstate:/var/mail-state
       - ${VOLUME_PATH}config:/tmp/docker-mailserver/
-      - ${VOLUME_PATH}certs:/certs/
+      - ${VOLUME_PATH}letsencrypt:/etc/letsencrypt/
     environment:
       - OVERRIDE_HOSTNAME=${DOMAIN:-mailserver.localhost}
       - ENABLE_SPAMASSASSIN=1
@@ -23,9 +23,8 @@ services:
       - ENABLE_POSTGREY=0
       - ONE_DIR=1
       - DMS_DEBUG=0
-      - SSL_TYPE=manual
-      - SSL_CERT_PATH=/certs/certs/${DOMAIN:-mailserver.localhost}.crt
-      - SSL_KEY_PATH=/certs/private/${DOMAIN:-mailserver.localhost}.key
+      - SSL_TYPE=letsencrypt
+      - SSL_DOMAIN=${DOMAIN:-mailserver.localhost}
       - POSTFIX_MESSAGE_SIZE_LIMIT=${POSTFIX_MESSAGE_SIZE_LIMIT:-20480000}
     cap_add:
       - NET_ADMIN
@@ -33,9 +32,9 @@ services:
 
 volumes:
   config:
-  certs:
   maildata:
   mailstate:
+  letsencrypt:
 
 networks:
   traefik:
