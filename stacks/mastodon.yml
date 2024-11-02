@@ -1,7 +1,8 @@
 # DOMAIN=example.com docker stack deploy -c mastodon.yml mastodon
 # chown -R 991:991 system/
-# docker exec -it mastodon_web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
-# docker exec -it mastodon_web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
+# docker exec -it web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
+# docker exec -it web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
+# docker exec -it web bin/rails db:encryption:init
 # tootctl accounts modify --role Owner <username> # Set owner role
 # tootctl accounts create <username> --email <email> --confirmed --role Admin # Add user
 # tootctl media remove # Remove all media
@@ -10,7 +11,7 @@
 # tootctl accounts modify --disable-2fa <username> # Disable 2FA
 
 x-defaults: &defaults
-  image: tootsuite/mastodon:${VERSION:-v4.3.1}
+  image: ghcr.io/mastodon/mastodon:${VERSION:-v4.3.1}
   environment:
     - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
     - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
@@ -33,6 +34,9 @@ x-defaults: &defaults
     - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
     - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
     - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-noreply@example.com}
+    - ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=${ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY}
+    - ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=${ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY}
+    - ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=${ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT}
 
 services:
   web:
@@ -56,6 +60,7 @@ services:
 
   streaming:
     <<: *defaults
+    image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.3.1}
     command: node ./streaming
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
