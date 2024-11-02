@@ -853,6 +853,36 @@
         },
         {
             "type": 2,
+            "title": "Castopod",
+            "description": "Castopod est une plateforme de podcasting open-source.",
+            "categories": ["Podcast"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/XrJEjVD.png",
+            "website": "https://castopod.org",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/castopod.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "admin",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
+        },
+        {
+            "type": 2,
             "title": "Taiga",
             "description": "Taiga est une plateforme de gestion de projet Open Source complète pour les startups et les développeurs agiles.",
             "categories": ["Gestion de projet"],

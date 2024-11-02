@@ -1,0 +1,61 @@
+# DOMAIN=example.com docker stack deploy -c castopod.yml castopod
+# php spark install:create-superadmin # Create first admin user
+
+services:
+  castopod:
+    image: castopod/castopod:${VERSION:-1.13.0}
+    volumes:
+      - ${VOLUME_PATH}media:/var/www/castopod/public/media
+    environment:
+      - MYSQL_DATABASE=castopod
+      - MYSQL_USER=castopod
+      - MYSQL_PASSWORD=myp@ssw0rd
+      - CP_CACHE_HANDLER=redis
+      - CP_REDIS_HOST=redis
+      - CP_REDIS_PASSWORD=myp@ssw0rd
+      - CP_ANALYTICS_SALT=changeme
+      - CP_BASEURL=${SCHEME:-https}://${DOMAIN:-castopod.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.castopod-${NUMBER:-1}.rule=Host(`${DOMAIN:-castopod.localhost}`)
+        - traefik.http.routers.castopod-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.castopod-${NUMBER:-1}.service=castopod-${NUMBER:-1}
+        - traefik.http.routers.castopod-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.castopod-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-10.5.9}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-castopod}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-castopod}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    command: --requirepass myp@ssw0rd
+    volumes:
+      - redis:/data
+    networks:
+      - internal
+
+volumes:
+  media:
+  redis:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
