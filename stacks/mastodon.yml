@@ -10,7 +10,7 @@
 # tootctl accounts modify --disable-2fa <username> # Disable 2FA
 
 x-defaults: &defaults
-  image: tootsuite/mastodon:${VERSION:-v4.2.13}
+  image: tootsuite/mastodon:${VERSION:-v4.3.1}
   environment:
     - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
     - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
