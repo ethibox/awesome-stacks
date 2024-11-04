@@ -37,7 +37,7 @@ services:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-myp@ssw0rd}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
       WORDPRESS_CONFIG_EXTRA: |
-        define('DISABLE_WP_CRON', true);
+        define('DISABLE_WP_CRON', getenv('DISABLE_WP_CRON'));
         define('WP_HOME', getenv('WP_HOME'));
         define('WP_SITEURL', getenv('WP_SITEURL'));
       WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
@@ -45,6 +45,7 @@ services:
       WP_UPLOAD_MAX_FILESIZE: ${WP_UPLOAD_MAX_FILESIZE:-256M}
       WP_MEMORY_LIMIT: ${WP_MEMORY_LIMIT:-256M}
       WP_POST_MAX_SIZE: ${WP_POST_MAX_SIZE:-256M}
+      DISABLE_WP_CRON: ${DISABLE_WP_CRON:-true}
     networks:
       - internal
 
