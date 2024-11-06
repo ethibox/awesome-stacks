@@ -1,0 +1,31 @@
+# DOMAIN=example.com docker stack deploy -c vaultwarden.yml vaultwarden
+
+services:
+  web:
+    image: vaultwarden/server:${VERSION:-1.32.3}
+    environment:
+      - DOMAIN=${SCHEME:-https}://${DOMAIN:-vaultwarden.localhost}
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.vaultwarden-${NUMBER:-1}.rule=Host(`${DOMAIN:-vaultwarden.localhost}`)
+        - traefik.http.routers.vaultwarden-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.vaultwarden-${NUMBER:-1}.service=vaultwarden-${NUMBER:-1}
+        - traefik.http.routers.vaultwarden-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.vaultwarden-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - traefik
+      - internal
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
