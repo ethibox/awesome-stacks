@@ -2181,6 +2181,35 @@
                     "disabled": true
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Moodle",
+            "description": "Plateforme d'apprentissage en ligne open-source",
+            "categories": ["LMS"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/Xb8jEOK.png",
+            "website": "https://moodle.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/moodle.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_USERNAME",
+                    "label": "Admin username",
+                    "value": "admin",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }

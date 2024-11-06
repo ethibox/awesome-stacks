@@ -1,0 +1,53 @@
+# DOMAIN=example.com docker stack deploy -c moodle.yml moodle
+
+services:
+  moodle:
+    image: bitnami/moodle:${VERSION:-4.5}
+    environment:
+      - MOODLE_USERNAME=${ADMIN_USERNAME:-admin}
+      - MOODLE_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - MOODLE_DATABASE_USER=moodle
+      - MOODLE_DATABASE_NAME=moodle
+      - MOODLE_DATABASE_HOST=mariadb
+      - MOODLE_DATABASE_PORT_NUMBER=3306
+      - MOODLE_DATABASE_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}moodle:/bitnami/moodle
+      - ${VOLUME_PATH}moodledata:/bitnami/moodledata
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.moodle-${NUMBER:-1}.rule=Host(`${DOMAIN:-moodle.localhost}`)
+        - traefik.http.routers.moodle-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.moodle-${NUMBER:-1}.service=moodle-${NUMBER:-1}
+        - traefik.http.routers.moodle-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.moodle-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - traefik
+      - internal
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-11.4}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-moodle}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-moodle}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+  moodle:
+  moodledata:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
