@@ -28,10 +28,13 @@ services:
         echo "upload_max_filesize = $$WP_UPLOAD_MAX_FILESIZE" > $$PHP_INI_DIR/conf.d/custom.ini
         echo "memory_limit = $$WP_MEMORY_LIMIT" >> $$PHP_INI_DIR/conf.d/custom.ini
         echo "post_max_size = $$WP_POST_MAX_SIZE" >> $$PHP_INI_DIR/conf.d/custom.ini
+        echo "max_execution_time = $$WP_MAX_EXECUTION_TIME" >> $$PHP_INI_DIR/conf.d/custom.ini
         docker-entrypoint.sh php-fpm
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     environment:
+      WORDPRESS_DEBUG: ${WORDPRESS_DEBUG:-false}
       WORDPRESS_DB_HOST: ${MYSQL_HOST:-mariadb}
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-myp@ssw0rd}
@@ -43,6 +46,7 @@ services:
       WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
       WP_SITEURL: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
       WP_UPLOAD_MAX_FILESIZE: ${WP_UPLOAD_MAX_FILESIZE:-256M}
+      WP_MAX_EXECUTION_TIME: ${WP_MAX_EXECUTION_TIME:-300}
       WP_MEMORY_LIMIT: ${WP_MEMORY_LIMIT:-256M}
       WP_POST_MAX_SIZE: ${WP_POST_MAX_SIZE:-256M}
       DISABLE_WP_CRON: ${DISABLE_WP_CRON:-true}
@@ -55,8 +59,7 @@ services:
     command:
       - -c
       - |
-        apk add --no-cache curl
-        echo '* * * * * curl -s http://nginx/wp-cron.php?doing_wp_cron' | crontab -
+        echo '* * * * * wget -q -O - http://nginx/wp-cron.php?doing_wp_cron' | crontab -
         crond -f
     volumes:
       - /etc/localtime:/etc/localtime:ro
