@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: listmonk/listmonk:${VERSION:-v4.0.1}
+    image: listmonk/listmonk:${VERSION:-v4.1.0}
     command:
       - /bin/sh
       - -c
