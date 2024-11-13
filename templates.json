@@ -2211,6 +2211,21 @@
                     "disabled": true
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Memos",
+            "description": "Outil de prise de notes léger et respectueux de la vie privée",
+            "categories": ["Notes"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/MlTef7m.png",
+            "website": "https://usememos.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/memos.yml"
+            }
         }
     ]
 }
