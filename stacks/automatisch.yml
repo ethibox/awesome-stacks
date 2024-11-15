@@ -1,0 +1,68 @@
+# DOMAIN=example.com docker stack deploy -c automatisch.yml automatisch
+
+services:
+  web:
+    image: automatischio/automatisch:${VERSION:-0.13.1}
+    environment:
+      - PORT=3000
+      - REDIS_HOST=redis
+      - APP_ENV=production
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DATABASE=automatisch
+      - POSTGRES_USERNAME=automatisch
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - PROTOCOL=${SCHEME:-https}
+      - HOST=${DOMAIN:-automatisch.localhost}
+      - API_URL=${SCHEME:-https}://${DOMAIN:-automatisch.localhost}
+      - WEB_APP_URL=${SCHEME:-https}://${DOMAIN:-automatisch.localhost}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-c471841e34193bc1903d9cf9bf58cab7ebae6c1c9c095dff75cb8f3a80771b84}
+      - WEBHOOK_SECRET_KEY=${WEBHOOK_SECRET_KEY:-c9c179f8de7a14a4ecd14dc2c5097905f7084e65f3821e431e2b28a2fde32e9a}
+      - APP_SECRET_KEY=${APP_SECRET_KEY:-22efcd64c37b2f690868a0cd7adb1069584adf5d7a1ee0c4f6e2654339d2e399}
+    volumes:
+      - ${VOLUME_PATH}storage:/automatisch/storage
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.automatisch-${NUMBER:-1}.rule=Host(`${DOMAIN:-automatisch.localhost}`)
+        - traefik.http.routers.automatisch-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.automatisch-${NUMBER:-1}.service=automatisch-${NUMBER:-1}
+        - traefik.http.routers.automatisch-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.automatisch-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:6-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    environment:
+      - POSTGRES_DB=automatisch
+      - POSTGRES_USER=automatisch
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "automatisch"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  redis:
+  storage:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

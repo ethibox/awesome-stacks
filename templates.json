@@ -2226,6 +2226,37 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/memos.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Automatisch",
+            "description": "Alternative open-source à Zapier",
+            "categories": ["Automatisation"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/FMgsYUe.jpeg",
+            "website": "https://automatisch.io/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/automatisch.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "label": "Admin Email",
+                    "type": "email",
+                    "value": "user@automatisch.io",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "value": "sample",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }
