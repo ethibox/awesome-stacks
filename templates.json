@@ -2143,7 +2143,7 @@
             "description": "Plateforme de publication destiné aux universités.",
             "categories": ["Publication"],
             "manual": true,
-            "enabled": false,
+            "enabled": true,
             "trial": 7,
             "price": 19,
             "logo": "https://i.imgur.com/tpZBUI6.png",

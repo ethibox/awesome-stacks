@@ -4,7 +4,7 @@
 
 services:
   omeka:
-    image: ethibox/omeka:${VERSION:-latest}
+    image: ethibox/omeka:${VERSION:-4.2.0}
     volumes:
       - ${VOLUME_PATH}files:/var/www/html/files
       - ${VOLUME_PATH}config:/var/www/html/config
