@@ -1,0 +1,65 @@
+# DOMAIN=example.com docker stack deploy -c khoj.yml khoj
+
+services:
+  server:
+    image: ghcr.io/khoj-ai/khoj:${VERSION:-1.30.7}
+    command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode --non-interactive
+    volumes:
+      - ${VOLUME_PATH}config:/root/.khoj/
+      - ${VOLUME_PATH}models:/root/.cache/torch/sentence_transformers
+      - ${VOLUME_PATH}models:/root/.cache/huggingface
+    environment:
+      - POSTGRES_DB=khoj
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=khoj
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - KHOJ_DEBUG=${KHOJ_DEBUG:-False}
+      - KHOJ_DOMAIN=${DOMAIN:-khoj.localhost}
+      - KHOJ_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - KHOJ_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - KHOJ_TELEMETRY_DISABLE=${KHOJ_TELEMETRY_DISABLE:-True}
+      - KHOJ_DJANGO_SECRET_KEY=${KHOJ_DJANGO_SECRET_KEY:-mys3cr3t}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.khoj-${NUMBER:-1}.rule=Host(`${DOMAIN:-khoj.localhost}`)
+        - traefik.http.routers.khoj-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.khoj-${NUMBER:-1}.service=khoj-${NUMBER:-1}
+        - traefik.http.routers.khoj-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.khoj-${NUMBER:-1}.loadbalancer.server.port=42110
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-ankane/pgvector}:${POSTGRES_VERSION:-latest}
+    environment:
+      - POSTGRES_DB=khoj
+      - POSTGRES_USER=khoj
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "khoj"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  sandbox:
+    image: ghcr.io/khoj-ai/terrarium:latest
+    networks:
+      - internal
+
+volumes:
+  config:
+  models:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
