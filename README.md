@@ -43,7 +43,7 @@ Deploy your apps with one command!
 Here an example with [Nextcloud](./stacks/nextcloud.yml):
 
 ```bash
-docker stack deploy -c stacks/nextcoud.yml nextcloud
+docker stack deploy -c stacks/nextcloud.yml nextcloud
 ```
 
 Go to https://nextcloud.localhost and enjoy your app!
