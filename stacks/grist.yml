@@ -2,12 +2,19 @@
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.2.1}
+    image: gristlabs/grist:${VERSION:-1.3.0}
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
       - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
       - GRIST_DEFAULT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - GRIST_FORCE_LOGIN=${GRIST_FORCE_LOGIN:-true}
+      # Create a new client in keycloak # https://support.getgrist.com/install/oidc/#example-keycloak
+      # - GRIST_OIDC_IDP_ISSUER=${SCHEME:-https}://${DOMAIN:-keycloak.localhost}/realms/master
+      # - GRIST_OIDC_SP_HOST=${SCHEME:-https}://${DOMAIN:-grist.localhost}
+      # - GRIST_OIDC_IDP_CLIENT_SECRET=${GRIST_OIDC_IDP_CLIENT_SECRET}
+      # - GRIST_OIDC_IDP_CLIENT_ID=${GRIST_OIDC_IDP_CLIENT_ID}
+      # - GRIST_OIDC_IDP_SCOPES=openid profile email
     deploy:
       labels:
         - traefik.enable=true
@@ -19,11 +26,17 @@ services:
         - traefik.http.routers.grist-${NUMBER:-1}.middlewares=grist-${NUMBER:-1}-auth
         - traefik.http.middlewares.grist-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd}
         # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+    networks:
+      - internal
+      - traefik
 
 volumes:
   grist:
 
 networks:
-  default:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
     external: true
     name: traefik-net
