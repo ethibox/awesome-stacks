@@ -2286,7 +2286,60 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/keila.yml"
-            }
+            },
+            "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "label": "Admin Email",
+                    "type": "email",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From",
+                    "type": "email"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_TLS",
+                    "label": "SMTP TLS",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "oui",
+                            "value": "true"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "type": 2,

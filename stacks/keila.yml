@@ -5,7 +5,7 @@ services:
     image: pentacent/keila:${VERSION:-0.15.1}
     environment:
       - KEILA_USER=${ADMIN_EMAIL:-admin@example.com}
-      - KEILA_PASSWORD=${KEILA_PASSWORD:-myp@ssw0rd}
+      - KEILA_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - URL_SCHEMA=${URL_SCHEMA:-https}
       - URL_HOST=${DOMAIN:-keila.localhost}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t} # openssl rand -base64 64
@@ -14,7 +14,7 @@ services:
       - MAILER_SMTP_HOST=${SMTP_HOST}
       - MAILER_SMTP_USER=${SMTP_USERNAME}
       - MAILER_SMTP_PASSWORD=${SMTP_PASSWORD}
-      - MAILER_ENABLE_STARTTLS=${SMTP_SSL:-false}
+      - MAILER_ENABLE_STARTTLS=${SMTP_TLS:-false}
       - DB_URL=postgres://keila:myp@ssw0rd@postgres/keila
     volumes:
       - ${VOLUME_PATH}uploads:/opt/app/uploads
