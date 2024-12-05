@@ -1,0 +1,56 @@
+# DOMAIN=example.com docker stack deploy -c keila.yml keila
+
+services:
+  keila:
+    image: pentacent/keila:${VERSION:-0.15.1}
+    environment:
+      - KEILA_USER=${ADMIN_EMAIL:-admin@example.com}
+      - KEILA_PASSWORD=${KEILA_PASSWORD:-myp@ssw0rd}
+      - URL_SCHEMA=${URL_SCHEMA:-https}
+      - URL_HOST=${DOMAIN:-keila.localhost}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t} # openssl rand -base64 64
+      - MAILER_SMTP_PORT=${SMTP_PORT:-587}
+      - MAILER_SMTP_FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
+      - MAILER_SMTP_HOST=${SMTP_HOST}
+      - MAILER_SMTP_USER=${SMTP_USERNAME}
+      - MAILER_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - MAILER_ENABLE_STARTTLS=${SMTP_SSL:-false}
+      - DB_URL=postgres://keila:myp@ssw0rd@postgres/keila
+    volumes:
+      - ${VOLUME_PATH}uploads:/opt/app/uploads
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.keila-${NUMBER:-1}.rule=Host(`${DOMAIN:-keila.localhost}`)
+        - traefik.http.routers.keila-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.keila-${NUMBER:-1}.service=keila-${NUMBER:-1}
+        - traefik.http.routers.keila-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.keila-${NUMBER:-1}.loadbalancer.server.port=4000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=keila
+      - POSTGRES_USER=keila
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "keila"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  uploads:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

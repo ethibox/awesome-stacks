@@ -2275,6 +2275,21 @@
         },
         {
             "type": 2,
+            "title": "Keila",
+            "description": "Gestionnaire de newsletter open-source",
+            "categories": ["Email"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/260OnQX.jpeg",
+            "website": "https://keila.io/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/keila.yml"
+            }
+        },
+        {
+            "type": 2,
             "title": "Listmonk",
             "description": "Gestionnaire de newsletter open-source",
             "categories": ["Email"],
