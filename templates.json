@@ -2272,6 +2272,22 @@
                     "disabled": true
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Listmonk",
+            "description": "Gestionnaire de newsletter open-source",
+            "categories": ["Email"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/26dkpKq.png",
+            "website": "https://listmonk.app/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/listmonk.yml"
+            }
         }
     ]
 }
