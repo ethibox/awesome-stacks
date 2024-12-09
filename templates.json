@@ -2356,6 +2356,62 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/listmonk.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Rallly",
+            "description": "Outil de planification de réunion simple",
+            "categories": ["Planification"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/m2dqLMM.png",
+            "website": "https://rallly.co/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/rallly.yml"
+            },
+            "env": [
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From",
+                    "type": "email"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_SSL",
+                    "label": "SMTP SSL",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "oui",
+                            "value": "true"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

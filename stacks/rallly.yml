@@ -1,0 +1,52 @@
+# DOMAIN=example.com docker stack deploy -c rallly.yml rallly
+
+services:
+  web:
+    image: lukevella/rallly:${VERSION:-3.11.2}
+    environment:
+      - DATABASE_URL=postgres://rallly:myp@ssw0rd@postgres/rallly
+      - NEXT_PUBLIC_BASE_URL=${SCHEME:-https}://${DOMAIN:-rallly.localhost}
+      - NEXTAUTH_URL=${SCHEME:-https}://${DOMAIN:-rallly.localhost}
+      - NEXT_PUBLIC_SELF_HOSTED=${NEXT_PUBLIC_SELF_HOSTED:-true}
+      - SECRET_PASSWORD=${SECRET_PASSWORD:-XzAKLTuVLv0I1DtXx6/LsNUEttSsZ5Zr}
+      - SUPPORT_EMAIL=${SMTP_FROM:-admin@example.com}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USERNAME}
+      - SMTP_PWD=${SMTP_PASSWORD}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SSL:-false}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.rallly-${NUMBER:-1}.rule=Host(`${DOMAIN:-rallly.localhost}`)
+        - traefik.http.routers.rallly-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.rallly-${NUMBER:-1}.service=rallly-${NUMBER:-1}
+        - traefik.http.routers.rallly-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.rallly-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=rallly
+      - POSTGRES_USER=rallly
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "rallly"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
