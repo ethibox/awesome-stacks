@@ -1,0 +1,65 @@
+# DOMAIN=example.com docker stack deploy -c sympa.yml sympa
+
+services:
+  web:
+    image: tozd/sympa:${VERSION:-latest}
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        export SMTP_FROM_USER=`echo $${SMTP_FROM} | cut -d '@' -f1`
+        export SMTP_FROM_DOMAIN=`echo $${SMTP_FROM} | cut -d '@' -f2`
+        echo "email $$SMTP_FROM_USER" >> /etc/sympa/sympa/sympa.conf
+        sed -i -e 's/pgsql/postgres/g' \
+               -e 's/password$$/myp@ssw0rd/g' \
+               -e 's/domain example.com/domain '$$SMTP_FROM_DOMAIN'/g' \
+               -e 's/admin@example.com/'$$SMTP_FROM'/g' \
+               -e 's/example.com/'$$DOMAIN'/g' /etc/sympa/sympa/sympa.conf
+        /dinit
+    environment:
+      - SMTP_FROM=${SMTP_FROM}
+      - DOMAIN=${DOMAIN:-sympa.localhost}
+      - REMOTES=${SMTP_HOST} smtp --port=${SMTP_PORT} --auth-login --user=${SMTP_USERNAME} --pass=${SMTP_PASSWORD} --starttls
+    volumes:
+      - ${VOLUME_PATH}lib:/var/lib/sympa
+      - ${VOLUME_PATH}spool:/var/spool/sympa
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.sympa-${NUMBER:-1}.rule=Host(`${DOMAIN:-sympa.localhost}`)
+        - traefik.http.routers.sympa-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.sympa-${NUMBER:-1}.service=sympa-${NUMBER:-1}
+        - traefik.http.routers.sympa-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.sympa-${NUMBER:-1}.middlewares=sympa-${NUMBER:-1}
+        - traefik.http.services.sympa-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.middlewares.sympa-${NUMBER:-1}.redirectregex.regex=^https://([^/]+)/$$
+        - traefik.http.middlewares.sympa-${NUMBER:-1}.redirectregex.replacement=https://$$1/lists
+        - traefik.http.middlewares.sympa-${NUMBER:-1}.redirectregex.permanent=true
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=sympa
+      - POSTGRES_USER=sympa
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "sympa"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  lib:
+  spool:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

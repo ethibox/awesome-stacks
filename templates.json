@@ -2412,6 +2412,47 @@
                     ]
                 }
             ]
+        },
+        {
+            "type": 2,
+            "title": "Sympa",
+            "description": "Logiciel de gestion de listes de diffusion",
+            "categories": ["Email"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/9wJD9XH.png",
+            "website": "https://sympa.community/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/sympa.yml"
+            },
+            "env": [
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_FROM",
+                    "label": "SMTP From",
+                    "type": "email"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP password",
+                    "type": "password"
+                }
+            ]
         }
     ]
 }
