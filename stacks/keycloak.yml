@@ -1,0 +1,36 @@
+# DOMAIN=example.com docker stack deploy -c keycloak.yml keycloak
+# chown -R 1000:1000 data
+
+services:
+  web:
+    image: keycloak/keycloak:${VERSION:-26.0.5}
+    command: start-dev
+    environment:
+      - KC_PROXY_HEADERS=xforwarded
+      - KC_BOOTSTRAP_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}data:/opt/keycloak/data
+      - ${VOLUME_PATH}providers:/opt/keycloak/providers
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.keycloak-${NUMBER:-1}.rule=Host(`${DOMAIN:-keycloak.localhost}`)
+        - traefik.http.routers.keycloak-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.keycloak-${NUMBER:-1}.service=keycloak-${NUMBER:-1}
+        - traefik.http.routers.keycloak-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.keycloak-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
