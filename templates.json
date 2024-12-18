@@ -2418,7 +2418,7 @@
             "title": "Sympa",
             "description": "Logiciel de gestion de listes de diffusion",
             "categories": ["Email"],
-            "enabled": true,
+            "enabled": false,
             "trial": 7,
             "price": 19,
             "logo": "https://i.imgur.com/9wJD9XH.png",
