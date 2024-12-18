@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: freshrss/freshrss:${VERSION:-1.19.2-alpine}
+    image: freshrss/freshrss:${VERSION:-1.24.3-alpine}
     volumes:
       - ${VOLUME_PATH}data:/var/www/FreshRSS/data
       - ${VOLUME_PATH}extensions:/var/www/FreshRSS/extensions
