@@ -1973,9 +1973,9 @@
         {
             "type": 2,
             "title": "Nocobase",
-            "description": "Plateforme no-code open-source",
-            "categories": ["Low-code"],
-            "enabled": false,
+            "description": "Alternative open-source à Airtable",
+            "categories": ["Spreadsheet"],
+            "enabled": true,
             "trial": 7,
             "price": 19,
             "logo": "https://i.imgur.com/S1zp24t.png",
