@@ -1,0 +1,31 @@
+# DOMAIN=example.com docker stack deploy -c shaarli.yml shaarli.yml
+
+services:
+  web:
+    image: ghcr.io/shaarli/shaarli:${VERSION:-v0.14.0}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/shaarli/data
+      - ${VOLUME_PATH}cache:/var/www/shaarli/cache
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.shaarli-${NUMBER:-1}.rule=Host(`${DOMAIN:-shaarli.localhost}`)
+        - traefik.http.routers.shaarli-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.shaarli-${NUMBER:-1}.service=shaarli-${NUMBER:-1}
+        - traefik.http.routers.shaarli-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.shaarli-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+  cache:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
