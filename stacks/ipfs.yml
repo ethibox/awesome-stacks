@@ -3,7 +3,7 @@
 
 services:
   web:
-    image: ipfs/kubo:${VERSION:-v0.21.0}
+    image: ipfs/kubo:${VERSION:-v0.32.1}
     volumes:
       - ${VOLUME_PATH}ipfs:/data/ipfs
     deploy:
