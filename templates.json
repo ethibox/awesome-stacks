@@ -602,6 +602,7 @@
             "title": "Calendso",
             "description": "Alternative open-source à Calendly",
             "categories": ["Calendar"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
@@ -612,6 +613,18 @@
                 "stackfile": "stacks/calendso.yml"
             },
             "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "label": "Admin Email",
+                    "type": "email",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                },
                 {
                     "name": "SMTP_HOST",
                     "label": "SMTP Host"
@@ -633,7 +646,7 @@
                 {
                     "name": "SMTP_PORT",
                     "label": "SMTP Port",
-                    "value": 587,
+                    "value": "587",
                     "type": "number"
                 }
             ]

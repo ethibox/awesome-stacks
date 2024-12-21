@@ -2,6 +2,7 @@
 
 x-calendso: &calendso
   environment:
+    - VERSION=${VERSION:-v4.7.8}
     - NODE_ENV=production
     - POSTGRES_USER=calendso
     - POSTGRES_PASSWORD=myp@ssw0rd
@@ -9,8 +10,9 @@ x-calendso: &calendso
     - DATABASE_URL=postgresql://calendso:myp@ssw0rd@postgres:5432/calendso
     - NEXT_PUBLIC_WEBAPP_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
     - NEXT_PUBLIC_WEBSITE_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
+    - NEXT_PUBLIC_API_V2_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}/api/v2
     - NEXTAUTH_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
-    - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-mys3cr3t}  # openssl rand -base64 32
+    - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-mys3cr3t} # openssl rand -base64 32
     - NEXT_PUBLIC_IS_E2E=true
     - MS_GRAPH_CLIENT_ID=${MS_GRAPH_CLIENT_ID}
     - MS_GRAPH_CLIENT_SECRET=${MS_GRAPH_CLIENT_SECRET}
@@ -21,7 +23,7 @@ x-calendso: &calendso
     - EMAIL_SERVER_PORT=${SMTP_PORT:-587}
     - EMAIL_SERVER_USER=${SMTP_USER:-email_user}
     - EMAIL_SERVER_PASSWORD=${SMTP_PASSWORD:-password}
-    - CALENDSO_ENCRYPTION_KEY=${CALENDSO_ENCRYPTION_KEY:-mys3cr3t}  # openssl rand -base64 24
+    - CALENDSO_ENCRYPTION_KEY=${CALENDSO_ENCRYPTION_KEY:-mys3cr3t} # openssl rand -base64 24
     - CALCOM_TELEMETRY_DISABLED=${CALCOM_TELEMETRY_DISABLED:-1}
     - GOOGLE_API_CREDENTIALS=${GOOGLE_API_CREDENTIALS}
     - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
@@ -35,15 +37,16 @@ services:
     command:
       - -c
       - |
-        docker image inspect calendso:$${DOMAIN} && exit 0
+        docker image inspect calendso:$${DOMAIN} && exit 0 > /dev/null 2>&1
         apk add git
         git clone https://github.com/calcom/docker
         cd docker
+        git checkout $${VERSION}
         git submodule update --init
-        sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/v2/LicenseRequired.tsx
-        sed -i -e 's/cal.com/'$$DOMAIN'/g' calcom/packages/features/ee/teams/pages/team-profile-view.tsx
-        docker build \
+        sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        DOCKER_BUILDKIT=0 docker build \
         --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
+        --build-arg NEXT_PUBLIC_API_V2_URL=$${NEXT_PUBLIC_API_V2_URL} \
         --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
         --build-arg NEXTAUTH_SECRET=$${NEXTAUTH_SECRET} \
         --build-arg CALENDSO_ENCRYPTION_KEY=$${CALENDSO_ENCRYPTION_KEY} \
@@ -74,7 +77,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:14-alpine
     environment:
       - POSTGRES_DB=calendso
       - POSTGRES_USER=calendso
