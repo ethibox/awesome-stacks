@@ -7,7 +7,7 @@ services:
     command:
       - -c
       - |
-        wget -O /usr/share/nginx/html/index.html https://git.io/JEwvw
+        wget -O /usr/share/nginx/html/index.html https://gist.githubusercontent.com/johackim/e7a4ca2f00b587c890849586ac89d3a1/raw/waiting.html
         nginx -g 'daemon off;'
     deploy:
       labels:
