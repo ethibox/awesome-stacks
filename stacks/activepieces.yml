@@ -1,0 +1,65 @@
+# DOMAIN=example.com docker stack deploy -c activepieces.yml activepieces
+
+services:
+  web:
+    image: ghcr.io/activepieces/activepieces:${VERSION:-0.38.3}
+    environment:
+      - AP_POSTGRES_PORT=5432
+      - AP_POSTGRES_HOST=postgres
+      - AP_POSTGRES_DATABASE=activepieces
+      - AP_POSTGRES_USERNAME=activepieces
+      - AP_POSTGRES_PASSWORD=myp@ssw0rd
+      - AP_REDIS_HOST=redis
+      - AP_REDIS_PORT=6379
+      - AP_FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-activepieces.localhost}
+      - AP_ENCRYPTION_KEY=${AP_ENCRYPTION_KEY:-81916d955d175163e784d68de04cd863} # openssl rand -hex 16
+      - AP_JWT_SECRET=${AP_JWT_SECRET:-mys3cr3t}
+      - AP_ENVIRONMENT=prod
+    volumes:
+      - ${VOLUME_PATH}cache:/usr/src/app/cache
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.activepieces-${NUMBER:-1}.rule=Host(`${DOMAIN:-activepieces.localhost}`)
+        - traefik.http.routers.activepieces-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.activepieces-${NUMBER:-1}.service=activepieces-${NUMBER:-1}
+        - traefik.http.routers.activepieces-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.activepieces-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=activepieces
+      - POSTGRES_USER=activepieces
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "activepieces"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  cache:
+  redis:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
