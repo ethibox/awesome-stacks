@@ -1,0 +1,73 @@
+# DOMAIN=example.com docker stack deploy -c postiz.yml postiz
+
+services:
+  web:
+    image: ghcr.io/gitroomhq/postiz-app:${VERSION:-latest}
+    environment:
+      - MAIN_URL=${SCHEME:-https}://${DOMAIN:-postiz.localhost}
+      - FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-postiz.localhost}
+      - NEXT_PUBLIC_BACKEND_URL=${SCHEME:-https}://${DOMAIN:-postiz.localhost}/api
+      - JWT_SECRET=${JWT_SECRET:-mys3cr3t}
+      - DATABASE_URL=postgresql://postiz:myp@ssw0rd@postgres:5432/postiz
+      - REDIS_URL=redis://redis:6379
+      - BACKEND_INTERNAL_URL=http://localhost:3000
+      - IS_GENERAL=true
+      - STORAGE_PROVIDER=local
+      - UPLOAD_DIRECTORY=/uploads
+      - NEXT_PUBLIC_UPLOAD_DIRECTORY=/uploads
+      - X_API_KEY=${X_API_KEY}
+      - X_API_SECRET=${X_API_SECRET}
+      - X_CLIENT=${X_CLIENT}
+      - X_SECRET=${X_SECRET}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000 || exit 1"]
+    volumes:
+      - ${VOLUME_PATH}config:/config/
+      - ${VOLUME_PATH}uploads:/uploads/
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.postiz-${NUMBER:-1}.rule=Host(`${DOMAIN:-postiz.localhost}`)
+        - traefik.http.routers.postiz-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.postiz-${NUMBER:-1}.service=postiz-${NUMBER:-1}
+        - traefik.http.routers.postiz-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.postiz-${NUMBER:-1}.loadbalancer.server.port=5000
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+ 
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=postiz
+      - POSTGRES_USER=postiz
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postiz"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  redis:
+  config:
+  uploads:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

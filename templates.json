@@ -2482,6 +2482,22 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/activepieces.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Postiz",
+            "description": "Votre outil ultime de planification des réseaux sociaux",
+            "categories": ["Automatisation"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/wpUqmnb.png",
+            "website": "https://postiz.com/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/postiz.yml"
+            }
         }
     ]
 }
