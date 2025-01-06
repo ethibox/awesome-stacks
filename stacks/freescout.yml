@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: tiredofit/freescout:${VERSION:-php8.1-1.17.72}
+    image: tiredofit/freescout:${VERSION:-php8.1-1.17.97}
     volumes:
       - ${VOLUME_PATH}data:/data
       - ${VOLUME_PATH}logs:/www/logs
