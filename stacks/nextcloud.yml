@@ -8,7 +8,7 @@
 # php occ --no-warnings config:system:set maintenance_window_start --type=integer --value=1
 
 x-nextcloud: &nextcloud
-  image: nextcloud:${VERSION:-30.0.2-fpm-alpine}
+  image: nextcloud:${VERSION:-30.0.4-fpm-alpine}
   environment:
     - DOMAIN=${DOMAIN:-nextcloud.localhost}
     - MYSQL_HOST=mariadb
