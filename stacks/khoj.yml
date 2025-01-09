@@ -2,7 +2,7 @@
 
 services:
   server:
-    image: ghcr.io/khoj-ai/khoj:${VERSION:-1.30.7}
+    image: ghcr.io/khoj-ai/khoj:${VERSION:-1.33.2}
     command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode --non-interactive
     volumes:
       - ${VOLUME_PATH}config:/root/.khoj/
