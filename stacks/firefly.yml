@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: fireflyiii/core:${VERSION:-version-5.5.13}
+    image: fireflyiii/core:${VERSION:-version-6.1.25}
     environment:
       - DB_HOST=postgres
       - DB_DATABASE=firefly
@@ -10,12 +10,12 @@ services:
       - DB_PASSWORD=myp@ssw0rd
       - DB_CONNECTION=pgsql
       - DB_PORT=5432
-      - APP_KEY=${APP_KEY:-S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly}
-      - APP_ENV=${APP_ENV:-local}
       - TZ=Europe/Paris
-      - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
-      - APP_URL=${SCHEME:-https}://${DOMAIN:-firefly.localhost}
       - TRUSTED_PROXIES=**
+      - APP_ENV=${APP_ENV:-local}
+      - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
+      - APP_KEY=${APP_KEY:-S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-firefly.localhost}
     deploy:
       labels:
         - traefik.enable=true
