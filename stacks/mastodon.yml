@@ -1,12 +1,12 @@
 # DOMAIN=example.com docker stack deploy -c mastodon.yml mastodon
 # chown -R 991:991 system/
-# docker exec -it web bundle exec rake secret # OTP_SECRET and SECRET_KEY_BASE
-# docker exec -it web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
 # docker exec -it web bin/rails db:encryption:init
-# tootctl accounts modify --role Owner <username> # Set owner role
+# docker exec -it web bin/rails secret # OTP_SECRET and SECRET_KEY_BASE
+# docker exec -it web bundle exec rake mastodon:webpush:generate_vapid_key # VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY
 # tootctl accounts create <username> --email <email> --confirmed --role Admin # Add user
-# tootctl media remove # Remove all media
+# tootctl accounts modify --role Owner <username> # Set owner role
 # tootctl media remove-orphans # Remove orphan files
+# tootctl media remove # Remove all media
 # tootctl cache clear # Clear cache
 # tootctl accounts modify --disable-2fa <username> # Disable 2FA
 
