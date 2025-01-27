@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: nocobase/nocobase:${VERSION:-1.4.11}
+    image: nocobase/nocobase:${VERSION:-1.4.31}
     environment:
       - APP_ENV=production
       - INIT_ROOT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
@@ -15,6 +15,8 @@ services:
       - DB_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}storage:/app/nocobase/storage
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost/api/app:getLang', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
     deploy:
       labels:
         - traefik.enable=true
