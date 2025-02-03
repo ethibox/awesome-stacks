@@ -1,0 +1,70 @@
+# DOMAIN=example.com docker stack deploy -c twenty.yml twenty
+# chown -R 1000:1000 data docker
+
+x-defaults: &defaults
+  image: twentycrm/twenty:${VERSION:-latest}
+  environment:
+    - PORT=3000
+    - PG_DATABASE_URL=postgres://twenty:mypassw0rd@postgres:5432/default
+    - SERVER_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
+    - FRONT_BASE_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
+    - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+    - SIGN_IN_PREFILLED=${SIGN_IN_PREFILLED:-false}
+    - STORAGE_TYPE=${STORAGE_TYPE:-local}
+    - ENABLE_DB_MIGRATIONS=${ENABLE_DB_MIGRATIONS:-true}
+    - APP_SECRET=${APP_SECRET:-onoUicllnXTKiO6J+OGSFQFtdw9uyucAyxw3ztKXu+8=} # openssl rand -base64 32
+  volumes:
+    - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
+    - ${VOLUME_PATH}docker:/app/docker-data
+
+services:
+  app:
+    <<: *defaults
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.twenty-${NUMBER:-1}.rule=Host(`${DOMAIN:-twenty.localhost}`)
+        - traefik.http.routers.twenty-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.twenty-${NUMBER:-1}.service=twenty-${NUMBER:-1}
+        - traefik.http.routers.twenty-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.twenty-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - internal
+
+  worker:
+    <<: *defaults
+    command: ["yarn", "worker:prod"]
+    networks:
+      - internal
+
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=twenty
+      - POSTGRES_USER=twenty
+      - POSTGRES_PASSWORD=mypassw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "twenty"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  data:
+  docker:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

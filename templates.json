@@ -2496,6 +2496,21 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/postiz.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Twenty",
+            "description": "CRM open-source",
+            "categories": ["CRM"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/7lMXvhX.png",
+            "website": "https://twenty.com",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/twenty.yml"
+            }
         }
     ]
 }
