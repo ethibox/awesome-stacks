@@ -43,8 +43,9 @@ services:
         cd docker
         git checkout $${VERSION}
         git submodule update --init
-        sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        # sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
         DOCKER_BUILDKIT=0 docker build \
+        --build-arg NODE_ENV=$${NODE_ENV} \
         --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
         --build-arg NEXT_PUBLIC_API_V2_URL=$${NEXT_PUBLIC_API_V2_URL} \
         --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
