@@ -1,0 +1,40 @@
+# DOMAIN=example.com docker stack deploy -c changedetection.yml changedetection
+
+services:
+  app:
+    image: dgtlmoon/changedetection.io:${VERSION:-0.49.0}
+    environment:
+      - WEBDRIVER_URL=http://chrome:4444/wd/hub
+    volumes:
+      - ${VOLUME_PATH}data:/datastore
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.changedetection-${NUMBER:-1}.rule=Host(`${DOMAIN:-changedetection.localhost}`)
+        - traefik.http.routers.changedetection-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.changedetection-${NUMBER:-1}.service=changedetection-${NUMBER:-1}
+        - traefik.http.routers.changedetection-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.changedetection-${NUMBER:-1}.loadbalancer.server.port=5000
+        - traefik.http.routers.changedetection-${NUMBER:-1}.middlewares=changedetection-${NUMBER:-1}-auth
+        - traefik.http.middlewares.changedetection-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+    networks:
+      - internal
+      - traefik
+
+  chrome:
+    image: selenium/standalone-chrome:latest
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - internal
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
