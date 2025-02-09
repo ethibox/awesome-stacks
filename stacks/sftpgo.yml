@@ -1,0 +1,40 @@
+# DOMAIN=example.com docker stack deploy -c sftpgo.yml sftpgo
+# chown -R 1000:1000 config data
+
+services:
+  app:
+    image: drakkan/sftpgo:${VERSION:-v2.6.5}
+    environment:
+      - SFTPGO_WEBDAVD__BINDINGS__0__PORT=8081
+      - SFTPGO_WEBDAVD__BINDINGS__0__PREFIX=/webdav
+    volumes:
+      - ${VOLUME_PATH}data:/srv/sftpgo
+      - ${VOLUME_PATH}config:/var/lib/sftpgo
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.sftpgo-${NUMBER:-1}.rule=Host(`${DOMAIN:-sftpgo.localhost}`)
+        - traefik.http.routers.sftpgo-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.sftpgo-${NUMBER:-1}.service=sftpgo-${NUMBER:-1}
+        - traefik.http.routers.sftpgo-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.sftpgo-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.rule=Host(`${DOMAIN:-sftpgo.localhost}`) && PathPrefix(`/webdav`)
+        - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.service=sftpgo-webdav-${NUMBER:-1}
+        - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.sftpgo-webdav-${NUMBER:-1}.loadbalancer.server.port=8081
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+  config:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
