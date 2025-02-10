@@ -2,7 +2,8 @@
 
 services:
   web:
-    image: vectorim/riot-web:${VERSION:-v1.7.33}
+    image: vectorim/element-web:${VERSION:-v1.11.91}
+    user: root
     command:
       - /bin/sh
       - -c
@@ -12,9 +13,9 @@ services:
         sed -i -e 's/"breadcrumbs": true/"breadcrumbs": true,\n        "language": "'$$LANGUAGE'"/g' /app/config.json
         nginx -g 'daemon off;'
     environment:
-      - DOMAIN=${DOMAIN:-element.localhost}
       - SCHEME=${SCHEME:-https}
       - LANGUAGE=${LANGUAGE:-fr_FR}
+      - DOMAIN=${DOMAIN:-element.localhost}
     deploy:
       labels:
         - traefik.enable=true
@@ -28,16 +29,22 @@ services:
       - internal
 
   synapse:
-    image: matrixdotorg/synapse:v1.35.1
+    image: ghcr.io/element-hq/synapse:${SYNAPSE_VERSION:-v1.123.0}
     entrypoint: /bin/sh
     command:
       - -c
       - |
-        sed -i -e 's/#enable_registration: false/enable_registration: '$$ENABLE_REGISTRATION'/g' /data/homeserver.yaml
-        sed -i -e 's/log_config:/#log_config:/g' /data/homeserver.yaml
+        sed -i -e '/^[^#]*log_config:/s/^/#/' /data/homeserver.yaml
+        if ! grep -q 'enable_registration' /data/homeserver.yaml; then
+          sed -i "/registration_shared_secret/a enable_registration: $$ENABLE_REGISTRATION" /data/homeserver.yaml
+        fi
+        if ! grep -q 'enable_registration_without_verification' /data/homeserver.yaml; then
+          sed -i "/registration_shared_secret/a enable_registration_without_verification: $$DISABLE_VERIFICATION" /data/homeserver.yaml
+        fi
         /start.py
     environment:
       - ENABLE_REGISTRATION=${ENABLE_REGISTRATION:-true}
+      - DISABLE_VERIFICATION=${DISABLE_VERIFICATION:-true}
     volumes:
       - ${VOLUME_PATH}synapse:/data
     deploy:
@@ -53,7 +60,7 @@ services:
       - internal
 
   synapse-init:
-    image: matrixdotorg/synapse:v1.35.1
+    image: ghcr.io/element-hq/synapse:${SYNAPSE_VERSION:-v1.123.0}
     command: generate
     volumes:
       - ${VOLUME_PATH}synapse:/data
