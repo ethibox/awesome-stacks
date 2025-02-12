@@ -1,4 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c element.yml element
+# docker cp $(docker create --rm ghcr.io/etkecc/synapse-admin):/app/ .
+# echo '{ "restrictBaseUrl": "https://yourserver.com" }' > /app/config.json
+# UPDATE users SET admin = 1 WHERE name = '@username:yourserver.com'; # Set admin role
 
 services:
   web:
@@ -50,11 +53,31 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.routers.element-synapse-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/_matrix`)
+        - traefik.http.routers.element-synapse-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && (PathPrefix(`/_matrix`) || PathPrefix(`/_synapse`))
         - traefik.http.routers.element-synapse-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.element-synapse-${NUMBER:-1}.service=element-synapse-${NUMBER:-1}
         - traefik.http.routers.element-synapse-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.element-synapse-${NUMBER:-1}.loadbalancer.server.port=8008
+    networks:
+      - traefik
+      - internal
+
+  synapse-admin:
+    image: ghcr.io/etkecc/synapse-admin:${SYNAPSE_ADMIN_VERSION:-latest}
+    volumes:
+      - ${VOLUME_PATH}app:/app
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/admin`)
+        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.service=element-synapse-admin-${NUMBER:-1}
+        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.middlewares=element-synapse-admin-${NUMBER:-1},element-synapse-admin_path-${NUMBER:-1}
+        - traefik.http.services.element-synapse-admin-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.middlewares.element-synapse-admin-${NUMBER:-1}.redirectregex.regex=^(.*)/admin/?
+        - traefik.http.middlewares.element-synapse-admin-${NUMBER:-1}.redirectregex.replacement=$${1}/admin/
+        - traefik.http.middlewares.element-synapse-admin_path-${NUMBER:-1}.stripprefix.prefixes=/admin
     networks:
       - traefik
       - internal
@@ -76,6 +99,7 @@ services:
 
 volumes:
   synapse:
+  app:
 
 networks:
   internal:
