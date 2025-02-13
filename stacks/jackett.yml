@@ -1,0 +1,36 @@
+# DOMAIN=example.com docker stack deploy -c jackett.yml jackett
+
+services:
+  web:
+    image: linuxserver/jackett:${VERSION:-0.22.1421}
+    volumes:
+      - ${VOLUME_PATH}config:/config 
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.jackett-${NUMBER:-1}.rule=Host(`${DOMAIN:-jackett.localhost}`)
+        - traefik.http.routers.jackett-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.jackett-${NUMBER:-1}.service=jackett-${NUMBER:-1}
+        - traefik.http.routers.jackett-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.jackett-${NUMBER:-1}.loadbalancer.server.port=9117
+    networks:
+      - internal
+      - traefik
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    environment:
+      - LOG_LEVEL=info
+    networks:
+      - internal
+
+volumes:
+  config:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
