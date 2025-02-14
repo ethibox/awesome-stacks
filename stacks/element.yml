@@ -1,7 +1,9 @@
 # DOMAIN=example.com docker stack deploy -c element.yml element
 # docker cp $(docker create --rm ghcr.io/etkecc/synapse-admin):/app/ .
-# echo '{ "restrictBaseUrl": "https://yourserver.com" }' > /app/config.json
+# echo '{ "restrictBaseUrl": "https://element.localhost" }' > /app/config.json # On synapse-admin
+# register_new_matrix_user -c /data/homeserver.yaml https://element.localhost # Create an admin user
 # UPDATE users SET admin = 1 WHERE name = '@username:yourserver.com'; # Set admin role
+# https://matrix.org/federationtester # To check config
 
 services:
   web:
@@ -11,9 +13,12 @@ services:
       - /bin/sh
       - -c
       - |
+        mkdir /app/.well-known/matrix/
+        echo '{"m.server": "'$$DOMAIN':443"}' > /app/.well-known/matrix/server
+        echo '{"m.homeserver":{"base_url":"'$$SCHEME'://'$$DOMAIN'"},"m.identity_server":{"base_url":"https://vector.im"}}' > /app/.well-known/matrix/client
+        sed -i -e 's/"breadcrumbs": true/"breadcrumbs": true,\n        "language": "'$$LANGUAGE'"/g' /app/config.json
         sed -i -e 's#https://matrix-client.matrix.org#'$$SCHEME'://'$$DOMAIN'#g' /app/config.json
         sed -i -e 's/matrix.org/'$$DOMAIN'/g' /app/config.json
-        sed -i -e 's/"breadcrumbs": true/"breadcrumbs": true,\n        "language": "'$$LANGUAGE'"/g' /app/config.json
         nginx -g 'daemon off;'
     environment:
       - SCHEME=${SCHEME:-https}
