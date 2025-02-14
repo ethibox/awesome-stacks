@@ -2,11 +2,9 @@
 
 services:
   traefik:
-    image: traefik:${VERSION:-v2.11.3}
+    image: traefik:${VERSION:-v2.11.20}
     command:
-      # - --log.level=DEBUG
-      - --accesslog=true
-      - --accesslog.filepath=/var/log/traefik/access.log
+      - --log.level=${LOGLEVEL:-ERROR}
       - --providers.docker
       - --providers.docker.network=traefik-net
       - --providers.docker.exposedByDefault=false
@@ -25,6 +23,8 @@ services:
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      - --accesslog.filepath=/var/log/traefik/access.log
+      - --accesslog=true
     volumes:
       - ${VOLUME_PATH}logs:/var/log/traefik/
       - ${VOLUME_PATH}letsencrypt:/letsencrypt
