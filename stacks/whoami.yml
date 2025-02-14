@@ -1,0 +1,24 @@
+# DOMAIN=example.com docker stack deploy -c whoami.yml whoami
+
+services:
+  whoami:
+    image: traefik/whoami:${VERSION:-latest}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.whoami-${NUMBER:-1}.rule=Host(`${DOMAIN:-whoami.localhost}`)
+        - traefik.http.routers.whoami-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.whoami-${NUMBER:-1}.service=whoami-${NUMBER:-1}
+        - traefik.http.routers.whoami-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.whoami-${NUMBER:-1}.loadbalancer.server.port=${PORT:-80}
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
