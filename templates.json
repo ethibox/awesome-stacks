@@ -1924,6 +1924,7 @@
             "title": "Focalboard",
             "description": "Alternative open-source à Trello",
             "categories": ["Gestion de projet"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,

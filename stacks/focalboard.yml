@@ -1,11 +1,11 @@
 # DOMAIN=example.com docker stack deploy -c focalboard.yml focalboard
-# chown -R 65534:65534 data/
+# chown -R 65534:65534 data
 
 services:
   web:
-    image: mattermost/focalboard:${VERSION:-7.4.2}
+    image: mattermost/focalboard:${VERSION:-7.11.4}
     volumes:
-      - ${VOLUME_PATH}data:/data
+      - ${VOLUME_PATH}data:/opt/focalboard/data
     deploy:
       labels:
         - traefik.enable=true
