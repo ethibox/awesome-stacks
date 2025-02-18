@@ -648,6 +648,25 @@
                     "label": "SMTP Port",
                     "value": "587",
                     "type": "number"
+                },
+                {
+                    "name": "GOOGLE_LOGIN_ENABLED",
+                    "label": "Google login enabled",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "Oui",
+                            "value": "true"
+                        }
+                    ]
+                },
+                {
+                    "name": "GOOGLE_API_CREDENTIALS",
+                    "label": "Google API Credentials"
                 }
             ]
         },
