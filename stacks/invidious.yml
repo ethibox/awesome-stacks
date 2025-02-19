@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: ethibox/invidious:${VERSION:-latest}
+    image: quay.io/invidious/invidious:${VERSION:-latest}
     environment:
       INVIDIOUS_CONFIG: |
         hmac_key: ${HMAC_KEY:-random_hmac_key}
