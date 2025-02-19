@@ -1,0 +1,58 @@
+# DOMAIN=example.com docker stack deploy -c docmost.yml docmost
+
+services:
+  app:
+    image: docmost/docmost:${VERSION:-0.8.1}
+    environment:
+      - APP_SECRET=${APP_SECRET:-UWnum8qzylZ4unS36YjNnTsQlxRX14bg}
+      - APP_URL=${SCHEME:-https}://${DOMAIN:-docmost.localhost}
+      - DATABASE_URL=postgresql://docmost:myp%40ssw0rd@postgres:5432/docmost?schema=public
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ${VOLUME_PATH}data:/app/data/storage
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.docmost-${NUMBER:-1}.rule=Host(`${DOMAIN:-docmost.localhost}`)
+        - traefik.http.routers.docmost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.docmost-${NUMBER:-1}.service=docmost-${NUMBER:-1}
+        - traefik.http.routers.docmost-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.docmost-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    environment:
+      - POSTGRES_DB=docmost
+      - POSTGRES_USER=docmost
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "docmost"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  redis:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
