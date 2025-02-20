@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.3.0}
+    image: gristlabs/grist:${VERSION:-1.4.2}
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
@@ -15,6 +15,8 @@ services:
       # - GRIST_OIDC_IDP_CLIENT_SECRET=${GRIST_OIDC_IDP_CLIENT_SECRET}
       # - GRIST_OIDC_IDP_CLIENT_ID=${GRIST_OIDC_IDP_CLIENT_ID}
       # - GRIST_OIDC_IDP_SCOPES=openid profile email
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8484/api/orgs', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
     deploy:
       labels:
         - traefik.enable=true
