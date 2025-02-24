@@ -667,6 +667,14 @@
                 {
                     "name": "GOOGLE_API_CREDENTIALS",
                     "label": "Google API Credentials"
+                },
+                {
+                    "name": "NEXTAUTH_SECRET",
+                    "preset": true
+                },
+                {
+                    "name": "CALENDSO_ENCRYPTION_KEY",
+                    "preset": true
                 }
             ]
         },
