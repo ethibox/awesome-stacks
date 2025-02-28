@@ -3,7 +3,7 @@
 
 services:
   castopod:
-    image: castopod/castopod:${VERSION:-1.13.0}
+    image: castopod/castopod:${VERSION:-1.13.4}
     volumes:
       - ${VOLUME_PATH}media:/var/www/castopod/public/media
     environment:
@@ -13,7 +13,7 @@ services:
       - CP_CACHE_HANDLER=redis
       - CP_REDIS_HOST=redis
       - CP_REDIS_PASSWORD=myp@ssw0rd
-      - CP_ANALYTICS_SALT=changeme
+      - CP_ANALYTICS_SALT=${CP_ANALYTICS_SALT:-changeme}
       - CP_BASEURL=${SCHEME:-https}://${DOMAIN:-castopod.localhost}
     deploy:
       labels:
