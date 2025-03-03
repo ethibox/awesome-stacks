@@ -13,11 +13,16 @@ x-defaults: &defaults
     - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
     - JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD}
     - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
+    - JVB_STUN_SERVERS=${JVB_STUN_SERVERS:-meet-jit-si-turnrelay.jitsi.net:443}
+    - TURN_CREDENTIALS=${TURN_CREDENTIALS}
+    - TURN_TRANSPORT=${TURN_TRANSPORT}
+    - TURN_HOST=${TURN_HOST}
+    - TURN_PORT=${TURN_PORT}
 
 services:
   web:
     <<: *defaults
-    image: jitsi/web:${VERSION:-stable}
+    image: jitsi/web:${VERSION:-stable-10078-1}
     volumes:
       - ${VOLUME_PATH}web:/config
     deploy:
@@ -34,7 +39,7 @@ services:
 
   prosody:
     <<: *defaults
-    image: jitsi/prosody:${VERSION:-stable}
+    image: jitsi/prosody:${VERSION:-stable-10078-1}
     volumes:
       - ${VOLUME_PATH}prosody:/config
     networks:
@@ -44,7 +49,7 @@ services:
 
   jicofo:
     <<: *defaults
-    image: jitsi/jicofo:${VERSION:-stable}
+    image: jitsi/jicofo:${VERSION:-stable-10078-1}
     volumes:
       - ${VOLUME_PATH}jicofo:/config
     networks:
@@ -52,7 +57,7 @@ services:
 
   jvb:
     <<: *defaults
-    image: jitsi/jvb:${VERSION:-stable}
+    image: jitsi/jvb:${VERSION:-stable-10078-1}
     volumes:
       - ${VOLUME_PATH}jvb:/config
     ports:
