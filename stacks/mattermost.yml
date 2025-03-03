@@ -4,7 +4,7 @@
 
 services:
   app:
-    image: ${IMAGE:-mattermost/mattermost-team-edition}:${VERSION:-10.4.2}
+    image: ${IMAGE:-mattermost/mattermost-team-edition}:${VERSION:-10.5.1}
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
       - ${VOLUME_PATH}config:/mattermost/config
