@@ -11,7 +11,7 @@
 # tootctl accounts modify --disable-2fa <username> # Disable 2FA
 
 x-defaults: &defaults
-  image: ghcr.io/mastodon/mastodon:${VERSION:-v4.3.3}
+  image: ghcr.io/mastodon/mastodon:${VERSION:-v4.3.4}
   environment:
     - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
     - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
@@ -60,7 +60,7 @@ services:
 
   streaming:
     <<: *defaults
-    image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.3.3}
+    image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.3.4}
     command: node ./streaming
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
