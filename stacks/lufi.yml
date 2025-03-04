@@ -1,15 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c lufi.yml lufi
 
 x-defaults: &defaults
-  image: ethibox/lufi:${VERSION:-0.05.18}
+  image: ethibox/lufi:${VERSION:-0.07.0}
   volumes:
     - ${VOLUME_PATH}data:/usr/lufi/data
     - ${VOLUME_PATH}files:/usr/lufi/files
   environment:
     - CONTACT=${CONTACT:-contact@example.com}
     - DEFAULT_DELAY=${DEFAULT_DELAY:-1}
-    - MAX_DELAY=${MAX_DELAY:-0}
-    - MAX_FILE_SIZE=${MAX_FILE_SIZE:-10000000000}
+    - MAX_DELAY=${MAX_DELAY:-30}
+    - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
+    - MAX_TOTAL_SIZE=${MAX_TOTAL_SIZE:-50}
+    - POLICY_WHEN_FULL=${POLICY_WHEN_FULL:-warn}
     - SECRET=${SECRET:-mys3cr3t}
 
 services:
@@ -23,26 +25,35 @@ services:
         - traefik.http.routers.lufi-${NUMBER:-1}.service=lufi-${NUMBER:-1}
         - traefik.http.routers.lufi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.lufi-${NUMBER:-1}.loadbalancer.server.port=8081
+    networks:
+      - traefik
+      - internal
 
   cron:
     <<: *defaults
     healthcheck:
       disable: true
+    entrypoint: /bin/sh
     command:
-      - /bin/sh
       - -c
       - |
-        while true; do
-        carton exec script/lufi cron cleanfiles --mode production
-        carton exec script/lufi cron cleanbdd --mode production
-        sleep 3600
-        done
+        apt update && apt install -y cron
+        ( crontab -l 2>/dev/null; 
+        echo '@daily cd /usr/lufi && /usr/local/bin/carton exec script/lufi cron cleanfiles --mode production >> /proc/1/fd/1 2>&1';
+        echo '@daily cd /usr/lufi && /usr/local/bin/carton exec script/lufi cron cleanbdd --mode production >> /proc/1/fd/1 2>&1';
+        echo '@daily cd /usr/lufi && /usr/local/bin/carton exec script/lufi cron watch --mode production >> /proc/1/fd/1 2>&1' ) | crontab -
+        docker-entrypoint.sh cron -f
+    networks:
+      - internal
 
 volumes:
   data:
   files:
 
 networks:
-  default:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
     external: true
     name: traefik-net
