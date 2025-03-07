@@ -5,7 +5,7 @@
 
 services:
   web:
-    image: ${IMAGE:-framasoft/mobilizon}:${VERSION:-4.1.0}
+    image: ${IMAGE:-framasoft/mobilizon}:${VERSION:-5.1.2}
     environment:
       - DOCKER=true
       - MIX_ENV=${MIX_ENV:-prod}
