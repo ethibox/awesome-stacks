@@ -31,18 +31,18 @@ services:
 
   cron:
     <<: *defaults
-    healthcheck:
-      disable: true
-    entrypoint: /bin/sh
     command:
+      - /bin/sh
       - -c
       - |
-        apt update && apt install -y cron
-        ( crontab -l 2>/dev/null; 
-        echo '@daily cd /usr/lufi && /usr/local/bin/carton exec script/lufi cron cleanfiles --mode production >> /proc/1/fd/1 2>&1';
-        echo '@daily cd /usr/lufi && /usr/local/bin/carton exec script/lufi cron cleanbdd --mode production >> /proc/1/fd/1 2>&1';
-        echo '@daily cd /usr/lufi && /usr/local/bin/carton exec script/lufi cron watch --mode production >> /proc/1/fd/1 2>&1' ) | crontab -
-        docker-entrypoint.sh cron -f
+        while true; do
+          carton exec script/lufi cron cleanfiles --mode production
+          carton exec script/lufi cron cleanbdd --mode production
+          carton exec script/lufi cron watch --mode production
+          sleep 86400
+        done
+    healthcheck:
+      disable: true
     networks:
       - internal
 
