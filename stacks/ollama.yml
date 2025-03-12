@@ -21,7 +21,7 @@ services:
       - traefik
 
   ollama:
-    image: ollama/ollama:${VERSION:-0.5.7}
+    image: ollama/ollama:${VERSION:-0.6.0}
     volumes:
       - ${VOLUME_PATH}ollama:/root/.ollama
     networks:
