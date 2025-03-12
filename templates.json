@@ -1805,7 +1805,7 @@
         {
             "type": 2,
             "title": "Mobilizon",
-            "description": "",
+            "description": "Alternative open-source à Facebook Events, Meetup, Eventbrite et autres plateformes de gestion d'événements.",
             "categories": ["Événements"],
             "manual": true,
             "enabled": true,
