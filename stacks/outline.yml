@@ -1,0 +1,74 @@
+# DOMAIN=example.com docker stack deploy -c outline.yml outline
+
+services:
+  web:
+    image: outlinewiki/outline:${VERSION:-0.82.0}
+    environment:
+      - PORT=3000
+      - PGSSLMODE=disable
+      - FILE_STORAGE=local
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - FILE_STORAGE_UPLOAD_MAX_SIZE=262144000
+      - FILE_STORAGE_LOCAL_ROOT_DIR=/var/lib/outline/data
+      - URL=${SCHEME:-https}://${DOMAIN:-outline.localhost}
+      - DATABASE_URL=postgres://outline:myp%40ssw0rd@postgres:5432/outline
+      - SECRET_KEY=${SECRET_KEY:-1af294aa610ebd993c643b71f29d79ceeb96b1ecfa9a4cdc28a7244654e96a39}
+      - UTILS_SECRET=${UTILS_SECRET:-0891b0d47b551ca2fd1a493dc6597f8a778a3baf2de0074478c58d4ef047100f}
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
+      - OIDC_AUTH_URI=${OIDC_AUTH_URI}
+      - OIDC_TOKEN_URI=${OIDC_TOKEN_URI}
+      - OIDC_USERINFO_URI=${OIDC_USERINFO_URI}
+      - OIDC_LOGOUT_URI=${OIDC_LOGOUT_URI}
+      - OIDC_USERNAME_CLAIM=preferred_username
+      - OIDC_DISPLAY_NAME=OpenID Connect
+      - OIDC_SCOPES=openid profile email
+    volumes:
+      - ${VOLUME_PATH}data:/var/lib/outline/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.outline-${NUMBER:-1}.rule=Host(`${DOMAIN:-outline.localhost}`)
+        - traefik.http.routers.outline-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.outline-${NUMBER:-1}.service=outline-${NUMBER:-1}
+        - traefik.http.routers.outline-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.outline-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=outline
+      - POSTGRES_USER=outline
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "outline"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  data:
+  redis:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

@@ -2539,6 +2539,22 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/twenty.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Outline",
+            "description": "Application de gestion des connaissances open-source",
+            "categories": ["Connaissances"],
+            "manual": true,
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/uN0Fjmg.png",
+            "website": "https://getoutline.com",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/outline.yml"
+            }
         }
     ]
 }
