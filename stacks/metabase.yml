@@ -2,7 +2,14 @@
 
 services:
   metabase:
-    image: metabase/metabase:${VERSION:-v0.53.4}
+    image: metabase/metabase:${VERSION:-v0.53.6}
+    environment:
+      - MB_DB_TYPE=mysql
+      - MB_DB_HOST=mariadb
+      - MB_DB_DBNAME=metabase
+      - MB_DB_PORT=3306
+      - MB_DB_USER=metabase
+      - MB_DB_PASS=myp@ssw0rd
     deploy:
       labels:
         - traefik.enable=true
@@ -11,13 +18,6 @@ services:
         - traefik.http.routers.metabase-${NUMBER:-1}.service=metabase-${NUMBER:-1}
         - traefik.http.routers.metabase-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.metabase-${NUMBER:-1}.loadbalancer.server.port=3000
-    environment:
-      - MB_DB_TYPE=mysql
-      - MB_DB_HOST=mariadb
-      - MB_DB_DBNAME=metabase
-      - MB_DB_PORT=3306
-      - MB_DB_USER=metabase
-      - MB_DB_PASS=myp@ssw0rd
     networks:
       - internal
       - traefik
