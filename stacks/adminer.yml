@@ -2,7 +2,7 @@
 
 services:
   adminer:
-    image: adminer:${VERSION:-5.0.2}
+    image: adminer:${VERSION:-5.0.4}
     deploy:
       labels:
         - traefik.enable=true
