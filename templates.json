@@ -683,6 +683,7 @@
             "title": "Chatwoot",
             "description": "Alternative open-source à Intercom",
             "categories": ["Livechat"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
@@ -691,7 +692,36 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/chatwoot.yml"
-            }
+            },
+            "env": [
+                {
+                    "name": "MAILER_SENDER_EMAIL",
+                    "label": "SMTP From"
+                },
+                {
+                    "name": "SMTP_ADDRESS",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP Password",
+                    "type": "password"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_DOMAIN",
+                    "label": "SMTP Domain"
+                }
+            ]
         },
         {
             "type": 2,

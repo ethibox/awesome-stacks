@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c chatwoot.yml chatwoot
-# docker exec -it chatwoot_web bundle exec rails db:chatwoot_prepare
-# docker exec -it chatwoot_web bundle exec rails db:seed
-# docker exec -it chatwoot_web bundle exec rails db:migrate
+# bundle exec rails db:chatwoot_prepare
+# bundle exec rails db:seed
+# bundle exec rails db:migrate
 
 x-defaults: &defaults
   environment:
@@ -9,12 +9,14 @@ x-defaults: &defaults
     - FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-chatwoot.localhost}
     - NODE_ENV=${NODE_ENV:-production}
     - RAILS_ENV=${RAILS_ENV:-production}
+    - INSTALLATION_ENV=docker
     - POSTGRES_HOST=postgres
     - POSTGRES_USERNAME=chatwoot
     - POSTGRES_DATABASE=chatwoot
     - POSTGRES_PASSWORD=myp@ssw0rd
     - REDIS_URL=redis://redis:6379
     - REDIS_PASSWORD=myp@ssw0rd
+    - MAILER_SENDER_EMAIL=${MAILER_SENDER_EMAIL}
     - SMTP_ADDRESS=${SMTP_ADDRESS}
     - SMTP_AUTHENTICATION=plain
     - SMTP_DOMAIN=${SMTP_DOMAIN}
@@ -26,7 +28,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: chatwoot/chatwoot:${VERSION:-v2.9.1}
+    image: chatwoot/chatwoot:${VERSION:-v4.0.4}
     entrypoint: docker/entrypoints/rails.sh
     command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
     deploy:
@@ -43,7 +45,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: chatwoot/chatwoot:${VERSION:-v2.9.1}
+    image: chatwoot/chatwoot:${VERSION:-v4.0.4}
     command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
     networks:
       - internal
@@ -56,7 +58,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:12-alpine
+    image: ${POSTGRES_IMAGE:-pgvector/pgvector}:${POSTGRES_VERSION:-pg16}
     environment:
       - POSTGRES_DB=chatwoot
       - POSTGRES_USER=chatwoot
