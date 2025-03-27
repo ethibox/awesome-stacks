@@ -4,7 +4,7 @@
 
 services:
   app:
-    image: ethibox/pixelfed:${VERSION:-v0.11.3}
+    image: ethibox/pixelfed:${VERSION:-v0.11.2}
     environment:
       - APP_NAME=${APP_NAME:-PixelFed}
       - APP_ENV=${APP_ENV:-production}
@@ -58,8 +58,6 @@ services:
       - REMOTE_FOLLOW=${REMOTE_FOLLOW:-false}
 
       - INSTANCE_CONTACT_EMAIL=${INSTANCE_CONTACT_EMAIL}
-
-      - ENABLE_CONFIG_CACHE=true
     volumes:
       - ${VOLUME_PATH}data:/var/www/storage
     deploy:
