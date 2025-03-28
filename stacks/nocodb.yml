@@ -2,7 +2,7 @@
 
 services:
   nocodb:
-    image: nocodb/nocodb:${VERSION:-0.207.0}
+    image: nocodb/nocodb:${VERSION:-0.262.5}
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:8080 || exit 1"]
     environment:
