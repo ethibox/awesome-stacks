@@ -1077,7 +1077,7 @@
             "type": 2,
             "title": "Metabase",
             "description": "Le moyen le plus rapide et le plus simple de partager des données et des analyses au sein de votre entreprise.",
-            "categories": ["Analytics"],
+            "categories": ["Tableau de bord"],
             "enabled": true,
             "trial": 7,
             "price": 19,
@@ -2596,6 +2596,21 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/outline.yml"
+            }
+        },
+        {
+            "type": 2,
+            "title": "Chartbrew",
+            "description": "Créez des tableaux de bord et des graphiques en quelques minutes",
+            "categories": ["Tableau de bord"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/4q5znvz.png",
+            "website": "https://chartbrew.com",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/chartbrew.yml"
             }
         }
     ]

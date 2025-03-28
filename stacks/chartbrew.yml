@@ -1,0 +1,105 @@
+# DOMAIN=example.com docker stack deploy -c chartbrew.yml chartbrew
+
+x-chartbrew: &chartbrew
+  environment:
+    - VERSION=${VERSION:-v3.13.0}
+    - CB_API_HOST=0.0.0.0
+    - CB_API_PORT=4019
+    - CB_DB_HOST=mariadb
+    - CB_DB_PORT=3306
+    - CB_DB_NAME=chartbrew
+    - CB_DB_USERNAME=chartbrew
+    - CB_DB_PASSWORD=myp@ssw0rd
+    - CB_REDIS_HOST=redis
+    - CB_REDIS_PORT=6379
+    - CB_ENCRYPTION_KEY=${CB_ENCRYPTION_KEY:-e7ea6e81c299c0a06739e3c619afe9365bd9f533e59f00420cab9c070fbe75e9}
+    - VITE_APP_API_HOST=https://${DOMAIN:-chartbrew.localhost}/api
+    - VITE_APP_CLIENT_HOST=https://${DOMAIN:-chartbrew.localhost}
+    - VITE_APP_CLIENT_PORT=4018
+    - DOMAIN=${DOMAIN:-chartbrew.localhost}
+
+services:
+  docker:
+    <<: *chartbrew
+    image: docker:dind
+    entrypoint: /bin/ash
+    command:
+      - -c
+      - |
+        docker image inspect chartbrew:$${DOMAIN} && exit 0 > /dev/null 2>&1
+        apk add git
+        git clone https://github.com/chartbrew/chartbrew/
+        cd chartbrew
+        git checkout $${VERSION}
+        docker build \
+        --build-arg VITE_APP_CLIENT_PORT=$${VITE_APP_CLIENT_PORT} \
+        --build-arg VITE_APP_CLIENT_HOST=$${VITE_APP_CLIENT_HOST} \
+        --build-arg VITE_APP_API_HOST=$${VITE_APP_API_HOST} \
+        --no-cache -t chartbrew:$${DOMAIN} .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+  web:
+    <<: *chartbrew
+    image: chartbrew:${DOMAIN-chartbrew.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.chartbrew-${NUMBER:-1}.rule=Host(`${DOMAIN:-chartbrew.localhost}`)
+        - traefik.http.routers.chartbrew-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.chartbrew-${NUMBER:-1}.service=chartbrew-${NUMBER:-1}
+        - traefik.http.routers.chartbrew-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.chartbrew-${NUMBER:-1}.loadbalancer.server.port=4018
+    networks:
+      - internal
+      - traefik
+
+  api:
+    <<: *chartbrew
+    image: chartbrew:${DOMAIN-chartbrew.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.chartbrew-api-${NUMBER:-1}.rule=Host(`${DOMAIN:-chartbrew.localhost}`) && PathPrefix(`/api/`)
+        - traefik.http.routers.chartbrew-api-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.chartbrew-api-${NUMBER:-1}.service=chartbrew-api-${NUMBER:-1}
+        - traefik.http.routers.chartbrew-api-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.chartbrew-api-${NUMBER:-1}.middlewares=chartbrew-api-stripprefix-${NUMBER:-1}@docker
+        - traefik.http.services.chartbrew-api-${NUMBER:-1}.loadbalancer.server.port=4019
+        - traefik.http.middlewares.chartbrew-api-stripprefix-${NUMBER:-1}.stripprefix.prefixes=/api
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:10.5.9
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-chartbrew}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-chartbrew}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal
+
+volumes:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
