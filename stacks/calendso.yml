@@ -2,7 +2,7 @@
 
 x-calendso: &calendso
   environment:
-    - VERSION=${VERSION:-v4.7.8}
+    - VERSION=${VERSION:-v5.1.12}
     - NODE_ENV=production
     - POSTGRES_USER=calendso
     - POSTGRES_PASSWORD=myp@ssw0rd
@@ -29,6 +29,9 @@ x-calendso: &calendso
     - GOOGLE_LOGIN_ENABLED=${GOOGLE_LOGIN_ENABLED}
     - STACK_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
     - DOMAIN=${DOMAIN:-calendso.localhost}
+    - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME:-Calendso}
+    - NEXT_PUBLIC_COMPANY_NAME=${NEXT_PUBLIC_COMPANY_NAME:-Calendso}
+    - NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=${NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS:-admin@example.com}
 
 services:
   docker:
@@ -38,23 +41,32 @@ services:
     command:
       - -c
       - |
-        docker image inspect calendso:$${DOMAIN} && exit 0 > /dev/null 2>&1
+        docker image inspect calendso:$${DOMAIN} > /dev/null 2>&1 && exit 0
         apk add git
         git clone https://github.com/calcom/docker
         cd docker
         git checkout $${VERSION}
         git submodule update --init
-        # sed -i -e 's/session.data.hasValidLicense/true/g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i 's|--docker|--scope=@calcom/trpc --docker|' Dockerfile # Fix
+        sed -i '/embed folder/a RUN yarn workspace @calcom/trpc run build' Dockerfile # Fix
+        sed -i '/useSession/d' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i '/const session/d' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i 's/ && hasValidLicense === false//g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i 's/session.data ? session.data.hasValidLicense : null/true/g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
         DOCKER_BUILDKIT=0 docker build \
         --build-arg NODE_ENV=$${NODE_ENV} \
-        --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
-        --build-arg NEXT_PUBLIC_API_V2_URL=$${NEXT_PUBLIC_API_V2_URL} \
-        --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
-        --build-arg NEXTAUTH_SECRET=$${NEXTAUTH_SECRET} \
-        --build-arg CALENDSO_ENCRYPTION_KEY=$${CALENDSO_ENCRYPTION_KEY} \
+        --build-arg EMAIL_FROM=$${EMAIL_FROM} \
         --build-arg DATABASE_URL=$${DATABASE_URL} \
+        --build-arg NEXTAUTH_SECRET=$${NEXTAUTH_SECRET} \
+        --build-arg NEXT_PUBLIC_APP_NAME=$${NEXT_PUBLIC_APP_NAME} \
         --build-arg GOOGLE_LOGIN_ENABLED=$${GOOGLE_LOGIN_ENABLED} \
         --build-arg GOOGLE_API_CREDENTIALS=$${GOOGLE_API_CREDENTIALS} \
+        --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
+        --build-arg NEXT_PUBLIC_API_V2_URL=$${NEXT_PUBLIC_API_V2_URL} \
+        --build-arg CALENDSO_ENCRYPTION_KEY=$${CALENDSO_ENCRYPTION_KEY} \
+        --build-arg NEXT_PUBLIC_COMPANY_NAME=$${NEXT_PUBLIC_COMPANY_NAME} \
+        --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
+        --build-arg NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=$${NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS} \
         --network $${STACK_NAME}_internal \
         --no-cache -t calendso:$${DOMAIN} .
     volumes:
@@ -81,7 +93,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:14-alpine
+    image: postgres:${POSTGRES_VERSION:-14-alpine}
     environment:
       - POSTGRES_DB=calendso
       - POSTGRES_USER=calendso

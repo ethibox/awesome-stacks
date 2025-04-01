@@ -687,6 +687,21 @@
                 {
                     "name": "CALENDSO_ENCRYPTION_KEY",
                     "preset": true
+                },
+                {
+                    "name": "NEXT_PUBLIC_APP_NAME",
+                    "label": "App name",
+                    "value": "Calendso"
+                },
+                {
+                    "name": "NEXT_PUBLIC_COMPANY_NAME",
+                    "label": "Company name",
+                    "value": "Calendso"
+                },
+                {
+                    "name": "NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS",
+                    "label": "Support mail address",
+                    "value": "admin@example.com"
                 }
             ]
         },
