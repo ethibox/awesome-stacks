@@ -6,13 +6,15 @@ x-defaults: &defaults
     - ${VOLUME_PATH}data:/usr/lufi/data
     - ${VOLUME_PATH}files:/usr/lufi/files
   environment:
-    - CONTACT=${CONTACT:-contact@example.com}
-    - DEFAULT_DELAY=${DEFAULT_DELAY:-1}
     - MAX_DELAY=${MAX_DELAY:-30}
-    - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
+    - SECRET=${SECRET:-mys3cr3t}
+    - CRON_DELAY=${CRON_DELAY:-86400}
+    - ENABLE_CRON=${ENABLE_CRON:-true}
+    - DEFAULT_DELAY=${DEFAULT_DELAY:-1}
     - MAX_TOTAL_SIZE=${MAX_TOTAL_SIZE:-50}
     - POLICY_WHEN_FULL=${POLICY_WHEN_FULL:-warn}
-    - SECRET=${SECRET:-mys3cr3t}
+    - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
+    - ADMIN_EMAIL=${ADMIN_EMAIL:-contact@example.com}
 
 services:
   web:
@@ -35,14 +37,18 @@ services:
       - /bin/sh
       - -c
       - |
+        [ "$$ENABLE_CRON" = "true" ] || exit 0
         while true; do
           carton exec script/lufi cron cleanfiles --mode production
           carton exec script/lufi cron cleanbdd --mode production
           carton exec script/lufi cron watch --mode production
-          sleep 86400
+          sleep $$CRON_DELAY
         done
     healthcheck:
       disable: true
+    deploy:
+      restart_policy:
+        condition: on-failure
     networks:
       - internal
 
