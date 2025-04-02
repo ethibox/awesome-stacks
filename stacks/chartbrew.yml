@@ -26,7 +26,7 @@ services:
     command:
       - -c
       - |
-        docker image inspect chartbrew:$${DOMAIN} && exit 0 > /dev/null 2>&1
+        docker image inspect chartbrew:$${DOMAIN} > /dev/null 2>&1 && exit 0
         apk add git
         git clone https://github.com/chartbrew/chartbrew/
         cd chartbrew
