@@ -4,7 +4,7 @@
 x-defaults: &defaults
   environment:
     - TZ=Europe/Paris
-    - JVB_UDP_PORT=${JVB_UDP_PORT:-10000}
+    - JVB_PORT=${JVB_PORT:-10000}
     - JVB_ADVERTISE_IPS=${JVB_ADVERTISE_IPS}
     - JVB_AUTH_PASSWORD=${JVB_AUTH_PASSWORD}
     - ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX=1
@@ -13,14 +13,14 @@ x-defaults: &defaults
     - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
     - JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD}
     - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
-    - DISABLE_HTTPS=1
     - ENABLE_HTTP_REDIRECT=0
     - ENABLE_LETS_ENCRYPT=0
+    - DISABLE_HTTPS=1
 
 services:
   web:
     <<: *defaults
-    image: jitsi/web:${VERSION:-stable-10078-1}
+    image: jitsi/web:${VERSION:-stable-10133-1}
     volumes:
       - ${VOLUME_PATH}web:/config
     deploy:
@@ -37,7 +37,7 @@ services:
 
   prosody:
     <<: *defaults
-    image: jitsi/prosody:${VERSION:-stable-10078-1}
+    image: jitsi/prosody:${VERSION:-stable-10133-1}
     volumes:
       - ${VOLUME_PATH}prosody:/config
     networks:
@@ -47,7 +47,7 @@ services:
 
   jicofo:
     <<: *defaults
-    image: jitsi/jicofo:${VERSION:-stable-10078-1}
+    image: jitsi/jicofo:${VERSION:-stable-10133-1}
     volumes:
       - ${VOLUME_PATH}jicofo:/config
     networks:
@@ -55,12 +55,12 @@ services:
 
   jvb:
     <<: *defaults
-    image: jitsi/jvb:${VERSION:-stable-10078-1}
+    image: jitsi/jvb:${VERSION:-stable-10133-1}
     volumes:
       - ${VOLUME_PATH}jvb:/config
     ports:
-      - target: ${JVB_UDP_PORT:-10000}
-        published: ${JVB_UDP_PORT:-10000}
+      - target: ${JVB_PORT:-10000}
+        published: ${JVB_PORT:-10000}
         protocol: udp
         mode: host
     networks:

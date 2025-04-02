@@ -1206,13 +1206,8 @@
                     "disabled": true
                 },
                 {
-                    "name": "JVB_UDP_PORT",
+                    "name": "JVB_PORT",
                     "value": "10000",
-                    "preset": true
-                },
-                {
-                    "name": "JVB_TCP_PORT",
-                    "value": "4443",
                     "preset": true
                 }
             ]
