@@ -2,7 +2,7 @@
 
 services:
   traefik:
-    image: traefik:${VERSION:-v2.11.21}
+    image: traefik:${VERSION:-v2.11.22}
     command:
       - --log.level=${LOGLEVEL:-ERROR}
       - --providers.docker
