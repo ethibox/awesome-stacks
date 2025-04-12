@@ -2,23 +2,24 @@
 
 x-calendso: &calendso
   environment:
-    - VERSION=${VERSION:-v5.1.12}
+    - VERSION=${VERSION:-v5.1.20}
     - NODE_ENV=production
     - POSTGRES_USER=calendso
     - POSTGRES_PASSWORD=myp@ssw0rd
     - POSTGRES_DB=calendso
     - DATABASE_URL=postgresql://calendso:myp@ssw0rd@postgres:5432/calendso
+    - DATABASE_DIRECT_URL=postgresql://calendso:myp@ssw0rd@postgres:5432/calendso
     - NEXT_PUBLIC_WEBAPP_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
     - NEXT_PUBLIC_WEBSITE_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
     - NEXT_PUBLIC_API_V2_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}/api/v2
     - NEXTAUTH_URL=${SCHEME:-https}://${DOMAIN:-calendso.localhost}
     - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-mys3cr3t} # openssl rand -base64 32
-    - NEXT_PUBLIC_IS_E2E=true
     - MS_GRAPH_CLIENT_ID=${MS_GRAPH_CLIENT_ID}
     - MS_GRAPH_CLIENT_SECRET=${MS_GRAPH_CLIENT_SECRET}
     - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID}
     - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET}
     - EMAIL_FROM=${SMTP_FROM:-noreply@example.com}
+    - EMAIL_FROM_NAME=${EMAIL_FROM_NAME:-Calendso}
     - EMAIL_SERVER_HOST=${SMTP_HOST:-smtp.example.com}
     - EMAIL_SERVER_PORT=${SMTP_PORT:-587}
     - EMAIL_SERVER_USER=${SMTP_USER:-email_user}
@@ -32,6 +33,7 @@ x-calendso: &calendso
     - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME:-Calendso}
     - NEXT_PUBLIC_COMPANY_NAME=${NEXT_PUBLIC_COMPANY_NAME:-Calendso}
     - NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=${NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS:-admin@example.com}
+    # - ALLOWED_HOSTNAMES=${ALLOWED_HOSTNAMES:-"localhost"}
 
 services:
   docker:
@@ -63,6 +65,7 @@ services:
         --build-arg GOOGLE_API_CREDENTIALS=$${GOOGLE_API_CREDENTIALS} \
         --build-arg NEXT_PUBLIC_WEBAPP_URL=$${NEXT_PUBLIC_WEBAPP_URL} \
         --build-arg NEXT_PUBLIC_API_V2_URL=$${NEXT_PUBLIC_API_V2_URL} \
+        --build-arg NEXT_PUBLIC_WEBSITE_URL=$${NEXT_PUBLIC_WEBSITE_URL} \
         --build-arg CALENDSO_ENCRYPTION_KEY=$${CALENDSO_ENCRYPTION_KEY} \
         --build-arg NEXT_PUBLIC_COMPANY_NAME=$${NEXT_PUBLIC_COMPANY_NAME} \
         --build-arg CALCOM_TELEMETRY_DISABLED=$${CALCOM_TELEMETRY_DISABLED} \
