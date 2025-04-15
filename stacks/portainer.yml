@@ -2,7 +2,7 @@
 
 services:
   portainer:
-    image: ${IMAGE:-portainer/portainer-ce}:${VERSION:-2.27.3-alpine}
+    image: ${IMAGE:-portainer/portainer-ce}:${VERSION:-2.27.4-alpine}
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     volumes:
       - ${VOLUME_PATH}portainer:/data
@@ -22,7 +22,7 @@ services:
       - traefik
 
   agent:
-    image: portainer/agent:${VERSION:-2.27.3-alpine}
+    image: portainer/agent:${VERSION:-2.27.4-alpine}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
