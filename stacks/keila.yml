@@ -2,7 +2,7 @@
 
 services:
   keila:
-    image: pentacent/keila:${VERSION:-0.15.1}
+    image: pentacent/keila:${VERSION:-0.17.1}
     environment:
       - KEILA_USER=${ADMIN_EMAIL:-admin@example.com}
       - KEILA_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
