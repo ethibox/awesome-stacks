@@ -1,0 +1,29 @@
+# DOMAIN=example.com docker stack deploy -c paheko.yml paheko
+
+services:
+  app:
+    image: paheko/paheko:${VERSION:-1.3.13}
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/paheko/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.paheko-${NUMBER:-1}.rule=Host(`${DOMAIN:-paheko.localhost}`)
+        - traefik.http.routers.paheko-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.paheko-${NUMBER:-1}.service=paheko-${NUMBER:-1}
+        - traefik.http.routers.paheko-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.paheko-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
