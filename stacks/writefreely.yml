@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: writeas/writefreely:${VERSION:-0.12.0}
+    image: ${IMAGE:-ethibox/writefreely}:${VERSION:-0.15.1}
     entrypoint: /bin/sh
     command:
       - -c
@@ -42,8 +42,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=writefreely
-      - MYSQL_USER=writefreely
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_USER=writefreely
     networks:
       - internal
 
