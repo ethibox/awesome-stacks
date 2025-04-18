@@ -2,10 +2,10 @@
 # chown -R 1000:1000 data docker
 
 x-defaults: &defaults
-  image: twentycrm/twenty:${VERSION:-latest}
+  image: twentycrm/twenty:${VERSION:-v0.51.4}
   environment:
     - PORT=3000
-    - PG_DATABASE_URL=postgres://twenty:mypassw0rd@postgres:5432/default
+    - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/default
     - SERVER_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
     - FRONT_BASE_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
     - REDIS_URL=${REDIS_URL:-redis://redis:6379}
@@ -44,7 +44,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=twenty
       - POSTGRES_USER=twenty
