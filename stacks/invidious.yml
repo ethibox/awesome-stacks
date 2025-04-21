@@ -1,14 +1,16 @@
 # DOMAIN=example.com docker stack deploy -c invidious.yml invidious
+# docker run quay.io/invidious/youtube-trusted-session-generator
 
 services:
   web:
-    image: quay.io/invidious/invidious:${VERSION:-latest}
+    image: quay.io/invidious/invidious:${VERSION:-master}
     environment:
       INVIDIOUS_CONFIG: |
-        hmac_key: ${HMAC_KEY:-random_hmac_key}
+        hmac_key: ${HMAC_KEY:-random_hmac_key} # pwgen 20 1
         domain: ${DOMAIN:-invidious.localhost}
         channel_threads: 1
         check_tables: true
+        signature_server: inv_sig_helper:12999
         feed_threads: 1
         db:
           user: invidious
@@ -18,6 +20,8 @@ services:
           dbname: invidious
         full_refresh: false
         https_only: ${HTTPS_ONLY:-true}
+        visitor_data: ${VISITOR_DATA:-false}
+        po_token: ${PO_TOKEN:-random_token}
         popular_enabled: ${POPULAR_ENABLED:-true}
         default_user_preferences:
           default_home: Trending
@@ -33,11 +37,22 @@ services:
       - internal
       - traefik
 
+  inv_sig_helper:
+    image: quay.io/invidious/inv-sig-helper:latest
+    init: true
+    command: ["--tcp", "0.0.0.0:12999"]
+    environment:
+      - RUST_LOG=info
+    cap_drop:
+      - ALL
+    read_only: true
+    networks:
+      - internal
+
   postgres:
-    image: postgres:11.2-alpine
-    entrypoint: /bin/sh -c '/bin/sh -c "$${@}"'
+    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    entrypoint: /bin/sh
     command:
-      - /bin/sh
       - -c
       - |
         mkdir -p /config/sql
