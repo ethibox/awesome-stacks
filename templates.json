@@ -681,6 +681,14 @@
                     "label": "Google API Credentials"
                 },
                 {
+                    "name": "MS_GRAPH_CLIENT_ID",
+                    "label": "Office 365 / Outlook Client ID"
+                },
+                {
+                    "name": "MS_GRAPH_CLIENT_SECRET",
+                    "label": "Office 365 / Outlook Client Secret"
+                },
+                {
                     "name": "NEXTAUTH_SECRET",
                     "preset": true
                 },
