@@ -1,10 +1,10 @@
 # DOMAIN=example.com docker stack deploy -c mediawiki.yml mediawiki
 # chown -R 33:33 data/
-# wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.1.tar.gz
+# wget https://releases.wikimedia.org/mediawiki/1.43/mediawiki-1.43.1.tar.gz
 
 services:
   app:
-    image: mediawiki:${VERSION:-1.40.0}
+    image: mediawiki:${VERSION:-1.43.1}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     deploy:
@@ -20,14 +20,14 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:10.6
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
-      - MYSQL_DATABASE=mediawiki
       - MYSQL_USER=mediawiki
+      - MYSQL_DATABASE=mediawiki
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
     networks:
       - internal
 
