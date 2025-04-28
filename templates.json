@@ -2318,6 +2318,7 @@
             "title": "Vaultwarden",
             "description": "Gestionnaire de mot de passe open-source",
             "categories": ["Password manager"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
@@ -2326,7 +2327,15 @@
             "repository": {
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/vaultwarden.yml"
-            }
+            },
+            "env": [
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
         },
         {
             "type": 2,
