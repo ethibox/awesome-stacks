@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: vaultwarden/server:${VERSION:-1.32.3}
+    image: vaultwarden/server:${VERSION:-1.33.2}
     environment:
       - DOMAIN=${SCHEME:-https}://${DOMAIN:-vaultwarden.localhost}
     volumes:
