@@ -3,7 +3,7 @@
 
 services:
   n8n:
-    image: n8nio/n8n:${VERSION:-1.89.2}
+    image: n8nio/n8n:${VERSION:-1.91.1}
     environment:
       - NODE_ENV=production
       - N8N_PROTOCOL=${SCHEME:-https}
