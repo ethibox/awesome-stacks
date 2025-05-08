@@ -1,16 +1,15 @@
 # DOMAIN=example.com docker stack deploy -c invoiceninja.yml invoiceninja
-# chown -R 1500:1500 data/ storage/
 
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
     environment:
       - HTTPS=${HTTPS:-1}
-      - NGINX_ROOT_PATH=/var/www/app/public
+      - NGINX_ROOT_PATH=/var/www/html/public
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
     volumes:
-      - ${VOLUME_PATH}storage:/var/www/app/storage
-      - ${VOLUME_PATH}data:/var/www/app/public
+      - ${VOLUME_PATH}data:/var/www/html/public
+      - ${VOLUME_PATH}storage:/var/www/html/storage
     deploy:
       labels:
         - traefik.enable=true
@@ -24,12 +23,12 @@ services:
       - traefik
 
   app:
-    image: invoiceninja/invoiceninja:${VERSION:-5.5.104}
+    image: ${IMAGE:-invoiceninja/invoiceninja-debian}:${VERSION:-5.11.73-d}
     cap_add:
       - SYS_ADMIN
     volumes:
-      - ${VOLUME_PATH}storage:/var/www/app/storage:rw,delegated
-      - ${VOLUME_PATH}data:/var/www/app/public:rw,delegated
+      - ${VOLUME_PATH}data:/var/www/html/public
+      - ${VOLUME_PATH}storage:/var/www/html/storage
     environment:
       - APP_LOCALE=fr
       - APP_ENV=${APP_ENV:-production}
@@ -59,14 +58,14 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-10.6}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
-      - MYSQL_DATABASE=invoiceninja
       - MYSQL_USER=invoiceninja
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_DATABASE=invoiceninja
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
     networks:
       - internal
 
