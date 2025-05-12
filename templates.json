@@ -2656,6 +2656,21 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/paheko.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Teable",
+            "description": "Tableur open-source et collaboratif",
+            "categories": ["Spreadsheet"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/XZCiv1V.png",
+            "website": "https://teable.io/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/teable.yml"
+            }
         }
     ]
 }
