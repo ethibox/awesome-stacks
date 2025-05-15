@@ -662,39 +662,9 @@
                     "type": "number"
                 },
                 {
-                    "name": "GOOGLE_LOGIN_ENABLED",
-                    "label": "Google login enabled",
-                    "type": "select",
-                    "select": [
-                        {
-                            "text": "Non",
-                            "value": "false"
-                        },
-                        {
-                            "text": "Oui",
-                            "value": "true"
-                        }
-                    ]
-                },
-                {
-                    "name": "GOOGLE_API_CREDENTIALS",
-                    "label": "Google API Credentials"
-                },
-                {
-                    "name": "MS_GRAPH_CLIENT_ID",
-                    "label": "Office 365 / Outlook Client ID"
-                },
-                {
-                    "name": "MS_GRAPH_CLIENT_SECRET",
-                    "label": "Office 365 / Outlook Client Secret"
-                },
-                {
-                    "name": "NEXTAUTH_SECRET",
-                    "preset": true
-                },
-                {
-                    "name": "CALENDSO_ENCRYPTION_KEY",
-                    "preset": true
+                    "name": "NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS",
+                    "label": "Support mail address",
+                    "value": "admin@example.com"
                 },
                 {
                     "name": "NEXT_PUBLIC_APP_NAME",
@@ -707,9 +677,12 @@
                     "value": "Calendso"
                 },
                 {
-                    "name": "NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS",
-                    "label": "Support mail address",
-                    "value": "admin@example.com"
+                    "name": "NEXTAUTH_SECRET",
+                    "preset": true
+                },
+                {
+                    "name": "CALENDSO_ENCRYPTION_KEY",
+                    "preset": true
                 }
             ]
         },
