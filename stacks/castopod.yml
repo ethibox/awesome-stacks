@@ -43,7 +43,7 @@ services:
     image: redis:7-alpine
     command: --requirepass myp@ssw0rd
     volumes:
-      - redis:/data
+      - ${VOLUME_PATH}redis:/data
     networks:
       - internal
 
