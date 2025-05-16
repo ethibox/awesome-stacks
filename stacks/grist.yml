@@ -1,20 +1,28 @@
 # DOMAIN=example.com docker stack deploy -c grist.yml grist
+# mc alias set local http://localhost:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD --api S3v4
+# mc mb --with-versioning local/grist
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.4.2}
+    image: gristlabs/grist:${VERSION:-1.5.2}
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
       - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
       - GRIST_DEFAULT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - GRIST_FORCE_LOGIN=${GRIST_FORCE_LOGIN:-true}
-      # Create a new client in keycloak # https://support.getgrist.com/install/oidc/#example-keycloak
-      # - GRIST_OIDC_IDP_ISSUER=${SCHEME:-https}://${DOMAIN:-keycloak.localhost}/realms/master
-      # - GRIST_OIDC_SP_HOST=${SCHEME:-https}://${DOMAIN:-grist.localhost}
-      # - GRIST_OIDC_IDP_CLIENT_SECRET=${GRIST_OIDC_IDP_CLIENT_SECRET}
-      # - GRIST_OIDC_IDP_CLIENT_ID=${GRIST_OIDC_IDP_CLIENT_ID}
-      # - GRIST_OIDC_IDP_SCOPES=openid profile email
+      - REDIS_URL=redis://redis:6379
+      - GRIST_DOCS_MINIO_PORT=9000
+      - GRIST_DOCS_MINIO_USE_SSL=0
+      - GRIST_DOCS_MINIO_BUCKET=grist
+      - GRIST_DOCS_MINIO_ENDPOINT=minio
+      - GRIST_DOCS_MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-grist}
+      - GRIST_DOCS_MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-myp@ssw0rd}
+      - GRIST_OIDC_IDP_ISSUER=${GRIST_OIDC_IDP_ISSUER}
+      - GRIST_OIDC_IDP_CLIENT_ID=${GRIST_OIDC_IDP_CLIENT_ID}
+      - GRIST_OIDC_IDP_CLIENT_SECRET=${GRIST_OIDC_IDP_CLIENT_SECRET}
+      - GRIST_OIDC_SP_HOST=${SCHEME:-https}://${DOMAIN:-grist.localhost}
+      - GRIST_OIDC_IDP_SCOPES=${GRIST_OIDC_IDP_SCOPES:-openid profile email}
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:8484/api/orgs', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
     deploy:
@@ -26,14 +34,33 @@ services:
         - traefik.http.routers.grist-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grist-${NUMBER:-1}.loadbalancer.server.port=8484
         - traefik.http.routers.grist-${NUMBER:-1}.middlewares=grist-${NUMBER:-1}-auth
-        - traefik.http.middlewares.grist-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd}
-        # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+        - traefik.http.middlewares.grist-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
     networks:
       - internal
       - traefik
 
+  minio:
+    image: minio/minio:${VERSION:-RELEASE.2025-04-22T22-12-26Z-cpuv1}
+    command: server /data --console-address ":9001"
+    volumes:
+      - ${VOLUME_PATH}minio:/data
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-grist}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
 volumes:
   grist:
+  minio:
+  redis:
 
 networks:
   internal:
