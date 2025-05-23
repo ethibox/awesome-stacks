@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c vikunja.yml vikunja
+
+services:
+  app:
+    image: vikunja/vikunja:${VERSION:-0.24.6}
+    environment:
+      - VIKUNJA_DATABASE_TYPE=mysql
+      - VIKUNJA_DATABASE_HOST=mariadb
+      - VIKUNJA_DATABASE_USER=vikunja
+      - VIKUNJA_DATABASE_DATABASE=vikunja
+      - VIKUNJA_DATABASE_PASSWORD=myp@ssw0rd
+      - VIKUNJA_SERVICE_JWTSECRET=${VIKUNJA_SERVICE_JWTSECRET:-mys3cr3t}
+      - VIKUNJA_SERVICE_PUBLICURL=${SCHEME:-https}://${DOMAIN:-vikunja.localhost}
+    volumes:
+      - ${VOLUME_PATH}files:/app/vikunja/files
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.vikunja-${NUMBER:-1}.rule=Host(`${DOMAIN:-vikunja.localhost}`)
+        - traefik.http.routers.vikunja-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.vikunja-${NUMBER:-1}.service=vikunja-${NUMBER:-1}
+        - traefik.http.routers.vikunja-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.vikunja-${NUMBER:-1}.loadbalancer.server.port=3456
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-10.6}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-vikunja}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-vikunja}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  files:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net

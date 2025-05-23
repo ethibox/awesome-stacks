@@ -2644,6 +2644,21 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/teable.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Vikunja",
+            "description": "Gestionnaire de tâches open-source",
+            "categories": ["Gestion de projet"],
+            "enabled": true,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/Yd4nxf3.png",
+            "website": "https://vikunja.io/",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/vikunja.yml"
+            }
         }
     ]
 }
