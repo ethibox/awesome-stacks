@@ -677,6 +677,14 @@
                     "value": "Calendso"
                 },
                 {
+                    "name": "STRIPE_CLIENT_ID",
+                    "label": "Stripe Client ID"
+                },
+                {
+                    "name": "STRIPE_PRIVATE_KEY",
+                    "label": "Stripe Private Key"
+                },
+                {
                     "name": "NEXTAUTH_SECRET",
                     "preset": true
                 },

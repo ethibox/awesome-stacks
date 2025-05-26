@@ -2,7 +2,7 @@
 
 x-calendso: &calendso
   environment:
-    - VERSION=${VERSION:-v5.2.17}
+    - VERSION=${VERSION:-v5.3.5}
     - NODE_ENV=production
     - POSTGRES_USER=calendso
     - POSTGRES_PASSWORD=myp@ssw0rd
@@ -18,6 +18,8 @@ x-calendso: &calendso
     - MS_GRAPH_CLIENT_SECRET=${MS_GRAPH_CLIENT_SECRET}
     - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID}
     - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET}
+    - STRIPE_PRIVATE_KEY=${STRIPE_PRIVATE_KEY}
+    - STRIPE_CLIENT_ID=${STRIPE_CLIENT_ID}
     - EMAIL_FROM=${SMTP_FROM:-noreply@example.com}
     - EMAIL_FROM_NAME=${EMAIL_FROM_NAME:-Calendso}
     - EMAIL_SERVER_HOST=${SMTP_HOST:-smtp.example.com}
@@ -46,11 +48,10 @@ services:
       - |
         docker image inspect calendso:$${DOMAIN} > /dev/null 2>&1 && exit 0
         apk add git
-        git clone https://github.com/calcom/docker
+        git clone --recursive -b $${VERSION} https://github.com/calcom/docker
         cd docker
-        git checkout $${VERSION}
-        git submodule update --init
         sed -i 's|--docker|--scope=@calcom/trpc --docker|' Dockerfile # Fix
+        sed -i -e 's/calcom\/git-init.sh calcom\/git-setup.sh //' Dockerfile # Fix
         sed -i '/embed folder/a RUN yarn workspace @calcom/trpc run build' Dockerfile # Fix
         sed -i '/useSession/d' calcom/packages/features/ee/common/components/LicenseRequired.tsx
         sed -i '/const session/d' calcom/packages/features/ee/common/components/LicenseRequired.tsx
