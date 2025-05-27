@@ -1,0 +1,49 @@
+# DOMAIN=example.com docker stack deploy -c joplin.yml joplin
+
+services:
+  app:
+    image: joplin/server:${VERSION:-3.3.13}
+    environment:
+      - APP_PORT=22300
+      - DB_CLIENT=pg
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_DATABASE=joplin
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=joplin
+      - POSTGRES_PORT=5432
+      - APP_BASE_URL=${SCHEME:-https}://${DOMAIN:-joplin.localhost}
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.joplin-${NUMBER:-1}.rule=Host(`${DOMAIN:-joplin.localhost}`)
+        - traefik.http.routers.joplin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.joplin-${NUMBER:-1}.service=joplin-${NUMBER:-1}
+        - traefik.http.routers.joplin-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.joplin-${NUMBER:-1}.loadbalancer.server.port=22300
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=joplin
+      - POSTGRES_USER=joplin
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "joplin"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
