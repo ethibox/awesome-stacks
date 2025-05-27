@@ -2,14 +2,14 @@
 
 services:
   traefik:
-    image: traefik:${VERSION:-v2.11.24}
+    image: traefik:${VERSION:-v3.4.1}
     command:
       - --log.level=${LOGLEVEL:-ERROR}
-      - --providers.docker
-      - --providers.docker.network=traefik-net
-      - --providers.docker.exposedByDefault=false
-      - --providers.docker.swarmMode=true
-      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --core.defaultRuleSyntax=v2
+      - --providers.swarm
+      - --providers.swarm.network=traefik-net
+      - --providers.swarm.exposedByDefault=false
+      - --providers.swarm.endpoint=unix:///var/run/docker.sock
       - --entrypoints.https.http.middlewares=crowdsec-bouncer@docker
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
