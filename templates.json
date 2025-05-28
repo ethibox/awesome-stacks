@@ -1478,7 +1478,6 @@
             "title": "Wikijs",
             "description": "Une application wiki open-source, moderne et puissante.",
             "categories": ["Wiki"],
-            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,

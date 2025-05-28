@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: requarks/wiki:${VERSION:-2.5.297}
+    image: requarks/wiki:${VERSION:-2.5.307}
     environment:
       - DB_TYPE=mysql
       - DB_HOST=mariadb
@@ -23,7 +23,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:10.6
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
