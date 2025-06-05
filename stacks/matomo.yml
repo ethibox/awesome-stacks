@@ -22,7 +22,7 @@ services:
       - traefik
 
   app:
-    image: matomo:${VERSION:-5.3.1-fpm-alpine}
+    image: matomo:${VERSION:-5.3.2-fpm-alpine}
     environment:
       - MATOMO_DATABASE_USERNAME=matomo
       - MATOMO_DATABASE_DBNAME=matomo
