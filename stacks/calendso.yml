@@ -2,7 +2,7 @@
 
 x-calendso: &calendso
   environment:
-    - VERSION=${VERSION:-v5.3.5}
+    - VERSION=${VERSION:-v5.3.11}
     - NODE_ENV=production
     - POSTGRES_USER=calendso
     - POSTGRES_PASSWORD=myp@ssw0rd
