@@ -1541,7 +1541,7 @@
                 },
                 {
                     "name": "SMTP_PORT",
-                    "value": 587,
+                    "value": "587",
                     "preset": true
                 }
             ]
