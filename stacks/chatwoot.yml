@@ -28,7 +28,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: chatwoot/chatwoot:${VERSION:-v4.0.4}
+    image: chatwoot/chatwoot:${VERSION:-v4.3.0}
     entrypoint: docker/entrypoints/rails.sh
     command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
     deploy:
@@ -45,7 +45,7 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: chatwoot/chatwoot:${VERSION:-v4.0.4}
+    image: chatwoot/chatwoot:${VERSION:-v4.3.0}
     command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
     networks:
       - internal
