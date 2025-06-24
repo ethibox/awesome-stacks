@@ -22,7 +22,7 @@ services:
       - traefik
 
   app:
-    image: prestashop/prestashop:${VERSION:-1.7.8.6-fpm}
+    image: prestashop/prestashop:${VERSION:-8.0.0-8.1-fpm}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     environment:
@@ -45,7 +45,7 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-10.6}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
