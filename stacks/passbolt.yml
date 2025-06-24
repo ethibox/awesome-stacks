@@ -1,6 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c passbolt.yml passbolt
 # su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u your@email.com -f firstname -l lastname -r admin" -s /bin/sh www-data
 # UPDATE users SET role_id = 'xyz' WHERE id = 'xyz'; # Set admin role
+# chown -R 33:33 gpg/
 
 services:
   passbolt:
