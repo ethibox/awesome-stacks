@@ -736,6 +736,41 @@
                 {
                     "name": "SMTP_DOMAIN",
                     "label": "SMTP Domain"
+                },
+                {
+                    "name": "STORAGE_BUCKET_NAME",
+                    "label": "Storage Bucket Name"
+                },
+                {
+                    "name": "STORAGE_ACCESS_KEY_ID",
+                    "label": "Storage Access Key ID"
+                },
+                {
+                    "name": "STORAGE_SECRET_ACCESS_KEY",
+                    "label": "Storage Secret Access Key"
+                },
+                {
+                    "name": "STORAGE_REGION",
+                    "label": "Storage Region"
+                },
+                {
+                    "name": "STORAGE_ENDPOINT",
+                    "label": "Storage Endpoint"
+                },
+                {
+                    "name": "STORAGE_FORCE_PATH_STYLE",
+                    "label": "Storage Force Path Style",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "Non",
+                            "value": "false"
+                        },
+                        {
+                            "text": "Oui",
+                            "value": "true"
+                        }
+                    ]
                 }
             ]
         },
