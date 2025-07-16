@@ -40,7 +40,7 @@ services:
       - traefik
 
   minio:
-    image: minio/minio:${VERSION:-RELEASE.2025-04-22T22-12-26Z-cpuv1}
+    image: minio/minio:${MINIO_VERSION:-RELEASE.2025-04-22T22-12-26Z-cpuv1}
     command: server /data --console-address ":9001"
     volumes:
       - ${VOLUME_PATH}minio:/data
