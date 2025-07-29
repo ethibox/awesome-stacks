@@ -1,0 +1,55 @@
+# DOMAIN=example.com docker stack deploy -c ghostfolio.yml ghostfolio
+
+services:
+  ghostfolio:
+    image: ghostfolio/ghostfolio:${VERSION:-2.185.0}
+    environment:
+      - DATABASE_URL=postgresql://ghostfolio:myp@ssw0rd@postgres:5432/ghostfolio
+      - ACCESS_TOKEN_SALT=${ACCESS_TOKEN_SALT:-mys3cr3t}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-mys3cr3t}
+      - REDIS_HOST=redis
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3333/api/v1/health']
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.ghostfolio-${NUMBER:-1}.rule=Host(`${DOMAIN:-ghostfolio.localhost}`)
+        - traefik.http.routers.ghostfolio-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.ghostfolio-${NUMBER:-1}.service=ghostfolio-${NUMBER:-1}
+        - traefik.http.routers.ghostfolio-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.ghostfolio-${NUMBER:-1}.loadbalancer.server.port=3333
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    environment:
+      - POSTGRES_DB=ghostfolio
+      - POSTGRES_USER=ghostfolio
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ghostfolio"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  redis:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
