@@ -2,12 +2,17 @@
 
 services:
   web:
-    image: ghost:${VERSION:-4.11.0-alpine}
+    image: ghost:${VERSION:-6.0.0-alpine}
     volumes:
       - ${VOLUME_PATH}ghost:/var/lib/ghost/content
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - url=${SCHEME:-https}://${DOMAIN:-ghost.localhost}
+      - database__client=${DATABASE_CLIENT:-mysql}
+      - database__connection__user=${DATABASE_USER:-ghost}
+      - database__connection__host=${DATABASE_HOST:-mariadb}
+      - database__connection__database=${DATABASE_NAME:-ghost}
+      - database__connection__password=${DATABASE_PASSWORD:-myp@ssw0rd}
       - mail__transport=${MAIL_TRANSPORT:-SMTP}
       - mail__from=${SMTP_FROM}
       - mail__options__host=${SMTP_HOST}
@@ -23,11 +28,30 @@ services:
         - traefik.http.routers.ghost-${NUMBER:-1}.service=ghost-${NUMBER:-1}
         - traefik.http.routers.ghost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.ghost-${NUMBER:-1}.loadbalancer.server.port=2368
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-10.6}
+    environment:
+      - MYSQL_USER=ghost
+      - MYSQL_DATABASE=ghost
+      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
 
 volumes:
   ghost:
+  mariadb:
 
 networks:
-  default:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
     external: true
     name: traefik-net
