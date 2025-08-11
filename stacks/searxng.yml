@@ -4,8 +4,10 @@ services:
   web:
     image: searxng/searxng:${VERSION:-latest}
     environment:
-      - BASE_URL=${SCHEME:-https}://${DOMAIN:-searxng.localhost}
       - BIND_ADDRESS=0.0.0.0:8080
+      - BASE_URL=${SCHEME:-https}://${DOMAIN:-searxng.localhost}
+      - SEARXNG_PUBLIC_INSTANCE=${SEARXNG_PUBLIC_INSTANCE:-false}
+      - SEARXNG_VALKEY_URL=${SEARXNG_VALKEY_URL:-redis://redis:6379/0}
     deploy:
       labels:
         - traefik.enable=true
@@ -14,8 +16,19 @@ services:
         - traefik.http.routers.searxng-${NUMBER:-1}.service=searxng-${NUMBER:-1}
         - traefik.http.routers.searxng-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.searxng-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal
 
 networks:
-  default:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
     external: true
     name: traefik-net
