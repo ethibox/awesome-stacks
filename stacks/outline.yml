@@ -1,4 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c outline.yml outline
+# chown 1001:1001 data
 
 services:
   web:
