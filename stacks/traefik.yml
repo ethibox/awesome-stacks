@@ -10,6 +10,7 @@ services:
       - --providers.swarm.network=traefik-net
       - --providers.swarm.exposedByDefault=false
       - --providers.swarm.endpoint=unix:///var/run/docker.sock
+      - --providers.file.directory=/config
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.address=:443
@@ -21,9 +22,9 @@ services:
       - --entrypoints.http.http.redirections.entrypoint.permanent=true
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}
-      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.letsencrypt.acme.storage=/config/acme.json
     volumes:
-      - ${VOLUME_PATH}letsencrypt:/letsencrypt
+      - ${VOLUME_PATH}config:/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - {target: 80, published: 80, mode: host, protocol: tcp}
@@ -32,7 +33,7 @@ services:
       mode: ${MODE:-replicated}
 
 volumes:
-  letsencrypt:
+  config:
 
 networks:
   default:
