@@ -1312,7 +1312,7 @@
             "type": 2,
             "title": "Commento",
             "description": "Un système de commentaires rapide et sans ballonnement pour favoriser la discussion sur votre site Web.",
-            "categories": ["Système de commentaires"],
+            "categories": ["Commentaires"],
             "enabled": true,
             "trial": 7,
             "price": 19,
