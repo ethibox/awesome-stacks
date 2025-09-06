@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: neosmemo/memos:${VERSION:-0.22.5}
+    image: neosmemo/memos:${VERSION:-0.25.0}
     volumes:
       - ${VOLUME_PATH}memos:/var/opt/memos
     deploy:
