@@ -4,7 +4,7 @@
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.7.2}
+    image: gristlabs/grist:${VERSION:-1.7.3}
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
