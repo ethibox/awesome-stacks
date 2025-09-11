@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: jgraph/drawio:${VERSION:-28.0.4}
+    image: jgraph/drawio:${VERSION:-28.2.0}
     deploy:
       labels:
         - traefik.enable=true
