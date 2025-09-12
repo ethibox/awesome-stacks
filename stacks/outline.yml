@@ -3,7 +3,7 @@
 
 services:
   web:
-    image: outlinewiki/outline:${VERSION:-0.86.1}
+    image: outlinewiki/outline:${VERSION:-0.87.3}
     environment:
       - PORT=3000
       - PGSSLMODE=disable
