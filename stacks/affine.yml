@@ -1,0 +1,70 @@
+# DOMAIN=example.com docker stack deploy -c affine.yml affine
+
+x-affine: &affine
+  image: ghcr.io/toeverything/affine:${VERSION:-0.24.1}
+  volumes:
+    - ${VOLUME_PATH}storage:/root/.affine/storage
+    - ${VOLUME_PATH}config:/root/.affine/config
+  environment:
+    - REDIS_SERVER_HOST=redis
+    - AFFINE_INDEXER_ENABLED=false
+    - AFFINE_SERVER_HOST=${DOMAIN:-affine.localhost}
+    - AFFINE_SERVER_EXTERNAL_URL=${SCHEME:-https}://${DOMAIN:-affine.localhost}
+    - DATABASE_URL=postgresql://affine:myp@ssw0rd@postgres:5432/affine
+
+services:
+  affine:
+    <<: *affine
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.affine-${NUMBER:-1}.rule=Host(`${DOMAIN:-affine.localhost}`)
+        - traefik.http.routers.affine-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.affine-${NUMBER:-1}.service=affine-${NUMBER:-1}
+        - traefik.http.routers.affine-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.affine-${NUMBER:-1}.loadbalancer.server.port=3010
+    networks:
+      - internal
+      - traefik
+
+  migration:
+    <<: *affine
+    command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=affine
+      - POSTGRES_USER=affine
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "affine"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  config:
+  storage:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
