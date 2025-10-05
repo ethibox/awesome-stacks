@@ -1,0 +1,32 @@
+# DOMAIN=example.com docker stack deploy -c forgejo.yml forgejo
+
+services:
+  app:
+    image: codeberg.org/forgejo/forgejo:${VERSION:-12}
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.forgejo-${NUMBER:-1}.rule=Host(`${DOMAIN:-forgejo.localhost}`)
+        - traefik.http.routers.forgejo-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.forgejo-${NUMBER:-1}.service=forgejo-${NUMBER:-1}
+        - traefik.http.routers.forgejo-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.forgejo-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
