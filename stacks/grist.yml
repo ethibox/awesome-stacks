@@ -4,13 +4,13 @@
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.7.3}
+    image: gristlabs/grist:${VERSION:-1.7.4}
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
       - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
       - GRIST_DEFAULT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - GRIST_FORCE_LOGIN=${GRIST_FORCE_LOGIN:-true}
+      - GRIST_ANON_PLAYGROUND=${GRIST_ANON_PLAYGROUND:-false}
       - REDIS_URL=redis://redis:6379
       - GRIST_DOCS_MINIO_PORT=9000
       - GRIST_DOCS_MINIO_USE_SSL=0
@@ -33,8 +33,6 @@ services:
         - traefik.http.routers.grist-${NUMBER:-1}.service=grist-${NUMBER:-1}
         - traefik.http.routers.grist-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grist-${NUMBER:-1}.loadbalancer.server.port=8484
-        - traefik.http.routers.grist-${NUMBER:-1}.middlewares=grist-${NUMBER:-1}-auth
-        - traefik.http.middlewares.grist-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
     networks:
       - internal
       - traefik
