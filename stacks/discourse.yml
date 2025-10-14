@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c discourse.yml discourse
 
 x-defaults: &defaults
-  image: bitnami/discourse:${VERSION:-3.5.0}
+  image: bitnamilegacy/discourse:${VERSION:-3.5.0}
   environment:
     DISCOURSE_DATABASE_HOST: postgres
     DISCOURSE_DATABASE_NAME: discourse
