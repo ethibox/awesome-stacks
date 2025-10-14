@@ -4,7 +4,7 @@
 # chown -R 1000:1000 elasticsearch storage var
 
 x-zammad: &zammad
-  image: zammad/zammad-docker-compose:${VERSION:-6.5.1}
+  image: zammad/zammad-docker-compose:${VERSION:-6.5.2}
   volumes:
     - ${VOLUME_PATH}storage:/opt/zammad/storage
     - ${VOLUME_PATH}var:/opt/zammad/var
