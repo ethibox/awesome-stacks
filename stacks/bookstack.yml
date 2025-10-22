@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: linuxserver/bookstack:${VERSION:-25.07.2}
+    image: linuxserver/bookstack:${VERSION:-25.07.3}
     environment:
       - APP_URL=${SCHEME:-https}://${DOMAIN:-bookstack.localhost}
       - ALLOW_ROBOTS=${ALLOW_ROBOTS:-true}
