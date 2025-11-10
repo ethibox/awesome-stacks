@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: rocketchat/rocket.chat:${VERSION:-7.10.1}
+    image: rocketchat/rocket.chat:${VERSION:-7.12.1}
     volumes:
       - ${VOLUME_PATH}uploads:/app/uploads
     environment:
