@@ -3,7 +3,7 @@
 
 services:
   castopod:
-    image: castopod/castopod:${VERSION:-1.13.4}
+    image: castopod/castopod:${VERSION:-1.13.7}
     volumes:
       - ${VOLUME_PATH}media:/var/www/castopod/public/media
     environment:
@@ -28,7 +28,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:${MARIADB_VERSION:-10.5.9}
+    image: mariadb:${MARIADB_VERSION:-10.6}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
