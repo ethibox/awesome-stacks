@@ -1,0 +1,37 @@
+# DOMAIN=example.com docker stack deploy -c nextcloud-talk.yml nextcloud-talk
+
+services:
+  web:
+    image: nextcloud/aio-talk:${VERSION:-latest}
+    environment:
+      - TALK_PORT=${TALK_PORT:-3478}
+      - TALK_HOST=${DOMAIN:-nextcloud-talk.localhost}
+      - NC_DOMAIN=${NC_DOMAIN:-nextcloud.example.com}
+      - SIGNALING_SECRET=${SIGNALING_SECRET:-mys3cr3t}
+      - INTERNAL_SECRET=${INTERNAL_SECRET:-mys3cr3t}
+      - TURN_SECRET=${TURN_SECRET:-mys3cr3t}
+      - TZ=${TZ:-Europe/Paris}
+    ports:
+      - target: 3478
+        published: ${TALK_PORT:-3478}
+        protocol: tcp
+        mode: host
+      - target: 3478
+        published: ${TALK_PORT:-3478}
+        protocol: udp
+        mode: host
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud-talk.localhost}`)
+        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.service=nextcloud-talk-${NUMBER:-1}
+        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.nextcloud-talk-${NUMBER:-1}.loadbalancer.server.port=8081
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
+    name: traefik-net
