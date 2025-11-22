@@ -1,38 +1,32 @@
 # DOMAIN=example.com docker stack deploy -c discourse.yml discourse
-
-x-defaults: &defaults
-  image: bitnamilegacy/discourse:${VERSION:-3.5.0}
-  environment:
-    DISCOURSE_DATABASE_HOST: postgres
-    DISCOURSE_DATABASE_NAME: discourse
-    DISCOURSE_DATABASE_USER: discourse
-    DISCOURSE_DATABASE_PASSWORD: myp@ssw0rd
-    DISCOURSE_USERNAME: ${ADMIN_USERNAME:-admin}
-    DISCOURSE_PASSWORD: ${ADMIN_PASSWORD:-myp@ssw0rd}
-    DISCOURSE_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
-    DISCOURSE_HOST: ${DOMAIN:-discourse.localhost}
-    DISCOURSE_PORT: 3000
-    DISCOURSE_SMTP_HOST: ${SMTP_HOST}
-    DISCOURSE_SMTP_PORT: ${SMTP_PORT}
-    DISCOURSE_SMTP_USER: ${SMTP_USER}
-    DISCOURSE_SMTP_PASSWORD: ${SMTP_PASSWORD}
-    DISCOURSE_SMTP_AUTH: ${SMTP_AUTH:-login}
-    DISCOURSE_SMTP_PROTOCOL: ${SMTP_PROTOCOL:-tls}
-    DISCOURSE_SMTP_ENABLE_START_TLS: ${SMTP_TLS:-true}
-    DISCOURSE_NOTIFICATION_EMAIL: ${SMTP_FROM:-noreply@example.com}
-    ALLOW_EMPTY_PASSWORD: "yes"
-    GITLAB_APP_ID: ${GITLAB_APP_ID}
-    GITLAB_SECRET: ${GITLAB_SECRET}
-    GITLAB_URL: ${GITLAB_URL}
-    BITNAMI_DEBUG: ${BITNAMI_DEBUG:-false}
-    DISCOURSE_EXTRA_CONF_CONTENT: |
-        force_https = true
+# rake admin:create
 
 services:
-  discourse:
-    <<: *defaults
+  app:
+    image: discourse/discourse:${VERSION:-3.5.2}
     volumes:
-      - ${VOLUME_PATH}data:/bitnami
+      - ${VOLUME_PATH}data:/shared
+    environment:
+      - LANG=${LANG:-fr_FR.UTF-8}
+      - DISCOURSE_DB_PORT=5432
+      - DISCOURSE_DB_HOST=postgres
+      - DISCOURSE_DB_NAME=discourse
+      - DISCOURSE_DB_USERNAME=discourse
+      - DISCOURSE_DB_PASSWORD=myp@ssw0rd
+      - DISCOURSE_REDIS_HOST=redis
+      - DISCOURSE_REDIS_PORT=6379
+      - DISCOURSE_SMTP_PORT=${SMTP_PORT:-587}
+      - DISCOURSE_SMTP_USER_NAME=${SMTP_USER}
+      - DISCOURSE_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - DISCOURSE_SMTP_ENABLE_START_TLS=${SMTP_TLS:-true}
+      - DISCOURSE_SMTP_ADDRESS=${SMTP_HOST:-smtp.example.com}
+      - DISCOURSE_DEVELOPER_EMAILS=${ADMIN_EMAIL:-admin@example.com}
+      - DISCOURSE_NOTIFICATION_EMAIL=${SMTP_FROM:-noreply@example.com}
+      - DISCOURSE_HOSTNAME=${DOMAIN:-discourse.localhost}
+      - DISCOURSE_FORCE_HTTPS=${FORCE_HTTPS:-true}
+      - GITLAB_APP_ID=${GITLAB_APP_ID}
+      - GITLAB_SECRET=${GITLAB_SECRET}
+      - GITLAB_URL=${GITLAB_URL}
     deploy:
       labels:
         - traefik.enable=true
@@ -40,41 +34,36 @@ services:
         - traefik.http.routers.discourse-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.discourse-${NUMBER:-1}.service=discourse-${NUMBER:-1}
         - traefik.http.routers.discourse-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.services.discourse-${NUMBER:-1}.loadbalancer.server.port=3000
+        - traefik.http.services.discourse-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
       - traefik
       - internal
 
-  sidekiq:
-    <<: *defaults
-    command: /opt/bitnami/scripts/discourse-sidekiq/run.sh
-    volumes:
-      - ${VOLUME_PATH}sidekiq:/bitnami
-    networks:
-      - internal
-
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: ${POSTGRES_IMAGE:-discourse/postgres}:${POSTGRES_VERSION:-pg16}
     environment:
+      - DB_USER=discourse
+      - DB_PASSWORD=myp@ssw0rd
       - POSTGRES_DB=discourse
       - POSTGRES_USER=discourse
       - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "discourse"]
     volumes:
-      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql
     networks:
       - internal
 
   redis:
-    image: redis:6-alpine
+    image: redis:7-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - internal
 
 volumes:
-  postgres:
   data:
-  sidekiq:
+  postgres:
 
 networks:
   internal:

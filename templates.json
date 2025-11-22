@@ -220,6 +220,7 @@
             "title": "Discourse",
             "description": "Discourse est une plateforme de discussion open source construite pour la prochaine décennie de l'Internet.",
             "categories": ["Forum"],
+            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
