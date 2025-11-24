@@ -30,7 +30,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-14-alpine}
     environment:
       - POSTGRES_DB=etherpad
       - POSTGRES_USER=etherpad
