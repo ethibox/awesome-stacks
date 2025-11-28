@@ -2,7 +2,7 @@
 
 services:
   traefik:
-    image: traefik:${VERSION:-v3.4.5}
+    image: traefik:${VERSION:-v3.6.2}
     command:
       - --log.level=${LOGLEVEL:-ERROR}
       - --core.defaultRuleSyntax=v2
@@ -23,6 +23,7 @@ services:
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}
       - --certificatesresolvers.letsencrypt.acme.storage=/config/acme.json
+      - --accesslog=${ACCESSLOG:-false}
     volumes:
       - ${VOLUME_PATH}config:/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
