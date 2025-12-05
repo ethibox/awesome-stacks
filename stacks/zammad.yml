@@ -50,12 +50,13 @@ services:
     image: zammad/zammad-docker-compose:zammad-elasticsearch-5.2.3-32
     environment:
       - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
     volumes:
       - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
     deploy:
       resources:
         limits:
-          memory: 5G
+          memory: 2G
     networks:
       - internal
 
