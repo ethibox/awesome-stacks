@@ -1,8 +1,9 @@
 # DOMAIN=example.com docker stack deploy -c monitoring.yml monitoring
+# chown -R nobody:root prometheus/
 
 services:
   grafana:
-    image: grafana/grafana:${GRAFANA_VERSION:-9.5.1}
+    image: grafana/grafana:${GRAFANA_VERSION:-12.3.0}
     user: root
     environment:
       - GF_SMTP_ENABLED=true
@@ -26,7 +27,7 @@ services:
       - traefik
 
   prometheus:
-    image: prom/prometheus:v2.43.0
+    image: prom/prometheus:v3.8.0
     entrypoint: /bin/sh
     command:
       - -c
@@ -62,7 +63,7 @@ services:
       - traefik
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
     command: -docker_only=true
     volumes:
       - /:/rootfs:ro
@@ -75,7 +76,7 @@ services:
       - internal
 
   node-exporter:
-    image: prom/node-exporter:v1.5.0
+    image: prom/node-exporter:v1.10.2
     hostname: "{{.Node.Hostname}}"
     volumes:
       - /sys:/host/sys:ro
@@ -97,6 +98,15 @@ services:
           memory: 128M
         reservations:
           memory: 64M
+    networks:
+      - internal
+
+  process-exporter:
+    image: ncabatoff/process-exporter:0.7.10
+    command: --procfs /host/proc -config.path /etc/process-exporter/process-conf.yml
+    volumes:
+      - /proc:/host/proc:ro
+      - ${VOLUME_PATH}config:/etc/process-exporter:ro
     networks:
       - internal
 
