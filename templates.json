@@ -692,6 +692,21 @@
                 {
                     "name": "CALENDSO_ENCRYPTION_KEY",
                     "preset": true
+                },
+                {
+                    "name": "NEXT_PUBLIC_DISABLE_SIGNUP",
+                    "label": "Disable Signup",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "No",
+                            "value": "false"
+                        },
+                        {
+                            "text": "Yes",
+                            "value": "true"
+                        }
+                    ]
                 }
             ]
         },
