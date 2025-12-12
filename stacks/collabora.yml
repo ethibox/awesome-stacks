@@ -2,7 +2,7 @@
 
 services:
   collabora:
-    image: collabora/code:${VERSION:-25.04.5.3.1}
+    image: collabora/code:${VERSION:-25.04.7.3.1}
     healthcheck:
       test: ["CMD-SHELL", "curl -fsSL http://localhost:9980 || exit 1"]
     environment:
@@ -15,6 +15,8 @@ services:
         - traefik.http.routers.collabora-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.collabora-${NUMBER:-1}.service=collabora-${NUMBER:-1}
         - traefik.http.routers.collabora-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.collabora-${NUMBER:-1}.middlewares=collabora-${NUMBER:-1}-headers
+        - traefik.http.middlewares.collabora-${NUMBER:-1}-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
         - traefik.http.services.collabora-${NUMBER:-1}.loadbalancer.server.port=9980
     networks:
       - internal
