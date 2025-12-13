@@ -13,6 +13,7 @@ services:
       - --providers.file.directory=/config
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.https.http.middlewares=${MIDDLEWARES}
       - --entrypoints.https.http.encodedCharacters.allowEncodedQuestionMark=true
       - --entrypoints.https.http.encodedCharacters.allowEncodedSlash=true
       - --entrypoints.https.address=:443
@@ -25,8 +26,10 @@ services:
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}
       - --certificatesresolvers.letsencrypt.acme.storage=/config/acme.json
+      - --accesslog.filepath=${ACCESSLOG_PATH:-/var/log/traefik/access.log}
       - --accesslog=${ACCESSLOG:-false}
     volumes:
+      - /var/log:/var/log
       - ${VOLUME_PATH}config:/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:

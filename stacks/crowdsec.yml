@@ -1,15 +1,16 @@
 # DOMAIN=example.com docker stack deploy -c crowdsec.yml crowdsec
+# docker exec -it $(docker ps -qf name=crowdsec_crowdsec) cscli bouncers add traefik-bouncer
 
 services:
   crowdsec:
-    image: crowdsecurity/crowdsec:${VERSION:-v1.6.1-2}
+    image: crowdsecurity/crowdsec:${VERSION:-v1.7.4}
     environment:
       - COLLECTIONS=${COLLECTIONS:-crowdsecurity/traefik}
       - CUSTOM_HOSTNAME=${CUSTOM_HOSTNAME:-crowdsec}
     volumes:
+      - /var/log:/var/log:ro
       - ${VOLUME_PATH}config:/etc/crowdsec
       - ${VOLUME_PATH}data:/var/lib/crowdsec/data/
-      - /var/log/traefik:/var/log/traefik:ro
     networks:
       - traefik
       - internal
