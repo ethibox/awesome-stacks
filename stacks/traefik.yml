@@ -26,6 +26,8 @@ services:
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}
       - --certificatesresolvers.letsencrypt.acme.storage=/config/acme.json
+      - --experimental.plugins.my-plugin.moduleName=${PLUGIN}
+      - --experimental.plugins.my-plugin.version=${PLUGIN_VERSION:-latest}
       - --accesslog.filepath=${ACCESSLOG_PATH:-/var/log/traefik/access.log}
       - --accesslog=${ACCESSLOG:-false}
     volumes:
