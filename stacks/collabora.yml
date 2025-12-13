@@ -2,7 +2,7 @@
 
 services:
   collabora:
-    image: collabora/code:${VERSION:-25.04.7.3.1}
+    image: collabora/code:${VERSION:-25.04.5.3.1}
     healthcheck:
       test: ["CMD-SHELL", "curl -fsSL http://localhost:9980 || exit 1"]
     environment:
