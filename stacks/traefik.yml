@@ -13,9 +13,9 @@ services:
       - --providers.file.directory=/config
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
-      - --entrypoints.https.http.middlewares=${MIDDLEWARES}
       - --entrypoints.https.http.encodedCharacters.allowEncodedQuestionMark=true
       - --entrypoints.https.http.encodedCharacters.allowEncodedSlash=true
+      - --entrypoints.https.http.middlewares=${MIDDLEWARES}
       - --entrypoints.https.address=:443
       - --entrypoints.http.address=:80
       - --entrypoints.http.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
