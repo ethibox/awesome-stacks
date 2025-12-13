@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c crowdsec.yml crowdsec
+# docker stack deploy -c crowdsec.yml crowdsec
 # docker exec -it $(docker ps -qf name=crowdsec_crowdsec) cscli bouncers add traefik-bouncer
 
 services:
