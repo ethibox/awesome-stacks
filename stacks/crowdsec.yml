@@ -15,7 +15,7 @@ services:
       - traefik
       - internal
 
-  crowdsec-bouncer:
+  bouncer:
     image: fbonalair/traefik-crowdsec-bouncer:latest
     environment:
       - CROWDSEC_BOUNCER_API_KEY=${CROWDSEC_BOUNCER_API_KEY}
