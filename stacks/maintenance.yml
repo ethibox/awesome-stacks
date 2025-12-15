@@ -8,6 +8,7 @@ services:
       - -c
       - |
         curl -sL https://gist.github.com/johackim/bcdb9111cfda4fd9e8b60eeae3cd867d/raw/maintenance.html > /usr/share/nginx/html/index.html
+        sed -i '/index.html index.htm;/a\\        try_files $$uri $$uri/ /index.html;' /etc/nginx/conf.d/default.conf
         nginx -g 'daemon off;'
     deploy:
       labels:
@@ -17,11 +18,7 @@ services:
         - traefik.http.routers.maintenance-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.maintenance-${NUMBER:-1}.service=maintenance-${NUMBER:-1}
         - traefik.http.routers.maintenance-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.routers.maintenance-${NUMBER:-1}.middlewares=maintenance-${NUMBER:-1}
         - traefik.http.services.maintenance-${NUMBER:-1}.loadbalancer.server.port=80
-        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.regex=^https?:\/\/(.+?)\/(.+)$$
-        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.replacement=https://$${1}/
-        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.permanent=false
     networks:
       - traefik
 
