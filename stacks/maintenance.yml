@@ -7,7 +7,7 @@ services:
       - /bin/sh
       - -c
       - |
-        wcurl -O /usr/share/nginx/html/index.html https://gist.github.com/johackim/bcdb9111cfda4fd9e8b60eeae3cd867d/raw/maintenance.html
+        curl -sL https://gist.github.com/johackim/bcdb9111cfda4fd9e8b60eeae3cd867d/raw/maintenance.html > /usr/share/nginx/html/index.html
         nginx -g 'daemon off;'
     deploy:
       labels:
