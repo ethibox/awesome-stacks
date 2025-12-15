@@ -1,0 +1,31 @@
+# DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
+
+services:
+  web:
+    image: nginx:${VERSION:-alpine}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        wcurl -O /usr/share/nginx/html/index.html https://gist.github.com/johackim/bcdb9111cfda4fd9e8b60eeae3cd867d/raw/maintenance.html
+        nginx -g 'daemon off;'
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.maintenance-${NUMBER:-1}.priority=50
+        - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`)
+        - traefik.http.routers.maintenance-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.maintenance-${NUMBER:-1}.service=maintenance-${NUMBER:-1}
+        - traefik.http.routers.maintenance-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.maintenance-${NUMBER:-1}.middlewares=maintenance-${NUMBER:-1}
+        - traefik.http.services.maintenance-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.regex=^https?:\/\/(.+?)\/(.+)$$
+        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.replacement=https://$${1}/
+        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.permanent=false
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
+    name: traefik-net
