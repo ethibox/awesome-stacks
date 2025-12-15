@@ -8,6 +8,7 @@ services:
       - -c
       - |
         curl -sL https://gist.github.com/johackim/bcdb9111cfda4fd9e8b60eeae3cd867d/raw/maintenance.html > /usr/share/nginx/html/index.html
+        sed -i '/location \/ {/i location /socket.io/ { return 403; }' /etc/nginx/conf.d/default.conf
         sed -i '/index.html index.htm;/a\\        try_files $$uri $$uri/ /index.html;' /etc/nginx/conf.d/default.conf
         nginx -g 'daemon off;'
     deploy:
