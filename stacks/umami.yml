@@ -2,11 +2,13 @@
 
 services:
   umami:
-    image: docker.umami.is/umami-software/umami:${VERSION:-postgresql-v2.13.2}
+    image: umamisoftware/umami:${VERSION:-3.0.3}
     environment:
       - DATABASE_TYPE=postgresql
       - DATABASE_URL=postgresql://umami:myp@ssw0rd@postgres:5432/umami
-      - HASH_SALT=${HASH_SALT:-replace-me-with-a-random-string}
+      - APP_SECRET=${APP_SECRET:-replace-me-with-a-random-string}
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
     deploy:
       labels:
         - traefik.enable=true
@@ -20,7 +22,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:16-alpine
     environment:
       - POSTGRES_DB=umami
       - POSTGRES_USER=umami
