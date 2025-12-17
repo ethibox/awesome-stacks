@@ -2,7 +2,7 @@
 
 x-calendso: &calendso
   environment:
-    - VERSION=${VERSION:-v5.5.13}
+    - VERSION=${VERSION:-v6.0.2}
     - NODE_ENV=production
     - POSTGRES_USER=calendso
     - POSTGRES_PASSWORD=myp@ssw0rd
@@ -49,15 +49,13 @@ services:
       - |
         docker image inspect calendso:$${DOMAIN} > /dev/null 2>&1 && exit 0
         apk add git
-        git clone --recursive -b $${VERSION} https://github.com/calcom/docker
-        cd docker
-        sed -i 's|--docker|--scope=@calcom/trpc --docker|' Dockerfile # Fix
-        sed -i -e 's/calcom\/git-init.sh calcom\/git-setup.sh //' Dockerfile # Fix
-        sed -i '/embed folder/a RUN yarn workspace @calcom/trpc run build' Dockerfile # Fix
-        sed -i '/useSession/d' calcom/packages/features/ee/common/components/LicenseRequired.tsx
-        sed -i '/const session/d' calcom/packages/features/ee/common/components/LicenseRequired.tsx
-        sed -i 's/ && hasValidLicense === false//g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
-        sed -i 's/session.data ? session.data.hasValidLicense : null/true/g' calcom/packages/features/ee/common/components/LicenseRequired.tsx
+        git clone --recursive -b $${VERSION} https://github.com/calcom/cal.com
+        cd cal.com
+        sed -i -e 's/ --platform=\$$BUILDPLATFORM//' Dockerfile
+        sed -i '/useSession/d' packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i '/const session/d' packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i 's/ && hasValidLicense === false//g' packages/features/ee/common/components/LicenseRequired.tsx
+        sed -i 's/session.data ? session.data.hasValidLicense : null/true/g' packages/features/ee/common/components/LicenseRequired.tsx
         DOCKER_BUILDKIT=0 docker build \
         --build-arg NODE_ENV=$${NODE_ENV} \
         --build-arg EMAIL_FROM=$${EMAIL_FROM} \
