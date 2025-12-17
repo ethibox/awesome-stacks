@@ -3,7 +3,7 @@
 
 services:
   grafana:
-    image: grafana/grafana:${GRAFANA_VERSION:-12.3.0}
+    image: grafana/grafana:${GRAFANA_VERSION:-12.3.1}
     user: root
     environment:
       - GF_SMTP_ENABLED=true
@@ -27,7 +27,7 @@ services:
       - traefik
 
   prometheus:
-    image: prom/prometheus:v3.8.0
+    image: prom/prometheus:v3.8.1
     entrypoint: /bin/sh
     command:
       - -c
@@ -79,11 +79,11 @@ services:
     image: prom/node-exporter:v1.10.2
     hostname: "{{.Node.Hostname}}"
     volumes:
-      - /sys:/host/sys:ro
       - /:/rootfs:ro
+      - /mnt:/mnt:ro
+      - /sys:/host/sys:ro
       - /proc:/host/proc:ro
       - /etc/hostname:/etc/hostname:ro
-      - /mnt:/mnt:ro
     environment:
       - NODE_ID={{.Node.ID}}
     command:
@@ -102,7 +102,7 @@ services:
       - internal
 
   process-exporter:
-    image: ncabatoff/process-exporter:0.7.10
+    image: ncabatoff/process-exporter:0.8.7
     command: --procfs /host/proc -config.path /etc/process-exporter/process-conf.yml
     volumes:
       - /proc:/host/proc:ro
