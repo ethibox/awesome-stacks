@@ -64,10 +64,10 @@ services:
 
   cadvisor:
     image: ghcr.io/google/cadvisor:0.54.1
-    command: -docker_only=true
+    command: -docker_only=true -housekeeping_interval=15s -disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process,advtcp,hugetlb,referenced_memory
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:rw
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     deploy:
@@ -82,7 +82,7 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
       - /proc:/host/proc:ro
-      - /etc/hostname:/etc/hostname
+      - /etc/hostname:/etc/hostname:ro
       - /mnt:/mnt:ro
     environment:
       - NODE_ID={{.Node.ID}}
