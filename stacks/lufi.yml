@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c lufi.yml lufi
 
 x-defaults: &defaults
-  image: ethibox/lufi:${VERSION:-0.07.0}
+  image: ethibox/lufi:${VERSION:-0.07.3}
   volumes:
     - ${VOLUME_PATH}data:/usr/lufi/data
     - ${VOLUME_PATH}files:/usr/lufi/files
