@@ -7,7 +7,7 @@ services:
     environment:
       - SITE_NAME=${SITE_NAME:-Kutt}
       - DEFAULT_DOMAIN=${DOMAIN:-kutt.localhost}
-      - JWT_SECRET=${JWT_SECRET-securekey}
+      - JWT_SECRET=${JWT_SECRET-mys3cr3t}
       - MAIL_HOST=${SMTP_HOST}
       - MAIL_PORT=${SMTP_PORT}
       - MAIL_USER=${SMTP_USER}

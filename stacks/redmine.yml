@@ -4,7 +4,7 @@ services:
   web:
     image: redmine:${VERSION:-4.2.2-alpine}
     environment:
-      - REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE:-supersecretkey}
+      - REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE:-mys3cr3t}
       - REDMINE_DB_POSTGRES=postgres
       - REDMINE_DB_USERNAME=redmine
       - REDMINE_DB_DATABASE=redmine
