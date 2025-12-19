@@ -74,7 +74,6 @@
             "title": "Mattermost",
             "description": "Mattermost est un service de discussion instantanée Open source. C'est une alternative open source à Slack.",
             "categories": ["Tchat"],
-            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,

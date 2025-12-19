@@ -1,8 +1,19 @@
 # DOMAIN=example.com docker stack deploy -c mattermost.yml mattermost
-# chown -R 2000:2000 config/ data/ plugins/
 # ./bin/mmctl --local user create --system-admin --email admin@example.com --username admin --password myp@ssw0rd
 
 services:
+  init:
+    image: busybox
+    command: chown -R 2000:2000 /mattermost/data /mattermost/config /mattermost/plugins
+    user: root
+    volumes:
+      - ${VOLUME_PATH}data:/mattermost/data
+      - ${VOLUME_PATH}config:/mattermost/config
+      - ${VOLUME_PATH}plugins:/mattermost/plugins
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
     image: ${IMAGE:-mattermost/mattermost-team-edition}:${VERSION:-11.1.1}
     volumes:
