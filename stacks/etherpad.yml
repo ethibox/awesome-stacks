@@ -1,7 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c etherpad.yml etherpad
-# chown -R 5001:5001 plugins var
 
 services:
+  init:
+    image: busybox
+    command: chown -R 5001:5001 /opt/etherpad-lite/src/plugin_packages /opt/etherpad-lite/var
+    user: root
+    volumes:
+      - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
+      - ${VOLUME_PATH}var:/opt/etherpad-lite/var
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     image: ${IMAGE:-etherpad/etherpad}:${VERSION:-2.5.3}
     volumes:
