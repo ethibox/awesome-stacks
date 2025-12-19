@@ -1,9 +1,18 @@
 # DOMAIN=example.com docker stack deploy -c n8n.yml n8n
-# chown -R 1000:1000 n8n
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /home/node/.n8n
+    user: root
+    volumes:
+      - ${VOLUME_PATH}n8n:/home/node/.n8n
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   n8n:
-    image: n8nio/n8n:${VERSION:-1.120.3}
+    image: n8nio/n8n:${VERSION:-1.123.7}
     environment:
       - NODE_ENV=production
       - N8N_PROTOCOL=${SCHEME:-https}
