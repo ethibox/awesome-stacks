@@ -13,6 +13,7 @@ x-defaults: &defaults
     - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
     - JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD}
     - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
+    - VIDEOBRIDGE_MAX_MEMORY=${VIDEOBRIDGE_MAX_MEMORY:-2048m}
     - ENABLE_HTTP_REDIRECT=0
     - ENABLE_LETS_ENCRYPT=0
     - DISABLE_HTTPS=1
@@ -20,7 +21,7 @@ x-defaults: &defaults
 services:
   web:
     <<: *defaults
-    image: jitsi/web:${VERSION:-stable-10133-1}
+    image: jitsi/web:${VERSION:-stable-10655}
     volumes:
       - ${VOLUME_PATH}web:/config
     deploy:
@@ -37,7 +38,7 @@ services:
 
   prosody:
     <<: *defaults
-    image: jitsi/prosody:${VERSION:-stable-10133-1}
+    image: jitsi/prosody:${VERSION:-stable-10655}
     volumes:
       - ${VOLUME_PATH}prosody:/config
     networks:
@@ -47,7 +48,7 @@ services:
 
   jicofo:
     <<: *defaults
-    image: jitsi/jicofo:${VERSION:-stable-10133-1}
+    image: jitsi/jicofo:${VERSION:-stable-10655}
     volumes:
       - ${VOLUME_PATH}jicofo:/config
     networks:
@@ -55,7 +56,7 @@ services:
 
   jvb:
     <<: *defaults
-    image: jitsi/jvb:${VERSION:-stable-10133-1}
+    image: jitsi/jvb:${VERSION:-stable-10655}
     volumes:
       - ${VOLUME_PATH}jvb:/config
     ports:
