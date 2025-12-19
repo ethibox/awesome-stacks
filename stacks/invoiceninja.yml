@@ -23,9 +23,7 @@ services:
       - traefik
 
   app:
-    image: ${IMAGE:-invoiceninja/invoiceninja-debian}:${VERSION:-5.11.73-d}
-    cap_add:
-      - SYS_ADMIN
+    image: ${IMAGE:-invoiceninja/invoiceninja-debian}:${VERSION:-5.12.40}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html/public
       - ${VOLUME_PATH}storage:/var/www/html/storage

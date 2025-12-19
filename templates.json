@@ -834,7 +834,6 @@
             "title": "Invoice-ninja",
             "description": "Invoice Ninja est une application libre et open-source pour la facturation de vos clients.",
             "categories": ["Facturation"],
-            "manual": true,
             "enabled": true,
             "trial": 7,
             "price": 19,
