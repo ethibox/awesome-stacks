@@ -17,6 +17,8 @@ x-zammad: &zammad
     - POSTGRESQL_OPTIONS=${POSTGRESQL_OPTIONS:-?pool=50}
     - MEMCACHE_SERVERS=${MEMCACHE_SERVERS:-zammad-memcached:11211}
     - REDIS_URL=redis://zammad-redis:6379
+    - MALLOC_ARENA_MAX=${MALLOC_ARENA_MAX:-2}
+    - WEB_CONCURRENCY=${WEB_CONCURRENCY:-2}
     - TZ=${TZ:-Europe/Paris}
   networks:
     - internal
