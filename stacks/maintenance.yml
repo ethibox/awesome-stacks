@@ -3,26 +3,50 @@
 services:
   web:
     image: nginx:${VERSION:-alpine}
+    entrypoint: /bin/sh
     command:
-      - /bin/sh
       - -c
       - |
-        curl -sL https://gist.github.com/johackim/bcdb9111cfda4fd9e8b60eeae3cd867d/raw/maintenance.html > /usr/share/nginx/html/index.html
-        sed -i '/index.html index.htm;/a\\        try_files $$uri $$uri/ /index.html;' /etc/nginx/conf.d/default.conf
+        cat << EOF > /usr/share/nginx/html/index.html
+        <!DOCTYPE html>
+        <html lang="fr">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width" />
+                <title>Ethibox - Maintenance en cours...</title>
+                <script src="https://cdn.tailwindcss.com"></script>
+                <link href="https://fonts.bunny.net/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+            </head>
+            <body class="bg-gray-900 text-white min-h-screen flex justify-center items-center text-center font-['Roboto']">
+                <main>
+                    <p class="mt-2 p-2 sm:p-0 sm:text-xl">Une opération de maintenance est actuellement en cours sur votre application. 🛠️</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Nous mettons tout en œuvre pour rétablir l'accès le plus rapidement possible. 🚀</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Cela ne devrait prendre que quelques minutes. Merci pour votre patience ! 😊</p>
+                    <p class="mt-8 p-2 sm:p-0 sm:text-base text-gray-500">Si besoin, vous pouvez nous contacter sur <a href="mailto:contact@ethibox.fr" class="underline">contact@ethibox.fr</a></p>
+                </main>
+
+                <footer class="absolute bottom-0">
+                    <span class="block mb-4">Ethibox</span>
+                </footer>
+            </body>
+        </html>
+        EOF
         nginx -g 'daemon off;'
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.routers.maintenance-${NUMBER:-1}.priority=50
         - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`)
+        - traefik.http.routers.maintenance-${NUMBER:-1}.priority=50
         - traefik.http.routers.maintenance-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.maintenance-${NUMBER:-1}.service=maintenance-${NUMBER:-1}
         - traefik.http.routers.maintenance-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.maintenance-${NUMBER:-1}.loadbalancer.server.port=80
-    networks:
-      - traefik
+        - traefik.http.routers.maintenance-${NUMBER:-1}.middlewares=maintenance-${NUMBER:-1}
+        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.regex=^https?:\/\/(.+?)\/(.+)$$
+        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.replacement=https://$${1}/
+        - traefik.http.middlewares.maintenance-${NUMBER:-1}.redirectregex.permanent=false
 
 networks:
-  traefik:
+  default:
     external: true
     name: traefik-net
