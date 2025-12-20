@@ -4,7 +4,7 @@
 
 services:
   app:
-    image: mediawiki:${VERSION:-1.44.0}
+    image: mediawiki:${VERSION:-1.45.1}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     deploy:
