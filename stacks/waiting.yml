@@ -7,7 +7,31 @@ services:
     command:
       - -c
       - |
-        wget -O /usr/share/nginx/html/index.html https://gist.githubusercontent.com/johackim/e7a4ca2f00b587c890849586ac89d3a1/raw/waiting.html
+        cat << EOF > /usr/share/nginx/html/index.html
+        <!DOCTYPE html>
+        <html lang="fr">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width" />
+                <title>Ethibox - Installation en cours...</title>
+                <script src="https://cdn.tailwindcss.com"></script>
+                <link href="https://fonts.bunny.net/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+            </head>
+            <body class="bg-gray-900 text-white min-h-screen flex justify-center items-center text-center font-['Roboto']">
+                <main>
+                    <p class="mt-2 p-2 sm:p-0 sm:text-xl">Rassurez-vous, nous finalisons l'installation de votre application avec soin ! 🛠️</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Votre application demande l'intervention manuelle d'un administrateur.</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">L'administrateur de Ethibox a été prévenu et interviendra dès que possible pour finaliser l'installation. 👨‍💻</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">En général, cela prend en moyenne 1h, mais cela peut aller jusqu'à 48 heures maximum. Merci pour votre patience ! 😊</p>
+                    <p class="mt-6 p-2 sm:p-0 sm:text-xl font-medium">Vous recevrez un petit e-mail dès que tout sera prêt ! 📧✨</p>
+                </main>
+
+                <footer class="absolute bottom-0">
+                    <span class="block mb-4">Ethibox</span>
+                </footer>
+            </body>
+        </html>
+        EOF
         nginx -g 'daemon off;'
     deploy:
       labels:
