@@ -1,11 +1,19 @@
 # DOMAIN=example.com docker stack deploy -c mobilizon.yml mobilizon
 # mobilizon_ctl users.new "admin@example.com" --admin --password "myp@ssw0rd"
-# chown -R 65534:65534 uploads/
-# Don't change domain name
 
 services:
+  init:
+    image: busybox
+    command: chown -R 65534:65534 /var/lib/mobilizon/uploads
+    user: root
+    volumes:
+      - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
-    image: ${IMAGE:-kaihuri/mobilizon}:${VERSION:-5.1.5}
+    image: ${IMAGE:-kaihuri/mobilizon}:${VERSION:-5.2.0}
     environment:
       - DOCKER=true
       - MIX_ENV=${MIX_ENV:-prod}
