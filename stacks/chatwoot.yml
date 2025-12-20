@@ -24,20 +24,20 @@ x-defaults: &defaults
     - SMTP_PORT=${SMTP_PORT:-587}
     - SMTP_USERNAME=${SMTP_USERNAME}
     - SMTP_PASSWORD=${SMTP_PASSWORD}
-    # - ACTIVE_STORAGE_SERVICE=${ACTIVE_STORAGE_SERVICE:-s3_compatible}
-    # - STORAGE_BUCKET_NAME=${STORAGE_BUCKET_NAME}
-    # - STORAGE_ACCESS_KEY_ID=${STORAGE_ACCESS_KEY_ID}
-    # - STORAGE_SECRET_ACCESS_KEY=${STORAGE_SECRET_ACCESS_KEY}
-    # - STORAGE_REGION=${STORAGE_REGION}
-    # - STORAGE_ENDPOINT=${STORAGE_ENDPOINT}
-    # - STORAGE_FORCE_PATH_STYLE=${STORAGE_FORCE_PATH_STYLE}
+    - ACTIVE_STORAGE_SERVICE=${ACTIVE_STORAGE_SERVICE:-local}
+    - STORAGE_BUCKET_NAME=${STORAGE_BUCKET_NAME}
+    - STORAGE_ACCESS_KEY_ID=${STORAGE_ACCESS_KEY_ID}
+    - STORAGE_SECRET_ACCESS_KEY=${STORAGE_SECRET_ACCESS_KEY}
+    - STORAGE_REGION=${STORAGE_REGION}
+    - STORAGE_ENDPOINT=${STORAGE_ENDPOINT}
+    - STORAGE_FORCE_PATH_STYLE=${STORAGE_FORCE_PATH_STYLE}
 
 services:
   web:
     <<: *defaults
-    image: chatwoot/chatwoot:${VERSION:-v4.3.0}
+    image: chatwoot/chatwoot:${VERSION:-v4.8.0}
     entrypoint: docker/entrypoints/rails.sh
-    command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+    command: bundle exec rails s -p 3000 -b 0.0.0.0
     deploy:
       labels:
         - traefik.enable=true
@@ -52,8 +52,8 @@ services:
 
   sidekiq:
     <<: *defaults
-    image: chatwoot/chatwoot:${VERSION:-v4.3.0}
-    command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+    image: chatwoot/chatwoot:${VERSION:-v4.8.0}
+    command: bundle exec sidekiq -C config/sidekiq.yml
     networks:
       - internal
 
