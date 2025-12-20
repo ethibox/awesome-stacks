@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c waiting.yml waiting
 
 services:
-  waiting:
+  web:
     image: nginx:${VERSION:-alpine}
     entrypoint: /bin/sh
     command:
@@ -24,6 +24,7 @@ services:
                     <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">L'administrateur de Ethibox a été prévenu et interviendra dès que possible pour finaliser l'installation. 👨‍💻</p>
                     <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">En général, cela prend en moyenne 1h, mais cela peut aller jusqu'à 48 heures maximum. Merci pour votre patience ! 😊</p>
                     <p class="mt-6 p-2 sm:p-0 sm:text-xl font-medium">Vous recevrez un petit e-mail dès que tout sera prêt ! 📧✨</p>
+                    <p class="mt-8 p-2 sm:p-0 sm:text-base text-gray-500">Si besoin, vous pouvez nous contacter sur <a href="mailto:contact@ethibox.fr" class="underline">contact@ethibox.fr</a></p>
                 </main>
 
                 <footer class="absolute bottom-0">
