@@ -16,14 +16,14 @@ services:
       - DB_DATABASE=bookstack
       - DB_USERNAME=bookstack
       - DB_PASSWORD=myp@ssw0rd
-      - MAIL_HOST=${MAIL_HOST}
-      - MAIL_FROM=${MAIL_FROM}
-      - MAIL_PORT=${MAIL_PORT:-587}
-      - MAIL_USERNAME=${MAIL_USERNAME}
-      - MAIL_PASSWORD=${MAIL_PASSWORD}
-      - MAIL_DRIVER=${MAIL_DRIVER:-smtp}
-      - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
-      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-BookStack}
+      - MAIL_HOST=${SMTP_HOST}
+      - MAIL_FROM=${SMTP_FROM}
+      - MAIL_PORT=${SMTP_PORT:-587}
+      - MAIL_USERNAME=${SMTP_USERNAME}
+      - MAIL_PASSWORD=${SMTP_PASSWORD}
+      - MAIL_DRIVER=${SMTP_DRIVER:-smtp}
+      - MAIL_ENCRYPTION=${SMTP_ENCRYPTION:-tls}
+      - MAIL_FROM_NAME=${SMTP_FROM_NAME:-BookStack}
     volumes:
       - ${VOLUME_PATH}data:/config
     deploy:
