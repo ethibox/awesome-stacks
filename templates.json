@@ -2176,6 +2176,45 @@
                             "value": "list"
                         }
                     ]
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "label": "SMTP Host"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "label": "SMTP Port",
+                    "value": "587",
+                    "type": "number"
+                },
+                {
+                    "name": "SMTP_ENCRYPTION",
+                    "label": "SMTP Encryption",
+                    "type": "select",
+                    "select": [
+                        {
+                            "text": "No encryption",
+                            "value": "null"
+                        },
+                        {
+                            "text": "TLS",
+                            "value": "tls"
+                        }
+                    ]
+                },
+                {
+                    "name": "SMTP_FROM_NAME",
+                    "label": "SMTP From",
+                    "type": "email"
+                },
+                {
+                    "name": "SMTP_USERNAME",
+                    "label": "SMTP Username"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "label": "SMTP Password",
+                    "type": "password"
                 }
             ]
         },
