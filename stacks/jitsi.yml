@@ -64,6 +64,10 @@ services:
         published: ${JVB_PORT:-10000}
         protocol: udp
         mode: host
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
