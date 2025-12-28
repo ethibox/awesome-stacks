@@ -3,7 +3,7 @@
 
 services:
   peertube:
-    image: chocobozzz/peertube:${VERSION:-v6.3.3-bookworm}
+    image: chocobozzz/peertube:${VERSION:-v8.0.1}
     ports:
       - target: 1935
         published: ${RTMP_PORT:-1935}
@@ -41,7 +41,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-peertube}
       - POSTGRES_USER=${POSTGRES_USER:-peertube}
@@ -52,7 +52,7 @@ services:
       - internal
 
   redis:
-    image: redis:6-alpine
+    image: redis:7-alpine
     networks:
       - internal
 
