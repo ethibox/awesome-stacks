@@ -2739,6 +2739,35 @@
                 "url": "https://github.com/ethibox/awesome-stacks",
                 "stackfile": "stacks/vikunja.yml"
             }
+        },
+        {
+            "type": 2,
+            "title": "Authentik",
+            "description": "Authentik est un fournisseur d'identité open-source axé sur la flexibilité et la polyvalence.",
+            "categories": ["Identité"],
+            "enabled": false,
+            "trial": 7,
+            "price": 19,
+            "logo": "https://i.imgur.com/qkJIEqu.png",
+            "website": "https://goauthentik.io",
+            "repository": {
+                "url": "https://github.com/ethibox/awesome-stacks",
+                "stackfile": "stacks/authentik.yml"
+            },
+            "env": [
+                {
+                    "name": "ADMIN_EMAIL",
+                    "label": "Admin Email",
+                    "type": "email",
+                    "disabled": true
+                },
+                {
+                    "name": "ADMIN_PASSWORD",
+                    "label": "Admin password",
+                    "type": "password",
+                    "disabled": true
+                }
+            ]
         }
     ]
 }
