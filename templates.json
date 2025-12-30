@@ -7,8 +7,6 @@
             "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore...",
             "categories": ["Cloud"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/ecFVnV8.png",
             "website": "https://nextcloud.com",
             "repository": {
@@ -75,8 +73,6 @@
             "description": "Mattermost est un service de discussion instantanée Open source. C'est une alternative open source à Slack.",
             "categories": ["Tchat"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/aWStYef.png",
             "website": "https://mattermost.com",
             "repository": {
@@ -107,8 +103,6 @@
             "description": "Kanboard est un logiciel de gestion de projet Kanban libre et open source.",
             "categories": ["Gestion de projet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/u2k4Aip.png",
             "website": "https://kanboard.org",
             "repository": {
@@ -176,8 +170,6 @@
             "categories": ["ERP"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/70iKt9a.png",
             "website": "https://www.odoo.com",
             "repository": {
@@ -205,8 +197,6 @@
             "description": "Matomo est un logiciel libre et open source de mesure de statistiques web.",
             "categories": ["Analytics"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/cp7xpLM.jpg",
             "website": "https://matomo.org",
             "repository": {
@@ -221,8 +211,6 @@
             "categories": ["Forum"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/KXbPDbg.png",
             "website": "https://www.discourse.org",
             "repository": {
@@ -301,8 +289,6 @@
             "categories": ["Réseau social"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/DOv1rxd.png",
             "website": "https://joinmastodon.org",
             "repository": {
@@ -381,8 +367,6 @@
             "description": "WordPress est l'application web la plus utilisé au monde pour créer un beau site web.",
             "categories": ["Blog"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/7WXHj55.png",
             "website": "https://fr.wordpress.com",
             "repository": {
@@ -396,8 +380,6 @@
             "description": "Formbricks est un outil de création de formulaires en ligne.",
             "categories": ["Formulaire"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/GK6PrCY.png",
             "website": "https://formbricks.com/",
             "repository": {
@@ -468,8 +450,6 @@
             "categories": ["Helpdesk"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/DdGF1Sh.png",
             "website": "https://zammad.org",
             "repository": {
@@ -483,8 +463,6 @@
             "description": "Rocket.Chat est un logiciel de discussion en ligne.",
             "categories": ["Tchat"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/mTR06gP.png",
             "website": "https://rocket.chat",
             "repository": {
@@ -499,8 +477,6 @@
             "categories": ["Streaming"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/1DO4t48.png",
             "website": "https://joinpeertube.org",
             "repository": {
@@ -573,8 +549,6 @@
             "description": "Alternative open-source à Zapier",
             "categories": ["Automatisation"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/HbXTiUF.jpg",
             "website": "https://n8n.io/",
             "repository": {
@@ -615,8 +589,6 @@
             "categories": ["Calendar"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/OA6qh1g.jpg",
             "website": "https://cal.com/",
             "repository": {
@@ -715,8 +687,6 @@
             "categories": ["Livechat"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/WoW73Oc.jpg",
             "website": "https://www.chatwoot.com/",
             "repository": {
@@ -794,8 +764,6 @@
             "description": "Wekan est une alternative open-source à Trello.",
             "categories": ["Gestion de projet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/CGvMmHR.png",
             "website": "https://wekan.github.io",
             "repository": {
@@ -835,8 +803,6 @@
             "description": "Invoice Ninja est une application libre et open-source pour la facturation de vos clients.",
             "categories": ["Facturation"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/r6TPGAZ.jpg",
             "website": "https://www.invoiceninja.com",
             "repository": {
@@ -927,8 +893,6 @@
             "description": "Etherpad est un éditeur en ligne Open Source qui permet une édition collaborative en temps réel.",
             "categories": ["Editeur"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/adNS6S5.png",
             "website": "https://etherpad.org",
             "repository": {
@@ -956,8 +920,6 @@
             "description": "Ghost est une plate-forme entièrement open source et hackable pour la création et l'exploitation d'une publication en ligne moderne.",
             "categories": ["Blog"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/aVvA5ow.png",
             "website": "https://ghost.org",
             "repository": {
@@ -992,8 +954,6 @@
             "categories": ["Podcast"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/XrJEjVD.png",
             "website": "https://castopod.org",
             "repository": {
@@ -1021,8 +981,6 @@
             "description": "Taiga est une plateforme de gestion de projet Open Source complète pour les startups et les développeurs agiles.",
             "categories": ["Gestion de projet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/dCk82vq.png",
             "website": "https://taiga.io",
             "repository": {
@@ -1057,8 +1015,6 @@
             "categories": ["Marketing"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/8wl7tBF.png",
             "website": "https://www.mautic.org",
             "repository": {
@@ -1087,8 +1043,6 @@
             "categories": ["ERP"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/ayV1kB4.png",
             "website": "https://www.dolibarr.org",
             "repository": {
@@ -1116,8 +1070,6 @@
             "description": "Element est une application de collaboration open-source qui fournit des services de messagerie, de partage de fichiers et de visioconférence.",
             "categories": ["Tchat"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/1QrflaM.png",
             "website": "https://element.io",
             "repository": {
@@ -1131,8 +1083,6 @@
             "description": "Le moyen le plus rapide et le plus simple de partager des données et des analyses au sein de votre entreprise.",
             "categories": ["Tableau de bord"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/AhEp6lV.png",
             "website": "https://www.metabase.com",
             "repository": {
@@ -1146,8 +1096,6 @@
             "description": "Fathom Analytics fournit des statistiques de sites Web simples et utiles sans suivre ni stocker les données personnelles de vos utilisateurs.",
             "categories": ["Analytics"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/I9vDBEy.png",
             "website": "https://usefathom.com",
             "repository": {
@@ -1175,8 +1123,6 @@
             "description": "Flarum est un logiciel de forum nouvelle génération qui rend les discussions en ligne amusantes.",
             "categories": ["Forum"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/oUlWx8o.png",
             "website": "https://flarum.org",
             "repository": {
@@ -1205,8 +1151,6 @@
             "categories": ["Analytics"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/HzPfjFr.png",
             "website": "https://plausible.io/",
             "repository": {
@@ -1221,8 +1165,6 @@
             "categories": ["Tchat vidéo"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/9vcfCvU.png",
             "website": "https://meet.jit.si",
             "repository": {
@@ -1256,8 +1198,6 @@
             "categories": ["E-commerce"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/qhLnwBy.png",
             "website": "https://www.prestashop.com",
             "repository": {
@@ -1284,8 +1224,6 @@
             "categories": ["Wiki"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/tilc0nt.png",
             "website": "https://www.mediawiki.org",
             "repository": {
@@ -1326,8 +1264,6 @@
             "description": "Un système de commentaires rapide et sans ballonnement pour favoriser la discussion sur votre site Web.",
             "categories": ["Commentaires"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/9FI6uV2.png",
             "website": "https://commento.io",
             "repository": {
@@ -1377,8 +1313,6 @@
             "categories": ["Réseau social"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/mBVrouU.png",
             "website": "https://pixelfed.org",
             "repository": {
@@ -1483,8 +1417,6 @@
             "categories": ["CRM"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/3lvjIbM.png",
             "website": "https://suitecrm.com",
             "repository": {
@@ -1516,8 +1448,6 @@
             "description": "Une application wiki open-source, moderne et puissante.",
             "categories": ["Wiki"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/a6GELLc.png",
             "website": "https://wiki.js.org",
             "repository": {
@@ -1546,8 +1476,6 @@
             "categories": ["Password manager"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/S6GsK8U.png",
             "website": "https://www.passbolt.com",
             "repository": {
@@ -1599,8 +1527,6 @@
             "description": "ONLYOFFICE est une suite bureautique open source qui vous permet de gérer vos documents en ligne.",
             "categories": ["Editeur"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/d5JvLcq.png",
             "website": "https://www.onlyoffice.com",
             "repository": {
@@ -1614,8 +1540,6 @@
             "description": "Wallabag est une application libre et open source pour la sauvegarde de vos pages web.",
             "categories": ["Bookmark"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/64kIbPN.png",
             "website": "https://www.wallabag.it/fr/",
             "repository": {
@@ -1629,8 +1553,6 @@
             "description": "Calibre Web est une application Web offrant une interface claire pour la navigation, la lecture et le téléchargement de livres électroniques.",
             "categories": ["Books"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/wYmdUN2.png",
             "website": "https://github.com/janeczku/calibre-web",
             "repository": {
@@ -1644,8 +1566,6 @@
             "description": "Stocke et chiffre vos données dans votre navigateur et vous permet de les télécharger.",
             "categories": ["Storage"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/Q4r221x.png",
             "website": "https://framalibre.org/content/lufi",
             "repository": {
@@ -1679,8 +1599,6 @@
             "description": "Un raccourcisseur d'URL open-source simple et rapide",
             "categories": ["Raccourcisseur d'url"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/KXpAzna.png",
             "website": "https://polrproject.org",
             "repository": {
@@ -1714,8 +1632,6 @@
             "description": "Rainloop est un client de messagerie simple, moderne et rapide basé sur le Web.",
             "categories": ["Webmail"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/4y32ar8.png",
             "website": "https://www.rainloop.net",
             "repository": {
@@ -1744,8 +1660,6 @@
             "description": "Un service Git auto-hébergé.",
             "categories": ["Git"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/pcAst1V.png",
             "website": "https://gogs.io",
             "repository": {
@@ -1759,8 +1673,6 @@
             "description": "CodiMD vous permet de créer des notes collaboratives en temps réel.",
             "categories": ["Editeur"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/tJXNcVZ.png",
             "website": "https://demo.codimd.org",
             "repository": {
@@ -1822,8 +1734,6 @@
             "description": "Un outil libre d’auto‐hébergement de pétitions.",
             "categories": ["Pétitions"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/7bcUMxB.png",
             "website": "https://framalibre.org/content/pytition",
             "repository": {
@@ -1837,8 +1747,6 @@
             "description": "Open-source analytics",
             "categories": ["Analytics"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/hTkK25O.png",
             "website": "https://posthog.com/",
             "repository": {
@@ -1858,8 +1766,6 @@
             "description": "Helpdesk Open-Source",
             "categories": ["Helpdesk"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/yxKOhHb.jpg",
             "website": "https://freescout.net/",
             "repository": {
@@ -1886,8 +1792,6 @@
             "description": "Alternative open-source à Facebook Events, Meetup, Eventbrite et autres plateformes de gestion d'événements.",
             "categories": ["Événements"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/OX6i2Ji.jpg",
             "website": "https://framalibre.org/content/mobilizon",
             "repository": {
@@ -1941,8 +1845,6 @@
             "description": "Votre gestionnaire de finances personnelles pour vérifier vos comptes, de n'importe quelle banque, en un seul endroit.",
             "categories": ["Finance"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/GHmCIMY.jpg",
             "website": "https://kresus.org/fr/index.html",
             "repository": {
@@ -1982,8 +1884,6 @@
             "description": "Moteur de recherche open-source",
             "categories": ["Moteur de recherche"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/MBpK9LK.jpg",
             "website": "https://www.searx.me/",
             "repository": {
@@ -1997,8 +1897,6 @@
             "description": "Alternative open-source à Airtable",
             "categories": ["Spreadsheet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/430br17.jpg",
             "website": "https://www.nocodb.com/",
             "repository": {
@@ -2030,8 +1928,6 @@
             "categories": ["Gestion de projet"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/yg1cgZ2.jpg",
             "website": "https://www.focalboard.com/",
             "repository": {
@@ -2045,8 +1941,6 @@
             "description": "Alternative open-source à Pushbullet",
             "categories": ["Notifications"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/xklY3FN.png",
             "website": "https://ntfy.sh/",
             "repository": {
@@ -2061,8 +1955,6 @@
             "categories": ["Spreadsheet"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/sTYQbEJ.png",
             "website": "https://www.getgrist.com/",
             "repository": {
@@ -2094,8 +1986,6 @@
             "description": "Alternative open-source à Airtable",
             "categories": ["Spreadsheet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/S1zp24t.png",
             "website": "https://www.nocobase.com/",
             "repository": {
@@ -2123,8 +2013,6 @@
             "description": "Application de gestion des connaissances open source",
             "categories": ["Connaissances"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/JJ4LnUD.png",
             "website": "https://bookstackapp.com/",
             "repository": {
@@ -2224,8 +2112,6 @@
             "categories": ["Carte"],
             "manual": true,
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/pWgJd6Q.png",
             "website": "https://gitlab.com/Seballot/gogocarto",
             "repository": {
@@ -2239,8 +2125,6 @@
             "description": "Appsmith est un outil Nocode open-source pour créer des applications web et des tableaux de bord.",
             "categories": ["Low-code"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/BAY6klX.png",
             "website": "https://appsmith.com/",
             "repository": {
@@ -2255,8 +2139,6 @@
             "categories": ["ERP"],
             "manual": true,
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/wxofSzi.png",
             "website": "https://dokos.io/",
             "repository": {
@@ -2285,8 +2167,6 @@
             "categories": ["Publication"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/tpZBUI6.png",
             "website": "https://omeka.org/",
             "repository": {
@@ -2301,8 +2181,6 @@
             "categories": ["Photos"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/KhMOja6.png",
             "website": "https://fr.piwigo.org/",
             "repository": {
@@ -2330,8 +2208,6 @@
             "description": "Plateforme d'apprentissage en ligne open-source",
             "categories": ["LMS"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/Xb8jEOK.png",
             "website": "https://moodle.com/",
             "repository": {
@@ -2360,8 +2236,6 @@
             "categories": ["Password manager"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/OhQNBuO.jpeg",
             "website": "https://github.com/dani-garcia/vaultwarden",
             "repository": {
@@ -2383,8 +2257,6 @@
             "description": "Outil de prise de notes léger et respectueux de la vie privée",
             "categories": ["Notes"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/MlTef7m.png",
             "website": "https://usememos.com/",
             "repository": {
@@ -2398,8 +2270,6 @@
             "description": "Alternative open-source à Zapier",
             "categories": ["Automatisation"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/FMgsYUe.jpeg",
             "website": "https://automatisch.io/",
             "repository": {
@@ -2429,8 +2299,6 @@
             "description": "Gestionnaire de newsletter open-source",
             "categories": ["Email"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/260OnQX.jpeg",
             "website": "https://keila.io/",
             "repository": {
@@ -2498,8 +2366,6 @@
             "categories": ["Email"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/26dkpKq.png",
             "website": "https://listmonk.app/",
             "repository": {
@@ -2513,8 +2379,6 @@
             "description": "Outil de planification de réunion simple",
             "categories": ["Planification"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/m2dqLMM.png",
             "website": "https://rallly.co/",
             "repository": {
@@ -2569,8 +2433,6 @@
             "description": "Logiciel de gestion de listes de diffusion",
             "categories": ["Email"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/9wJD9XH.png",
             "website": "https://sympa.community/",
             "repository": {
@@ -2610,8 +2472,6 @@
             "description": "Automatisez vos tâches quotidiennes",
             "categories": ["Automatisation"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/euWHFgq.png",
             "website": "https://activepieces.com",
             "repository": {
@@ -2625,8 +2485,6 @@
             "description": "Votre outil ultime de planification des réseaux sociaux",
             "categories": ["Automatisation"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/wpUqmnb.png",
             "website": "https://postiz.com/",
             "repository": {
@@ -2641,8 +2499,6 @@
             "categories": ["CRM"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/7lMXvhX.png",
             "website": "https://twenty.com",
             "repository": {
@@ -2657,8 +2513,6 @@
             "categories": ["Connaissances"],
             "manual": true,
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/uN0Fjmg.png",
             "website": "https://getoutline.com",
             "repository": {
@@ -2686,8 +2540,6 @@
             "description": "Créez des tableaux de bord et des graphiques en quelques minutes",
             "categories": ["Tableau de bord"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/4q5znvz.png",
             "website": "https://chartbrew.com",
             "repository": {
@@ -2701,8 +2553,6 @@
             "description": "Gestion d'association simple, complète et efficace",
             "categories": ["Association"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/WiiBjb1.png",
             "website": "https://paheko.cloud",
             "repository": {
@@ -2716,8 +2566,6 @@
             "description": "Tableur open-source et collaboratif",
             "categories": ["Spreadsheet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/XZCiv1V.png",
             "website": "https://teable.io/",
             "repository": {
@@ -2731,8 +2579,6 @@
             "description": "Gestionnaire de tâches open-source",
             "categories": ["Gestion de projet"],
             "enabled": true,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/Yd4nxf3.png",
             "website": "https://vikunja.io/",
             "repository": {
@@ -2746,8 +2592,6 @@
             "description": "Authentik est un fournisseur d'identité open-source axé sur la flexibilité et la polyvalence.",
             "categories": ["Identité"],
             "enabled": false,
-            "trial": 7,
-            "price": 19,
             "logo": "https://i.imgur.com/qkJIEqu.png",
             "website": "https://goauthentik.io",
             "repository": {
