@@ -79,7 +79,8 @@ services:
         prometheus --config.file=/etc/prometheus/prometheus.yml \
         --storage.tsdb.path=/prometheus \
         --storage.tsdb.retention.time=7d \
-        --storage.tsdb.retention.size=2GB \
+        --storage.tsdb.retention.size=20GB \
+        --storage.tsdb.wal-compression \
         --web.console.libraries=/usr/share/prometheus/console_libraries \
         --web.console.templates=/usr/share/prometheus/consoles \
         --web.route-prefix=/prometheus \
@@ -97,6 +98,11 @@ services:
         - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth
         - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROM_USER:-admin}:${PROM_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
     networks:
       - internal
       - traefik
