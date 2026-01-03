@@ -2848,6 +2848,29 @@
           "preset": true
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Collabora",
+      "description": "Collabora Online est une suite bureautique en ligne puissante basée sur LibreOffice.",
+      "categories": [
+        "Editeur"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/LVtcZqi.png",
+      "website": "https://collaboraoffice.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/collabora.yml",
+        "commit": "816e66c27d8d187ecc9efdf2e6ca97c52e36c160"
+      },
+      "env": [
+        {
+          "name": "ALLOWED_DOMAINS",
+          "label": "Allowed domains (regex)",
+          "value": ".*"
+        }
+      ]
     }
   ]
 }
