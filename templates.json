@@ -2811,6 +2811,43 @@
           "disabled": true
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Nextcloud-Talk",
+      "description": "Nextcloud Talk protège vos communications mieux que les autres plateformes d'équipe comme Microsoft Teams ou Slack.",
+      "categories": [
+        "Tchat vidéo"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/YNP1mii.png",
+      "website": "https://nextcloud.com/talk",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/nextcloud-talk.yml",
+        "commit": "ed806cf66841429e3edafb820acb1512c254f354"
+      },
+      "env": [
+        {
+          "name": "NC_DOMAIN",
+          "label": "Nextcloud Domain"
+        },
+        {
+          "name": "SIGNALING_SECRET",
+          "label": "Signaling Secret",
+          "preset": true
+        },
+        {
+          "name": "INTERNAL_SECRET",
+          "label": "Internal Secret",
+          "preset": true
+        },
+        {
+          "name": "TURN_SECRET",
+          "label": "Turn Secret",
+          "preset": true
+        }
+      ]
     }
   ]
 }
