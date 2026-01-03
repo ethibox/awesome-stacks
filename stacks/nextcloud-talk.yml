@@ -27,7 +27,10 @@ services:
         - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.service=nextcloud-talk-${NUMBER:-1}
         - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.middlewares=nextcloud-talk-welcome
         - traefik.http.services.nextcloud-talk-${NUMBER:-1}.loadbalancer.server.port=8081
+        - traefik.http.middlewares.nextcloud-talk-welcome.replacepathregex.regex=^/$$
+        - traefik.http.middlewares.nextcloud-talk-welcome.replacepathregex.replacement=/api/v1/welcome
     networks:
       - traefik
 
