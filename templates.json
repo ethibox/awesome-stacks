@@ -2871,6 +2871,28 @@
           "value": ".*"
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Umami",
+      "description": "Umami est une alternative simple, rapide et respectueuse de la vie privée à Google Analytics.",
+      "categories": [
+        "Analytics"
+      ],
+      "enabled": true,
+      "logo": "https://i.imgur.com/dpipP4s.png",
+      "website": "https://umami.is",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/umami.yml",
+        "commit": "2fa3aa70f8f7e0c8549f3944e61358b7c015c7b0"
+      },
+      "env": [
+        {
+          "name": "APP_SECRET",
+          "preset": true
+        }
+      ]
     }
   ]
 }
