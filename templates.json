@@ -2893,6 +2893,34 @@
           "preset": true
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Keycloak",
+      "description": "Keycloak est une solution open source de gestion des identités et des accès destinée aux applications et services modernes.",
+      "categories": [
+        "Identité"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/b0zqDfd.png",
+      "website": "https://keycloak.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/keycloak.yml",
+        "commit": "8dac71ca811f8babdcf1bfeb64ec01f64de020c6"
+      },
+      "env": [
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin Username",
+          "value": "admin"
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin Password",
+          "type": "password"
+        }
+      ]
     }
   ]
 }
