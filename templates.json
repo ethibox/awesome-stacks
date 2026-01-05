@@ -2929,7 +2929,7 @@
       "categories": [
         "Monitoring"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/aUdsy6n.png",
       "website": "https://glitchtip.com",
       "repository": {
@@ -2971,7 +2971,7 @@
       "categories": [
         "Books"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/HxiROwc.png",
       "website": "https://booklore.org",
       "repository": {
