@@ -2976,7 +2976,8 @@
       "website": "https://booklore.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
-        "stackfile": "stacks/booklore.yml"
+        "stackfile": "stacks/booklore.yml",
+        "commit": "beb35dbc27691b76c1e87f5f8d9635beca5803a7"
       }
     }
   ]
