@@ -2921,6 +2921,48 @@
           "type": "password"
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "GlitchTip",
+      "description": "GlitchTip est une alternative open-source à Sentry. Il permet de suivre les erreurs de vos applications.",
+      "categories": [
+        "Monitoring"
+      ],
+      "enabled": true,
+      "logo": "https://i.imgur.com/aUdsy6n.png",
+      "website": "https://glitchtip.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/glitchtip.yml",
+        "commit": "1b0c6026f1d93c5dd5e38d8e9eef20a97791e75c"
+      },
+      "env": [
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP Host"
+        },
+        {
+          "name": "SMTP_PORT",
+          "label": "SMTP Port",
+          "value": "587",
+          "type": "number"
+        },
+        {
+          "name": "SMTP_USER",
+          "label": "SMTP Username"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "label": "SMTP Password",
+          "type": "password"
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP From",
+          "type": "email"
+        }
+      ]
     }
   ]
 }

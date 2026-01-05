@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c glitchtip.yml glitchtip
 
 x-glitchtip: &glitchtip
-  image: glitchtip/glitchtip:${VERSION:-v5.2.0}
+  image: glitchtip/glitchtip:${VERSION:-v5.2.1}
   environment:
     - GLITCHTIP_DOMAIN=${SCHEME:-https}://${DOMAIN:-glitchtip.localhost}
     - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
