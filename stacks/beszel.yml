@@ -1,0 +1,46 @@
+# DOMAIN=example.com docker stack deploy -c beszel.yml beszel
+
+services:
+  beszel:
+    image: henrygd/beszel:${VERSION:-0.17.0}
+    volumes:
+      - ${VOLUME_PATH}data:/beszel_data
+      - ${VOLUME_PATH}socket:/beszel_socket
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.beszel-${NUMBER:-1}.rule=Host(`${DOMAIN:-beszel.localhost}`)
+        - traefik.http.routers.beszel-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.beszel-${NUMBER:-1}.service=beszel-${NUMBER:-1}
+        - traefik.http.routers.beszel-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.beszel-${NUMBER:-1}.loadbalancer.server.port=8090
+    networks:
+      - traefik
+      - internal
+
+  agent:
+    image: henrygd/beszel-agent:${VERSION:-0.17.0}
+    volumes:
+      - ${VOLUME_PATH}socket:/beszel_socket
+      - ${VOLUME_PATH}agent:/var/lib/beszel-agent
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - LISTEN=/beszel_socket/beszel.sock
+      - HUB_URL=http://beszel:8090
+      - TOKEN=${TOKEN}
+      - KEY=${KEY}
+    networks:
+      - internal
+
+volumes:
+  data:
+  agent:
+  socket:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
