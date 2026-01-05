@@ -2935,7 +2935,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/glitchtip.yml",
-        "commit": "1b0c6026f1d93c5dd5e38d8e9eef20a97791e75c"
+        "commit": "4a611e3ace42136cf81dacd82396efe7ab3abf56"
       },
       "env": [
         {
