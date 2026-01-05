@@ -2963,6 +2963,21 @@
           "type": "email"
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Booklore",
+      "description": "Gestionnaire et lecteur de livres auto-hébergé",
+      "categories": [
+        "Books"
+      ],
+      "enabled": true,
+      "logo": "https://i.imgur.com/HxiROwc.png",
+      "website": "https://booklore.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/booklore.yml"
+      }
     }
   ]
 }

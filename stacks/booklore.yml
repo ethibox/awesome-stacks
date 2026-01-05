@@ -1,0 +1,69 @@
+# DOMAIN=example.com docker stack deploy -c booklore.yml booklore
+
+services:
+  init:
+    image: busybox
+    command: sh -c "chown -R ${APP_USER_ID:-1000}:${APP_GROUP_ID:-1000} /app/data /books /bookdrop"
+    user: root
+    environment:
+      - APP_USER_ID=${APP_USER_ID:-1000}
+      - APP_GROUP_ID=${APP_GROUP_ID:-1000}
+    volumes:
+      - ${VOLUME_PATH}books:/books
+      - ${VOLUME_PATH}data:/app/data
+      - ${VOLUME_PATH}bookdrop:/bookdrop
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  app:
+    image: booklore/booklore:${VERSION:-v1.16.5}
+    environment:
+      - BOOKLORE_PORT=6060
+      - TZ=${TZ:-Europe/Paris}
+      - USER_ID=${APP_USER_ID:-1000}
+      - GROUP_ID=${APP_GROUP_ID:-1000}
+      - DATABASE_USERNAME=${MYSQL_USER:-booklore}
+      - DATABASE_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - DATABASE_URL=jdbc:mariadb://mariadb:3306/${MYSQL_DATABASE:-booklore}
+    volumes:
+      - ${VOLUME_PATH}books:/books
+      - ${VOLUME_PATH}data:/app/data
+      - ${VOLUME_PATH}bookdrop:/bookdrop
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.booklore-${NUMBER:-1}.rule=Host(`${DOMAIN:-booklore.localhost}`)
+        - traefik.http.routers.booklore-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.booklore-${NUMBER:-1}.service=booklore-${NUMBER:-1}
+        - traefik.http.routers.booklore-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.booklore-${NUMBER:-1}.loadbalancer.server.port=6060
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-11.4}
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-booklore}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-booklore}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  data:
+  books:
+  bookdrop:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
