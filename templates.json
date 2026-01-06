@@ -18,6 +18,18 @@
       },
       "env": [
         {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        },
+        {
           "name": "OBJECTSTORE_S3_HOST",
           "preset": true
         },
