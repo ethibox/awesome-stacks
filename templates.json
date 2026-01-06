@@ -14,7 +14,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nextcloud.yml",
-        "commit": "11817f7a0353ca1eb140f3cf10c05bdaaecabdd8"
+        "commit": "8a5f9e5c6892ce98244762ce2313e56df8feca3c"
       },
       "env": [
         {
