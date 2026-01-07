@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c peertube.yml peertube
-# for id in $(fdfind -j1 "\-0.mp4" ../data/videos/ -x echo {/} | sed s/-0.mp4//g); do npm run create-transcoding-job -- -v $id; sleep 5; done;
 
 services:
   peertube:
@@ -13,7 +12,7 @@ services:
       - PEERTUBE_DB_USERNAME=${POSTGRES_USER:-peertube}
       - PEERTUBE_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - PEERTUBE_WEBSERVER_HOSTNAME=${DOMAIN:-peertube.localhost}
-      - PEERTUBE_WEBSERVER_PORT=${PORT:-443}
+      - PEERTUBE_WEBSERVER_PORT=${PEERTUBE_WEBSERVER_PORT:-443}
       - PEERTUBE_WEBSERVER_HTTPS=${HTTPS:-true}
       - PEERTUBE_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - PEERTUBE_SMTP_USERNAME=${SMTP_USERNAME}
