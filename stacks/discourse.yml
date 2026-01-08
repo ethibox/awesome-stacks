@@ -3,7 +3,7 @@
 
 services:
   app:
-    image: discourse/discourse:${VERSION:-3.5.2}
+    image: discourse/discourse:${VERSION:-3.5.3}
     volumes:
       - ${VOLUME_PATH}data:/shared
     environment:
