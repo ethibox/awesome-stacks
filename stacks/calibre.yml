@@ -9,6 +9,9 @@ services:
       - TZ=Europe/Paris
       - DOCKER_MODS=linuxserver/calibre-web:calibre
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.calibre-${NUMBER:-1}.rule=Host(`${DOMAIN:-calibre.localhost}`)
