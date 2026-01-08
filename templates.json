@@ -2913,7 +2913,7 @@
       "categories": [
         "Identité"
       ],
-      "enabled": false,
+      "enabled": true,
       "logo": "https://i.imgur.com/b0zqDfd.png",
       "website": "https://keycloak.org",
       "repository": {
