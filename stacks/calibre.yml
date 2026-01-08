@@ -2,7 +2,7 @@
 
 services:
   calibre:
-    image: linuxserver/calibre-web:${VERSION:-latest}
+    image: linuxserver/calibre-web:${VERSION:-0.6.25}
     environment:
       - PUID=1000
       - PGID=1000
@@ -19,6 +19,8 @@ services:
     volumes:
       - ${VOLUME_PATH}config:/config
       - ${VOLUME_PATH}books:/books
+    networks:
+      - traefik
 
 volumes:
   config:
@@ -28,6 +30,6 @@ networks:
   internal:
     driver: overlay
     attachable: true
-  default:
+  traefik:
     external: true
     name: traefik-net
