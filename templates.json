@@ -1652,7 +1652,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/calibre.yml",
-        "commit": "782985f716f9c2d232bdf294d8703868d2c6c753"
+        "commit": "24edf84bd819200de7467246955379123d3b6ef2"
       }
     },
     {
