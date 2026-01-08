@@ -20,6 +20,9 @@ services:
   web:
     <<: *defaults
     deploy:
+      resources:
+        limits:
+          memory: 5G
       labels:
         - traefik.enable=true
         - traefik.http.routers.lufi-${NUMBER:-1}.rule=Host(`${DOMAIN:-lufi.localhost}`)
@@ -47,6 +50,9 @@ services:
     healthcheck:
       disable: true
     deploy:
+      resources:
+        limits:
+          memory: 2G
       restart_policy:
         condition: on-failure
     networks:

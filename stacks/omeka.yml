@@ -15,6 +15,9 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-omeka}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.omeka-${NUMBER:-1}.rule=Host(`${DOMAIN:-omeka.localhost}`)
@@ -35,6 +38,10 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-omeka}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

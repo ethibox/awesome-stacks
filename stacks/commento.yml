@@ -14,6 +14,9 @@ services:
       - COMMENTO_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
       - COMMENTO_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.commento-${NUMBER:-1}.rule=Host(`${DOMAIN:-commento.localhost}`)
@@ -33,6 +36,10 @@ services:
       - POSTGRES_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

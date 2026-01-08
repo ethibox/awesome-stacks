@@ -6,6 +6,9 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/opt/app/backend/data
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.pingvin-${NUMBER:-1}.rule=Host(`${DOMAIN:-pingvin.localhost}`)

@@ -8,6 +8,9 @@ services:
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html:cached
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.wordpress-${NUMBER:-1}.rule=Host(`${DOMAIN:-wordpress.localhost}`)
@@ -50,6 +53,10 @@ services:
       WP_MEMORY_LIMIT: ${WP_MEMORY_LIMIT:-256M}
       WP_POST_MAX_SIZE: ${WP_POST_MAX_SIZE:-256M}
       DISABLE_WP_CRON: ${DISABLE_WP_CRON:-true}
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -63,6 +70,10 @@ services:
         crond -f
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -75,6 +86,10 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress}
       - MYSQL_USER=${MYSQL_USER:-wordpress}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

@@ -18,6 +18,9 @@ services:
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost/api/app:getLang', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.nocobase-${NUMBER:-1}.rule=Host(`${DOMAIN:-nocobase.localhost}`)
@@ -39,6 +42,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "nocobase"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

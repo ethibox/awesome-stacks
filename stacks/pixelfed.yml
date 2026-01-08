@@ -61,6 +61,9 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/var/www/storage
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.pixelfed-${NUMBER:-1}.rule=Host(`${DOMAIN:-pixelfed.localhost}`)
@@ -81,6 +84,10 @@ services:
       - MYSQL_DATABASE=pixelfed
       - MYSQL_USER=pixelfed
       - MYSQL_PASSWORD=myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -88,6 +95,10 @@ services:
     image: redis:6-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

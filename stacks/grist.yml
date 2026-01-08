@@ -26,6 +26,9 @@ services:
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:8484/api/orgs', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.grist-${NUMBER:-1}.rule=Host(`${DOMAIN:-grist.localhost}`)
@@ -45,6 +48,10 @@ services:
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER:-grist}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-myp@ssw0rd}
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -52,6 +59,10 @@ services:
     image: redis:7-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

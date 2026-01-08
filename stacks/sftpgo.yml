@@ -11,6 +11,9 @@ services:
       - ${VOLUME_PATH}data:/srv/sftpgo
       - ${VOLUME_PATH}config:/var/lib/sftpgo
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.sftpgo-${NUMBER:-1}.rule=Host(`${DOMAIN:-sftpgo.localhost}`)

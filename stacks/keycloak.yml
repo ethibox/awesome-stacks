@@ -13,6 +13,9 @@ services:
       - ${VOLUME_PATH}data:/opt/keycloak/data
       - ${VOLUME_PATH}providers:/opt/keycloak/providers
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.keycloak-${NUMBER:-1}.rule=Host(`${DOMAIN:-keycloak.localhost}`)

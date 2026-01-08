@@ -4,6 +4,9 @@ services:
   adminer:
     image: adminer:${VERSION:-5.0.4}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.adminer-${NUMBER:-1}.rule=Host(`${DOMAIN:-adminer.localhost}`)

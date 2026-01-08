@@ -15,6 +15,9 @@ services:
       - JWT_SECRET=${JWT_SECRET-mys3cr3t}
       - WEBHOOK_URL=${WEBHOOK_URL}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.ethibox-${NUMBER:-1}.rule=Host(`${DOMAIN:-ethibox.localhost}`)
@@ -35,6 +38,10 @@ services:
       - MYSQL_USER=${DATABASE_USERNAME:-ethibox}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD:-myp@ssw0rd}
       - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD:-myp@ssw0rd}
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

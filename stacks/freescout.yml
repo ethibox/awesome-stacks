@@ -20,6 +20,9 @@ services:
       - DISPLAY_ERRORS=${DISPLAY_ERRORS:-false}
       - TIMEZONE=Europe/Paris
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.freescout-${NUMBER:-1}.rule=Host(`${DOMAIN:-freescout.localhost}`)
@@ -40,6 +43,10 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-freescout}
       - MYSQL_USER=${MYSQL_USER:-freescout}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

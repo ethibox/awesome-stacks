@@ -9,6 +9,9 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/var/www/html:cached
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.mautic-${NUMBER:-1}.rule=Host(`${DOMAIN:-mautic.localhost}`)
@@ -30,6 +33,10 @@ services:
       - MAUTIC_DB_USER=mautic
       - MAUTIC_DB_PASSWORD=myp@ssw0rd
       - PHP_MEMORY_LIMIT=2048M
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - traefik
       - internal
@@ -43,6 +50,10 @@ services:
       - MYSQL_DATABASE=mautic
       - MYSQL_USER=mautic
       - MYSQL_PASSWORD=myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

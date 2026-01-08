@@ -25,6 +25,9 @@ services:
       - ${VOLUME_PATH}config:/config/
       - ${VOLUME_PATH}uploads:/uploads/
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.postiz-${NUMBER:-1}.rule=Host(`${DOMAIN:-postiz.localhost}`)
@@ -42,6 +45,10 @@ services:
       test: ["CMD", "redis-cli", "ping"]
     volumes:
       - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
  
@@ -55,6 +62,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "postiz"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

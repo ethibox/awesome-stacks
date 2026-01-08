@@ -42,6 +42,9 @@ services:
       - ${VOLUME_PATH}config:/config
       - ${VOLUME_PATH}media:/mediaroot
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.pytition-${NUMBER:-1}.rule=Host(`${DOMAIN:-pytition.localhost}`)
@@ -60,6 +63,10 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

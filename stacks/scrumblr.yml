@@ -4,6 +4,9 @@ services:
   scrumblr:
     image: ${IMAGE:-ethibox/scrumblr}:${VERSION:-latest}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.scrumblr-${NUMBER:-1}.rule=Host(`${DOMAIN:-scrumblr.localhost}`)
@@ -19,6 +22,10 @@ services:
     image: redis:6-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

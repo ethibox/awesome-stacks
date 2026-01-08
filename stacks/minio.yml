@@ -12,6 +12,9 @@ services:
       - MINIO_BROWSER_REDIRECT_URL=${SCHEME:-https}://${DOMAIN_CONSOLE:?}
       - MINIO_SERVER_URL=${SCHEME:-https}://${DOMAIN:-minio.localhost}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.minio-${NUMBER:-1}.rule=Host(`${DOMAIN:-minio.localhost}`)

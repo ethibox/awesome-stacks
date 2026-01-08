@@ -27,6 +27,9 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/config
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.bookstack-${NUMBER:-1}.rule=Host(`${DOMAIN:-bookstack.localhost}`)
@@ -47,6 +50,10 @@ services:
       - MYSQL_DATABASE=bookstack
       - MYSQL_USER=bookstack
       - MYSQL_PASSWORD=myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

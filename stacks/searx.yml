@@ -7,6 +7,9 @@ services:
       - BASE_URL=${SCHEME:-https}://${DOMAIN:-searx.localhost}
       - BIND_ADDRESS=0.0.0.0:8080
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.searx-${NUMBER:-1}.rule=Host(`${DOMAIN:-searx.localhost}`)

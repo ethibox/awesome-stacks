@@ -11,6 +11,9 @@ services:
       - MB_DB_USER=metabase
       - MB_DB_PASS=myp@ssw0rd
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.metabase-${NUMBER:-1}.rule=Host(`${DOMAIN:-metabase.localhost}`)
@@ -31,6 +34,10 @@ services:
       - MYSQL_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

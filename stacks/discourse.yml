@@ -28,6 +28,9 @@ services:
       - GITLAB_SECRET=${GITLAB_SECRET}
       - GITLAB_URL=${GITLAB_URL}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.discourse-${NUMBER:-1}.rule=Host(`${DOMAIN:-discourse.localhost}`)
@@ -51,6 +54,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "discourse"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -58,6 +65,10 @@ services:
     image: redis:7-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

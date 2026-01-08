@@ -17,6 +17,9 @@ services:
       - SETTING_ADV_ANALYTICS=${SETTING_ADV_ANALYTICS:-false}
       - POLR_ALLOW_ACCT_CREATION=${POLR_ALLOW_ACCT_CREATION:-false}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.polr-${NUMBER:-1}.rule=Host(`${DOMAIN:-polr.localhost}`)
@@ -37,6 +40,10 @@ services:
       - MYSQL_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

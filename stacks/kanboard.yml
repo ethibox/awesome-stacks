@@ -16,6 +16,9 @@ services:
       - ${VOLUME_PATH}data:/var/www/app/data
       - ${VOLUME_PATH}plugins:/var/www/app/plugins
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.kanboard-${NUMBER:-1}.rule=Host(`${DOMAIN:-kanboard.localhost}`)

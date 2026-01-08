@@ -8,6 +8,9 @@ services:
       - ${VOLUME_PATH}portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.portainer-${NUMBER:-1}.rule=Host(`${DOMAIN:-portainer.localhost}`)
@@ -27,6 +30,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
     deploy:
+      resources:
+        limits:
+          memory: 2G
       mode: global
     networks:
       - internal

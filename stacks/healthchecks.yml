@@ -32,6 +32,9 @@ services:
       - SITE_ROOT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}
       - WEBHOOKS_ENABLED=True
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.healthchecks-${NUMBER:-1}.rule=Host(`${DOMAIN:-healthchecks.localhost}`)
@@ -53,6 +56,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "healthchecks"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

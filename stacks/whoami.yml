@@ -4,6 +4,9 @@ services:
   whoami:
     image: traefik/whoami:${VERSION:-latest}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.whoami-${NUMBER:-1}.rule=Host(`${DOMAIN:-whoami.localhost}`)

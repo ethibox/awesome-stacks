@@ -11,6 +11,9 @@ services:
     volumes:
       - ${VOLUME_PATH}registry:/var/lib/registry
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.registry-${NUMBER:-1}.rule=Host(`${DOMAIN:-registry.localhost}`)

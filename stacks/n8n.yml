@@ -40,6 +40,9 @@ services:
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.n8n-${NUMBER:-1}.rule=Host(`${DOMAIN:-n8n.localhost}`)
@@ -64,6 +67,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "n8n"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

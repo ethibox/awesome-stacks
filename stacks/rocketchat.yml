@@ -10,6 +10,9 @@ services:
       - MONGO_URL=mongodb://mongo:27017/rocketchat?replicaSet=rs01
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local?replicaSet=rs01
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.rocketchat-${NUMBER:-1}.rule=Host(`${DOMAIN:-rocketchat.localhost}`)
@@ -28,6 +31,10 @@ services:
     command: mongod --oplogSize 128 --replSet rs01
     volumes:
       - ${VOLUME_PATH}mongo:/data/db
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

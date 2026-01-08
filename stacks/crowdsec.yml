@@ -11,6 +11,10 @@ services:
       - /var/log:/var/log:ro
       - ${VOLUME_PATH}config:/etc/crowdsec
       - ${VOLUME_PATH}data:/var/lib/crowdsec/data/
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - traefik
       - internal
@@ -20,6 +24,10 @@ services:
     environment:
       - CROWDSEC_BOUNCER_API_KEY=${CROWDSEC_BOUNCER_API_KEY}
       - CROWDSEC_AGENT_HOST=crowdsec:8080
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - traefik
       - internal

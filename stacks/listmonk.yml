@@ -27,6 +27,9 @@ services:
       - INSTALL=${INSTALL:-false}
       - UPGRADE=${UPGRADE:-false}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.listmonk-${NUMBER:-1}.rule=Host(`${DOMAIN:-listmonk.localhost}`)
@@ -48,6 +51,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "listmonk"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

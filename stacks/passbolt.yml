@@ -25,6 +25,9 @@ services:
       - ${VOLUME_PATH}gpg:/etc/passbolt/gpg
       - ${VOLUME_PATH}jwt:/etc/passbolt/jwt
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.passbolt-${NUMBER:-1}.rule=Host(`${DOMAIN:-passbolt.localhost}`)
@@ -45,6 +48,10 @@ services:
       - MYSQL_DATABASE=passbolt
       - MYSQL_USER=passbolt
       - MYSQL_PASSWORD=myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

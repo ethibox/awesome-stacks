@@ -15,6 +15,9 @@ services:
     volumes:
       - ${VOLUME_PATH}grafana:/var/lib/grafana
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
@@ -116,6 +119,9 @@ services:
       - /var/run:/var/run:ro
       - /var/lib/docker/:/var/lib/docker:ro
     deploy:
+      resources:
+        limits:
+          memory: 2G
       mode: global
     networks:
       - internal
@@ -152,6 +158,10 @@ services:
     volumes:
       - /proc:/host/proc:ro
       - ${VOLUME_PATH}config:/etc/process-exporter:ro
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

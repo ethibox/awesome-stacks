@@ -33,6 +33,9 @@ services:
         EOF
         nginx -g 'daemon off;'
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`)

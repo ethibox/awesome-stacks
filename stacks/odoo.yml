@@ -23,6 +23,9 @@ services:
       - USER=odoo
       - PASSWORD=myp@ssw0rd
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.odoo-${NUMBER:-1}.rule=Host(`${DOMAIN:-odoo.localhost}`)
@@ -46,6 +49,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "odoo"]
     volumes:
       - ${VOLUME_PATH}db:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

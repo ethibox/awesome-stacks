@@ -26,6 +26,9 @@ services:
         default_user_preferences:
           default_home: Trending
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.invidious-${NUMBER:-1}.rule=Host(`${DOMAIN:-invidious.localhost}`)

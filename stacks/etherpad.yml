@@ -28,6 +28,9 @@ services:
     healthcheck:
       test: ['CMD-SHELL', 'curl -f http://localhost:9001/health']
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.etherpad-${NUMBER:-1}.rule=Host(`${DOMAIN:-etherpad.localhost}`)

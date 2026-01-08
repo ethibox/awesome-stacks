@@ -9,6 +9,9 @@ services:
       - domain=${ALLOWED_DOMAINS:-.*}
       - extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.collabora-${NUMBER:-1}.rule=Host(`${DOMAIN:-collabora.localhost}`)

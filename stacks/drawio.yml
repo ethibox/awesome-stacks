@@ -4,6 +4,9 @@ services:
   web:
     image: jgraph/drawio:${VERSION:-28.2.0}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.drawio-${NUMBER:-1}.rule=Host(`${DOMAIN:-drawio.localhost}`)

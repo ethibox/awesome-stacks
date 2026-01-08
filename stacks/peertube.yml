@@ -28,6 +28,9 @@ services:
       - ${VOLUME_PATH}data:/data
       - ${VOLUME_PATH}config:/config
     deploy:
+      resources:
+        limits:
+          memory: 4G
       labels:
         - traefik.enable=true
         - traefik.http.routers.peertube-${NUMBER:-1}.rule=Host(`${DOMAIN:-peertube.localhost}`)
@@ -47,11 +50,19 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
   redis:
     image: redis:7-alpine
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

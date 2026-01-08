@@ -35,6 +35,9 @@ services:
     <<: *zammad
     command: ["zammad-nginx"]
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.zammad-${NUMBER:-1}.rule=Host(`${DOMAIN:-zammad.localhost}`)
@@ -65,6 +68,10 @@ services:
   zammad-memcached:
     image: memcached:1.6.31-alpine
     command: memcached -m 256M
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -79,6 +86,10 @@ services:
       - POSTGRES_DB=zammad
       - POSTGRES_USER=zammad
       - POSTGRES_PASSWORD=myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -86,20 +97,36 @@ services:
     image: redis:${REDIS_VERSION:-7-alpine}
     volumes:
       - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
   zammad-railsserver:
     <<: *zammad
     command: ["zammad-railsserver"]
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   zammad-scheduler:
     <<: *zammad
     command: ["zammad-scheduler"]
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   zammad-websocket:
     <<: *zammad
     command: ["zammad-websocket"]
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 volumes:
   var:

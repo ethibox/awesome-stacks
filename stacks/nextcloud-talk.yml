@@ -21,6 +21,9 @@ services:
         protocol: udp
         mode: host
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud-talk.localhost}`)

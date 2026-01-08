@@ -46,6 +46,9 @@ services:
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.nextcloud-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud.localhost}`)
@@ -76,6 +79,10 @@ services:
         echo "php /var/www/html/occ maintenance:repair --include-expensive -n" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
         chmod +x /docker-entrypoint-hooks.d/post-installation/setup.sh
         exec /entrypoint.sh php-fpm
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   cron:
     <<: *nextcloud
@@ -86,6 +93,10 @@ services:
         echo "0 2 * * * php /var/www/html/occ db:add-missing-indices -n" >> /var/spool/cron/crontabs/www-data
         echo "0 3 * * * php /var/www/html/occ maintenance:repair --include-expensive -n" >> /var/spool/cron/crontabs/www-data
         exec /cron.sh
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
@@ -99,6 +110,10 @@ services:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -109,6 +124,10 @@ services:
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

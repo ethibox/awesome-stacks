@@ -17,6 +17,9 @@ services:
       - NC_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
       - NC_SMTP_SECURE=${SMTP_SECURE:-true}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.nocodb-${NUMBER:-1}.rule=Host(`${DOMAIN:-nocodb.localhost}`)
@@ -38,6 +41,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "nocodb", "-d", "nocodb"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

@@ -21,6 +21,9 @@ services:
       - mail__options__auth__user=${SMTP_USER}
       - mail__options__auth__pass=${SMTP_PASSWORD}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.ghost-${NUMBER:-1}.rule=Host(`${DOMAIN:-ghost.localhost}`)
@@ -41,6 +44,10 @@ services:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

@@ -10,6 +10,9 @@ services:
       - MAX_FILE_UPLOADS=${MAX_FILE_UPLOADS:-300}
       - PDF_STORAGE_PATH=/data
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.signaturepdf-${NUMBER:-1}.rule=Host(`${DOMAIN:-signaturepdf.localhost}`)

@@ -10,6 +10,9 @@ services:
       - MAIL_URL=smtp://${SMTP_USERNAME}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT:-587}
       - MAIL_FROM=${SMTP_FROM:-noreply@example.com}
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.wekan-${NUMBER:-1}.rule=Host(`${DOMAIN:-wekan.localhost}`)
@@ -25,6 +28,10 @@ services:
     image: mongo:8.2
     volumes:
       - ${VOLUME_PATH}mongo:/data/db
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

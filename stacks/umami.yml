@@ -10,6 +10,9 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.umami-${NUMBER:-1}.rule=Host(`${DOMAIN:-umami.localhost}`)
@@ -31,6 +34,10 @@ services:
       test: ["CMD", "pg_isready", "-U", "umami"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

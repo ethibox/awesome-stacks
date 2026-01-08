@@ -29,6 +29,9 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/var/www/framadate
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.framadate-${NUMBER:-1}.rule=Host(`${DOMAIN:-framadate.localhost}`)
@@ -49,6 +52,10 @@ services:
       - MYSQL_DATABASE=framadate
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

@@ -25,6 +25,9 @@ services:
     volumes:
       - ${VOLUME_PATH}web:/config
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.jitsi-${NUMBER:-1}.rule=Host(`${DOMAIN:-jitsi.localhost}`)
@@ -41,6 +44,10 @@ services:
     image: jitsi/prosody:${VERSION:-stable-10655}
     volumes:
       - ${VOLUME_PATH}prosody:/config
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       internal:
         aliases:
@@ -51,6 +58,10 @@ services:
     image: jitsi/jicofo:${VERSION:-stable-10655}
     volumes:
       - ${VOLUME_PATH}jicofo:/config
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

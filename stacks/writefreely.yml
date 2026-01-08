@@ -24,6 +24,9 @@ services:
     volumes:
       - ${VOLUME_PATH}keys:/go/keys
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.writefreely-${NUMBER:-1}.rule=Host(`${DOMAIN:-writefreely.localhost}`)
@@ -44,6 +47,10 @@ services:
       - MYSQL_DATABASE=writefreely
       - MYSQL_PASSWORD=myp@ssw0rd
       - MYSQL_USER=writefreely
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 

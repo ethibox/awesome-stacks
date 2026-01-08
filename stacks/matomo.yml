@@ -10,6 +10,9 @@ services:
       - ${VOLUME_PATH}data:/var/www/html:ro
       - ${VOLUME_PATH}data:/var/www/html/config:ro
     deploy:
+      resources:
+        limits:
+          memory: 2G
       labels:
         - traefik.enable=true
         - traefik.http.routers.matomo-${NUMBER:-1}.rule=Host(`${DOMAIN:-matomo.localhost}`)
@@ -31,6 +34,10 @@ services:
     volumes:
       - ${VOLUME_PATH}config:/var/www/html/config:cached
       - ${VOLUME_PATH}data:/var/www/html:cached
+    deploy:
+      resources:
+        limits:
+          memory: 2G
     networks:
       - internal
 
@@ -43,6 +50,10 @@ services:
       - MYSQL_DATABASE=matomo
       - MYSQL_USER=matomo
       - MYSQL_PASSWORD=myp@ssw0rd
+    deploy:
+      resources:
+        limits:
+          memory: 3G
     networks:
       - internal
 
