@@ -1,27 +1,38 @@
 # DOMAIN=example.com docker stack deploy -c odoo.yml odoo
-# odoo --stop-after-init --no-xmlrpc --no-http -c /etc/odoo/odoo.conf --db_host db --database odoo --db_user odoo --db_password myp@ssw0rd -u all # Upgrade
-# proxy_mode = True
 
 services:
-  web:
-    image: odoo:${VERSION:-18.0}
-    entrypoint: /bin/sh
+  init:
+    image: busybox
     user: root
     command:
+      - /bin/sh
       - -c
       - |
         if [ ! -f /etc/odoo/odoo.conf ]; then
-          curl -o /etc/odoo/odoo.conf https://raw.githubusercontent.com/odoo/docker/master/$${VERSION:-18.0}/odoo.conf
+        cat << EOF > /etc/odoo/odoo.conf
+        [options]
+        addons_path = /mnt/extra-addons
+        data_dir = /var/lib/odoo
+        EOF
         fi
         chown -R 101:101 /etc/odoo /var/lib/odoo
-        /entrypoint.sh odoo
+    volumes:
+      - ${VOLUME_PATH}config:/etc/odoo
+      - ${VOLUME_PATH}odoo:/var/lib/odoo
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  web:
+    image: odoo:${VERSION:-18.0}
     volumes:
       - ${VOLUME_PATH}config:/etc/odoo
       - ${VOLUME_PATH}odoo:/var/lib/odoo
       - ${VOLUME_PATH}addons:/mnt/extra-addons
     environment:
-      - USER=odoo
-      - PASSWORD=myp@ssw0rd
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - DB_PORT_5432_TCP_ADDR=postgres
     deploy:
       resources:
         limits:
@@ -39,8 +50,8 @@ services:
       - internal
       - traefik
 
-  db:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_DB=postgres
