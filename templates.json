@@ -1060,7 +1060,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/taiga.yml",
-        "commit": "327df0e5076878922c8413d7d71dbd6902354d31"
+        "commit": "ea3d045ea9a7ed25448dddc2a52b129f0323bd1f"
       },
       "env": [
         {
