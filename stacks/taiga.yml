@@ -23,7 +23,7 @@ x-defaults: &defaults
 
 services:
   web:
-    image: ethibox/nginx-proxy:test3
+    image: ethibox/nginx-proxy:latest
     environment:
       - NGINX_TEMPLATE=${NGINX_TEMPLATE:-/etc/nginx/taiga.template}
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
