@@ -1063,7 +1063,7 @@
       },
       "env": [
         {
-          "name": "TAIGA_SECRET",
+          "name": "SECRET_KEY",
           "value": "mys3cr3t",
           "preset": true
         },
@@ -1074,10 +1074,9 @@
           "disabled": true
         },
         {
-          "name": "INITIAL_ADMIN_PASSWORD",
-          "label": "Initial admin password",
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
           "type": "password",
-          "value": "123123",
           "disabled": true
         }
       ]

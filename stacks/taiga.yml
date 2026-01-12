@@ -1,78 +1,35 @@
 # DOMAIN=example.com docker stack deploy -c taiga.yml taiga
-# Default password -> admin:123123
+# docker exec -it $(docker ps -qf name=taiga_back) python manage.py createsuperuser
 
 x-defaults: &defaults
   environment:
-    - TAIGA_HOST=${DOMAIN:-taiga.localhost}
-    - TAIGA_SECRET=${TAIGA_SECRET:-mys3cr3t}
-    - TAIGA_SCHEME=${SCHEME:-https}
-    - TAIGA_PORT=${TAIGA_PORT:-443}
-    - DB_HOST=db
-    - DB_NAME=taiga
-    - DB_USER=postgres
-    - DB_PASSWORD=password
-    - RABBIT_HOST=rabbit
-    - RABBIT_USER=taiga
-    - RABBIT_PASSWORD=password
-    - RABBIT_VHOST=taiga
-    - REDIS_HOST=redis
-    - REDIS_DB=0
-    - REDIS_PASSWORD=password
+    - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+    - TAIGA_SITES_SCHEME=${SCHEME:-https}
+    - TAIGA_ASYNC_RABBITMQ_HOST=rabbitmq
+    - TAIGA_EVENTS_RABBITMQ_HOST=rabbitmq
+    - TAIGA_SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+    - TAIGA_SITES_DOMAIN=${DOMAIN:-taiga.localhost}
+    - POSTGRES_DB=taiga
+    - POSTGRES_USER=taiga
+    - POSTGRES_HOST=postgres
+    - POSTGRES_PASSWORD=myp@ssw0rd
+    - RABBITMQ_USER=taiga
+    - RABBITMQ_VHOST=taiga
+    - RABBITMQ_HOST=rabbitmq
+    - RABBITMQ_PASS=mypassword
+  volumes:
+    - ${VOLUME_PATH}static:/taiga/static
+    - ${VOLUME_PATH}media:/taiga/media
 
 services:
-  back:
-    <<: *defaults
-    image: dockertaiga/back:${VERSION:-6.5}
+  web:
+    image: ethibox/nginx-proxy:test3
+    environment:
+      - NGINX_TEMPLATE=${NGINX_TEMPLATE:-/etc/nginx/taiga.template}
+      - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}
     volumes:
-      - ${VOLUME_PATH}media:/taiga-media
-    networks:
-      - internal
-
-  front:
-    <<: *defaults
-    image: dockertaiga/front:${VERSION:-6.5}
-    networks:
-      - internal
-
-  redis:
-    <<: *defaults
-    image: redis:6-alpine
-    command: /bin/sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
-    networks:
-      - internal
-
-  db:
-    image: postgres:12-alpine
-    environment:
-      - POSTGRES_DB=taiga
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - ${VOLUME_PATH}db:/var/lib/postgresql/data
-    networks:
-      - internal
-
-  rabbit:
-    image: dockertaiga/rabbit:latest
-    environment:
-      - RABBIT_USER=taiga
-      - RABBIT_PASSWORD=password
-      - RABBIT_VHOST=taiga
-    networks:
-      - internal
-
-  events:
-    image: dockertaiga/events:latest
-    environment:
-      - RABBIT_HOST=rabbit
-      - RABBIT_VHOST=taiga
-      - RABBIT_USER=taiga
-      - RABBIT_PASSWORD=password
-    networks:
-      - internal
-
-  proxy:
-    image: dockertaiga/proxy:latest
+      - ${VOLUME_PATH}static:/taiga/static
+      - ${VOLUME_PATH}media:/taiga/media
     deploy:
       labels:
         - traefik.enable=true
@@ -81,18 +38,75 @@ services:
         - traefik.http.routers.taiga-${NUMBER:-1}.service=taiga-${NUMBER:-1}
         - traefik.http.routers.taiga-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.taiga-${NUMBER:-1}.loadbalancer.server.port=80
-    environment:
-      - TAIGA_HOST=${DOMAIN:-taiga.localhost}
-      - TAIGA_BACK_HOST=back
-      - TAIGA_FRONT_HOST=front
-      - EVENTS_HOST=events
     networks:
       - internal
       - traefik
 
+  front:
+    <<: *defaults
+    image: taigaio/taiga-front:${VERSION:-6.9.0}
+    networks:
+      - internal
+
+  back:
+    <<: *defaults
+    image: taigaio/taiga-back:${VERSION:-6.9.0}
+    volumes:
+      - ${VOLUME_PATH}static:/taiga-back/static
+      - ${VOLUME_PATH}media:/taiga-back/media
+    networks:
+      - internal
+
+  async:
+    <<: *defaults
+    image: taigaio/taiga-back:${VERSION:-6.9.0}
+    entrypoint: /taiga-back/docker/async_entrypoint.sh
+    networks:
+      - internal
+
+  events:
+    <<: *defaults
+    image: taigaio/taiga-events:${VERSION:-6.9.0}
+    networks:
+      - internal
+
+  protected:
+    <<: *defaults
+    image: taigaio/taiga-protected:${VERSION:-6.9.0}
+    networks:
+      - internal
+
+  rabbitmq:
+    <<: *defaults
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=${SECRET_KEY:-mys3cr3t}
+      - RABBITMQ_DEFAULT_PASS=mypassword
+      - RABBITMQ_DEFAULT_VHOST=taiga
+      - RABBITMQ_DEFAULT_USER=taiga
+    volumes:
+      - ${VOLUME_PATH}rabbitmq:/var/lib/rabbitmq
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=taiga
+      - POSTGRES_USER=taiga
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "taiga"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
 volumes:
   media:
-  db:
+  static:
+  rabbitmq:
+  postgres:
 
 networks:
   internal:
