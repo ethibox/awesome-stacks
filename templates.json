@@ -1053,6 +1053,7 @@
       "categories": [
         "Gestion de projet"
       ],
+      "manual": true,
       "enabled": true,
       "logo": "https://i.imgur.com/dCk82vq.png",
       "website": "https://taiga.io",
