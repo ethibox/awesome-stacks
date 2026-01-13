@@ -198,7 +198,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/odoo.yml",
-        "commit": "e7d2392eef36732d16470cce5a785c0d3e5fba4c"
+        "commit": "899158cc216e308449b4b1afd0609d9ddc2ed187"
       },
       "env": [
         {
