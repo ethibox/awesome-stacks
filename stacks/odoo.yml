@@ -1,8 +1,15 @@
 # DOMAIN=example.com docker stack deploy -c odoo.yml odoo
 
+x-odoo: &odoo
+  image: odoo:${VERSION:-18.0}
+  volumes:
+    - ${VOLUME_PATH}config:/etc/odoo
+    - ${VOLUME_PATH}odoo:/var/lib/odoo
+    - ${VOLUME_PATH}addons:/mnt/extra-addons
+
 services:
   init:
-    image: busybox
+    <<: *odoo
     user: root
     command:
       - /bin/sh
@@ -15,20 +22,13 @@ services:
         data_dir = /var/lib/odoo
         EOF
         fi
-        chown -R 101:101 /etc/odoo /var/lib/odoo
-    volumes:
-      - ${VOLUME_PATH}config:/etc/odoo
-      - ${VOLUME_PATH}odoo:/var/lib/odoo
+        chown -R odoo:odoo /etc/odoo /var/lib/odoo
     deploy:
       restart_policy:
         condition: on-failure
 
   web:
-    image: odoo:${VERSION:-18.0}
-    volumes:
-      - ${VOLUME_PATH}config:/etc/odoo
-      - ${VOLUME_PATH}odoo:/var/lib/odoo
-      - ${VOLUME_PATH}addons:/mnt/extra-addons
+    <<: *odoo
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=myp@ssw0rd
