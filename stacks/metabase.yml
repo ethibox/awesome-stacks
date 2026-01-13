@@ -2,7 +2,7 @@
 
 services:
   metabase:
-    image: metabase/metabase:${VERSION:-v0.57.7.5}
+    image: metabase/metabase:${VERSION:-v0.58.2}
     environment:
       - MB_DB_TYPE=mysql
       - MB_DB_HOST=mariadb
