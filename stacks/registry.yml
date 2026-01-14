@@ -2,11 +2,11 @@
 
 services:
   web:
-    image: registry:${VERSION:-2}
+    image: registry:${VERSION:-3}
     environment:
-      - REGISTRY_AUTH_HTPASSWD_PATH=/run/secrets/registry-htpasswd
-      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
       - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_AUTH_HTPASSWD_PATH=/run/secrets/registry-htpasswd
       - REGISTRY_STORAGE_DELETE_ENABLED=${REGISTRY_STORAGE_DELETE_ENABLED:-true}
     volumes:
       - ${VOLUME_PATH}registry:/var/lib/registry
