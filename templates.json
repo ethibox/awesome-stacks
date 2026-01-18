@@ -2885,7 +2885,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/umami.yml",
-        "commit": "e167db72d95598081342e673115e77246372fd8d"
+        "commit": "6632fc01849b52756a779b59acca92a6bdeece26"
       },
       "env": [
         {
