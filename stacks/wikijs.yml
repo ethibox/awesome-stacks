@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: requarks/wiki:${VERSION:-2.5.307}
+    image: requarks/wiki:${VERSION:-2.5.311}
     environment:
       - DB_TYPE=mysql
       - DB_HOST=mariadb
