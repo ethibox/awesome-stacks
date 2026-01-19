@@ -1539,7 +1539,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wikijs.yml",
-        "commit": "152fe61ab6768c079d9a2d17fb392ebe49b4681c"
+        "commit": "1226da340e710c1c746b351e6a8725977e3a4713"
       },
       "env": [
         {
