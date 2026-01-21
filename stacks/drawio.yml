@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: jgraph/drawio:${VERSION:-28.2.0}
+    image: jgraph/drawio:${VERSION:-29.3.5}
     deploy:
       resources:
         limits:
