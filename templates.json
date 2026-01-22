@@ -2979,6 +2979,22 @@
         "stackfile": "stacks/booklore.yml",
         "commit": "beb35dbc27691b76c1e87f5f8d9635beca5803a7"
       }
+    },
+    {
+      "type": 2,
+      "title": "Drawio",
+      "description": "Draw.io est un éditeur de diagrammes open-source.",
+      "categories": [
+        "Editeur"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/qmTBRNg.png",
+      "website": "https://www.drawio.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/drawio.yml",
+        "commit": "106d33d75d2b9bd97b3affeb9e8abc08d0ee1200"
+      }
     }
   ]
 }
