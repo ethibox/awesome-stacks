@@ -1,0 +1,68 @@
+# DOMAIN=example.com docker stack deploy -c sonarqube.yml sonarqube
+
+services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /opt/sonarqube/data /opt/sonarqube/extensions /opt/sonarqube/logs
+    user: root
+    volumes:
+      - ${VOLUME_PATH}logs:/opt/sonarqube/logs
+      - ${VOLUME_PATH}data:/opt/sonarqube/data
+      - ${VOLUME_PATH}extensions:/opt/sonarqube/extensions
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  app:
+    image: sonarqube:${VERSION:-26.1.0.118079-community}
+    environment:
+      - SONAR_JDBC_USERNAME=${POSTGRES_USER:-sonarqube}
+      - SONAR_JDBC_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - SONAR_JDBC_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-sonarqube}
+    volumes:
+      - ${VOLUME_PATH}logs:/opt/sonarqube/logs
+      - ${VOLUME_PATH}data:/opt/sonarqube/data
+      - ${VOLUME_PATH}extensions:/opt/sonarqube/extensions
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.sonarqube-${NUMBER:-1}.rule=Host(`${DOMAIN:-sonarqube.localhost}`)
+        - traefik.http.routers.sonarqube-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.sonarqube-${NUMBER:-1}.service=sonarqube-${NUMBER:-1}
+        - traefik.http.routers.sonarqube-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.sonarqube-${NUMBER:-1}.loadbalancer.server.port=9000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-sonarqube}
+      - POSTGRES_USER=${POSTGRES_USER:-sonarqube}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    networks:
+      - internal
+
+volumes:
+  data:
+  logs:
+  postgres:
+  extensions:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
