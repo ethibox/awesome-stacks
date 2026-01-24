@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: lukevella/rallly:${VERSION:-3.11.2}
+    image: lukevella/rallly:${VERSION:-4.6.3}
     environment:
       - DATABASE_URL=postgres://rallly:myp@ssw0rd@postgres/rallly
       - NEXT_PUBLIC_BASE_URL=${SCHEME:-https}://${DOMAIN:-rallly.localhost}
@@ -31,7 +31,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=rallly
       - POSTGRES_USER=rallly
