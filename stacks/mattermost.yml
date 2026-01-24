@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c mattermost.yml mattermost
-# ./bin/mmctl --local user create --system-admin --email admin@example.com --username admin --password myp@ssw0rd
 
 services:
   init:
@@ -35,7 +34,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
