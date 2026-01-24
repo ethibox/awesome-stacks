@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: healthchecks/healthchecks:${VERSION:-v2.7}
+    image: healthchecks/healthchecks:${VERSION:-v4.0}
     command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; uwsgi /opt/healthchecks/docker/uwsgi.ini'
     environment:
       - ALLOWED_HOSTS=${DOMAIN:-healthchecks.localhost}
@@ -23,14 +23,14 @@ services:
       - EMAIL_USE_TLS=${SMTP_TLS:-True}
       - EMAIL_USE_SSL=${SMTP_SSL:-False}
       - EMAIL_USE_VERIFICATION=True
-      - PING_EMAIL_DOMAIN=${DOMAIN:-healthchecks.localhost}
-      - PING_ENDPOINT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}/ping/
-      - REGISTRATION_OPEN=${REGISTRATION_OPEN:-True}
-      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
-      - SITE_LOGO_URL=https://healthchecks.io/static/img/logo-full-ua.svg
       - SITE_NAME=Healthchecks
+      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - WEBHOOKS_ENABLED=${WEBHOOKS_ENABLED:-False}
+      - REGISTRATION_OPEN=${REGISTRATION_OPEN:-True}
+      - PING_EMAIL_DOMAIN=${DOMAIN:-healthchecks.localhost}
       - SITE_ROOT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}
-      - WEBHOOKS_ENABLED=True
+      - SITE_LOGO_URL=https://healthchecks.io/static/img/logo-full-ua.svg
+      - PING_ENDPOINT=${SCHEME:-https}://${DOMAIN:-healthchecks.localhost}/ping/
     deploy:
       resources:
         limits:
@@ -47,7 +47,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=healthchecks
       - POSTGRES_USER=healthchecks
