@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
 
 x-nextcloud: &nextcloud
-  image: nextcloud:${VERSION:-32.0.3-fpm-alpine}
+  image: nextcloud:${VERSION:-32.0.5-fpm-alpine}
   environment:
     - DOMAIN=${DOMAIN:-nextcloud.localhost}
     - MYSQL_HOST=mariadb
@@ -30,6 +30,7 @@ x-nextcloud: &nextcloud
     - NEXTCLOUD_ADMIN_USER=${ADMIN_USERNAME:-admin}
     - NEXTCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
     - NC_default_phone_region=${NC_default_phone_region:-FR}
+    - NC_loglevel=${NC_loglevel:-2}
     - NC_maintenance_window_start=1
   volumes:
     - ${VOLUME_PATH}nextcloud:/var/www/html:cached
