@@ -2995,6 +2995,100 @@
         "stackfile": "stacks/drawio.yml",
         "commit": "106d33d75d2b9bd97b3affeb9e8abc08d0ee1200"
       }
+    },
+    {
+      "type": 2,
+      "title": "Healthchecks",
+      "description": "Healthchecks est un service de surveillance de vos tâches planifiées.",
+      "categories": [
+        "Monitoring"
+      ],
+      "enabled": true,
+      "logo": "https://i.imgur.com/qLOjLMl.png",
+      "website": "https://healthchecks.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/healthchecks.yml",
+        "commit": "382a612f8b5251eb6a55eff5383e6fff8e6af159"
+      },
+      "env": [
+        {
+          "name": "SECRET_KEY",
+          "preset": true
+        },
+        {
+          "name": "REGISTRATION_OPEN",
+          "label": "Ouvrir les inscriptions",
+          "type": "select",
+          "value": "True",
+          "select": [
+            {
+              "text": "Oui",
+              "value": "True"
+            },
+            {
+              "text": "Non",
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP Host"
+        },
+        {
+          "name": "SMTP_PORT",
+          "label": "SMTP Port",
+          "type": "number",
+          "value": "587"
+        },
+        {
+          "name": "SMTP_USER",
+          "label": "SMTP User"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "label": "SMTP Password",
+          "type": "password"
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP From",
+          "type": "email"
+        },
+        {
+          "name": "SMTP_TLS",
+          "label": "Utiliser TLS",
+          "type": "select",
+          "value": "True",
+          "select": [
+            {
+              "text": "Oui",
+              "value": "True"
+            },
+            {
+              "text": "Non",
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "name": "SMTP_SSL",
+          "label": "Utiliser SSL",
+          "type": "select",
+          "value": "False",
+          "select": [
+            {
+              "text": "Oui",
+              "value": "True"
+            },
+            {
+              "text": "Non",
+              "value": "False"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
