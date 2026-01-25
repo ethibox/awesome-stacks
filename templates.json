@@ -597,6 +597,7 @@
       "categories": [
         "Automatisation"
       ],
+      "manual": true,
       "enabled": true,
       "logo": "https://i.imgur.com/HbXTiUF.jpg",
       "website": "https://n8n.io/",
