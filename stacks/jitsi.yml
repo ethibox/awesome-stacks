@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c jitsi.yml jitsi
-# prosodyctl --config /config/prosody.cfg.lua register username meet.jitsi password
 
 x-defaults: &defaults
   environment:
@@ -17,6 +16,9 @@ x-defaults: &defaults
     - ENABLE_HTTP_REDIRECT=0
     - ENABLE_LETS_ENCRYPT=0
     - DISABLE_HTTPS=1
+    - ENABLE_AUTH=${ENABLE_AUTH:-0}
+    - ENABLE_GUESTS=${ENABLE_GUESTS:-1}
+    - AUTH_TYPE=${AUTH_TYPE:-internal}
 
 services:
   web:
@@ -34,6 +36,9 @@ services:
         - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.jitsi-${NUMBER:-1}.service=jitsi-${NUMBER:-1}
         - traefik.http.routers.jitsi-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.routers.jitsi-${NUMBER:-1}.middlewares=jitsi-${NUMBER:-1}-block
+        - traefik.http.middlewares.jitsi-${NUMBER:-1}-block.replacepathregex.regex=^/(.*)(${JITSI_BLOCK_REGEX:-nonexistentpath})(.*)$$
+        - traefik.http.middlewares.jitsi-${NUMBER:-1}-block.replacepathregex.replacement=/static/offline.html
         - traefik.http.services.jitsi-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
       - traefik
