@@ -1238,7 +1238,7 @@
     },
     {
       "type": 2,
-      "title": "Jitsi-Meet",
+      "title": "Jitsi",
       "description": "Jitsi Meet vous permet de rester en contact avec toutes vos équipes, qu'elles soient familiales, amicales ou collègues.",
       "categories": [
         "Tchat vidéo"
@@ -1250,7 +1250,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/jitsi.yml",
-        "commit": "e167db72d95598081342e673115e77246372fd8d"
+        "commit": "82f62000455f677aca772f621f7f0bb3ff74f710"
       },
       "env": [
         {
