@@ -6,7 +6,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.drawio-${NUMBER:-1}.rule=Host(`${DOMAIN:-drawio.localhost}`)

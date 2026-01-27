@@ -40,7 +40,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       mode: ${MODE:-replicated}
 
 volumes:

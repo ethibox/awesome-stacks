@@ -49,7 +49,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.nextcloud-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud.localhost}`)
@@ -83,7 +83,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
 
   cron:
     <<: *nextcloud
@@ -97,7 +97,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
@@ -114,7 +114,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
@@ -128,7 +128,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 

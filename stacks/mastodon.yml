@@ -47,7 +47,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.mastodon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`)
@@ -70,7 +70,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`) && PathPrefix(`/api/v1/streaming`)
@@ -90,7 +90,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
@@ -108,7 +108,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
@@ -121,7 +121,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 

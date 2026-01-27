@@ -17,7 +17,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
@@ -103,9 +103,9 @@ services:
         - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROM_USER:-admin}:${PROM_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
       resources:
         limits:
-          memory: 8G
+          memory: ${MEMORY_LIMIT:-8G}
         reservations:
-          memory: 4G
+          memory: ${MEMORY_LIMIT:-4G}
     networks:
       - internal
       - traefik
@@ -121,7 +121,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       mode: global
     networks:
       - internal
@@ -146,9 +146,9 @@ services:
       mode: global
       resources:
         limits:
-          memory: 128M
+          memory: ${MEMORY_LIMIT:-128M}
         reservations:
-          memory: 64M
+          memory: ${MEMORY_LIMIT:-64M}
     networks:
       - internal
 
@@ -161,7 +161,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 

@@ -10,7 +10,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.portainer-${NUMBER:-1}.rule=Host(`${DOMAIN:-portainer.localhost}`)
@@ -32,7 +32,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
       mode: global
     networks:
       - internal

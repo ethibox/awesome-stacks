@@ -30,7 +30,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: ${MEMORY_LIMIT:-4G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.peertube-${NUMBER:-1}.rule=Host(`${DOMAIN:-peertube.localhost}`)
@@ -53,7 +53,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
@@ -62,7 +62,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
