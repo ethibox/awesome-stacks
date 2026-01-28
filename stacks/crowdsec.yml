@@ -3,7 +3,7 @@
 
 services:
   crowdsec:
-    image: crowdsecurity/crowdsec:${VERSION:-v1.7.4}
+    image: crowdsecurity/crowdsec:${VERSION:-v1.7.6}
     environment:
       - COLLECTIONS=${COLLECTIONS:-crowdsecurity/traefik}
       - CUSTOM_HOSTNAME=${CUSTOM_HOSTNAME:-crowdsec}
