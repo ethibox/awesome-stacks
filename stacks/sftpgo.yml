@@ -1,9 +1,19 @@
 # DOMAIN=example.com docker stack deploy -c sftpgo.yml sftpgo
-# chown -R 1000:1000 config data
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /srv/sftpgo /var/lib/sftpgo
+    user: root
+    volumes:
+      - ${VOLUME_PATH}data:/srv/sftpgo
+      - ${VOLUME_PATH}config:/var/lib/sftpgo
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
-    image: drakkan/sftpgo:${VERSION:-v2.6.5}
+    image: drakkan/sftpgo:${VERSION:-v2.7.0}
     environment:
       - SFTPGO_WEBDAVD__BINDINGS__0__PORT=8081
       - SFTPGO_WEBDAVD__BINDINGS__0__PREFIX=/webdav
