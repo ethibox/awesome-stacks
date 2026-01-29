@@ -28,7 +28,9 @@ services:
       - --certificatesresolvers.letsencrypt.acme.storage=/config/acme.json
       - --experimental.plugins.my-plugin.moduleName=${PLUGIN}
       - --experimental.plugins.my-plugin.version=${PLUGIN_VERSION:-latest}
-      - --accesslog.filepath=${ACCESSLOG_PATH:-/var/log/traefik/access.log}
+      - --accesslog.filepath=${ACCESSLOG_PATH:-/var/log/traefik/access.json}
+      - --accesslog.fields.headers.names.User-Agent=keep
+      - --accesslog.format=${ACCESSLOG_FORMAT:-json}
       - --accesslog=${ACCESSLOG:-false}
     volumes:
       - /var/log:/var/log
