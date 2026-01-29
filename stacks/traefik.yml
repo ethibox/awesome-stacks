@@ -2,7 +2,7 @@
 
 services:
   traefik:
-    image: traefik:${VERSION:-v3.6.4}
+    image: traefik:${VERSION:-v3.6.7}
     command:
       - --log.level=${LOGLEVEL:-ERROR}
       - --core.defaultRuleSyntax=v2
@@ -13,8 +13,6 @@ services:
       - --providers.file.directory=/config
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
-      - --entrypoints.https.http.encodedCharacters.allowEncodedQuestionMark=true
-      - --entrypoints.https.http.encodedCharacters.allowEncodedSlash=true
       - --entrypoints.https.http.middlewares=${MIDDLEWARES}
       - --entrypoints.https.address=:443
       - --entrypoints.http.address=:80
