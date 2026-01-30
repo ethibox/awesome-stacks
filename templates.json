@@ -1571,7 +1571,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/passbolt.yml",
-        "commit": "bb9090eb8c5e85da5194977c426b56059c443585"
+        "commit": "077cdd08559a7bfd84e8ca49985c01ca8ea83d6a"
       },
       "env": [
         {
