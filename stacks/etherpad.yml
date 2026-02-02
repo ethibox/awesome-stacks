@@ -13,7 +13,7 @@ services:
         condition: on-failure
 
   web:
-    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-2.5.3}
+    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-2.6.1}
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
       - ${VOLUME_PATH}var:/opt/etherpad-lite/var
@@ -43,7 +43,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=etherpad
       - POSTGRES_USER=etherpad
