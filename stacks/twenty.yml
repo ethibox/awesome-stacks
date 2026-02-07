@@ -1,11 +1,10 @@
 # DOMAIN=example.com docker stack deploy -c twenty.yml twenty
-# chown -R 1000:1000 data docker
 
 x-defaults: &defaults
-  image: twentycrm/twenty:${VERSION:-v1.6.7}
+  image: twentycrm/twenty:${VERSION:-v1.16.7}
   environment:
     - PORT=3000
-    - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/default
+    - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/${POSTGRES_DB:-twenty}
     - SERVER_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
     - FRONT_BASE_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
     - REDIS_URL=${REDIS_URL:-redis://redis:6379}
@@ -18,6 +17,17 @@ x-defaults: &defaults
     - ${VOLUME_PATH}docker:/app/docker-data
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /app/packages/twenty-server/.local-storage /app/docker-data
+    user: root
+    volumes:
+      - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
+      - ${VOLUME_PATH}docker:/app/docker-data
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
     <<: *defaults
     deploy:
