@@ -20,10 +20,10 @@ services:
             <body class="bg-gray-900 text-white min-h-screen flex justify-center items-center text-center font-['Roboto']">
                 <main>
                     <p class="mt-2 p-2 sm:p-0 sm:text-xl">Votre application est en cours d'installation ! 🚀</p>
-                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Votre application demande l'intervention manuelle d'un administrateur.</p>
-                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">L'administrateur de Ethibox a été prévenu et interviendra dès que possible pour finaliser l'installation. 👨‍💻</p>
-                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">En général, cela prend en moyenne 1h, mais cela peut aller jusqu'à 48 heures maximum. Merci pour votre patience ! 😊</p>
-                    <p class="mt-6 p-2 sm:p-0 sm:text-xl font-medium">Vous recevrez un petit e-mail dès que tout sera prêt ! 📧</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Cette installation demande l'intervention manuelle d'un administrateur. 👨‍💻</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Cela prend en moyenne 1h et peut aller jusqu'à 48h maximum. ⏳</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Vous recevrez un e-mail dès que tout sera prêt ! 📧</p>
+                    <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Merci pour votre patience ! 😊</p>
                     <p class="mt-8 p-2 sm:p-0 sm:text-base text-gray-500">Si besoin, vous pouvez nous contacter sur <a href="mailto:contact@ethibox.fr" class="underline">contact@ethibox.fr</a></p>
                 </main>
 
