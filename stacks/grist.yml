@@ -3,6 +3,17 @@
 services:
   web:
     image: gristlabs/grist:${VERSION:-1.7.10}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        if [ -n "$$GRIST_OIDC_IDP_ISSUER" ]; then
+          until node -e "fetch(process.env.GRIST_OIDC_IDP_ISSUER).then(r => process.exit(r.status < 500 ? 0 : 1)).catch(() => process.exit(1))" 2>/dev/null; do
+            echo "Waiting for Keycloak at $$GRIST_OIDC_IDP_ISSUER..."
+            sleep 5
+          done
+        fi
+        exec node ./sandbox/supervisor.mjs
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
