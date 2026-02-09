@@ -2685,8 +2685,25 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/twenty.yml",
-        "commit": "54a78c3485a99e822f7e64dc789e97481a1a92ae"
-      }
+        "commit": "193db76c350c8d87beda2243cf34a358b9fb14c7"
+      },
+      "env": [
+        {
+          "name": "IS_MULTIWORKSPACE_ENABLED",
+          "label": "Enable multi-workspace",
+          "type": "select",
+          "select": [
+            {
+              "text": "No",
+              "value": "false"
+            },
+            {
+              "text": "Yes",
+              "value": "true"
+            }
+          ]
+        }
+      ]
     },
     {
       "type": 2,
