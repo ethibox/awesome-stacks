@@ -11,6 +11,7 @@ x-defaults: &defaults
     - SIGN_IN_PREFILLED=${SIGN_IN_PREFILLED:-false}
     - STORAGE_TYPE=${STORAGE_TYPE:-local}
     - ENABLE_DB_MIGRATIONS=${ENABLE_DB_MIGRATIONS:-true}
+    - IS_MULTIWORKSPACE_ENABLED=${IS_MULTIWORKSPACE_ENABLED:-false}
     - APP_SECRET=${APP_SECRET:-onoUicllnXTKiO6J+OGSFQFtdw9uyucAyxw3ztKXu+8=} # openssl rand -base64 32
   volumes:
     - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
@@ -36,7 +37,7 @@ services:
           memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
-        - traefik.http.routers.twenty-${NUMBER:-1}.rule=Host(`${DOMAIN:-twenty.localhost}`)
+        - traefik.http.routers.twenty-${NUMBER:-1}.rule=Host(`${DOMAIN:-twenty.localhost}`) || HostRegexp(`{subdomain:[a-z0-9-]+}.${DOMAIN:-twenty.localhost}`)
         - traefik.http.routers.twenty-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.twenty-${NUMBER:-1}.service=twenty-${NUMBER:-1}
         - traefik.http.routers.twenty-${NUMBER:-1}.tls.certresolver=letsencrypt
