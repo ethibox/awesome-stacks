@@ -116,7 +116,6 @@ services:
           memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
-      - traefik
 
 volumes:
   postgres:

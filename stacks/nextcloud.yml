@@ -36,7 +36,6 @@ x-nextcloud: &nextcloud
     - ${VOLUME_PATH}nextcloud:/var/www/html:cached
   networks:
     - internal
-    - traefik
 
 services:
   nginx:
