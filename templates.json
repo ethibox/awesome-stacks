@@ -14,7 +14,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nextcloud.yml",
-        "commit": "bb9090eb8c5e85da5194977c426b56059c443585"
+        "commit": "4d089f3158e29e61394c3f6e3567a273bb61402e"
       },
       "env": [
         {
@@ -647,7 +647,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/calendso.yml",
-        "commit": "6f7e48d58c50bcbae0a2dccd8f44fa684017bad1"
+        "commit": "4d089f3158e29e61394c3f6e3567a273bb61402e"
       },
       "env": [
         {
@@ -1097,7 +1097,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mautic.yml",
-        "commit": "bb9090eb8c5e85da5194977c426b56059c443585"
+        "commit": "4d089f3158e29e61394c3f6e3567a273bb61402e"
       },
       "env": [
         {
