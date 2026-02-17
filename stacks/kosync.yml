@@ -1,0 +1,40 @@
+# DOMAIN=example.com docker stack deploy -c kosync.yml kosync
+
+services:
+  kosync:
+    image: ${IMAGE:-koreader/kosync}:${VERSION:-latest}
+    environment:
+      - ENABLE_USER_REGISTRATION=${ENABLE_USER_REGISTRATION:-true}
+    volumes:
+      - ${VOLUME_PATH}data:/var/lib/redis
+      - ${VOLUME_PATH}redis:/var/log/redis
+      - ${VOLUME_PATH}logs:/app/koreader-sync-server/logs
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.kosync-${NUMBER:-1}.rule=Host(`${DOMAIN:-kosync.localhost}`)
+        - traefik.http.routers.kosync-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.kosync-${NUMBER:-1}.service=kosync-${NUMBER:-1}
+        - traefik.http.routers.kosync-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.kosync-${NUMBER:-1}.loadbalancer.server.port=17200
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f -H "Accept: application/vnd.koreader.v1+json" http://localhost:17200/healthcheck || exit 1']
+    networks:
+      - internal
+      - traefik
+
+volumes:
+  data:
+  logs:
+  redis:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
