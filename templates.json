@@ -3107,6 +3107,39 @@
           ]
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Kosync",
+      "description": "Serveur de synchronisation pour KOReader.",
+      "categories": [
+        "Ebook"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/893Vvda.png",
+      "website": "https://github.com/koreader/kosync",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/kosync.yml",
+        "commit": "7d4e0340a7f77e785afcb49f024a92ccda45c59a"
+      },
+      "env": [
+        {
+          "name": "ENABLE_USER_REGISTRATION",
+          "label": "Activer l'inscription",
+          "type": "select",
+          "select": [
+            {
+              "text": "Oui",
+              "value": "true"
+            },
+            {
+              "text": "Non",
+              "value": "false"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
