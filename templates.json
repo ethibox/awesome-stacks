@@ -1637,11 +1637,11 @@
       ],
       "enabled": false,
       "logo": "https://i.imgur.com/wYmdUN2.png",
-      "website": "https://github.com/janeczku/calibre-web",
+      "website": "https://github.com/crocodilestick/Calibre-Web-Automated",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/calibre.yml",
-        "commit": "f664cf9587f599d8a1b4ef197a1441f4bd439843"
+        "commit": "0a5dfc77919f862e4341c66b6f3cc563d4798262"
       }
     },
     {
