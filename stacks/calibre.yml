@@ -2,12 +2,13 @@
 
 services:
   calibre:
-    image: linuxserver/calibre-web:${VERSION:-0.6.25}
+    image: crocodilestick/calibre-web-automated:${VERSION:-v4.0.6}
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Paris
-      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - HARDCOVER_TOKEN=${HARDCOVER_TOKEN}
+      - NETWORK_SHARE_MODE=${NETWORK_SHARE_MODE:-false}
     deploy:
       resources:
         limits:
@@ -21,13 +22,15 @@ services:
         - traefik.http.services.calibre-${NUMBER:-1}.loadbalancer.server.port=8083
     volumes:
       - ${VOLUME_PATH}config:/config
-      - ${VOLUME_PATH}books:/books
+      - ${VOLUME_PATH}books:/calibre-library
+      - ${VOLUME_PATH}ingest:/cwa-book-ingest
     networks:
       - traefik
 
 volumes:
-  config:
   books:
+  config:
+  ingest:
 
 networks:
   internal:
