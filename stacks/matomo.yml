@@ -50,7 +50,7 @@ services:
     command:
       - -c
       - |
-        echo "*/15 * * * * /usr/local/bin/php /var/www/html/console core:archive --url=http://localhost" > /var/spool/cron/crontabs/www-data
+        echo "0 * * * * /usr/local/bin/php /var/www/html/console core:archive --url=http://localhost" > /var/spool/cron/crontabs/www-data
         exec crond -f
 
   mariadb:
