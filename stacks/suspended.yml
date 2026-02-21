@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c suspended.yml suspended
+
+services:
+  web:
+    image: nginx:${VERSION:-alpine}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        cat << EOF > /usr/share/nginx/html/index.html
+        <!DOCTYPE html>
+        <html lang="fr">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width" />
+                <title>Ethibox - Application suspendue</title>
+                <script src="https://cdn.tailwindcss.com"></script>
+                <link href="https://fonts.bunny.net/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+            </head>
+            <body class="bg-gray-900 text-white min-h-screen flex justify-center items-center text-center font-['Roboto']">
+                <main>
+                    <p class="mt-2 p-2 sm:p-0 sm:text-xl">Votre application est actuellement suspendue. 🛑</p>
+                    <p class="mt-8 p-2 sm:p-0 sm:text-base text-gray-500">Vous pouvez nous contacter sur <a href="mailto:contact@ethibox.fr" class="underline">contact@ethibox.fr</a></p>
+                </main>
+
+                <footer class="absolute bottom-0">
+                    <span class="block mb-4">Ethibox</span>
+                </footer>
+            </body>
+        </html>
+        EOF
+        nginx -g 'daemon off;'
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.suspended-${NUMBER:-1}.rule=Host(`${DOMAIN:-suspended.localhost}`)
+        - traefik.http.routers.suspended-${NUMBER:-1}.priority=50
+        - traefik.http.routers.suspended-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.suspended-${NUMBER:-1}.service=suspended-${NUMBER:-1}
+        - traefik.http.routers.suspended-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.http.services.suspended-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.routers.suspended-${NUMBER:-1}.middlewares=suspended-${NUMBER:-1}
+        - traefik.http.middlewares.suspended-${NUMBER:-1}.redirectregex.regex=^https?:\/\/(.+?)\/(.+)$$
+        - traefik.http.middlewares.suspended-${NUMBER:-1}.redirectregex.replacement=https://$${1}/
+        - traefik.http.middlewares.suspended-${NUMBER:-1}.redirectregex.permanent=false
+
+networks:
+  default:
+    external: true
+    name: traefik-net
