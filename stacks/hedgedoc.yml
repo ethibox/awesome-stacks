@@ -1,11 +1,12 @@
-# DOMAIN=example.com docker stack deploy -c hedgedoc.yml hedgedoc
+# DOMAIN=hedgedoc.example.com docker stack deploy -c hedgedoc.yml hedgedoc
 
 services:
   app:
-    image: linuxserver/hedgedoc:${VERSION:-1.10.0}
+    image: linuxserver/hedgedoc:${VERSION:-1.10.5}
     volumes:
       - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
     environment:
+      - CMD_DOMAIN=hedgedoc.example.com
       - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
       - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
       - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
