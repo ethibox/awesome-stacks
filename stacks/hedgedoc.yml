@@ -2,11 +2,11 @@
 
 services:
   app:
-    image: linuxserver/hedgedoc:${VERSION:-1.10.5}
+    image: linuxserver/hedgedoc:${VERSION:-1.10.6}
     volumes:
       - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
     environment:
-      - CMD_DOMAIN=hedgedoc.example.com
+      - CMD_DOMAIN=${DOMAIN:-hedgedoc.localhost}
       - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
       - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
       - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
