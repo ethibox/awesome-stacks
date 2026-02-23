@@ -66,7 +66,7 @@ services:
     command:
       - -c
       - |
-        echo '* * * * * wget -q -O - http://nginx/wp-cron.php?doing_wp_cron' | crontab -
+        echo '* * * * * wget -q -O - ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}/wp-cron.php?doing_wp_cron' | crontab -
         crond -f
     volumes:
       - /etc/localtime:/etc/localtime:ro
