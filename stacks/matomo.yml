@@ -65,7 +65,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: ${MEMORY_LIMIT:-3G}
+          memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
 
