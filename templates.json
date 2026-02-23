@@ -228,7 +228,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/matomo.yml",
-        "commit": "315a925570fd2107889b752d0dd892725ac9c00f"
+        "commit": "e904526b212be8ff1abc4139ed3838ce4f215693"
       }
     },
     {
