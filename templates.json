@@ -2880,13 +2880,13 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/collabora.yml",
-        "commit": "bb9090eb8c5e85da5194977c426b56059c443585"
+        "commit": "61a36b88aa4c0954535d6aff0f6a8432120a89a8"
       },
       "env": [
         {
           "name": "ALLOWED_DOMAINS",
           "label": "Allowed domains (regex)",
-          "value": ".*"
+          "value": "https://.*:443"
         }
       ]
     },
