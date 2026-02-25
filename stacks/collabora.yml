@@ -6,7 +6,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "curl -fsSL http://localhost:9980 || exit 1"]
     environment:
-      - domain=${ALLOWED_DOMAINS:-.*}
+      - aliasgroup1=${ALLOWED_DOMAINS:-https://.*:443}
       - extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false
     deploy:
       resources:
