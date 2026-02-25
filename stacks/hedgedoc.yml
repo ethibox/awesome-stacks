@@ -1,11 +1,12 @@
-# DOMAIN=example.com docker stack deploy -c hedgedoc.yml hedgedoc
+# DOMAIN=hedgedoc.example.com docker stack deploy -c hedgedoc.yml hedgedoc
 
 services:
   app:
-    image: linuxserver/hedgedoc:${VERSION:-1.10.0}
+    image: linuxserver/hedgedoc:${VERSION:-1.10.6}
     volumes:
       - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
     environment:
+      - CMD_DOMAIN=${DOMAIN:-hedgedoc.localhost}
       - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
       - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
       - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
@@ -26,7 +27,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:12-alpine
+    image: postgres:15-alpine
     environment:
       - POSTGRES_DB=hedgedoc
       - POSTGRES_USER=hedgedoc
