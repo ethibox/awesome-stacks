@@ -3,7 +3,7 @@
 
 services:
   grafana:
-    image: grafana/grafana:${GRAFANA_VERSION:-12.3.1}
+    image: grafana/grafana:${GRAFANA_VERSION:-12.4.0}
     user: root
     environment:
       - GF_SMTP_ENABLED=true
@@ -30,7 +30,7 @@ services:
       - traefik
 
   prometheus:
-    image: prom/prometheus:v3.8.1
+    image: prom/prometheus:v3.10.0
     entrypoint: /bin/sh
     command:
       - -c
@@ -111,7 +111,7 @@ services:
       - traefik
 
   cadvisor:
-    image: ghcr.io/google/cadvisor:0.55.1
+    image: ghcr.io/google/cadvisor:0.56.2
     command: -docker_only=true -housekeeping_interval=15s -disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process,advtcp,hugetlb,referenced_memory
     volumes:
       - /:/rootfs:ro
