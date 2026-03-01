@@ -3140,6 +3140,55 @@
           ]
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Monitoring",
+      "description": "Stack de supervision complète avec Prometheus, Grafana, cAdvisor et Node Exporter.",
+      "categories": [
+        "Supervision"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/6CFlVVm.png",
+      "website": "https://grafana.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/monitoring.yml",
+        "commit": "811304b9221d2650b01aee0cb90bc744b82fcd43"
+      },
+      "env": [
+        {
+          "name": "PROM_USER",
+          "label": "Prometheus Admin Username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "PROM_PASSWORD",
+          "label": "Prometheus Admin Password (htpasswd)",
+          "type": "password",
+          "value": "htpasswd",
+          "disabled": true
+        },
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP Host"
+        },
+        {
+          "name": "SMTP_USERNAME",
+          "label": "SMTP Username"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "label": "SMTP Password",
+          "type": "password"
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP From",
+          "type": "email"
+        }
+      ]
     }
   ]
 }
