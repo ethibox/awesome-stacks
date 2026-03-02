@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.7.10}
+    image: gristlabs/grist:${VERSION:-1.7.11}
     command:
       - /bin/sh
       - -c
@@ -20,6 +20,8 @@ services:
       - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
       - GRIST_DEFAULT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - GRIST_ANON_PLAYGROUND=${GRIST_ANON_PLAYGROUND:-false}
+      - GRIST_PERSONAL_ORGS=${GRIST_PERSONAL_ORGS:-true}
+      - GRIST_ORG_CREATION_ANYONE=${GRIST_ORG_CREATION_ANYONE:-true}
       - REDIS_URL=redis://redis:6379
       - GRIST_DOCS_MINIO_PORT=9000
       - GRIST_DOCS_MINIO_USE_SSL=0
