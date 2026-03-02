@@ -2087,7 +2087,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/grist.yml",
-        "commit": "afb9e05dd3e7ec6aaa598f64482adf657fc56ee8"
+        "commit": "46bd28bfc615fbafa8c1dafd860e1fae49ed4f3a"
       },
       "env": [
         {
@@ -2105,6 +2105,36 @@
           "label": "Admin password",
           "type": "password",
           "disabled": true
+        },
+        {
+          "name": "GRIST_PERSONAL_ORGS",
+          "label": "Allow personal organizations",
+          "type": "select",
+          "select": [
+            {
+              "text": "Yes",
+              "value": "true"
+            },
+            {
+              "text": "No",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "name": "GRIST_ORG_CREATION_ANYONE",
+          "label": "Allow anyone to create team organizations",
+          "type": "select",
+          "select": [
+            {
+              "text": "Yes",
+              "value": "true"
+            },
+            {
+              "text": "No",
+              "value": "false"
+            }
+          ]
         }
       ]
     },
