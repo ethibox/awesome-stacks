@@ -2955,7 +2955,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/keycloak.yml",
-        "commit": "bb9090eb8c5e85da5194977c426b56059c443585"
+        "commit": "9b4e9319cdc6898687ce26c804e84aea0c950aab"
       },
       "env": [
         {
