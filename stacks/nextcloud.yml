@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
 
 x-nextcloud: &nextcloud
-  image: nextcloud:${VERSION:-32.0.6-fpm-alpine}
+  image: nextcloud:${VERSION:-33.0.0-fpm-alpine}
   environment:
     - DOMAIN=${DOMAIN:-nextcloud.localhost}
     - MYSQL_HOST=mariadb
