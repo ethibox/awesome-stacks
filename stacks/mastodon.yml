@@ -10,37 +10,34 @@
 # tootctl cache clear # Clear cache
 # tootctl accounts modify --disable-2fa <username> # Disable 2FA
 
-x-defaults: &defaults
-  image: ghcr.io/mastodon/mastodon:${VERSION:-v4.5.2}
-  environment:
-    - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
-    - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
-    - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"DEFAULT_KEY"}
-    - OTP_SECRET=${OTP_SECRET}
-    - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
-    - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
-    - DB_HOST=${POSTGRES_HOST:-postgres}
-    - DB_PORT=${POSTGRES_PORT:-5432}
-    - DB_NAME=${POSTGRES_DB:-mastodon}
-    - DB_USER=${POSTGRES_USER:-mastodon}
-    - DB_PASS=${POSTGRES_PASSWORD:-myp@ssw0rd}
-    - REDIS_HOST=redis
-    - REDIS_PORT=6379
-    - REDIS_PASSWORD=
-    - SMTP_SERVER=${SMTP_SERVER:-smtp.mailgun.org}
-    - SMTP_PORT=${SMTP_PORT:-587}
-    - SMTP_LOGIN=${SMTP_LOGIN}
-    - SMTP_PASSWORD=${SMTP_PASSWORD}
-    - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
-    - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
-    - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-noreply@example.com}
-    - ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=${ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY}
-    - ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=${ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY}
-    - ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=${ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT}
-
 services:
   web:
-    <<: *defaults
+    image: &mastodon-image ghcr.io/mastodon/mastodon:${VERSION:-v4.5.2}
+    environment: &mastodon-environment
+      - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
+      - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"DEFAULT_KEY"}
+      - OTP_SECRET=${OTP_SECRET}
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+      - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+      - DB_HOST=${POSTGRES_HOST:-postgres}
+      - DB_PORT=${POSTGRES_PORT:-5432}
+      - DB_NAME=${POSTGRES_DB:-mastodon}
+      - DB_USER=${POSTGRES_USER:-mastodon}
+      - DB_PASS=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=
+      - SMTP_SERVER=${SMTP_SERVER:-smtp.mailgun.org}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_LOGIN=${SMTP_LOGIN}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-plain}
+      - SMTP_OPENSSL_VERIFY_MODE=${SMTP_OPENSSL_VERIFY_MODE:-none}
+      - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-noreply@example.com}
+      - ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=${ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY}
+      - ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=${ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY}
+      - ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=${ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT}
     command: bash -c "chown -R 991:991 /mastodon/public/system; rm -f /mastodon/tmp/pids/server.pid; rails db:migrate; rails assets:precompile; rails s -p 3000"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
@@ -62,8 +59,8 @@ services:
       - internal
 
   streaming:
-    <<: *defaults
     image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.5.2}
+    environment: *mastodon-environment
     command: node ./streaming
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
@@ -83,7 +80,8 @@ services:
       - internal
 
   sidekiq:
-    <<: *defaults
+    image: *mastodon-image
+    environment: *mastodon-environment
     command: bundle exec sidekiq
     volumes:
       - ${VOLUME_PATH}system:/mastodon/public/system
