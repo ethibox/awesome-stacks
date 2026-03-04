@@ -9,6 +9,8 @@ services:
       - TZ=Europe/Paris
       - HARDCOVER_TOKEN=${HARDCOVER_TOKEN}
       - NETWORK_SHARE_MODE=${NETWORK_SHARE_MODE:-false}
+    healthcheck:
+      disable: true
     deploy:
       resources:
         limits:
