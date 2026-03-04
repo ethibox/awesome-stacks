@@ -12,24 +12,25 @@ services:
         condition: on-failure
 
   n8n:
-    image: n8nio/n8n:${VERSION:-1.123.23}
-    environment:
+    image: &n8n-image n8nio/n8n:${VERSION:-2.10.3}
+    environment: &n8n-environment
       - NODE_ENV=production
       - N8N_PROTOCOL=${SCHEME:-https}
       - N8N_HOST=${DOMAIN:-n8n.localhost}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-Europe/Paris}
       - WEBHOOK_URL=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
       - VUE_APP_URL_BASE_API=${SCHEME:-https}://${DOMAIN:-n8n.localhost}/
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=postgres
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=${POSGRES_DATABASE:-n8n}
+      - DB_TYPE=${DB_TYPE:-postgresdb}
+      - DB_POSTGRESDB_PORT=${POSTGRES_PORT:-5432}
+      - DB_POSTGRESDB_HOST=${POSTGRES_HOST:-postgres}
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DATABASE:-n8n}
       - DB_POSTGRESDB_USER=${POSTGRES_USER:-n8n}
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - NODE_FUNCTION_ALLOW_EXTERNAL=${NODE_FUNCTION_ALLOW_EXTERNAL}
       - NODE_FUNCTION_ALLOW_BUILTIN=${NODE_FUNCTION_ALLOW_BUILTIN}
       - N8N_EMAIL_MODE=${N8N_EMAIL_MODE:-smtp}
       - N8N_SMTP_HOST=${SMTP_HOST}
-      - N8N_SMTP_PORT-${SMTP_PORT:-584}
+      - N8N_SMTP_PORT=${SMTP_PORT:-587}
       - N8N_SMTP_USER=${SMTP_USER}
       - N8N_SMTP_PASS=${SMTP_PASSWORD}
       - N8N_SMTP_SENDER=${SMTP_FROM:-noreply@example.com}
@@ -37,6 +38,12 @@ services:
       - N8N_PAYLOAD_SIZE_MAX=${N8N_PAYLOAD_SIZE_MAX:-16}
       - N8N_FORMDATA_FILE_SIZE_MAX=${N8N_FORMDATA_FILE_SIZE_MAX:-200}
       - N8N_DEFAULT_BINARY_DATA_MODE=${N8N_DEFAULT_BINARY_DATA_MODE:-default}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS=true
+      - EXECUTIONS_MODE=${EXECUTIONS_MODE:-queue}
+      - N8N_PROXY_HOPS=${N8N_PROXY_HOPS:-1}
+      - QUEUE_HEALTH_CHECK_ACTIVE=true
+      - QUEUE_BULL_REDIS_HOST=redis
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:
@@ -49,16 +56,45 @@ services:
         - traefik.http.routers.n8n-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.n8n-${NUMBER:-1}.service=n8n-${NUMBER:-1}
         - traefik.http.routers.n8n-${NUMBER:-1}.tls.certresolver=letsencrypt
-        - traefik.http.routers.n8n-${NUMBER:-1}.middlewares=n8n-${NUMBER:-1}
         - traefik.http.services.n8n-${NUMBER:-1}.loadbalancer.server.port=5678
-        - traefik.http.middlewares.n8n-${NUMBER:-1}.headers.customResponseHeaders.Access-Control-Allow-Origin=*
-        - traefik.http.middlewares.n8n-${NUMBER:-1}.headers.customResponseHeaders.Access-Control-Allow-Headers=Content-Type
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5678/healthz', res => res.statusCode === 200 ? process.exit(0) : process.exit(1))"]
     networks:
       - traefik
       - internal
+      - extranet
+
+  worker:
+    image: *n8n-image
+    command: worker
+    environment: *n8n-environment
+    volumes:
+      - ${VOLUME_PATH}n8n:/home/node/.n8n
+    deploy:
+      mode: replicated
+      replicas: ${WORKER_REPLICAS:-1}
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+      - extranet
+
+  redis:
+    image: redis:${REDIS_VERSION:-7-alpine}
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=n8n
       - POSTGRES_USER=n8n
@@ -76,6 +112,7 @@ services:
 
 volumes:
   n8n:
+  redis:
   postgres:
 
 networks:
@@ -85,3 +122,6 @@ networks:
   traefik:
     external: true
     name: traefik-net
+  extranet:
+    name: ${EXTRANET_NAME}
+    external: ${EXTRANET_EXTERNAL:-false}
