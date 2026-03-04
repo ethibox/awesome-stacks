@@ -38,7 +38,7 @@ services:
           memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
-        - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`)
+        - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`) && !ClientIP(`${IP:-127.0.0.1}`)
         - traefik.http.routers.maintenance-${NUMBER:-1}.priority=50
         - traefik.http.routers.maintenance-${NUMBER:-1}.entrypoints=${SCHEME:-https}
         - traefik.http.routers.maintenance-${NUMBER:-1}.service=maintenance-${NUMBER:-1}
