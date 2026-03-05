@@ -49,7 +49,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.mastodon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`)
         - traefik.http.routers.mastodon-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.mastodon-${NUMBER:-1}.service=mastodon-${NUMBER:-1}
         - traefik.http.routers.mastodon-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mastodon-${NUMBER:-1}.loadbalancer.server.port=3000
     volumes:
@@ -72,7 +71,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.rule=Host(`${DOMAIN:-mastodon.localhost}`) && PathPrefix(`/api/v1/streaming`)
         - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.service=mastodon-streaming-${NUMBER:-1}
         - traefik.http.routers.mastodon-streaming-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mastodon-streaming-${NUMBER:-1}.loadbalancer.server.port=4000
     networks:

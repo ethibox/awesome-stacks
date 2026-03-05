@@ -11,7 +11,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.scrumblr-${NUMBER:-1}.rule=Host(`${DOMAIN:-scrumblr.localhost}`)
         - traefik.http.routers.scrumblr-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.scrumblr-${NUMBER:-1}.service=scrumblr-${NUMBER:-1}
         - traefik.http.routers.scrumblr-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.scrumblr-${NUMBER:-1}.loadbalancer.server.port=1000
     networks:

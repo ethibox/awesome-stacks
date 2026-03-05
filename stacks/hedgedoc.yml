@@ -18,7 +18,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.hedgedoc-${NUMBER:-1}.rule=Host(`${DOMAIN:-hedgedoc.localhost}`)
         - traefik.http.routers.hedgedoc-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.hedgedoc-${NUMBER:-1}.service=hedgedoc-${NUMBER:-1}
         - traefik.http.routers.hedgedoc-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.hedgedoc-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

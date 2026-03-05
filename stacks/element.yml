@@ -90,7 +90,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/admin`)
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.service=element-synapse-admin-${NUMBER:-1}
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.middlewares=element-synapse-admin-${NUMBER:-1},element-synapse-admin_path-${NUMBER:-1}
         - traefik.http.services.element-synapse-admin-${NUMBER:-1}.loadbalancer.server.port=80

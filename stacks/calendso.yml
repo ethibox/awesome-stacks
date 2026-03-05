@@ -93,7 +93,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.calendso-${NUMBER:-1}.rule=Host(`${DOMAIN:-calendso.localhost}`)
         - traefik.http.routers.calendso-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.calendso-${NUMBER:-1}.service=calendso-${NUMBER:-1}
         - traefik.http.routers.calendso-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.calendso-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

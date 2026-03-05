@@ -22,7 +22,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
         - traefik.http.routers.grafana-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.grafana-${NUMBER:-1}.service=grafana-${NUMBER:-1}
         - traefik.http.routers.grafana-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
@@ -96,7 +95,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`) && PathPrefix(`/prometheus/`)
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.grafana-prom-${NUMBER:-1}.service=grafana-prom-${NUMBER:-1}
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth

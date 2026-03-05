@@ -34,7 +34,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.listmonk-${NUMBER:-1}.rule=Host(`${DOMAIN:-listmonk.localhost}`)
         - traefik.http.routers.listmonk-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.listmonk-${NUMBER:-1}.service=listmonk-${NUMBER:-1}
         - traefik.http.routers.listmonk-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.listmonk-${NUMBER:-1}.loadbalancer.server.port=9000
     networks:

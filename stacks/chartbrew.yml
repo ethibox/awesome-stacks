@@ -52,7 +52,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.chartbrew-${NUMBER:-1}.rule=Host(`${DOMAIN:-chartbrew.localhost}`)
         - traefik.http.routers.chartbrew-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.chartbrew-${NUMBER:-1}.service=chartbrew-${NUMBER:-1}
         - traefik.http.routers.chartbrew-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.chartbrew-${NUMBER:-1}.loadbalancer.server.port=4018
     networks:
@@ -67,7 +66,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.chartbrew-api-${NUMBER:-1}.rule=Host(`${DOMAIN:-chartbrew.localhost}`) && PathPrefix(`/api/`)
         - traefik.http.routers.chartbrew-api-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.chartbrew-api-${NUMBER:-1}.service=chartbrew-api-${NUMBER:-1}
         - traefik.http.routers.chartbrew-api-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.chartbrew-api-${NUMBER:-1}.middlewares=chartbrew-api-stripprefix-${NUMBER:-1}@docker
         - traefik.http.services.chartbrew-api-${NUMBER:-1}.loadbalancer.server.port=4019

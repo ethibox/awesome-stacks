@@ -16,7 +16,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.collabora-${NUMBER:-1}.rule=Host(`${DOMAIN:-collabora.localhost}`)
         - traefik.http.routers.collabora-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.collabora-${NUMBER:-1}.service=collabora-${NUMBER:-1}
         - traefik.http.routers.collabora-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.collabora-${NUMBER:-1}.middlewares=collabora-${NUMBER:-1}-headers
         - traefik.http.middlewares.collabora-${NUMBER:-1}-headers.headers.customRequestHeaders.X-Forwarded-Proto=https

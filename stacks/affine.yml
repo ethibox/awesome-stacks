@@ -20,7 +20,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.affine-${NUMBER:-1}.rule=Host(`${DOMAIN:-affine.localhost}`)
         - traefik.http.routers.affine-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.affine-${NUMBER:-1}.service=affine-${NUMBER:-1}
         - traefik.http.routers.affine-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.affine-${NUMBER:-1}.loadbalancer.server.port=3010
     networks:

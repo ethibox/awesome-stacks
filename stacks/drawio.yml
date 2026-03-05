@@ -11,7 +11,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.drawio-${NUMBER:-1}.rule=Host(`${DOMAIN:-drawio.localhost}`)
         - traefik.http.routers.drawio-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.drawio-${NUMBER:-1}.service=drawio-${NUMBER:-1}
         - traefik.http.routers.drawio-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.drawio-${NUMBER:-1}.loadbalancer.server.port=8080
 

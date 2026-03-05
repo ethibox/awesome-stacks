@@ -11,7 +11,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.adminer-${NUMBER:-1}.rule=Host(`${DOMAIN:-adminer.localhost}`)
         - traefik.http.routers.adminer-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.adminer-${NUMBER:-1}.service=adminer-${NUMBER:-1}
         - traefik.http.routers.adminer-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.adminer-${NUMBER:-1}.loadbalancer.server.port=8080
         - traefik.http.routers.adminer-${NUMBER:-1}.middlewares=adminer-${NUMBER:-1}-auth

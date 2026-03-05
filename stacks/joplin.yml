@@ -17,7 +17,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.joplin-${NUMBER:-1}.rule=Host(`${DOMAIN:-joplin.localhost}`)
         - traefik.http.routers.joplin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.joplin-${NUMBER:-1}.service=joplin-${NUMBER:-1}
         - traefik.http.routers.joplin-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.joplin-${NUMBER:-1}.loadbalancer.server.port=22300
     networks:

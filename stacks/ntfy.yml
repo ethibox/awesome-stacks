@@ -24,7 +24,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.ntfy-${NUMBER:-1}.rule=Host(`${DOMAIN:-ntfy.localhost}`)
         - traefik.http.routers.ntfy-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.ntfy-${NUMBER:-1}.service=ntfy-${NUMBER:-1}
         - traefik.http.routers.ntfy-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.ntfy-${NUMBER:-1}.loadbalancer.server.port=80
 

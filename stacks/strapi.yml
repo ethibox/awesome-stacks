@@ -20,7 +20,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.strapi-${NUMBER:-1}.rule=Host(`${DOMAIN:-strapi.localhost}`)
         - traefik.http.routers.strapi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.strapi-${NUMBER:-1}.service=strapi-${NUMBER:-1}
         - traefik.http.routers.strapi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.strapi-${NUMBER:-1}.loadbalancer.server.port=1337
     networks:

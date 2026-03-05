@@ -36,7 +36,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.framadate-${NUMBER:-1}.rule=Host(`${DOMAIN:-framadate.localhost}`)
         - traefik.http.routers.framadate-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.framadate-${NUMBER:-1}.service=framadate-${NUMBER:-1}
         - traefik.http.routers.framadate-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.framadate-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

@@ -32,7 +32,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.jitsi-${NUMBER:-1}.rule=Host(`${DOMAIN:-jitsi.localhost}`)
         - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.jitsi-${NUMBER:-1}.service=jitsi-${NUMBER:-1}
         - traefik.http.routers.jitsi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.jitsi-${NUMBER:-1}.middlewares=jitsi-${NUMBER:-1}-block
         - traefik.http.middlewares.jitsi-${NUMBER:-1}-block.replacepathregex.regex=^/(.*)(${JITSI_BLOCK_REGEX:-nonexistentpath})(.*)$$

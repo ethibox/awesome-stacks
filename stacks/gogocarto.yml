@@ -22,7 +22,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.gogocarto-${NUMBER:-1}.rule=Host(`${DOMAIN:-gogocarto.localhost}`)
         - traefik.http.routers.gogocarto-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.gogocarto-${NUMBER:-1}.service=gogocarto-${NUMBER:-1}
         - traefik.http.routers.gogocarto-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.gogocarto-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

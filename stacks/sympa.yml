@@ -27,7 +27,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.sympa-${NUMBER:-1}.rule=Host(`${DOMAIN:-sympa.localhost}`)
         - traefik.http.routers.sympa-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.sympa-${NUMBER:-1}.service=sympa-${NUMBER:-1}
         - traefik.http.routers.sympa-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.sympa-${NUMBER:-1}.middlewares=sympa-${NUMBER:-1}
         - traefik.http.services.sympa-${NUMBER:-1}.loadbalancer.server.port=80

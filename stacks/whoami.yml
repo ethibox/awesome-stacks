@@ -11,7 +11,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.whoami-${NUMBER:-1}.rule=Host(`${DOMAIN:-whoami.localhost}`)
         - traefik.http.routers.whoami-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.whoami-${NUMBER:-1}.service=whoami-${NUMBER:-1}
         - traefik.http.routers.whoami-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.whoami-${NUMBER:-1}.loadbalancer.server.port=${PORT:-80}
     networks:

@@ -24,7 +24,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.polr-${NUMBER:-1}.rule=Host(`${DOMAIN:-polr.localhost}`)
         - traefik.http.routers.polr-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.polr-${NUMBER:-1}.service=polr-${NUMBER:-1}
         - traefik.http.routers.polr-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.polr-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

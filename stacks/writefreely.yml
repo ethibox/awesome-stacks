@@ -31,7 +31,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.writefreely-${NUMBER:-1}.rule=Host(`${DOMAIN:-writefreely.localhost}`)
         - traefik.http.routers.writefreely-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.writefreely-${NUMBER:-1}.service=writefreely-${NUMBER:-1}
         - traefik.http.routers.writefreely-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.writefreely-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

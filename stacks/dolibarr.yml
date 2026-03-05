@@ -20,7 +20,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.dolibarr-${NUMBER:-1}.rule=Host(`${DOMAIN:-dolibarr.localhost}`)
         - traefik.http.routers.dolibarr-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.dolibarr-${NUMBER:-1}.service=dolibarr-${NUMBER:-1}
         - traefik.http.routers.dolibarr-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.dolibarr-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

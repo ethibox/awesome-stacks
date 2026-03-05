@@ -25,7 +25,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.photoprism-${NUMBER:-1}.rule=Host(`${DOMAIN:-photoprism.localhost}`)
         - traefik.http.routers.photoprism-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.photoprism-${NUMBER:-1}.service=photoprism-${NUMBER:-1}
         - traefik.http.routers.photoprism-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.photoprism-${NUMBER:-1}.loadbalancer.server.port=2342
     networks:

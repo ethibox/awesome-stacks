@@ -33,7 +33,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.invidious-${NUMBER:-1}.rule=Host(`${DOMAIN:-invidious.localhost}`)
         - traefik.http.routers.invidious-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.invidious-${NUMBER:-1}.service=invidious-${NUMBER:-1}
         - traefik.http.routers.invidious-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.invidious-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

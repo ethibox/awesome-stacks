@@ -53,7 +53,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.nextcloud-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud.localhost}`)
         - traefik.http.routers.nextcloud-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.nextcloud-${NUMBER:-1}.service=nextcloud-${NUMBER:-1}
         - traefik.http.routers.nextcloud-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.nextcloud-${NUMBER:-1}.middlewares=nextcloud-${NUMBER:-1}
         - traefik.http.services.nextcloud-${NUMBER:-1}.loadbalancer.server.port=80

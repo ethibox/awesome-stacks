@@ -32,7 +32,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.postiz-${NUMBER:-1}.rule=Host(`${DOMAIN:-postiz.localhost}`)
         - traefik.http.routers.postiz-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.postiz-${NUMBER:-1}.service=postiz-${NUMBER:-1}
         - traefik.http.routers.postiz-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.postiz-${NUMBER:-1}.loadbalancer.server.port=5000
     networks:

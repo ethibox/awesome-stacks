@@ -19,7 +19,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.moodle-${NUMBER:-1}.rule=Host(`${DOMAIN:-moodle.localhost}`)
         - traefik.http.routers.moodle-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.moodle-${NUMBER:-1}.service=moodle-${NUMBER:-1}
         - traefik.http.routers.moodle-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.moodle-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

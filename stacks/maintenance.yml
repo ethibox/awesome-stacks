@@ -41,7 +41,6 @@ services:
         - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`) && !ClientIP(`${IP:-127.0.0.1}`)
         - traefik.http.routers.maintenance-${NUMBER:-1}.priority=50
         - traefik.http.routers.maintenance-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.maintenance-${NUMBER:-1}.service=maintenance-${NUMBER:-1}
         - traefik.http.routers.maintenance-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.maintenance-${NUMBER:-1}.loadbalancer.server.port=80
         - traefik.http.routers.maintenance-${NUMBER:-1}.middlewares=maintenance-${NUMBER:-1}

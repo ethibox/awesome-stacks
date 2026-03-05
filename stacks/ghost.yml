@@ -28,7 +28,6 @@ services:
         - traefik.enable=true
         - traefik.http.routers.ghost-${NUMBER:-1}.rule=Host(`${DOMAIN:-ghost.localhost}`)
         - traefik.http.routers.ghost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
-        - traefik.http.routers.ghost-${NUMBER:-1}.service=ghost-${NUMBER:-1}
         - traefik.http.routers.ghost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.ghost-${NUMBER:-1}.loadbalancer.server.port=2368
     networks:
