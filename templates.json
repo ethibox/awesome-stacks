@@ -1906,7 +1906,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mobilizon.yml",
-        "commit": "dbc900d9244c0c48c98a5a56cdc8737c85d1ef72"
+        "commit": "be5ed2c1f8535ecff2b5f1dbea234a3777d97137"
       },
       "env": [
         {
