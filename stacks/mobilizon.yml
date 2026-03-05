@@ -13,7 +13,7 @@ services:
         condition: on-failure
 
   web:
-    image: ${IMAGE:-kaihuri/mobilizon}:${VERSION:-5.2.0}
+    image: ${IMAGE:-kaihuri/mobilizon}:${VERSION:-5.2.2}
     environment:
       - DOCKER=true
       - MIX_ENV=${MIX_ENV:-prod}
