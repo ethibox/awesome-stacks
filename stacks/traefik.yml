@@ -2,7 +2,7 @@
 
 services:
   traefik:
-    image: traefik:${VERSION:-v3.6.7}
+    image: traefik:${VERSION:-v3.6.10}
     command:
       - --log.level=${LOGLEVEL:-ERROR}
       - --core.defaultRuleSyntax=v2
