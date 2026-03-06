@@ -9,8 +9,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.filegator-${NUMBER:-1}.rule=Host(`${DOMAIN:-filegator.localhost}`)
-        - traefik.http.routers.filegator-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.filegator-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.filegator-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - internal

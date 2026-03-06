@@ -18,14 +18,10 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.minio-${NUMBER:-1}.rule=Host(`${DOMAIN:-minio.localhost}`)
-        - traefik.http.routers.minio-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.minio-${NUMBER:-1}.service=minio-${NUMBER:-1}
-        - traefik.http.routers.minio-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.minio-${NUMBER:-1}.loadbalancer.server.port=9000
         - traefik.http.routers.minio-console-${NUMBER:-1}.rule=Host(`${DOMAIN_CONSOLE:?}`)
-        - traefik.http.routers.minio-console-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.minio-console-${NUMBER:-1}.service=minio-console-${NUMBER:-1}
-        - traefik.http.routers.minio-console-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.minio-console-${NUMBER:-1}.loadbalancer.server.port=9001
 
 volumes:

@@ -11,8 +11,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.changedetection-${NUMBER:-1}.rule=Host(`${DOMAIN:-changedetection.localhost}`)
-        - traefik.http.routers.changedetection-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.changedetection-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.changedetection-${NUMBER:-1}.loadbalancer.server.port=5000
         - traefik.http.routers.changedetection-${NUMBER:-1}.middlewares=changedetection-${NUMBER:-1}-auth
         - traefik.http.middlewares.changedetection-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'

@@ -7,8 +7,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.whoogle-search-${NUMBER:-1}.rule=Host(`${DOMAIN:-whoogle-search.localhost}`)
-        - traefik.http.routers.whoogle-search-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.whoogle-search-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.whoogle-search-${NUMBER:-1}.loadbalancer.server.port=5000
 
 networks:

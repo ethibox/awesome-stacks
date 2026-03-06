@@ -18,8 +18,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.teable-${NUMBER:-1}.rule=Host(`${DOMAIN:-teable.localhost}`)
-        - traefik.http.routers.teable-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.teable-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.teable-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - internal

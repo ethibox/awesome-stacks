@@ -10,8 +10,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.adminer-${NUMBER:-1}.rule=Host(`${DOMAIN:-adminer.localhost}`)
-        - traefik.http.routers.adminer-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.adminer-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.adminer-${NUMBER:-1}.loadbalancer.server.port=8080
         - traefik.http.routers.adminer-${NUMBER:-1}.middlewares=adminer-${NUMBER:-1}-auth
         - traefik.http.middlewares.adminer-${NUMBER:-1}-auth.basicauth.users=${ADMIN_USERNAME:-admin}:${ADMIN_PASSWORD:-htpasswd}

@@ -27,8 +27,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.formbricks-${NUMBER:-1}.rule=Host(`${DOMAIN:-formbricks.localhost}`)
-        - traefik.http.routers.formbricks-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.formbricks-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.formbricks-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - internal

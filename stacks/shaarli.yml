@@ -10,8 +10,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.shaarli-${NUMBER:-1}.rule=Host(`${DOMAIN:-shaarli.localhost}`)
-        - traefik.http.routers.shaarli-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.shaarli-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.shaarli-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
       - internal

@@ -14,8 +14,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.portainer-${NUMBER:-1}.rule=Host(`${DOMAIN:-portainer.localhost}`)
-        - traefik.http.routers.portainer-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.portainer-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.portainer-${NUMBER:-1}.loadbalancer.server.port=9000
       mode: replicated
       replicas: 1

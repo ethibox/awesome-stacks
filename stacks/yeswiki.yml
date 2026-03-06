@@ -24,8 +24,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.yeswiki-${NUMBER:-1}.rule=Host(`${DOMAIN:-yeswiki.localhost}`)
-        - traefik.http.routers.yeswiki-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.yeswiki-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.yeswiki-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
       - traefik

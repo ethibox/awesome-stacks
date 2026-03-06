@@ -17,8 +17,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.fider-${NUMBER:-1}.rule=Host(`${DOMAIN:-fider.localhost}`)
-        - traefik.http.routers.fider-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.fider-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.fider-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - internal

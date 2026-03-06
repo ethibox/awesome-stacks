@@ -37,8 +37,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.directus-${NUMBER:-1}.rule=Host(`${DOMAIN:-directus.localhost}`)
-        - traefik.http.routers.directus-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.directus-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.directus-${NUMBER:-1}.loadbalancer.server.port=8055
     networks:
       - internal

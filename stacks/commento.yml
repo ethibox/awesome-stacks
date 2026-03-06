@@ -20,8 +20,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.commento-${NUMBER:-1}.rule=Host(`${DOMAIN:-commento.localhost}`)
-        - traefik.http.routers.commento-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.commento-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.commento-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - internal

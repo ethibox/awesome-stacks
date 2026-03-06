@@ -34,8 +34,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.booklore-${NUMBER:-1}.rule=Host(`${DOMAIN:-booklore.localhost}`)
-        - traefik.http.routers.booklore-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.booklore-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.booklore-${NUMBER:-1}.loadbalancer.server.port=6060
     networks:
       - internal

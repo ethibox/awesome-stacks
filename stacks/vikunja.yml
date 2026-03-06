@@ -17,8 +17,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.vikunja-${NUMBER:-1}.rule=Host(`${DOMAIN:-vikunja.localhost}`)
-        - traefik.http.routers.vikunja-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.vikunja-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.vikunja-${NUMBER:-1}.loadbalancer.server.port=3456
     networks:
       - internal

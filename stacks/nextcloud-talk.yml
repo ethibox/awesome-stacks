@@ -27,8 +27,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.rule=Host(`${DOMAIN:-nextcloud-talk.localhost}`)
-        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.nextcloud-talk-${NUMBER:-1}.middlewares=nextcloud-talk-welcome
         - traefik.http.services.nextcloud-talk-${NUMBER:-1}.loadbalancer.server.port=8081
         - traefik.http.middlewares.nextcloud-talk-welcome.replacepathregex.regex=^/$$

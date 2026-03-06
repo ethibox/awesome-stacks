@@ -20,8 +20,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.firefly-${NUMBER:-1}.rule=Host(`${DOMAIN:-firefly.localhost}`)
-        - traefik.http.routers.firefly-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.firefly-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.firefly-${NUMBER:-1}.loadbalancer.server.port=8080
     volumes:
       - ${VOLUME_PATH}storage:/var/www/firefly-iii/storage/

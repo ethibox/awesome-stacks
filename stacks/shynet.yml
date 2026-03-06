@@ -17,8 +17,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.shynet-${NUMBER:-1}.rule=Host(`${DOMAIN:-shynet.localhost}`)
-        - traefik.http.routers.shynet-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.shynet-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.shynet-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - internal

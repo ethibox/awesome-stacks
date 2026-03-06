@@ -38,8 +38,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.twenty-${NUMBER:-1}.rule=Host(`${DOMAIN:-twenty.localhost}`) || HostRegexp(`{subdomain:[a-z0-9-]+}.${DOMAIN:-twenty.localhost}`)
-        - traefik.http.routers.twenty-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.twenty-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.twenty-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - traefik

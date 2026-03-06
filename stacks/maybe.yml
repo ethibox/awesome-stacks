@@ -19,8 +19,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.maybe-${NUMBER:-1}.rule=Host(`${DOMAIN:-maybe.localhost}`)
-        - traefik.http.routers.maybe-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.maybe-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.maybe-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - internal

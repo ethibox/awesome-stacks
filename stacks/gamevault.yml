@@ -16,8 +16,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.gamevault-${NUMBER:-1}.rule=Host(`${DOMAIN:-gamevault.localhost}`)
-        - traefik.http.routers.gamevault-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.gamevault-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.gamevault-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - internal

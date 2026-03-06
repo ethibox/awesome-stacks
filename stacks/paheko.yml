@@ -9,8 +9,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.paheko-${NUMBER:-1}.rule=Host(`${DOMAIN:-paheko.localhost}`)
-        - traefik.http.routers.paheko-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.paheko-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.paheko-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
       - internal

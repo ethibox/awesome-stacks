@@ -31,8 +31,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.outline-${NUMBER:-1}.rule=Host(`${DOMAIN:-outline.localhost}`)
-        - traefik.http.routers.outline-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.outline-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.outline-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - internal

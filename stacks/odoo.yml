@@ -40,8 +40,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.odoo-${NUMBER:-1}.rule=Host(`${DOMAIN:-odoo.localhost}`)
-        - traefik.http.routers.odoo-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.odoo-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.odoo-${NUMBER:-1}.middlewares=odoo-${NUMBER:-1}
         - traefik.http.services.odoo-${NUMBER:-1}.loadbalancer.server.port=8069
         - traefik.http.middlewares.odoo-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=https

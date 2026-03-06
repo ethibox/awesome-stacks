@@ -21,8 +21,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
-        - traefik.http.routers.grafana-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.grafana-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
       - internal
@@ -94,8 +92,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`) && PathPrefix(`/prometheus/`)
-        - traefik.http.routers.grafana-prom-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.grafana-prom-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth
         - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROM_USER:-admin}:${PROM_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'

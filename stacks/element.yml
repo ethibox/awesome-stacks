@@ -29,8 +29,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`)
-        - traefik.http.routers.element-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.element-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.element-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
       - traefik
@@ -70,8 +68,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-synapse-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && (PathPrefix(`/_matrix`) || PathPrefix(`/_synapse`))
-        - traefik.http.routers.element-synapse-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.element-synapse-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.element-synapse-${NUMBER:-1}.loadbalancer.server.port=8008
     networks:
       - traefik
@@ -88,8 +84,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/admin`)
-        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.middlewares=element-synapse-admin-${NUMBER:-1},element-synapse-admin_path-${NUMBER:-1}
         - traefik.http.services.element-synapse-admin-${NUMBER:-1}.loadbalancer.server.port=80
         - traefik.http.middlewares.element-synapse-admin-${NUMBER:-1}.redirectregex.regex=^(.*)/admin/?

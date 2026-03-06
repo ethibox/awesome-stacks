@@ -17,8 +17,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.registry-${NUMBER:-1}.rule=Host(`${DOMAIN:-registry.localhost}`)
-        - traefik.http.routers.registry-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.registry-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.registry-${NUMBER:-1}.loadbalancer.server.port=5000
     secrets:
       - registry-htpasswd

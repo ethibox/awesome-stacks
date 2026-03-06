@@ -41,8 +41,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.zammad-${NUMBER:-1}.rule=Host(`${DOMAIN:-zammad.localhost}`)
-        - traefik.http.routers.zammad-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.zammad-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.zammad-${NUMBER:-1}.loadbalancer.server.port=8080
         - traefik.http.routers.zammad-${NUMBER:-1}.middlewares=zammad-${NUMBER:-1}
         - traefik.http.middlewares.zammad-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=https

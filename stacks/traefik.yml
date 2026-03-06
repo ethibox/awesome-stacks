@@ -13,6 +13,7 @@ services:
       - --providers.file.directory=/config
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
+      - --entrypoints.https.http.tls.certResolver=letsencrypt
       - --entrypoints.https.http.middlewares=${MIDDLEWARES}
       - --entrypoints.https.address=:443
       - --entrypoints.http.address=:80

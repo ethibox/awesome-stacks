@@ -11,8 +11,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.jellyfin-${NUMBER:-1}.rule=Host(`${DOMAIN:-jellyfin.localhost}`)
-        - traefik.http.routers.jellyfin-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.jellyfin-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.jellyfin-${NUMBER:-1}.loadbalancer.server.port=8096
 
 networks:

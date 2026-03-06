@@ -10,8 +10,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.ethercalc-${NUMBER:-1}.rule=Host(`${DOMAIN:-ethercalc.localhost}`)
-        - traefik.http.routers.ethercalc-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.ethercalc-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.ethercalc-${NUMBER:-1}.loadbalancer.server.port=8000
 
   redis:

@@ -18,8 +18,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.phpbb-${NUMBER:-1}.rule=Host(`${DOMAIN:-phpbb.localhost}`)
-        - traefik.http.routers.phpbb-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.phpbb-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.phpbb-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - traefik

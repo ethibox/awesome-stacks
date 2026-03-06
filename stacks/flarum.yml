@@ -34,8 +34,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.flarum-${NUMBER:-1}.rule=Host(`${DOMAIN:-flarum.localhost}`)
-        - traefik.http.routers.flarum-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.flarum-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.flarum-${NUMBER:-1}.loadbalancer.server.port=8888
     networks:
       - internal

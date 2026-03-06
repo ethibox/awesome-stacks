@@ -21,8 +21,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.glitchtip-${NUMBER:-1}.rule=Host(`${DOMAIN:-glitchtip.localhost}`)
-        - traefik.http.routers.glitchtip-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.glitchtip-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.glitchtip-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - traefik

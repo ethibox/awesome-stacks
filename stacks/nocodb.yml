@@ -23,8 +23,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.nocodb-${NUMBER:-1}.rule=Host(`${DOMAIN:-nocodb.localhost}`)
-        - traefik.http.routers.nocodb-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.nocodb-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.nocodb-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - internal

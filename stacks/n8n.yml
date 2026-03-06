@@ -53,8 +53,6 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.n8n-${NUMBER:-1}.rule=Host(`${DOMAIN:-n8n.localhost}`)
-        - traefik.http.routers.n8n-${NUMBER:-1}.entrypoints=https
-        - traefik.http.routers.n8n-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.n8n-${NUMBER:-1}.loadbalancer.server.port=5678
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:5678/healthz', res => res.statusCode === 200 ? process.exit(0) : process.exit(1))"]
