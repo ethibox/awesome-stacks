@@ -7,7 +7,7 @@ services:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:8080 || exit 1"]
     environment:
       - NC_DB=pg://postgres:5432?u=nocodb&p=myp@ssw0rd&d=nocodb
-      - NC_PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-nocodb.localhost}
+      - NC_PUBLIC_URL=https://${DOMAIN:-nocodb.localhost}
       - NC_DISABLE_TELE=true
       - NC_INVITE_ONLY_SIGNUP=${NC_INVITE_ONLY_SIGNUP:-true}
       - NC_SMTP_FROM=${SMTP_FROM:-noreply@example.com}
@@ -23,7 +23,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.nocodb-${NUMBER:-1}.rule=Host(`${DOMAIN:-nocodb.localhost}`)
-        - traefik.http.routers.nocodb-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.nocodb-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.nocodb-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.nocodb-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

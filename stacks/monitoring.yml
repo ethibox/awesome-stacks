@@ -11,7 +11,7 @@ services:
       - GF_SMTP_HOST=${SMTP_HOST:-smtp.example.com:587}
       - GF_SMTP_PASSWORD=${SMTP_PASSWORD:-myp@ssw0rd}
       - GF_SMTP_USER=${SMTP_USERNAME:-noreply@example.com}
-      - GF_SERVER_ROOT_URL=${SCHEME:-https}://${DOMAIN:-grafana.localhost}
+      - GF_SERVER_ROOT_URL=https://${DOMAIN:-grafana.localhost}
     volumes:
       - ${VOLUME_PATH}grafana:/var/lib/grafana
     deploy:
@@ -21,7 +21,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
-        - traefik.http.routers.grafana-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grafana-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.grafana-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:
@@ -86,7 +86,7 @@ services:
         --web.console.libraries=/usr/share/prometheus/console_libraries \
         --web.console.templates=/usr/share/prometheus/consoles \
         --web.route-prefix=/prometheus \
-        --web.external-url=${SCHEME:-https}://${DOMAIN:-grafana.localhost}/prometheus
+        --web.external-url=https://${DOMAIN:-grafana.localhost}/prometheus
     volumes:
       - ${VOLUME_PATH}prometheus:/prometheus
       - ${VOLUME_PATH}config:/etc/prometheus/
@@ -94,7 +94,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`) && PathPrefix(`/prometheus/`)
-        - traefik.http.routers.grafana-prom-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grafana-prom-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
         - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth

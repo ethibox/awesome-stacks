@@ -4,9 +4,9 @@ services:
   web:
     image: ghcr.io/gitroomhq/postiz-app:${VERSION:-latest}
     environment:
-      - MAIN_URL=${SCHEME:-https}://${DOMAIN:-postiz.localhost}
-      - FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-postiz.localhost}
-      - NEXT_PUBLIC_BACKEND_URL=${SCHEME:-https}://${DOMAIN:-postiz.localhost}/api
+      - MAIN_URL=https://${DOMAIN:-postiz.localhost}
+      - FRONTEND_URL=https://${DOMAIN:-postiz.localhost}
+      - NEXT_PUBLIC_BACKEND_URL=https://${DOMAIN:-postiz.localhost}/api
       - JWT_SECRET=${JWT_SECRET:-mys3cr3t}
       - DATABASE_URL=postgresql://postiz:myp@ssw0rd@postgres:5432/postiz
       - REDIS_URL=redis://redis:6379
@@ -31,7 +31,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.postiz-${NUMBER:-1}.rule=Host(`${DOMAIN:-postiz.localhost}`)
-        - traefik.http.routers.postiz-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.postiz-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.postiz-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.postiz-${NUMBER:-1}.loadbalancer.server.port=5000
     networks:

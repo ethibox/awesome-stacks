@@ -22,7 +22,7 @@ services:
     environment:
       - MM_SQLSETTINGS_DATASOURCE=postgres://mattermost:myp@ssw0rd@postgres:5432/mattermost?sslmode=disable&connect_timeout=10
       - MM_SERVICESETTINGS_ENABLELOCALMODE=${MM_SERVICESETTINGS_ENABLELOCALMODE:-true}
-      - MM_SERVICESETTINGS_SITEURL=${SCHEME:-https}://${DOMAIN:-mattermost.localhost}
+      - MM_SERVICESETTINGS_SITEURL=https://${DOMAIN:-mattermost.localhost}
       - MM_SERVICESETTINGS_ENABLEAPICHANNELDELETION=${ENABLEAPICHANNELDELETION:-true}
       - MM_FILESETTINGS_MAXFILESIZE=${MM_FILESETTINGS_MAXFILESIZE:-104857600}
       - MM_LOCALIZATIONSETTINGS_DEFAULTCLIENTLOCALE=${LOCALE:-fr}
@@ -50,7 +50,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mattermost-${NUMBER:-1}.rule=Host(`${DOMAIN:-mattermost.localhost}`)
-        - traefik.http.routers.mattermost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mattermost-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.mattermost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mattermost-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

@@ -9,7 +9,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.jackett-${NUMBER:-1}.rule=Host(`${DOMAIN:-jackett.localhost}`)
-        - traefik.http.routers.jackett-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.jackett-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.jackett-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.jackett-${NUMBER:-1}.loadbalancer.server.port=9117
     networks:

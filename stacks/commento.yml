@@ -4,7 +4,7 @@ services:
   server:
     image: ${IMAGE:-registry.gitlab.com/commento/commento}:${VERSION:-latest}
     environment:
-      - COMMENTO_ORIGIN=${SCHEME:-https}://${DOMAIN:-commento.localhost}
+      - COMMENTO_ORIGIN=https://${DOMAIN:-commento.localhost}
       - COMMENTO_PORT=8080
       - COMMENTO_POSTGRES=postgres://commento:myp@ssw0rd@postgres:5432/commento?sslmode=disable
       - COMMENTO_FORBID_NEW_OWNERS=${COMMENTO_FORBID_NEW_OWNERS:-false}
@@ -20,7 +20,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.commento-${NUMBER:-1}.rule=Host(`${DOMAIN:-commento.localhost}`)
-        - traefik.http.routers.commento-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.commento-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.commento-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.commento-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

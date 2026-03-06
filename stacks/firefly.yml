@@ -15,12 +15,12 @@ services:
       - APP_ENV=${APP_ENV:-local}
       - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
       - APP_KEY=${APP_KEY:-S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly}
-      - APP_URL=${SCHEME:-https}://${DOMAIN:-firefly.localhost}
+      - APP_URL=https://${DOMAIN:-firefly.localhost}
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.firefly-${NUMBER:-1}.rule=Host(`${DOMAIN:-firefly.localhost}`)
-        - traefik.http.routers.firefly-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.firefly-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.firefly-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.firefly-${NUMBER:-1}.loadbalancer.server.port=8080
     volumes:

@@ -12,12 +12,12 @@ services:
       - ALLOWED_HOSTS=${DOMAIN:-shynet.localhost}
       - ACCOUNT_SIGNUPS_ENABLED=${ACCOUNT_SIGNUPS_ENABLED:-False}
       - ACCOUNT_EMAIL_VERIFICATION=${ACCOUNT_EMAIL_VERIFICATION:-none}
-      - CSRF_TRUSTED_ORIGINS=${SCHEME:-https}://${DOMAIN:-shynet.localhost}
+      - CSRF_TRUSTED_ORIGINS=https://${DOMAIN:-shynet.localhost}
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.shynet-${NUMBER:-1}.rule=Host(`${DOMAIN:-shynet.localhost}`)
-        - traefik.http.routers.shynet-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.shynet-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.shynet-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.shynet-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

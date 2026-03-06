@@ -4,7 +4,7 @@ services:
   formbricks:
     image: formbricks/formbricks:${VERSION:-2.6.0}
     environment:
-      - WEBAPP_URL=${SCHEME:-https}://${DOMAIN:-formbricks.localhost}
+      - WEBAPP_URL=https://${DOMAIN:-formbricks.localhost}
       - DATABASE_URL=postgresql://formbricks:myp@ssw0rd@postgres:5432/formbricks?schema=public
       - MAIL_FROM=${SMTP_FROM:-noreply@example.com}
       - SMTP_HOST=${SMTP_HOST:-smtp.example.com}
@@ -27,7 +27,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.formbricks-${NUMBER:-1}.rule=Host(`${DOMAIN:-formbricks.localhost}`)
-        - traefik.http.routers.formbricks-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.formbricks-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.formbricks-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.formbricks-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

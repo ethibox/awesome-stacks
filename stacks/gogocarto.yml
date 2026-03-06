@@ -10,7 +10,7 @@ services:
     environment:
       - APP_ENV=${APP_ENV:-prod}
       - APP_DEBUG=${APP_DEBUG:-0}
-      - BASE_PROTOCOL=${SCHEME:-https}
+      - BASE_PROTOCOL=https
       - BASE_URL=${DOMAIN:-gogocarto.localhost}
       - MAILER_URL=smtp://${SMTP_HOST}:${SMTP_PORT:-587}?encryption=${SMTP_ENCRYPTION:-tls}&auth_mode=login&username=${SMTP_USERNAME}&password=${SMTP_PASSWORD}
       - FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
@@ -21,7 +21,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.gogocarto-${NUMBER:-1}.rule=Host(`${DOMAIN:-gogocarto.localhost}`)
-        - traefik.http.routers.gogocarto-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.gogocarto-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.gogocarto-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.gogocarto-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

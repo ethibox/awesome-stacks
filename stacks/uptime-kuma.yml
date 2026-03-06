@@ -9,7 +9,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.uptime-kuma-${NUMBER:-1}.rule=Host(`${DOMAIN:-uptime-kuma.localhost}`)
-        - traefik.http.routers.uptime-kuma-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.uptime-kuma-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.uptime-kuma-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.uptime-kuma-${NUMBER:-1}.loadbalancer.server.port=3001
 

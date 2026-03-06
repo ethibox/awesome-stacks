@@ -3,7 +3,7 @@
 x-glitchtip: &glitchtip
   image: glitchtip/glitchtip:${VERSION:-v5.2.1}
   environment:
-    - GLITCHTIP_DOMAIN=${SCHEME:-https}://${DOMAIN:-glitchtip.localhost}
+    - GLITCHTIP_DOMAIN=https://${DOMAIN:-glitchtip.localhost}
     - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
     - EMAIL_URL=smtp://${SMTP_USER}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT}
     - CELERY_WORKER_CONCURRENCY=${CELERY_WORKER_CONCURRENCY:-1}
@@ -21,7 +21,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.glitchtip-${NUMBER:-1}.rule=Host(`${DOMAIN:-glitchtip.localhost}`)
-        - traefik.http.routers.glitchtip-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.glitchtip-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.glitchtip-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.glitchtip-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

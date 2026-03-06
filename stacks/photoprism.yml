@@ -10,7 +10,7 @@ services:
       - PHOTOPRISM_ADMIN_USER=${ADMIN_USER:-admin}
       - PHOTOPRISM_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - PHOTOPRISM_AUTH_MODE=password
-      - PHOTOPRISM_SITE_URL=${SCHEME:-https}://${DOMAIN:-photoprism.localhost}
+      - PHOTOPRISM_SITE_URL=https://${DOMAIN:-photoprism.localhost}
       - PHOTOPRISM_DATABASE_DRIVER=mysql
       - PHOTOPRISM_DATABASE_SERVER=mariadb:3306
       - PHOTOPRISM_DATABASE_NAME=photoprism
@@ -24,7 +24,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.photoprism-${NUMBER:-1}.rule=Host(`${DOMAIN:-photoprism.localhost}`)
-        - traefik.http.routers.photoprism-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.photoprism-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.photoprism-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.photoprism-${NUMBER:-1}.loadbalancer.server.port=2342
     networks:

@@ -34,7 +34,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.peertube-${NUMBER:-1}.rule=Host(`${DOMAIN:-peertube.localhost}`)
-        - traefik.http.routers.peertube-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.peertube-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.peertube-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.peertube-${NUMBER:-1}.loadbalancer.server.port=9000
     networks:

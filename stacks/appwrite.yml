@@ -29,7 +29,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.appwrite-${NUMBER:-1}.rule=Host(`${DOMAIN:-appwrite.localhost}`)
-        - traefik.http.routers.appwrite-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.appwrite-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.appwrite-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.appwrite-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

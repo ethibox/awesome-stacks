@@ -14,12 +14,12 @@ services:
       - CP_REDIS_HOST=redis
       - CP_REDIS_PASSWORD=myp@ssw0rd
       - CP_ANALYTICS_SALT=${CP_ANALYTICS_SALT:-changeme}
-      - CP_BASEURL=${SCHEME:-https}://${DOMAIN:-castopod.localhost}
+      - CP_BASEURL=https://${DOMAIN:-castopod.localhost}
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.castopod-${NUMBER:-1}.rule=Host(`${DOMAIN:-castopod.localhost}`)
-        - traefik.http.routers.castopod-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.castopod-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.castopod-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.castopod-${NUMBER:-1}.loadbalancer.server.port=8000
     networks:

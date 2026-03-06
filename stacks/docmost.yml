@@ -5,7 +5,7 @@ services:
     image: docmost/docmost:${VERSION:-0.8.1}
     environment:
       - APP_SECRET=${APP_SECRET:-UWnum8qzylZ4unS36YjNnTsQlxRX14bg}
-      - APP_URL=${SCHEME:-https}://${DOMAIN:-docmost.localhost}
+      - APP_URL=https://${DOMAIN:-docmost.localhost}
       - DATABASE_URL=postgresql://docmost:myp%40ssw0rd@postgres:5432/docmost?schema=public
       - REDIS_URL=redis://redis:6379
     volumes:
@@ -14,7 +14,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.docmost-${NUMBER:-1}.rule=Host(`${DOMAIN:-docmost.localhost}`)
-        - traefik.http.routers.docmost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.docmost-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.docmost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.docmost-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

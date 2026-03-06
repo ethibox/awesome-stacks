@@ -10,14 +10,14 @@ services:
       - VIKUNJA_DATABASE_DATABASE=vikunja
       - VIKUNJA_DATABASE_PASSWORD=myp@ssw0rd
       - VIKUNJA_SERVICE_JWTSECRET=${VIKUNJA_SERVICE_JWTSECRET:-mys3cr3t}
-      - VIKUNJA_SERVICE_PUBLICURL=${SCHEME:-https}://${DOMAIN:-vikunja.localhost}
+      - VIKUNJA_SERVICE_PUBLICURL=https://${DOMAIN:-vikunja.localhost}
     volumes:
       - ${VOLUME_PATH}files:/app/vikunja/files
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.vikunja-${NUMBER:-1}.rule=Host(`${DOMAIN:-vikunja.localhost}`)
-        - traefik.http.routers.vikunja-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.vikunja-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.vikunja-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.vikunja-${NUMBER:-1}.loadbalancer.server.port=3456
     networks:

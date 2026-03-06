@@ -14,7 +14,7 @@ services:
       - JIGASI_XMPP_PASSWORD=${JIGASI_XMPP_PASSWORD}
       - JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
       - JIBRI_RECORDER_PASSWORD=${JIBRI_RECORDER_PASSWORD}
-      - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-jitsi.localhost}
+      - PUBLIC_URL=https://${DOMAIN:-jitsi.localhost}
       - VIDEOBRIDGE_MAX_MEMORY=${VIDEOBRIDGE_MAX_MEMORY:-2048m}
       - ENABLE_HTTP_REDIRECT=0
       - ENABLE_LETS_ENCRYPT=0
@@ -31,7 +31,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.jitsi-${NUMBER:-1}.rule=Host(`${DOMAIN:-jitsi.localhost}`)
-        - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.jitsi-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.jitsi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.jitsi-${NUMBER:-1}.middlewares=jitsi-${NUMBER:-1}-block
         - traefik.http.middlewares.jitsi-${NUMBER:-1}-block.replacepathregex.regex=^/(.*)(${JITSI_BLOCK_REGEX:-nonexistentpath})(.*)$$

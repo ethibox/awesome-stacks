@@ -7,7 +7,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.rsshub-${NUMBER:-1}.rule=Host(`${DOMAIN:-rsshub.localhost}`)
-        - traefik.http.routers.rsshub-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.rsshub-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.rsshub-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.rsshub-${NUMBER:-1}.loadbalancer.server.port=1200
 

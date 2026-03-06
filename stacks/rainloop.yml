@@ -9,7 +9,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.rainloop-${NUMBER:-1}.rule=Host(`${DOMAIN:-rainloop.localhost}`)
-        - traefik.http.routers.rainloop-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.rainloop-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.rainloop-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.rainloop-${NUMBER:-1}.loadbalancer.server.port=8888
 

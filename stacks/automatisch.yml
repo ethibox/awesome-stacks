@@ -11,10 +11,10 @@ services:
       - POSTGRES_DATABASE=automatisch
       - POSTGRES_USERNAME=automatisch
       - POSTGRES_PASSWORD=myp@ssw0rd
-      - PROTOCOL=${SCHEME:-https}
+      - PROTOCOL=https
       - HOST=${DOMAIN:-automatisch.localhost}
-      - API_URL=${SCHEME:-https}://${DOMAIN:-automatisch.localhost}
-      - WEB_APP_URL=${SCHEME:-https}://${DOMAIN:-automatisch.localhost}
+      - API_URL=https://${DOMAIN:-automatisch.localhost}
+      - WEB_APP_URL=https://${DOMAIN:-automatisch.localhost}
       - ENCRYPTION_KEY=${ENCRYPTION_KEY:-c471841e34193bc1903d9cf9bf58cab7ebae6c1c9c095dff75cb8f3a80771b84}
       - WEBHOOK_SECRET_KEY=${WEBHOOK_SECRET_KEY:-c9c179f8de7a14a4ecd14dc2c5097905f7084e65f3821e431e2b28a2fde32e9a}
       - APP_SECRET_KEY=${APP_SECRET_KEY:-22efcd64c37b2f690868a0cd7adb1069584adf5d7a1ee0c4f6e2654339d2e399}
@@ -24,7 +24,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.automatisch-${NUMBER:-1}.rule=Host(`${DOMAIN:-automatisch.localhost}`)
-        - traefik.http.routers.automatisch-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.automatisch-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.automatisch-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.automatisch-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

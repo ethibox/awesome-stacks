@@ -14,7 +14,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.invoiceninja-${NUMBER:-1}.rule=Host(`${DOMAIN:-invoiceninja.localhost}`)
-        - traefik.http.routers.invoiceninja-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.invoiceninja-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.invoiceninja-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.invoiceninja-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
@@ -30,7 +30,7 @@ services:
       - APP_LOCALE=fr
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_URL=${SCHEME:-https}://${DOMAIN:-invoiceninja.localhost}
+      - APP_URL=https://${DOMAIN:-invoiceninja.localhost}
       - REQUIRE_HTTPS=${REQUIRE_HTTPS:-true}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_CIPHER=AES-256-CBC

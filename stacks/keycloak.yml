@@ -35,7 +35,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.keycloak-${NUMBER:-1}.rule=Host(`${DOMAIN:-keycloak.localhost}`)
-        - traefik.http.routers.keycloak-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.keycloak-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.keycloak-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.keycloak-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

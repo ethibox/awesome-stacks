@@ -4,7 +4,7 @@ services:
   web:
     image: vaultwarden/server:${VERSION:-1.33.2}
     environment:
-      - DOMAIN=${SCHEME:-https}://${DOMAIN:-vaultwarden.localhost}
+      - DOMAIN=https://${DOMAIN:-vaultwarden.localhost}
       - ADMIN_TOKEN=${ADMIN_TOKEN} # echo -n "MySecretPassword" | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1
     volumes:
       - ${VOLUME_PATH}data:/data
@@ -12,7 +12,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.vaultwarden-${NUMBER:-1}.rule=Host(`${DOMAIN:-vaultwarden.localhost}`)
-        - traefik.http.routers.vaultwarden-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.vaultwarden-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.vaultwarden-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.vaultwarden-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

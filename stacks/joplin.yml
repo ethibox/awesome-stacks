@@ -11,12 +11,12 @@ services:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=joplin
       - POSTGRES_PORT=5432
-      - APP_BASE_URL=${SCHEME:-https}://${DOMAIN:-joplin.localhost}
+      - APP_BASE_URL=https://${DOMAIN:-joplin.localhost}
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.joplin-${NUMBER:-1}.rule=Host(`${DOMAIN:-joplin.localhost}`)
-        - traefik.http.routers.joplin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.joplin-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.joplin-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.joplin-${NUMBER:-1}.loadbalancer.server.port=22300
     networks:

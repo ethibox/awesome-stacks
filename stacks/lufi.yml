@@ -26,7 +26,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.lufi-${NUMBER:-1}.rule=Host(`${DOMAIN:-lufi.localhost}`)
-        - traefik.http.routers.lufi-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.lufi-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.lufi-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.lufi-${NUMBER:-1}.loadbalancer.server.port=8081
     networks:

@@ -6,7 +6,7 @@
 x-defaults: &defaults
   environment:
     - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"replace_with_lengthy_secure_hex"}  # bundle exec rake secret
-    - FRONTEND_URL=${SCHEME:-https}://${DOMAIN:-chatwoot.localhost}
+    - FRONTEND_URL=https://${DOMAIN:-chatwoot.localhost}
     - NODE_ENV=${NODE_ENV:-production}
     - RAILS_ENV=${RAILS_ENV:-production}
     - INSTALLATION_ENV=docker
@@ -42,7 +42,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.chatwoot-${NUMBER:-1}.rule=Host(`${DOMAIN:-chatwoot.localhost}`)
-        - traefik.http.routers.chatwoot-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.chatwoot-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.chatwoot-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.chatwoot-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

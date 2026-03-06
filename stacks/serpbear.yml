@@ -6,7 +6,7 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/app/data
     environment:
-      - NEXT_PUBLIC_APP_URL=${SCHEME:-https}://${DOMAIN:-serpbear.localhost}
+      - NEXT_PUBLIC_APP_URL=https://${DOMAIN:-serpbear.localhost}
       - USER=${ADMIN_USERNAME:-admin}
       - PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - SECRET=${SECRET:-4715aed3216f7b0a38e6b534a958362654e96d10fbc04700770d572af3dce43625dd}
@@ -15,7 +15,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.serpbear-${NUMBER:-1}.rule=Host(`${DOMAIN:-serpbear.localhost}`)
-        - traefik.http.routers.serpbear-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.serpbear-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.serpbear-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.serpbear-${NUMBER:-1}.loadbalancer.server.port=3000
 

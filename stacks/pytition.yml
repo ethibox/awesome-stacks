@@ -34,7 +34,7 @@ services:
       - EMAIL_USE_TLS=${SMTP_TLS:-True}
       - EMAIL_HOST_PASSWORD=${SMTP_PASSWORD}
       - DEFAULT_FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
-      - CSRF_TRUSTED_ORIGINS=${SCHEME:-https}://${DOMAIN:-pytition.localhost}
+      - CSRF_TRUSTED_ORIGINS=https://${DOMAIN:-pytition.localhost}
       - DJANGO_SETTINGS_MODULE=config.docker_config
       - PYTHONPATH=/
       - DOMAIN=${DOMAIN:-pytition.localhost}
@@ -48,7 +48,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.pytition-${NUMBER:-1}.rule=Host(`${DOMAIN:-pytition.localhost}`)
-        - traefik.http.routers.pytition-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.pytition-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.pytition-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.pytition-${NUMBER:-1}.loadbalancer.server.port=8000
     networks:

@@ -4,7 +4,7 @@ services:
   app:
     image: getfider/fider:${VERSION:-main}
     environment:
-      - BASE_URL=${SCHEME:-https}://${DOMAIN:-fider.localhost}
+      - BASE_URL=https://${DOMAIN:-fider.localhost}
       - DATABASE_URL=postgres://fider:myp@ssw0rd@postgres:5432/fider?sslmode=disable
       - JWT_SECRET=${JWT_SECRET:-VERY_STRONG_SECRET_SHOULD_BE_USED_HERE}
       - EMAIL_NOREPLY=${SMTP_FROM:-noreply@example.com}
@@ -17,7 +17,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.fider-${NUMBER:-1}.rule=Host(`${DOMAIN:-fider.localhost}`)
-        - traefik.http.routers.fider-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.fider-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.fider-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.fider-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

@@ -4,7 +4,7 @@ services:
   web:
     image: searx/searx:${VERSION:-latest}
     environment:
-      - BASE_URL=${SCHEME:-https}://${DOMAIN:-searx.localhost}
+      - BASE_URL=https://${DOMAIN:-searx.localhost}
       - BIND_ADDRESS=0.0.0.0:8080
     deploy:
       resources:
@@ -13,7 +13,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.searx-${NUMBER:-1}.rule=Host(`${DOMAIN:-searx.localhost}`)
-        - traefik.http.routers.searx-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.searx-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.searx-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.searx-${NUMBER:-1}.loadbalancer.server.port=8080
 

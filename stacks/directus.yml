@@ -29,7 +29,7 @@ services:
       - EMAIL_TRANSPORT=${EMAIL_TRANSPORT:-smtp}
       - EMAIL_FROM=${EMAIL_FROM}
       - LOG_LEVEL=${LOG_LEVEL:-info}
-      - PUBLIC_URL=${SCHEME:-https}://${DOMAIN:-directus.localhost}
+      - PUBLIC_URL=https://${DOMAIN:-directus.localhost}
     volumes:
       - ${VOLUME_PATH}extensions:/directus/extensions
       - ${VOLUME_PATH}uploads:/directus/uploads
@@ -37,7 +37,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.directus-${NUMBER:-1}.rule=Host(`${DOMAIN:-directus.localhost}`)
-        - traefik.http.routers.directus-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.directus-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.directus-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.directus-${NUMBER:-1}.loadbalancer.server.port=8055
     networks:

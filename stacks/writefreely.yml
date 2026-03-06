@@ -12,7 +12,7 @@ services:
         if [ "${DISABLE_ROBOTS:-false}" = "true" ]; then
           wget -O /go/static/robots.txt https://pastebin.com/raw/tqR8CFkZ
         fi
-        sed -i -e s%#APP_URL%${SCHEME:-https}://${DOMAIN:-writefreely.localhost}%g /go/config.ini
+        sed -i -e s%#APP_URL%https://${DOMAIN:-writefreely.localhost}%g /go/config.ini
         sed -i -e s/#APP_OPENREGISTRATION/${APP_OPENREGISTRATION:-true}/g /go/config.ini
         sed -i -e s/#APP_FEDERATION/${APP_FEDERATION:-true}/g /go/config.ini
         sed -i -e s/#APP_THEME/${APP_THEME:-write}/g /go/config.ini
@@ -30,7 +30,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.writefreely-${NUMBER:-1}.rule=Host(`${DOMAIN:-writefreely.localhost}`)
-        - traefik.http.routers.writefreely-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.writefreely-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.writefreely-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.writefreely-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

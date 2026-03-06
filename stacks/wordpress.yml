@@ -14,7 +14,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.wordpress-${NUMBER:-1}.rule=Host(`${DOMAIN:-wordpress.localhost}`)
-        - traefik.http.routers.wordpress-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.wordpress-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.wordpress-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.wordpress-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
@@ -45,8 +45,8 @@ services:
         define('DISABLE_WP_CRON', getenv('DISABLE_WP_CRON'));
         define('WP_HOME', getenv('WP_HOME'));
         define('WP_SITEURL', getenv('WP_SITEURL'));
-      WP_HOME: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
-      WP_SITEURL: ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}
+      WP_HOME: https://${DOMAIN:-wordpress.localhost}
+      WP_SITEURL: https://${DOMAIN:-wordpress.localhost}
       WP_UPLOAD_MAX_FILESIZE: ${WP_UPLOAD_MAX_FILESIZE:-256M}
       WP_MAX_EXECUTION_TIME: ${WP_MAX_EXECUTION_TIME:-300}
       WP_MEMORY_LIMIT: ${WP_MEMORY_LIMIT:-256M}
@@ -65,7 +65,7 @@ services:
     command:
       - -c
       - |
-        echo '* * * * * wget -q -O - ${SCHEME:-https}://${DOMAIN:-wordpress.localhost}/wp-cron.php?doing_wp_cron' | crontab -
+        echo '* * * * * wget -q -O - https://${DOMAIN:-wordpress.localhost}/wp-cron.php?doing_wp_cron' | crontab -
         crond -f
     volumes:
       - /etc/localtime:/etc/localtime:ro

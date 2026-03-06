@@ -7,7 +7,7 @@ services:
       - ${VOLUME_PATH}ghost:/var/lib/ghost/content
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      - url=${SCHEME:-https}://${DOMAIN:-ghost.localhost}
+      - url=https://${DOMAIN:-ghost.localhost}
       - database__client=${DATABASE_CLIENT:-mysql}
       - database__connection__user=${DATABASE_USER:-ghost}
       - database__connection__host=${DATABASE_HOST:-mariadb}
@@ -27,7 +27,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.ghost-${NUMBER:-1}.rule=Host(`${DOMAIN:-ghost.localhost}`)
-        - traefik.http.routers.ghost-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.ghost-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.ghost-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.ghost-${NUMBER:-1}.loadbalancer.server.port=2368
     networks:

@@ -5,14 +5,14 @@ services:
   app:
     image: machines/filestash:${VERSION:-latest}
     environment:
-      - APPLICATION_URL=${SCHEME:-https}://${DOMAIN:-filestash.localhost}
+      - APPLICATION_URL=https://${DOMAIN:-filestash.localhost}
     volumes:
       - ${VOLUME_PATH}data:/app/data/state/
     deploy:
       labels:
         - traefik.enable=true
         - traefik.http.routers.filestash-${NUMBER:-1}.rule=Host(`${DOMAIN:-filestash.localhost}`)
-        - traefik.http.routers.filestash-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.filestash-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.filestash-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.filestash-${NUMBER:-1}.loadbalancer.server.port=8334
     networks:

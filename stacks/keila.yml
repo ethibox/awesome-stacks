@@ -22,7 +22,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.keila-${NUMBER:-1}.rule=Host(`${DOMAIN:-keila.localhost}`)
-        - traefik.http.routers.keila-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.keila-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.keila-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.keila-${NUMBER:-1}.loadbalancer.server.port=4000
     networks:

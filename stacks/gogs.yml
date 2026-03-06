@@ -12,7 +12,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.gogs-${NUMBER:-1}.rule=Host(`${DOMAIN:-gogs.localhost}`)
-        - traefik.http.routers.gogs-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.gogs-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.gogs-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.gogs-${NUMBER:-1}.loadbalancer.server.port=3000
 

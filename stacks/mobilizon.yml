@@ -42,7 +42,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.mobilizon-${NUMBER:-1}.rule=Host(`${DOMAIN:-mobilizon.localhost}`)
-        - traefik.http.routers.mobilizon-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.mobilizon-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.mobilizon-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.mobilizon-${NUMBER:-1}.loadbalancer.server.port=4000
     networks:

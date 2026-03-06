@@ -9,7 +9,7 @@ x-zammad: &zammad
     - ${VOLUME_PATH}storage:/opt/zammad/storage
     - ${VOLUME_PATH}var:/opt/zammad/var
   environment:
-    - NGINX_SERVER_SCHEME=${SCHEME:-https}
+    - NGINX_SERVER_SCHEME=https
     - POSTGRESQL_DB=zammad
     - POSTGRESQL_USER=zammad
     - POSTGRESQL_PASS=myp%40ssw0rd
@@ -41,11 +41,11 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.zammad-${NUMBER:-1}.rule=Host(`${DOMAIN:-zammad.localhost}`)
-        - traefik.http.routers.zammad-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.zammad-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.zammad-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.zammad-${NUMBER:-1}.loadbalancer.server.port=8080
         - traefik.http.routers.zammad-${NUMBER:-1}.middlewares=zammad-${NUMBER:-1}
-        - traefik.http.middlewares.zammad-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=${SCHEME:-https}
+        - traefik.http.middlewares.zammad-${NUMBER:-1}.headers.customRequestHeaders.X-Forwarded-Proto=https
     networks:
       - traefik
       - internal

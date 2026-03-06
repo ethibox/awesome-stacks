@@ -27,12 +27,12 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.sftpgo-${NUMBER:-1}.rule=Host(`${DOMAIN:-sftpgo.localhost}`)
-        - traefik.http.routers.sftpgo-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.sftpgo-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.sftpgo-${NUMBER:-1}.service=sftpgo-${NUMBER:-1}
         - traefik.http.routers.sftpgo-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.sftpgo-${NUMBER:-1}.loadbalancer.server.port=8080
         - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.rule=Host(`${DOMAIN:-sftpgo.localhost}`) && PathPrefix(`/webdav`)
-        - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.service=sftpgo-webdav-${NUMBER:-1}
         - traefik.http.routers.sftpgo-webdav-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.sftpgo-webdav-${NUMBER:-1}.loadbalancer.server.port=8081

@@ -15,12 +15,11 @@ services:
       - |
         mkdir -p /app/.well-known/matrix
         echo '{"m.server": "'$$DOMAIN':443"}' > /app/.well-known/matrix/server
-        echo '{"m.homeserver":{"base_url":"'$$SCHEME'://'$$DOMAIN'"},"m.identity_server":{"base_url":"https://vector.im"}}' > /app/.well-known/matrix/client
+        echo '{"m.homeserver":{"base_url":"'https'://'$$DOMAIN'"},"m.identity_server":{"base_url":"https://vector.im"}}' > /app/.well-known/matrix/client
         sed -i -e 's/"breadcrumbs": true/"breadcrumbs": true,\n        "language": "'$$LANGUAGE'"/g' /app/config.json
-        sed -i "s#https://matrix-client.matrix.org#$$SCHEME://$$DOMAIN#g; s/matrix.org/$$DOMAIN/g" /app/config.json
+        sed -i "s#https://matrix-client.matrix.org#https://$$DOMAIN#g; s/matrix.org/$$DOMAIN/g" /app/config.json
         exec /docker-entrypoint.sh nginx -g 'daemon off;'
     environment:
-      - SCHEME=${SCHEME:-https}
       - LANGUAGE=${LANGUAGE:-fr_FR}
       - DOMAIN=${DOMAIN:-element.localhost}
     deploy:
@@ -30,7 +29,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`)
-        - traefik.http.routers.element-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.element-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.element-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.element-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
@@ -71,7 +70,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-synapse-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && (PathPrefix(`/_matrix`) || PathPrefix(`/_synapse`))
-        - traefik.http.routers.element-synapse-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.element-synapse-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.element-synapse-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.element-synapse-${NUMBER:-1}.loadbalancer.server.port=8008
     networks:
@@ -89,7 +88,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/admin`)
-        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.middlewares=element-synapse-admin-${NUMBER:-1},element-synapse-admin_path-${NUMBER:-1}
         - traefik.http.services.element-synapse-admin-${NUMBER:-1}.loadbalancer.server.port=80

@@ -17,7 +17,7 @@ services:
     volumes:
       - ${VOLUME_PATH}grist:/persist
     environment:
-      - APP_HOME_URL=${SCHEME:-https}://${DOMAIN:-grist.localhost}
+      - APP_HOME_URL=https://${DOMAIN:-grist.localhost}
       - GRIST_DEFAULT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - GRIST_ANON_PLAYGROUND=${GRIST_ANON_PLAYGROUND:-false}
       - GRIST_PERSONAL_ORGS=${GRIST_PERSONAL_ORGS:-true}
@@ -32,7 +32,7 @@ services:
       - GRIST_OIDC_IDP_ISSUER=${GRIST_OIDC_IDP_ISSUER}
       - GRIST_OIDC_IDP_CLIENT_ID=${GRIST_OIDC_IDP_CLIENT_ID}
       - GRIST_OIDC_IDP_CLIENT_SECRET=${GRIST_OIDC_IDP_CLIENT_SECRET}
-      - GRIST_OIDC_SP_HOST=${SCHEME:-https}://${DOMAIN:-grist.localhost}
+      - GRIST_OIDC_SP_HOST=https://${DOMAIN:-grist.localhost}
       - GRIST_OIDC_IDP_SCOPES=${GRIST_OIDC_IDP_SCOPES:-openid profile email}
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:8484/api/orgs', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
@@ -43,7 +43,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.grist-${NUMBER:-1}.rule=Host(`${DOMAIN:-grist.localhost}`)
-        - traefik.http.routers.grist-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.grist-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.grist-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.grist-${NUMBER:-1}.loadbalancer.server.port=8484
     networks:

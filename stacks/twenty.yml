@@ -5,8 +5,8 @@ x-defaults: &defaults
   environment:
     - PORT=3000
     - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/${POSTGRES_DB:-twenty}
-    - SERVER_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
-    - FRONT_BASE_URL=${SCHEME:-https}://${DOMAIN:-twenty.localhost}
+    - SERVER_URL=https://${DOMAIN:-twenty.localhost}
+    - FRONT_BASE_URL=https://${DOMAIN:-twenty.localhost}
     - REDIS_URL=${REDIS_URL:-redis://redis:6379}
     - SIGN_IN_PREFILLED=${SIGN_IN_PREFILLED:-false}
     - STORAGE_TYPE=${STORAGE_TYPE:-local}
@@ -38,7 +38,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.twenty-${NUMBER:-1}.rule=Host(`${DOMAIN:-twenty.localhost}`) || HostRegexp(`{subdomain:[a-z0-9-]+}.${DOMAIN:-twenty.localhost}`)
-        - traefik.http.routers.twenty-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.twenty-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.twenty-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.twenty-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

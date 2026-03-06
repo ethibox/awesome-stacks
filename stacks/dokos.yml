@@ -37,7 +37,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.dokos-${NUMBER:-1}.rule=Host(`${DOMAIN:-dokos.localhost}`)
-        - traefik.http.routers.dokos-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.dokos-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.dokos-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.dokos-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

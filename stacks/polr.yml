@@ -12,7 +12,7 @@ services:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - APP_NAME=${APP_NAME:-My Polr}
-      - APP_PROTOCOL=${SCHEME:-https}://
+      - APP_PROTOCOL=https://
       - APP_ADDRESS=${DOMAIN:-polr.localhost}
       - SETTING_ADV_ANALYTICS=${SETTING_ADV_ANALYTICS:-false}
       - POLR_ALLOW_ACCT_CREATION=${POLR_ALLOW_ACCT_CREATION:-false}
@@ -23,7 +23,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.polr-${NUMBER:-1}.rule=Host(`${DOMAIN:-polr.localhost}`)
-        - traefik.http.routers.polr-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.polr-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.polr-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.polr-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:

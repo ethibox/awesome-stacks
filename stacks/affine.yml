@@ -9,7 +9,7 @@ x-affine: &affine
     - REDIS_SERVER_HOST=redis
     - AFFINE_INDEXER_ENABLED=false
     - AFFINE_SERVER_HOST=${DOMAIN:-affine.localhost}
-    - AFFINE_SERVER_EXTERNAL_URL=${SCHEME:-https}://${DOMAIN:-affine.localhost}
+    - AFFINE_SERVER_EXTERNAL_URL=https://${DOMAIN:-affine.localhost}
     - DATABASE_URL=postgresql://affine:myp@ssw0rd@postgres:5432/affine
 
 services:
@@ -19,7 +19,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.affine-${NUMBER:-1}.rule=Host(`${DOMAIN:-affine.localhost}`)
-        - traefik.http.routers.affine-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.affine-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.affine-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.affine-${NUMBER:-1}.loadbalancer.server.port=3010
     networks:

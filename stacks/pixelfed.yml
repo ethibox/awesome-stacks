@@ -10,7 +10,7 @@ services:
       - APP_ENV=${APP_ENV:-production}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
       - APP_DEBUG=${APP_DEBUG:-false}
-      - APP_URL=${SCHEME:-https}://${DOMAIN:-pixelfed.localhost}
+      - APP_URL=https://${DOMAIN:-pixelfed.localhost}
 
       - ADMIN_DOMAIN=${DOMAIN:-pixelfed.localhost}
       - APP_DOMAIN=${DOMAIN:-pixelfed.localhost}
@@ -67,7 +67,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.pixelfed-${NUMBER:-1}.rule=Host(`${DOMAIN:-pixelfed.localhost}`)
-        - traefik.http.routers.pixelfed-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.pixelfed-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.pixelfed-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.pixelfed-${NUMBER:-1}.loadbalancer.server.port=80
     networks:

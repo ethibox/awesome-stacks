@@ -5,7 +5,7 @@ services:
     image: teableio/teable:${VERSION:-1.8.0-alpha-build.915-amd64}
     environment:
       - NEXT_ENV_IMAGES_ALL_REMOTE=true
-      - PUBLIC_ORIGIN=${SCHEME:-https}://${DOMAIN:-teable.localhost}
+      - PUBLIC_ORIGIN=https://${DOMAIN:-teable.localhost}
       - PRISMA_DATABASE_URL=postgresql://teable:myp@ssw0rd@postgres:5432/teable
       - SECRET_KEY=${SECRET_KEY:-mys3cr3t} # openssl rand -hex 32
       - BACKEND_CACHE_REDIS_URI=redis://default@redis:6379/0
@@ -18,7 +18,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.teable-${NUMBER:-1}.rule=Host(`${DOMAIN:-teable.localhost}`)
-        - traefik.http.routers.teable-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.teable-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.teable-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.teable-${NUMBER:-1}.loadbalancer.server.port=3000
     networks:

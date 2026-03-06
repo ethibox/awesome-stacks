@@ -43,7 +43,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.discourse-${NUMBER:-1}.rule=Host(`${DOMAIN:-discourse.localhost}`)
-        - traefik.http.routers.discourse-${NUMBER:-1}.entrypoints=${SCHEME:-https}
+        - traefik.http.routers.discourse-${NUMBER:-1}.entrypoints=https
         - traefik.http.routers.discourse-${NUMBER:-1}.tls.certresolver=letsencrypt
         - traefik.http.services.discourse-${NUMBER:-1}.loadbalancer.server.port=80
     networks:
