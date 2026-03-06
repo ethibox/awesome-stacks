@@ -1,42 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
 
-x-nextcloud: &nextcloud
-  image: nextcloud:${VERSION:-33.0.0-fpm-alpine}
-  environment:
-    - DOMAIN=${DOMAIN:-nextcloud.localhost}
-    - MYSQL_HOST=mariadb
-    - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
-    - MYSQL_USER=${MYSQL_USER:-nextcloud}
-    - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
-    - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
-    - FORCE_LANGUAGE=${FORCE_LANGUAGE:-en}
-    - OVERWRITEHOST=${DOMAIN:-nextcloud.localhost}
-    - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
-    - TRUSTED_PROXIES=${TRUSTED_PROXIES:-10.0.0.0/8 172.16.0.0/12}
-    - REDIS_HOST=redis
-    - REDIS_HOST_PASSWORD=myp@ssw0rd
-    - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
-    - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
-    - OBJECTSTORE_S3_KEY=${OBJECTSTORE_S3_KEY}
-    - OBJECTSTORE_S3_SECRET=${OBJECTSTORE_S3_SECRET}
-    - OBJECTSTORE_S3_PORT=${OBJECTSTORE_S3_PORT}
-    - OBJECTSTORE_S3_SSL=${OBJECTSTORE_S3_SSL}
-    - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
-    - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
-    - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
-    - PHP_OPCACHE_MEMORY_CONSUMPTION=${PHP_OPCACHE_MEMORY_CONSUMPTION:-512}
-    - PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-512M}
-    - PHP_UPLOAD_LIMIT=${PHP_UPLOAD_LIMIT:-512M}
-    - NEXTCLOUD_ADMIN_USER=${ADMIN_USERNAME:-admin}
-    - NEXTCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
-    - NC_default_phone_region=${NC_default_phone_region:-FR}
-    - NC_loglevel=${NC_loglevel:-2}
-    - NC_maintenance_window_start=1
-  volumes:
-    - ${VOLUME_PATH}nextcloud:/var/www/html:cached
-  networks:
-    - internal
-
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
@@ -61,7 +24,7 @@ services:
       - traefik
 
   app:
-    <<: *nextcloud
+    image: &nextcloud-image nextcloud:${VERSION:-33.0.0-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
@@ -75,13 +38,47 @@ services:
         echo "php /var/www/html/occ maintenance:repair --include-expensive -n" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
         chmod +x /docker-entrypoint-hooks.d/post-installation/setup.sh
         exec /entrypoint.sh php-fpm
+    environment: &nextcloud-environment
+      - DOMAIN=${DOMAIN:-nextcloud.localhost}
+      - MYSQL_HOST=mariadb
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
+      - MYSQL_USER=${MYSQL_USER:-nextcloud}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_UPDATE=${NEXTCLOUD_UPDATE:-1}
+      - FORCE_LANGUAGE=${FORCE_LANGUAGE:-en}
+      - OVERWRITEHOST=${DOMAIN:-nextcloud.localhost}
+      - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-10.0.0.0/8 172.16.0.0/12}
+      - REDIS_HOST=redis
+      - REDIS_HOST_PASSWORD=myp@ssw0rd
+      - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
+      - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
+      - OBJECTSTORE_S3_KEY=${OBJECTSTORE_S3_KEY}
+      - OBJECTSTORE_S3_SECRET=${OBJECTSTORE_S3_SECRET}
+      - OBJECTSTORE_S3_PORT=${OBJECTSTORE_S3_PORT}
+      - OBJECTSTORE_S3_SSL=${OBJECTSTORE_S3_SSL}
+      - OBJECTSTORE_S3_REGION=${OBJECTSTORE_S3_REGION}
+      - OBJECTSTORE_S3_USEPATH_STYLE=${OBJECTSTORE_S3_USEPATH_STYLE}
+      - OBJECTSTORE_S3_OBJECT_PREFIX=${OBJECTSTORE_S3_OBJECT_PREFIX}
+      - PHP_OPCACHE_MEMORY_CONSUMPTION=${PHP_OPCACHE_MEMORY_CONSUMPTION:-512}
+      - PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-512M}
+      - PHP_UPLOAD_LIMIT=${PHP_UPLOAD_LIMIT:-512M}
+      - NEXTCLOUD_ADMIN_USER=${ADMIN_USERNAME:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - NC_default_phone_region=${NC_default_phone_region:-FR}
+      - NC_loglevel=${NC_loglevel:-2}
+      - NC_maintenance_window_start=1
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   cron:
-    <<: *nextcloud
+    image: *nextcloud-image
     entrypoint: /bin/sh
     command:
       - -c
@@ -89,10 +86,15 @@ services:
         echo "0 2 * * * php /var/www/html/occ db:add-missing-indices -n" >> /var/spool/cron/crontabs/www-data
         echo "0 3 * * * php /var/www/html/occ maintenance:repair --include-expensive -n" >> /var/spool/cron/crontabs/www-data
         exec /cron.sh
+    environment: *nextcloud-environment
+    volumes:
+      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
     deploy:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
