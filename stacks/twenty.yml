@@ -1,36 +1,22 @@
 # DOMAIN=example.com docker stack deploy -c twenty.yml twenty
 
-x-defaults: &defaults
-  image: twentycrm/twenty:${VERSION:-v1.16.7}
-  environment:
-    - PORT=3000
-    - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/${POSTGRES_DB:-twenty}
-    - SERVER_URL=https://${DOMAIN:-twenty.localhost}
-    - FRONT_BASE_URL=https://${DOMAIN:-twenty.localhost}
-    - REDIS_URL=${REDIS_URL:-redis://redis:6379}
-    - SIGN_IN_PREFILLED=${SIGN_IN_PREFILLED:-false}
-    - STORAGE_TYPE=${STORAGE_TYPE:-local}
-    - ENABLE_DB_MIGRATIONS=${ENABLE_DB_MIGRATIONS:-true}
-    - IS_MULTIWORKSPACE_ENABLED=${IS_MULTIWORKSPACE_ENABLED:-false}
-    - APP_SECRET=${APP_SECRET:-onoUicllnXTKiO6J+OGSFQFtdw9uyucAyxw3ztKXu+8=} # openssl rand -base64 32
-  volumes:
-    - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
-    - ${VOLUME_PATH}docker:/app/docker-data
-
 services:
-  init:
-    image: busybox
-    command: chown -R 1000:1000 /app/packages/twenty-server/.local-storage /app/docker-data
-    user: root
-    volumes:
+  app:
+    image: &twenty-image twentycrm/twenty:${VERSION:-v1.16.7}
+    environment: &twenty-environment
+      - PORT=3000
+      - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/${POSTGRES_DB:-twenty}
+      - SERVER_URL=https://${DOMAIN:-twenty.localhost}
+      - FRONT_BASE_URL=https://${DOMAIN:-twenty.localhost}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - SIGN_IN_PREFILLED=${SIGN_IN_PREFILLED:-false}
+      - STORAGE_TYPE=${STORAGE_TYPE:-local}
+      - ENABLE_DB_MIGRATIONS=${ENABLE_DB_MIGRATIONS:-true}
+      - IS_MULTIWORKSPACE_ENABLED=${IS_MULTIWORKSPACE_ENABLED:-false}
+      - APP_SECRET=${APP_SECRET:-onoUicllnXTKiO6J+OGSFQFtdw9uyucAyxw3ztKXu+8=} # openssl rand -base64 32
+    volumes: &twenty-volumes
       - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
       - ${VOLUME_PATH}docker:/app/docker-data
-    deploy:
-      restart_policy:
-        condition: on-failure
-
-  app:
-    <<: *defaults
     deploy:
       resources:
         limits:
@@ -43,9 +29,20 @@ services:
       - traefik
       - internal
 
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /app/packages/twenty-server/.local-storage /app/docker-data
+    user: root
+    volumes: *twenty-volumes
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   worker:
-    <<: *defaults
+    image: *twenty-image
     command: ["yarn", "worker:prod"]
+    environment: *twenty-environment
+    volumes: *twenty-volumes
     deploy:
       resources:
         limits:
