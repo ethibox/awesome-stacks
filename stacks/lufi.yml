@@ -1,24 +1,21 @@
 # DOMAIN=example.com docker stack deploy -c lufi.yml lufi
 
-x-defaults: &defaults
-  image: ethibox/lufi:${VERSION:-0.07.3}
-  volumes:
-    - ${VOLUME_PATH}data:/usr/lufi/data
-    - ${VOLUME_PATH}files:/usr/lufi/files
-  environment:
-    - MAX_DELAY=${MAX_DELAY:-30}
-    - SECRET=${SECRET:-mys3cr3t}
-    - CRON_DELAY=${CRON_DELAY:-86400}
-    - ENABLE_CRON=${ENABLE_CRON:-true}
-    - DEFAULT_DELAY=${DEFAULT_DELAY:-1}
-    - MAX_TOTAL_SIZE=${MAX_TOTAL_SIZE:-50}
-    - POLICY_WHEN_FULL=${POLICY_WHEN_FULL:-warn}
-    - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
-    - ADMIN_EMAIL=${ADMIN_EMAIL:-contact@example.com}
-
 services:
   web:
-    <<: *defaults
+    image: &lufi-image ethibox/lufi:${VERSION:-0.07.3}
+    environment: &lufi-environment
+      - MAX_DELAY=${MAX_DELAY:-30}
+      - SECRET=${SECRET:-mys3cr3t}
+      - CRON_DELAY=${CRON_DELAY:-86400}
+      - ENABLE_CRON=${ENABLE_CRON:-true}
+      - DEFAULT_DELAY=${DEFAULT_DELAY:-1}
+      - MAX_TOTAL_SIZE=${MAX_TOTAL_SIZE:-50}
+      - POLICY_WHEN_FULL=${POLICY_WHEN_FULL:-warn}
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-contact@example.com}
+    volumes: &lufi-volumes
+      - ${VOLUME_PATH}data:/usr/lufi/data
+      - ${VOLUME_PATH}files:/usr/lufi/files
     deploy:
       resources:
         limits:
@@ -32,7 +29,7 @@ services:
       - internal
 
   cron:
-    <<: *defaults
+    image: *lufi-image
     command:
       - /bin/sh
       - -c
@@ -44,6 +41,8 @@ services:
           carton exec script/lufi cron watch --mode production
           sleep $$CRON_DELAY
         done
+    environment: *lufi-environment
+    volumes: *lufi-volumes
     healthcheck:
       disable: true
     deploy:
