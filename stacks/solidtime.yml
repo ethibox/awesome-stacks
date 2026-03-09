@@ -6,18 +6,18 @@
 services:
   app:
     image: &solidtime-image solidtime/solidtime:${VERSION:-0.11.5}
-    environment:
-      - CONTAINER_MODE=http
-      - APP_URL=https://${DOMAIN:-solidtime.localhost}
-      - APP_KEY=${APP_KEY}
-      - DB_CONNECTION=pgsql
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_DATABASE=${DB_DATABASE:-solidtime}
-      - DB_USERNAME=${DB_USERNAME:-solidtime}
-      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
-      - PASSPORT_PRIVATE_KEY=${PASSPORT_PRIVATE_KEY}
-      - PASSPORT_PUBLIC_KEY=${PASSPORT_PUBLIC_KEY}
+    environment: &solidtime-environment
+      CONTAINER_MODE: http
+      APP_URL: https://${DOMAIN:-solidtime.localhost}
+      APP_KEY: ${APP_KEY}
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-solidtime}
+      DB_USERNAME: ${DB_USERNAME:-solidtime}
+      DB_PASSWORD: ${DB_PASSWORD:-myp@ssw0rd}
+      PASSPORT_PRIVATE_KEY: ${PASSPORT_PRIVATE_KEY}
+      PASSPORT_PUBLIC_KEY: ${PASSPORT_PUBLIC_KEY}
     volumes:
       - ${VOLUME_PATH}storage:/var/www/html/storage
     healthcheck:
@@ -37,17 +37,8 @@ services:
   scheduler:
     image: *solidtime-image
     environment:
-      - CONTAINER_MODE=scheduler
-      - APP_URL=https://${DOMAIN:-solidtime.localhost}
-      - APP_KEY=${APP_KEY}
-      - DB_CONNECTION=pgsql
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_DATABASE=${DB_DATABASE:-solidtime}
-      - DB_USERNAME=${DB_USERNAME:-solidtime}
-      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
-      - PASSPORT_PRIVATE_KEY=${PASSPORT_PRIVATE_KEY}
-      - PASSPORT_PUBLIC_KEY=${PASSPORT_PUBLIC_KEY}
+      <<: *solidtime-environment
+      CONTAINER_MODE: scheduler
     volumes:
       - ${VOLUME_PATH}storage:/var/www/html/storage
     healthcheck:
@@ -62,18 +53,9 @@ services:
   queue:
     image: *solidtime-image
     environment:
-      - CONTAINER_MODE=worker
-      - WORKER_COMMAND=php /var/www/html/artisan queue:work
-      - APP_URL=https://${DOMAIN:-solidtime.localhost}
-      - APP_KEY=${APP_KEY}
-      - DB_CONNECTION=pgsql
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_DATABASE=${DB_DATABASE:-solidtime}
-      - DB_USERNAME=${DB_USERNAME:-solidtime}
-      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
-      - PASSPORT_PRIVATE_KEY=${PASSPORT_PRIVATE_KEY}
-      - PASSPORT_PUBLIC_KEY=${PASSPORT_PUBLIC_KEY}
+      <<: *solidtime-environment
+      CONTAINER_MODE: worker
+      WORKER_COMMAND: php /var/www/html/artisan queue:work
     volumes:
       - ${VOLUME_PATH}storage:/var/www/html/storage
     healthcheck:
