@@ -3219,6 +3219,49 @@
           "type": "email"
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Solidtime",
+      "description": "Solidtime est une application open-source de suivi du temps de travail.",
+      "categories": [
+        "Gestion de projet"
+      ],
+      "manual": true,
+      "enabled": true,
+      "logo": "https://i.imgur.com/5B4tJdI.png",
+      "website": "https://solidtime.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/solidtime.yml",
+        "commit": "d68271c4f2217a125b56979a3ae04c36691b1986"
+      },
+      "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin Email",
+          "type": "email",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        },
+        {
+          "name": "APP_KEY",
+          "preset": true
+        },
+        {
+          "name": "PASSPORT_PRIVATE_KEY",
+          "preset": true
+        },
+        {
+          "name": "PASSPORT_PUBLIC_KEY",
+          "preset": true
+        }
+      ]
     }
   ]
 }
