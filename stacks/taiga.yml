@@ -1,26 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c taiga.yml taiga
 # docker exec -it $(docker ps -qf name=taiga_back) python manage.py createsuperuser
 
-x-defaults: &defaults
-  environment:
-    - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
-    - TAIGA_SITES_SCHEME=https
-    - TAIGA_ASYNC_RABBITMQ_HOST=rabbitmq
-    - TAIGA_EVENTS_RABBITMQ_HOST=rabbitmq
-    - TAIGA_SECRET_KEY=${SECRET_KEY:-mys3cr3t}
-    - TAIGA_SITES_DOMAIN=${DOMAIN:-taiga.localhost}
-    - POSTGRES_DB=taiga
-    - POSTGRES_USER=taiga
-    - POSTGRES_HOST=postgres
-    - POSTGRES_PASSWORD=myp@ssw0rd
-    - RABBITMQ_USER=taiga
-    - RABBITMQ_VHOST=taiga
-    - RABBITMQ_HOST=rabbitmq
-    - RABBITMQ_PASS=mypassword
-  volumes:
-    - ${VOLUME_PATH}static:/taiga/static
-    - ${VOLUME_PATH}media:/taiga/media
-
 services:
   web:
     image: ethibox/nginx-proxy:latest
@@ -40,14 +20,31 @@ services:
       - traefik
 
   front:
-    <<: *defaults
     image: taigaio/taiga-front:${VERSION:-6.9.0}
+    environment: &taiga-environment
+      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - TAIGA_SITES_SCHEME=https
+      - TAIGA_ASYNC_RABBITMQ_HOST=rabbitmq
+      - TAIGA_EVENTS_RABBITMQ_HOST=rabbitmq
+      - TAIGA_SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - TAIGA_SITES_DOMAIN=${DOMAIN:-taiga.localhost}
+      - POSTGRES_DB=taiga
+      - POSTGRES_USER=taiga
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=myp@ssw0rd
+      - RABBITMQ_USER=taiga
+      - RABBITMQ_VHOST=taiga
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PASS=mypassword
+    volumes: &taiga-volumes
+      - ${VOLUME_PATH}static:/taiga/static
+      - ${VOLUME_PATH}media:/taiga/media
     networks:
       - internal
 
   back:
-    <<: *defaults
     image: taigaio/taiga-back:${VERSION:-6.9.0}
+    environment: *taiga-environment
     volumes:
       - ${VOLUME_PATH}static:/taiga-back/static
       - ${VOLUME_PATH}media:/taiga-back/media
@@ -55,26 +52,28 @@ services:
       - internal
 
   async:
-    <<: *defaults
     image: taigaio/taiga-back:${VERSION:-6.9.0}
+    environment: *taiga-environment
+    volumes: *taiga-volumes
     entrypoint: /taiga-back/docker/async_entrypoint.sh
     networks:
       - internal
 
   events:
-    <<: *defaults
     image: taigaio/taiga-events:${VERSION:-6.9.0}
+    environment: *taiga-environment
+    volumes: *taiga-volumes
     networks:
       - internal
 
   protected:
-    <<: *defaults
     image: taigaio/taiga-protected:${VERSION:-6.9.0}
+    environment: *taiga-environment
+    volumes: *taiga-volumes
     networks:
       - internal
 
   rabbitmq:
-    <<: *defaults
     image: rabbitmq:3.8-management-alpine
     environment:
       - RABBITMQ_ERLANG_COOKIE=${SECRET_KEY:-mys3cr3t}
