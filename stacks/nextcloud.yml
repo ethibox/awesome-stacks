@@ -79,13 +79,7 @@ services:
 
   cron:
     image: *nextcloud-image
-    entrypoint: /bin/sh
-    command:
-      - -c
-      - |
-        echo "0 2 * * * php /var/www/html/occ db:add-missing-indices -n" >> /var/spool/cron/crontabs/www-data
-        echo "0 3 * * * php /var/www/html/occ maintenance:repair --include-expensive -n" >> /var/spool/cron/crontabs/www-data
-        exec /cron.sh
+    entrypoint: /cron.sh
     environment: *nextcloud-environment
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
