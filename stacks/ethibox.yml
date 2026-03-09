@@ -15,7 +15,7 @@ services:
       - JWT_SECRET=${JWT_SECRET-mys3cr3t}
       - WEBHOOK_URL=${WEBHOOK_URL}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock
     deploy:
       labels:
         - traefik.enable=true
