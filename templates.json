@@ -2715,7 +2715,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/twenty.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "893def8915570afc70be5a3d677e5d51f6398b93"
       },
       "env": [
         {
