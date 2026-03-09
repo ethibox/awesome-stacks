@@ -1,0 +1,115 @@
+# DOMAIN=example.com docker stack deploy -c solidtime.yml solidtime
+# docker exec -it $(docker ps -qf name=solidtime_scheduler) php artisan self-host:generate-keys
+# docker exec $(docker ps -qf name=solidtime_app) php /var/www/html/artisan migrate --force
+# docker exec -it $(docker ps -qf name=solidtime_scheduler) php artisan admin:user:create "Firstname Lastname" "admin@example.com" --verify-email
+
+services:
+  app:
+    image: &solidtime-image solidtime/solidtime:${VERSION:-0.11.5}
+    environment:
+      - CONTAINER_MODE=http
+      - APP_URL=https://${DOMAIN:-solidtime.localhost}
+      - APP_KEY=${APP_KEY}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=${DB_DATABASE:-solidtime}
+      - DB_USERNAME=${DB_USERNAME:-solidtime}
+      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+      - PASSPORT_PRIVATE_KEY=${PASSPORT_PRIVATE_KEY}
+      - PASSPORT_PUBLIC_KEY=${PASSPORT_PUBLIC_KEY}
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8000/health-check/up"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.solidtime-${NUMBER:-1}.rule=Host(`${DOMAIN:-solidtime.localhost}`)
+        - traefik.http.services.solidtime-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - internal
+      - traefik
+
+  scheduler:
+    image: *solidtime-image
+    environment:
+      - CONTAINER_MODE=scheduler
+      - APP_URL=https://${DOMAIN:-solidtime.localhost}
+      - APP_KEY=${APP_KEY}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=${DB_DATABASE:-solidtime}
+      - DB_USERNAME=${DB_USERNAME:-solidtime}
+      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+      - PASSPORT_PRIVATE_KEY=${PASSPORT_PRIVATE_KEY}
+      - PASSPORT_PUBLIC_KEY=${PASSPORT_PUBLIC_KEY}
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD", "healthcheck"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  queue:
+    image: *solidtime-image
+    environment:
+      - CONTAINER_MODE=worker
+      - WORKER_COMMAND=php /var/www/html/artisan queue:work
+      - APP_URL=https://${DOMAIN:-solidtime.localhost}
+      - APP_KEY=${APP_KEY}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=${DB_DATABASE:-solidtime}
+      - DB_USERNAME=${DB_USERNAME:-solidtime}
+      - DB_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+      - PASSPORT_PRIVATE_KEY=${PASSPORT_PRIVATE_KEY}
+      - PASSPORT_PUBLIC_KEY=${PASSPORT_PUBLIC_KEY}
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD", "healthcheck"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=${DB_DATABASE:-solidtime}
+      - POSTGRES_USER=${DB_USERNAME:-solidtime}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USERNAME:-solidtime}"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+volumes:
+  storage:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
