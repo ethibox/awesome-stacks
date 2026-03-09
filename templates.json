@@ -748,7 +748,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/chatwoot.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "1b2ec2aca39e8debe704a0fb25f470d57167b29d"
       },
       "env": [
         {
