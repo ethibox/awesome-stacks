@@ -1,23 +1,49 @@
 # DOMAIN=example.com docker stack deploy -c solidtime.yml solidtime
-# docker exec -it $(docker ps -qf name=solidtime_scheduler) php artisan self-host:generate-keys
+# docker run -it solidtime/solidtime php artisan self-host:generate-keys
 # docker exec $(docker ps -qf name=solidtime_app) php /var/www/html/artisan migrate --force
 # docker exec -it $(docker ps -qf name=solidtime_scheduler) php artisan admin:user:create "Firstname Lastname" "admin@example.com" --verify-email
 
 services:
+  init:
+    image: busybox
+    user: root
+    working_dir: /var/www/html/storage
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        mkdir -p logs app/public framework/cache framework/sessions framework/views
+        chown -R 1000:1000 .
+        chmod -R 775 .
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/html/storage
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
     image: &solidtime-image solidtime/solidtime:${VERSION:-0.11.5}
     environment: &solidtime-environment
       CONTAINER_MODE: http
       APP_URL: https://${DOMAIN:-solidtime.localhost}
       APP_KEY: ${APP_KEY}
+      APP_ENABLE_REGISTRATION: ${APP_ENABLE_REGISTRATION:-false}
       DB_CONNECTION: pgsql
       DB_HOST: postgres
       DB_PORT: 5432
       DB_DATABASE: ${DB_DATABASE:-solidtime}
       DB_USERNAME: ${DB_USERNAME:-solidtime}
       DB_PASSWORD: ${DB_PASSWORD:-myp@ssw0rd}
+      MAIL_MAILER: ${SMTP_MAILER:-smtp}
+      MAIL_HOST: ${SMTP_HOST}
+      MAIL_PORT: ${SMTP_PORT:-587}
+      MAIL_ENCRYPTION: ${SMTP_ENCRYPTION:-tls}
+      MAIL_FROM_ADDRESS: ${SMTP_FROM}
+      MAIL_FROM_NAME: ${SMTP_FROM_NAME:-Solidtime}
+      MAIL_USERNAME: ${SMTP_USERNAME}
+      MAIL_PASSWORD: ${SMTP_PASSWORD}
       PASSPORT_PRIVATE_KEY: ${PASSPORT_PRIVATE_KEY}
       PASSPORT_PUBLIC_KEY: ${PASSPORT_PUBLIC_KEY}
+      SUPER_ADMINS: ${ADMIN_EMAIL:-admin@example.com}
     volumes:
       - ${VOLUME_PATH}storage:/var/www/html/storage
     healthcheck:
