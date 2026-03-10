@@ -3234,7 +3234,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/solidtime.yml",
-        "commit": "b1fdddfa4cfbf30c620003ed4fde417e119464d5"
+        "commit": "9cd735f757c7cb7f5e373517219584d575a8b37c"
       },
       "env": [
         {
@@ -3260,6 +3260,21 @@
         {
           "name": "PASSPORT_PUBLIC_KEY",
           "preset": true
+        },
+        {
+          "name": "APP_ENABLE_REGISTRATION",
+          "label": "Activer l'inscription",
+          "type": "select",
+          "select": [
+            {
+              "text": "Non",
+              "value": "false"
+            },
+            {
+              "text": "Oui",
+              "value": "true"
+            }
+          ]
         }
       ]
     }
