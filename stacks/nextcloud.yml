@@ -70,6 +70,8 @@ services:
       - NC_maintenance_window_start=1
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsSL --max-time 30 http://nginx/status.php || ! nc -z nginx 80"]
     deploy:
       resources:
         limits:
