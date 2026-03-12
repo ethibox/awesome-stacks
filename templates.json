@@ -3277,6 +3277,22 @@
           ]
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Uptime-Kuma",
+      "description": "Uptime Kuma est un outil de monitoring open-source auto-hébergé.",
+      "categories": [
+        "Monitoring"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/Ms4YoC4.png",
+      "website": "https://uptime.kuma.pet",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/uptime-kuma.yml",
+        "commit": "95279ba422c89d3706af83eae3557cd36409dbf0"
+      }
     }
   ]
 }
