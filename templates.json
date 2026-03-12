@@ -3285,7 +3285,7 @@
       "categories": [
         "Monitoring"
       ],
-      "enabled": false,
+      "enabled": true,
       "logo": "https://i.imgur.com/Ms4YoC4.png",
       "website": "https://uptime.kuma.pet",
       "repository": {
