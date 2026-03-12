@@ -2,7 +2,14 @@
 
 services:
   web:
-    image: louislam/uptime-kuma:${VERSION:-1.8.0-alpine}
+    image: louislam/uptime-kuma:${VERSION:-2.2.1-slim}
+    environment:
+      - UPTIME_KUMA_DB_PORT=3306
+      - UPTIME_KUMA_DB_TYPE=mariadb
+      - UPTIME_KUMA_DB_HOSTNAME=mariadb
+      - UPTIME_KUMA_DB_NAME=${MYSQL_DATABASE:-uptime-kuma}
+      - UPTIME_KUMA_DB_USERNAME=${MYSQL_USER:-uptime-kuma}
+      - UPTIME_KUMA_DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}data:/app/data
     deploy:
@@ -10,11 +17,36 @@ services:
         - traefik.enable=true
         - traefik.http.routers.uptime-kuma-${NUMBER:-1}.rule=Host(`${DOMAIN:-uptime-kuma.localhost}`)
         - traefik.http.services.uptime-kuma-${NUMBER:-1}.loadbalancer.server.port=3001
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-11.4}
+    environment:
+      - MYSQL_USER=${MYSQL_USER:-uptime-kuma}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-uptime-kuma}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
 volumes:
+  mariadb:
   data:
 
 networks:
-  default:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
     external: true
     name: traefik-net
