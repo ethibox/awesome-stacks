@@ -2910,7 +2910,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/collabora.yml",
-        "commit": "28a232232cb4aaeaccb618fcb62dd210e7da9427"
+        "commit": "1acc6ff3b00a8341af6bf0a209374a696248f9bd"
       },
       "env": [
         {
