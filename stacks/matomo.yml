@@ -1,22 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c matomo.yml matomo
 
-x-matomo: &matomo
-  image: matomo:${VERSION:-5.7.1-fpm-alpine}
-  environment:
-    - MATOMO_DATABASE_USERNAME=matomo
-    - MATOMO_DATABASE_DBNAME=matomo
-    - MATOMO_DATABASE_PASSWORD=myp@ssw0rd
-    - MATOMO_DATABASE_HOST=mariadb
-  volumes:
-    - ${VOLUME_PATH}config:/var/www/html/config:cached
-    - ${VOLUME_PATH}data:/var/www/html:cached
-  deploy:
-    resources:
-      limits:
-        memory: ${MEMORY_LIMIT:-2G}
-  networks:
-    - internal
-
 services:
   nginx:
     image: ethibox/nginx-proxy:latest
@@ -39,16 +22,35 @@ services:
       - traefik
 
   app:
-    <<: *matomo
+    image: &matomo-image matomo:${VERSION:-5.8.0-fpm-alpine}
+    environment: &matomo-environment
+      - MATOMO_DATABASE_USERNAME=matomo
+      - MATOMO_DATABASE_DBNAME=matomo
+      - MATOMO_DATABASE_PASSWORD=myp@ssw0rd
+      - MATOMO_DATABASE_HOST=mariadb
+    volumes: &matomo-volumes
+      - ${VOLUME_PATH}config:/var/www/html/config:cached
+      - ${VOLUME_PATH}data:/var/www/html:cached
+    deploy: &matomo-deploy
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   cron:
-    <<: *matomo
+    image: *matomo-image
+    environment: *matomo-environment
+    volumes: *matomo-volumes
     entrypoint: /bin/sh
     command:
       - -c
       - |
         echo "0 * * * * /usr/local/bin/php /var/www/html/console core:archive --url=http://localhost" > /var/spool/cron/crontabs/www-data
         exec crond -f
+    deploy: *matomo-deploy
+    networks:
+      - internal
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.5.9}
