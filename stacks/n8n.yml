@@ -12,7 +12,7 @@ services:
         condition: on-failure
 
   n8n:
-    image: &n8n-image n8nio/n8n:${VERSION:-2.10.3}
+    image: &n8n-image n8nio/n8n:${VERSION:-2.11.4}
     environment: &n8n-environment
       - NODE_ENV=production
       - N8N_PROTOCOL=https
