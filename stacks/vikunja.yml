@@ -1,15 +1,25 @@
 # DOMAIN=example.com docker stack deploy -c vikunja.yml vikunja
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /app/vikunja/files
+    user: root
+    volumes:
+      - ${VOLUME_PATH}files:/app/vikunja/files
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
-    image: vikunja/vikunja:${VERSION:-0.24.6}
+    image: vikunja/vikunja:${VERSION:-2.1.0}
     environment:
       - VIKUNJA_DATABASE_TYPE=mysql
       - VIKUNJA_DATABASE_HOST=mariadb
       - VIKUNJA_DATABASE_USER=vikunja
       - VIKUNJA_DATABASE_DATABASE=vikunja
       - VIKUNJA_DATABASE_PASSWORD=myp@ssw0rd
-      - VIKUNJA_SERVICE_JWTSECRET=${VIKUNJA_SERVICE_JWTSECRET:-mys3cr3t}
+      - VIKUNJA_SERVICE_JWTSECRET=${JWT_SECRET:-mys3cr3t}
       - VIKUNJA_SERVICE_PUBLICURL=https://${DOMAIN:-vikunja.localhost}
     volumes:
       - ${VOLUME_PATH}files:/app/vikunja/files
@@ -23,7 +33,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:${MARIADB_VERSION:-10.6}
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
     environment:
