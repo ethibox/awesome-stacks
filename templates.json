@@ -1097,7 +1097,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mautic.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "f29b973ce6cac22bd9ce937cc6f9c45035e8ffa9"
       },
       "env": [
         {
