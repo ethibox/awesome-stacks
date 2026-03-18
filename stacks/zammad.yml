@@ -1,39 +1,49 @@
 # DOMAIN=example.com docker stack deploy -c zammad.yml zammad
 # sudo sysctl -w vm.max_map_count=262144
 # echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
-# chown -R 1000:1000 elasticsearch storage var
-
-x-zammad: &zammad
-  image: zammad/zammad-docker-compose:${VERSION:-6.5.2}
-  volumes:
-    - ${VOLUME_PATH}storage:/opt/zammad/storage
-    - ${VOLUME_PATH}var:/opt/zammad/var
-  environment:
-    - NGINX_SERVER_SCHEME=https
-    - POSTGRESQL_DB=zammad
-    - POSTGRESQL_USER=zammad
-    - POSTGRESQL_PASS=myp%40ssw0rd
-    - POSTGRESQL_HOST=zammad-postgresql
-    - POSTGRESQL_OPTIONS=${POSTGRESQL_OPTIONS:-?pool=50}
-    - MEMCACHE_SERVERS=${MEMCACHE_SERVERS:-zammad-memcached:11211}
-    - REDIS_URL=redis://zammad-redis:6379
-    - MALLOC_ARENA_MAX=${MALLOC_ARENA_MAX:-2}
-    - WEB_CONCURRENCY=${WEB_CONCURRENCY:-2}
-    - TZ=${TZ:-Europe/Paris}
-  networks:
-    - internal
 
 services:
-  zammad-init:
-    <<: *zammad
-    command: ["zammad-init"]
+  zammad-chown:
+    image: busybox
+    command: chown -R 1000:1000 /opt/zammad/var /opt/zammad/storage /usr/share/elasticsearch/data
+    user: root
+    volumes:
+      - ${VOLUME_PATH}var:/opt/zammad/var
+      - ${VOLUME_PATH}storage:/opt/zammad/storage
+      - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
     deploy:
       restart_policy:
         condition: on-failure
 
+  zammad-init:
+    image: &zammad-image zammad/zammad-docker-compose:${VERSION:-7.0.0-0023}
+    command: ["zammad-init"]
+    volumes: &zammad-volumes
+      - ${VOLUME_PATH}var:/opt/zammad/var
+      - ${VOLUME_PATH}storage:/opt/zammad/storage
+    environment: &zammad-environment
+      - NGINX_SERVER_SCHEME=https
+      - POSTGRESQL_DB=zammad
+      - POSTGRESQL_USER=zammad
+      - POSTGRESQL_PASS=myp@ssw0rd
+      - POSTGRESQL_HOST=zammad-postgresql
+      - POSTGRESQL_OPTIONS=${POSTGRESQL_OPTIONS:-?pool=50}
+      - MEMCACHE_SERVERS=${MEMCACHE_SERVERS:-zammad-memcached:11211}
+      - REDIS_URL=redis://zammad-redis:6379
+      - MALLOC_ARENA_MAX=${MALLOC_ARENA_MAX:-2}
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY:-2}
+      - TZ=${TZ:-Europe/Paris}
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - internal
+
   zammad-nginx:
-    <<: *zammad
+    image: *zammad-image
     command: ["zammad-nginx"]
+    environment: *zammad-environment
+    volumes: *zammad-volumes
     deploy:
       resources:
         limits:
@@ -49,10 +59,11 @@ services:
       - internal
 
   zammad-elasticsearch:
-    image: zammad/zammad-docker-compose:zammad-elasticsearch-5.2.3-32
+    image: elasticsearch:${ELASTICSEARCH_VERSION:-9.3.1}
     environment:
       - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=${ES_JAVA_OPTS:--Xms512m -Xmx512m}
     volumes:
       - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
     deploy:
@@ -63,7 +74,7 @@ services:
       - internal
 
   zammad-memcached:
-    image: memcached:1.6.31-alpine
+    image: memcached:1.6.41-alpine
     command: memcached -m 256M
     deploy:
       resources:
@@ -73,7 +84,7 @@ services:
       - internal
 
   zammad-postgresql:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     command: postgres -c 'max_connections=250'
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "zammad"]
@@ -102,28 +113,40 @@ services:
       - internal
 
   zammad-railsserver:
-    <<: *zammad
+    image: *zammad-image
     command: ["zammad-railsserver"]
+    environment: *zammad-environment
+    volumes: *zammad-volumes
     deploy:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   zammad-scheduler:
-    <<: *zammad
+    image: *zammad-image
     command: ["zammad-scheduler"]
+    environment: *zammad-environment
+    volumes: *zammad-volumes
     deploy:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   zammad-websocket:
-    <<: *zammad
+    image: *zammad-image
     command: ["zammad-websocket"]
+    environment: *zammad-environment
+    volumes: *zammad-volumes
     deploy:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
 volumes:
   var:
