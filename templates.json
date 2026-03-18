@@ -647,7 +647,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/calendso.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "c66ef279aa61dd29c89d1c1e804603aae37aaa39"
       },
       "env": [
         {
