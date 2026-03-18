@@ -52,7 +52,7 @@ update_app() {
 }
 
 main() {
-  local apps=(nextcloud discourse rocketchat n8n mastodon mattermost metabase jitsi kanboard matomo mediawiki grist zammad wordpress nocobase wekan)
+  local apps=(nextcloud discourse rocketchat n8n mastodon mattermost metabase jitsi kanboard matomo mediawiki grist zammad wordpress nocobase wekan mautic calendso)
   for app in "${apps[@]}"; do
     update_app "$app"
   done
