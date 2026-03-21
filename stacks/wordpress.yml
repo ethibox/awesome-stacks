@@ -6,7 +6,7 @@ services:
     environment:
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
     volumes:
-      - ${VOLUME_PATH}wordpress:/var/www/html:cached
+      - ${VOLUME_PATH}wordpress:/var/www/html
     deploy:
       resources:
         limits:
@@ -32,7 +32,7 @@ services:
         docker-entrypoint.sh php-fpm
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${VOLUME_PATH}wordpress:/var/www/html:cached
+      - ${VOLUME_PATH}wordpress:/var/www/html
     environment:
       WORDPRESS_DEBUG: ${WORDPRESS_DEBUG:-false}
       WORDPRESS_DB_HOST: ${MYSQL_HOST:-mariadb}
@@ -77,7 +77,7 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.5.9}
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress}

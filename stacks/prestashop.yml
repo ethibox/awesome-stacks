@@ -4,7 +4,7 @@ services:
   app:
     image: prestashop/prestashop:${VERSION:-8}
     volumes:
-      - ${VOLUME_PATH}data:/var/www/html:cached
+      - ${VOLUME_PATH}data:/var/www/html
     environment:
       - DB_SERVER=mariadb
       - DB_USER=prestashop
@@ -33,7 +33,7 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.6}
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=prestashop

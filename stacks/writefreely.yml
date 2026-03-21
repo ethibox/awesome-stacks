@@ -38,7 +38,7 @@ services:
   mariadb:
     image: mariadb:10.5.9
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=writefreely

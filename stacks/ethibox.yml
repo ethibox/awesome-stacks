@@ -31,7 +31,7 @@ services:
   mariadb:
     image: mariadb:10.6
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=${DATABASE_NAME:-ethibox}
       - MYSQL_USER=${DATABASE_USERNAME:-ethibox}

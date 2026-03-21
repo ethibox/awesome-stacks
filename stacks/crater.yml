@@ -11,7 +11,7 @@ services:
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
       - NGINX_ROOT_PATH=/var/www/html/public
     volumes:
-      - ${VOLUME_PATH}data:/var/www/html:cached
+      - ${VOLUME_PATH}data:/var/www/html
     deploy:
       labels:
         - traefik.enable=true
@@ -26,14 +26,14 @@ services:
     environment:
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
     volumes:
-      - ${VOLUME_PATH}data:/var/www/html:cached
+      - ${VOLUME_PATH}data:/var/www/html
     networks:
       - internal
 
   mariadb:
     image: mariadb:10.5.9
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=crater

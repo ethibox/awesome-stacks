@@ -27,7 +27,7 @@ services:
     image: mariadb:${MARIADB_VERSION:-11.4}
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_USER=${MYSQL_USER:-moodle}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-moodle}

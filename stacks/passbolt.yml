@@ -49,7 +49,7 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=passbolt

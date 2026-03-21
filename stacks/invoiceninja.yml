@@ -55,7 +55,7 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.6}
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_USER=invoiceninja
       - MYSQL_PASSWORD=myp@ssw0rd

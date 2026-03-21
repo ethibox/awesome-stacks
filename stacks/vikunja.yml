@@ -35,7 +35,7 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_USER=${MYSQL_USER:-vikunja}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-vikunja}

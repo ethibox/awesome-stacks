@@ -29,7 +29,7 @@ services:
   mariadb:
     image: mariadb:10.5.9
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_USER=${MYSQL_USER:-omeka}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-omeka}

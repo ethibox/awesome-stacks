@@ -7,7 +7,7 @@ services:
       - NGINX_TEMPLATE=${NGINX_TEMPLATE:-/etc/nginx/nextcloud.template}
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
     volumes:
-      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+      - ${VOLUME_PATH}nextcloud:/var/www/html
     deploy:
       resources:
         limits:
@@ -69,7 +69,7 @@ services:
       - NC_loglevel=${NC_loglevel:-2}
       - NC_maintenance_window_start=1
     volumes:
-      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+      - ${VOLUME_PATH}nextcloud:/var/www/html
     healthcheck:
       test: ["CMD-SHELL", "curl -fsSL --max-time 30 http://nginx/status.php || ! nc -z nginx 80"]
     deploy:
@@ -84,7 +84,7 @@ services:
     entrypoint: /cron.sh
     environment: *nextcloud-environment
     volumes:
-      - ${VOLUME_PATH}nextcloud:/var/www/html:cached
+      - ${VOLUME_PATH}nextcloud:/var/www/html
     deploy:
       resources:
         limits:

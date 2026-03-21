@@ -29,8 +29,8 @@ services:
       - MATOMO_DATABASE_PASSWORD=myp@ssw0rd
       - MATOMO_DATABASE_HOST=mariadb
     volumes: &matomo-volumes
-      - ${VOLUME_PATH}config:/var/www/html/config:cached
-      - ${VOLUME_PATH}data:/var/www/html:cached
+      - ${VOLUME_PATH}config:/var/www/html/config
+      - ${VOLUME_PATH}data:/var/www/html
     deploy: &matomo-deploy
       resources:
         limits:

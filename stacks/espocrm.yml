@@ -4,7 +4,7 @@ services:
   app:
     image: espocrm/espocrm:${VERSION:-7-apache}
     volumes:
-      - ${VOLUME_PATH}espocrm:/var/www/html:cached
+      - ${VOLUME_PATH}espocrm:/var/www/html
     environment:
       - ESPOCRM_SITE_URL=https://${DOMAIN:-espocrm.localhost}
       - ESPOCRM_DATABASE_HOST=mariadb
@@ -24,7 +24,7 @@ services:
   mariadb:
     image: mariadb:10.5.9
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-espocrm}

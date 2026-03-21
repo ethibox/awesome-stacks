@@ -6,7 +6,7 @@ services:
   app:
     image: mediawiki:${VERSION:-1.45.1}
     volumes:
-      - ${VOLUME_PATH}data:/var/www/html:cached
+      - ${VOLUME_PATH}data:/var/www/html
     deploy:
       resources:
         limits:
@@ -22,7 +22,7 @@ services:
   mariadb:
     image: mariadb:10.6
     volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql:cached
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_USER=mediawiki
       - MYSQL_DATABASE=mediawiki
