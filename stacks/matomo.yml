@@ -46,6 +46,9 @@ services:
     command:
       - -c
       - |
+        cp -a /usr/src/matomo/. /var/www/html/
+        chown -R www-data:www-data /var/www/html
+        php /var/www/html/console core:update --yes 2>/dev/null || true
         echo "0 * * * * /usr/local/bin/php /var/www/html/console core:archive --url=http://localhost" > /var/spool/cron/crontabs/www-data
         exec crond -f
     deploy: *matomo-deploy
