@@ -46,6 +46,7 @@ services:
     command:
       - -c
       - |
+        for dir in /usr/src/matomo/plugins/*/; do rm -rf "/var/www/html/plugins/$$(basename "$$dir")"; done
         cp -a /usr/src/matomo/. /var/www/html/
         chown -R www-data:www-data /var/www/html
         php /var/www/html/console core:update --yes 2>/dev/null || true
@@ -57,6 +58,7 @@ services:
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-10.5.9}
+    command: --max-allowed-packet=64MB
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
