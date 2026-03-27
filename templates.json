@@ -407,7 +407,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wordpress.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "5092b5ba39fbcf1aedfeb317fd814ab6389efdbc"
       }
     },
     {
