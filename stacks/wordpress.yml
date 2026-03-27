@@ -20,7 +20,7 @@ services:
       - traefik
 
   app:
-    image: wordpress:${VERSION:-6.9.1-fpm-alpine}
+    image: wordpress:${VERSION:-6.9.4-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
