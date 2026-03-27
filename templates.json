@@ -2749,7 +2749,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/outline.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "8bccc92eb02203df64705cb45a298d039cc54aef"
       },
       "env": [
         {
