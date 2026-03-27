@@ -3,7 +3,7 @@
 
 services:
   web:
-    image: outlinewiki/outline:${VERSION:-0.87.4}
+    image: outlinewiki/outline:${VERSION:-1.6.1}
     environment:
       - PORT=3000
       - PGSSLMODE=disable
@@ -37,7 +37,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-12-alpine}
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=outline
       - POSTGRES_USER=outline
