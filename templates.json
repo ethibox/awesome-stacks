@@ -2740,7 +2740,7 @@
       "title": "Outline",
       "description": "Application de gestion des connaissances open-source",
       "categories": [
-        "Connaissances"
+        "Notes"
       ],
       "manual": true,
       "enabled": true,
@@ -3292,6 +3292,23 @@
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/uptime-kuma.yml",
         "commit": "95279ba422c89d3706af83eae3557cd36409dbf0"
+      }
+    },
+    {
+      "type": 2,
+      "title": "Affine",
+      "description": "AFFiNE est une alternative open-source à Notion",
+      "categories": [
+        "Notes"
+      ],
+      "manual": true,
+      "enabled": true,
+      "logo": "https://i.imgur.com/uX5GuD4.png",
+      "website": "https://affine.pro",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/affine.yml",
+        "commit": "008138cfdd249fd6892dbeefc628e17524c55234"
       }
     }
   ]
