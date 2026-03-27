@@ -1,7 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c affine.yml affine
 
 x-affine: &affine
-  image: ghcr.io/toeverything/affine:${VERSION:-0.24.1}
+  image: ghcr.io/toeverything/affine:${VERSION:-0.26.3}
   volumes:
     - ${VOLUME_PATH}storage:/root/.affine/storage
     - ${VOLUME_PATH}config:/root/.affine/config
