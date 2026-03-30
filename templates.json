@@ -3234,7 +3234,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/solidtime.yml",
-        "commit": "9cd735f757c7cb7f5e373517219584d575a8b37c"
+        "commit": "7f3b249d11d548d47dd07d942eabf3c3934e84a1"
       },
       "env": [
         {
