@@ -4,7 +4,7 @@
     {
       "type": 2,
       "title": "Nextcloud",
-      "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore...",
+      "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore.",
       "categories": [
         "Stockage"
       ],
@@ -118,7 +118,7 @@
     {
       "type": 2,
       "title": "Kanboard",
-      "description": "Kanboard est un logiciel de gestion de projet Kanban libre et open-source.",
+      "description": "Kanboard est un logiciel open-source de gestion de projet Kanban, simple et efficace.",
       "categories": [
         "Gestion de projet"
       ],
@@ -187,7 +187,7 @@
     {
       "type": 2,
       "title": "Odoo",
-      "description": "Odoo est une suite d'applications d'entreprise distribuées de logiciels libres.",
+      "description": "Odoo est une suite open-source d'applications de gestion d'entreprise (ERP, CRM, comptabilité).",
       "categories": [
         "Finance"
       ],
@@ -218,7 +218,7 @@
     {
       "type": 2,
       "title": "Matomo",
-      "description": "Matomo est un logiciel libre et open-source de mesure de statistiques web.",
+      "description": "Matomo est un logiciel open-source de mesure de statistiques web.",
       "categories": [
         "Analytics"
       ],
@@ -397,7 +397,7 @@
     {
       "type": 2,
       "title": "Wordpress",
-      "description": "WordPress est l'application web la plus utilisée au monde pour créer un beau site web.",
+      "description": "WordPress est l'application web open-source la plus utilisée au monde pour créer un beau site web.",
       "categories": [
         "Blog"
       ],
@@ -485,7 +485,7 @@
     {
       "type": 2,
       "title": "Zammad",
-      "description": "Zammad est un système de support client open-source basé sur le web pour gérer tickets, emails et chats.",
+      "description": "Zammad est un système de support client open-source pour gérer tickets, emails et chats.",
       "categories": [
         "Marketing"
       ],
@@ -860,7 +860,7 @@
     {
       "type": 2,
       "title": "Invoice-ninja",
-      "description": "Invoice Ninja est une application libre et open-source pour la facturation de vos clients.",
+      "description": "Invoice Ninja est une application open-source pour la facturation de vos clients.",
       "categories": [
         "Finance"
       ],
@@ -1117,7 +1117,7 @@
     {
       "type": 2,
       "title": "Dolibarr",
-      "description": "Dolibarr ERP & CRM est un progiciel web moderne et facile à utiliser pour la gestion de votre entreprise.",
+      "description": "Dolibarr ERP & CRM est un progiciel web open-source moderne et facile à utiliser pour la gestion de votre entreprise.",
       "categories": [
         "Finance"
       ],
@@ -1148,7 +1148,7 @@
     {
       "type": 2,
       "title": "Element",
-      "description": "Element est une application de collaboration open-source qui fournit des services de messagerie, de partage de fichiers et de visioconférence.",
+      "description": "Element est une application de collaboration open-source avec messagerie, partage de fichiers et visioconférence.",
       "categories": [
         "Communication"
       ],
@@ -1180,7 +1180,7 @@
     {
       "type": 2,
       "title": "Fathom",
-      "description": "Fathom Analytics fournit des statistiques de sites Web simples et utiles sans suivre ni stocker les données personnelles de vos utilisateurs.",
+      "description": "Fathom Analytics fournit des statistiques de sites web simples et utiles sans suivre ni stocker les données personnelles de vos utilisateurs.",
       "categories": [
         "Analytics"
       ],
@@ -1210,7 +1210,7 @@
     {
       "type": 2,
       "title": "Flarum",
-      "description": "Flarum est un logiciel de forum nouvelle génération qui rend les discussions en ligne amusantes.",
+      "description": "Flarum est un logiciel de forum open-source nouvelle génération qui rend les discussions en ligne amusantes.",
       "categories": [
         "Communication"
       ],
@@ -1264,7 +1264,7 @@
     {
       "type": 2,
       "title": "Prestashop",
-      "description": "PrestaShop est un logiciel de e-commerce libre et open-source.",
+      "description": "PrestaShop est un logiciel open-source de e-commerce pour créer et gérer votre boutique en ligne.",
       "categories": [
         "Finance"
       ],
@@ -1293,7 +1293,7 @@
     {
       "type": 2,
       "title": "Mediawiki",
-      "description": "MediaWiki est un logiciel wiki libre, à l'origine utilisé par Wikipédia.",
+      "description": "MediaWiki est un logiciel wiki open-source, à l'origine utilisé par Wikipédia.",
       "categories": [
         "Docs"
       ],
@@ -1560,7 +1560,7 @@
     {
       "type": 2,
       "title": "Passbolt",
-      "description": "Passbolt est un gestionnaire de mots de passe open-source pour les équipes. Il permet de partager et de stocker en toute sécurité les informations d'identification.",
+      "description": "Passbolt est un gestionnaire de mots de passe open-source pour partager et stocker en toute sécurité les identifiants de votre équipe.",
       "categories": [
         "Sécurité"
       ],
@@ -1615,7 +1615,7 @@
     {
       "type": 2,
       "title": "Wallabag",
-      "description": "Wallabag est une application libre et open-source pour la sauvegarde de vos pages web.",
+      "description": "Wallabag est une application open-source pour sauvegarder vos pages web et les lire plus tard.",
       "categories": [
         "Stockage"
       ],
@@ -1631,7 +1631,7 @@
     {
       "type": 2,
       "title": "Calibre",
-      "description": "Calibre Web est une application Web offrant une interface claire pour la navigation, la lecture et le téléchargement de livres électroniques.",
+      "description": "Calibre Web est une application web open-source offrant une interface claire pour la navigation, la lecture et le téléchargement de livres électroniques.",
       "categories": [
         "Stockage"
       ],
@@ -1719,7 +1719,7 @@
     {
       "type": 2,
       "title": "Rainloop",
-      "description": "Rainloop est un client de messagerie simple, moderne et rapide basé sur le Web.",
+      "description": "Rainloop est un client de messagerie open-source simple, moderne et rapide basé sur le web.",
       "categories": [
         "Communication"
       ],
@@ -1750,7 +1750,7 @@
     {
       "type": 2,
       "title": "Gogs",
-      "description": "Gogs est un service Git auto-hébergé léger pour héberger vos dépôts de code.",
+      "description": "Gogs est un service Git open-source auto-hébergé léger pour héberger vos dépôts de code.",
       "categories": [
         "Stockage"
       ],
@@ -1766,7 +1766,7 @@
     {
       "type": 2,
       "title": "CodiMD",
-      "description": "CodiMD vous permet de créer des notes collaboratives en temps réel.",
+      "description": "CodiMD est un éditeur open-source qui vous permet de créer des notes collaboratives en temps réel.",
       "categories": [
         "Docs"
       ],
@@ -2924,7 +2924,7 @@
     {
       "type": 2,
       "title": "Collabora",
-      "description": "Collabora Online est une suite bureautique en ligne puissante basée sur LibreOffice.",
+      "description": "Collabora Online est une suite bureautique en ligne open-source puissante basée sur LibreOffice.",
       "categories": [
         "Docs"
       ],
@@ -3055,7 +3055,7 @@
     {
       "type": 2,
       "title": "Drawio",
-      "description": "Draw.io est un éditeur de diagrammes open-source.",
+      "description": "Draw.io est un éditeur de diagrammes open-source pour créer des schémas, organigrammes et diagrammes techniques.",
       "categories": [
         "Docs"
       ],
@@ -3071,7 +3071,7 @@
     {
       "type": 2,
       "title": "Healthchecks",
-      "description": "Healthchecks est un service de surveillance de vos tâches planifiées.",
+      "description": "Healthchecks est un outil open-source de surveillance de tâches planifiées (cron jobs) avec alertes en cas d'échec.",
       "categories": [
         "Analytics"
       ],
@@ -3165,7 +3165,7 @@
     {
       "type": 2,
       "title": "Kosync",
-      "description": "Serveur de synchronisation pour KOReader.",
+      "description": "KOReader Sync est un serveur open-source de synchronisation de la progression de lecture pour KOReader.",
       "categories": [
         "Stockage"
       ],
@@ -3198,7 +3198,7 @@
     {
       "type": 2,
       "title": "Monitoring",
-      "description": "Stack de supervision complète avec Prometheus, Grafana, cAdvisor et Node Exporter.",
+      "description": "Stack de supervision open-source pour monitorer vos serveurs et conteneurs avec Prometheus, Grafana, cAdvisor et Node Exporter.",
       "categories": [
         "Analytics"
       ],
@@ -3247,7 +3247,7 @@
     {
       "type": 2,
       "title": "Solidtime",
-      "description": "Solidtime est une application open-source de suivi du temps de travail.",
+      "description": "Solidtime est une application open-source de suivi du temps de travail pour les freelances et les équipes.",
       "categories": [
         "Gestion de projet"
       ],
@@ -3305,7 +3305,7 @@
     {
       "type": 2,
       "title": "Uptime-Kuma",
-      "description": "Uptime Kuma est un outil de monitoring open-source auto-hébergé.",
+      "description": "Uptime Kuma est un outil de monitoring open-source pour surveiller la disponibilité de vos sites et services.",
       "categories": [
         "Analytics"
       ],
