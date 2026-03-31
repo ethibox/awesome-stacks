@@ -34,6 +34,12 @@ services:
       - GRIST_OIDC_IDP_CLIENT_SECRET=${GRIST_OIDC_IDP_CLIENT_SECRET}
       - GRIST_OIDC_SP_HOST=https://${DOMAIN:-grist.localhost}
       - GRIST_OIDC_IDP_SCOPES=${GRIST_OIDC_IDP_SCOPES:-openid profile email}
+      - ASSISTANT_API_KEY=${ASSISTANT_API_KEY}
+      - ASSISTANT_MODEL=${ASSISTANT_MODEL:-gpt-4o-2024-08-06}
+      - ASSISTANT_MAX_TOOL_CALLS=${ASSISTANT_MAX_TOOL_CALLS:-10}
+      - ASSISTANT_LONGER_CONTEXT_MODEL=${ASSISTANT_LONGER_CONTEXT_MODEL}
+      - ASSISTANT_CHAT_COMPLETION_ENDPOINT=${ASSISTANT_CHAT_COMPLETION_ENDPOINT:-https://api.openai.com/v1/chat/completions}
+      - GRIST_SANDBOX_FLAVOR=${GRIST_SANDBOX_FLAVOR:-pyodide}
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:8484/api/orgs', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"]
     deploy:

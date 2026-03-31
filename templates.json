@@ -2135,6 +2135,30 @@
               "value": "false"
             }
           ]
+        },
+        {
+          "name": "ASSISTANT_CHAT_COMPLETION_ENDPOINT",
+          "label": "Assistant chat completion endpoint",
+          "value": "https://api.openai.com/v1/chat/completions"
+        },
+        {
+          "name": "ASSISTANT_API_KEY",
+          "label": "Assistant API key",
+          "type": "password"
+        },
+        {
+          "name": "ASSISTANT_MODEL",
+          "label": "Assistant model",
+          "value": "gpt-4o-2024-08-06"
+        },
+        {
+          "name": "ASSISTANT_LONGER_CONTEXT_MODEL",
+          "label": "Assistant longer context model"
+        },
+        {
+          "name": "ASSISTANT_MAX_TOOL_CALLS",
+          "label": "Assistant max tool calls",
+          "value": "10"
         }
       ]
     },
