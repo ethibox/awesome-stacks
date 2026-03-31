@@ -3,7 +3,7 @@
 
 services:
   web:
-    image: jitsi/web:${VERSION:-stable-10741}
+    image: jitsi/web:${VERSION:-stable-10888}
     environment: &jitsi-environment
       - TZ=Europe/Paris
       - JVB_PORT=${JVB_PORT:-10000}
@@ -40,7 +40,7 @@ services:
       - internal
 
   prosody:
-    image: jitsi/prosody:${VERSION:-stable-10741}
+    image: jitsi/prosody:${VERSION:-stable-10888}
     environment: *jitsi-environment
     volumes:
       - ${VOLUME_PATH}prosody:/config
@@ -54,7 +54,7 @@ services:
           - ${XMPP_SERVER:-xmpp.meet.jitsi}
 
   jicofo:
-    image: jitsi/jicofo:${VERSION:-stable-10741}
+    image: jitsi/jicofo:${VERSION:-stable-10888}
     environment: *jitsi-environment
     volumes:
       - ${VOLUME_PATH}jicofo:/config
@@ -66,7 +66,7 @@ services:
       - internal
 
   jvb:
-    image: jitsi/jvb:${VERSION:-stable-10741}
+    image: jitsi/jvb:${VERSION:-stable-10888}
     environment: *jitsi-environment
     volumes:
       - ${VOLUME_PATH}jvb:/config
