@@ -1251,7 +1251,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/jitsi.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "02217f96cff7fa9df677eda7e35973a3caa3f874"
       },
       "env": [
         {
