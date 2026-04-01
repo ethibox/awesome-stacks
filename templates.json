@@ -1174,7 +1174,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/metabase.yml",
-        "commit": "80e8ead675ddec855f36e01bf55883cb3dc4348c"
+        "commit": "51bbb3aa4105ebd74c50963a14b464675fb10df1"
       }
     },
     {
