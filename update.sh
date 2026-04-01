@@ -36,7 +36,7 @@ update_app() {
     [[ "$line" =~ \$\{VERSION:-([^}]+)\} ]] && current="${BASH_REMATCH[1]}" || continue
     
     local image
-    image=$(echo "$line" | sed -E 's/.*image: (.*):\$\{VERSION.*/\1/' | sed -E 's/\$\{.*:-(.*)\}/\1/' | tr -d "'\" ")
+    image=$(echo "$line" | sed -E 's/.*image: (&[^ ]+ )?(.*):\$\{VERSION.*/\2/' | sed -E 's/\$\{.*:-(.*)\}/\1/' | tr -d "'\" ")
     
     local pattern
     pattern=$(get_pattern "$current")
