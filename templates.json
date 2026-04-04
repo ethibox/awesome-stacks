@@ -2087,7 +2087,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/grist.yml",
-        "commit": "cce36ee5c49b0f93abb02482bf1924cebc23e028"
+        "commit": "40b81e0876e7284749b51281aa490878c7f99e62"
       },
       "env": [
         {
@@ -2159,6 +2159,28 @@
           "name": "ASSISTANT_MAX_TOOL_CALLS",
           "label": "Assistant max tool calls",
           "value": "10"
+        },
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP host"
+        },
+        {
+          "name": "SMTP_PORT",
+          "label": "SMTP port",
+          "value": "587"
+        },
+        {
+          "name": "SMTP_USERNAME",
+          "label": "SMTP username"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "label": "SMTP password",
+          "type": "password"
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP from"
         }
       ]
     },
