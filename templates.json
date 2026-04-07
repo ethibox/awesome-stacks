@@ -95,7 +95,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mattermost.yml",
-        "commit": "4aab0a6dcb81934d65eb610b0a901e637c0188c3"
+        "commit": "98913d5cf8580251b576ac06bfe7e589f3ad02cf"
       },
       "env": [
         {
