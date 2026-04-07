@@ -2197,7 +2197,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nocobase.yml",
-        "commit": "050b6224849b57d9930ac48701e1a662ad4ac670"
+        "commit": "40dae0069a9dca88ef63a3602abb79a0d35fdf61"
       },
       "env": [
         {
