@@ -128,7 +128,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/kanboard.yml",
-        "commit": "442ef3c0d3885651773960faf800fbb0ffa5b8a0"
+        "commit": "7a89dbdb9dadfac8d8cc86f5ef7ab8fc547acbea"
       },
       "env": [
         {
