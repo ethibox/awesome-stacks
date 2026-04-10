@@ -29,8 +29,9 @@ services:
     command:
       - -c
       - |
+        apk add --no-cache fcgi
         sed -i 's/pm = dynamic/pm = ondemand/g' /usr/local/etc/php-fpm.d/www.conf
-        sed -i "s/pm.max_children = 5/pm.max_children = ${PHP_FPM_MAX_CHILDREN:-80}/g" /usr/local/etc/php-fpm.d/www.conf
+        sed -i "s/pm.max_children = 5/pm.max_children = ${PHP_FPM_MAX_CHILDREN:-60}/g" /usr/local/etc/php-fpm.d/www.conf
         sed -i "s/;pm.process_idle_timeout = 10s/pm.process_idle_timeout = 10s/g" /usr/local/etc/php-fpm.d/www.conf
         sed -i 's/;pm.max_requests/pm.max_requests/g' /usr/local/etc/php-fpm.d/www.conf
         echo "php /var/www/html/occ app:disable app_api" > /docker-entrypoint-hooks.d/post-installation/setup.sh
@@ -71,10 +72,17 @@ services:
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsSL --max-time 30 http://nginx/status.php || ! nc -z nginx 80"]
+      test:
+        - CMD-SHELL
+        - REQUEST_METHOD="GET" SCRIPT_NAME="status.php" SCRIPT_FILENAME="status.php" cgi-fcgi -bind -connect "127.0.0.1:9000" | grep -q '"installed":true'
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10m
     deploy:
       resources:
         limits:
+          cpus: ${CPU_LIMIT:-2.0}
           memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
@@ -88,6 +96,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: ${CRON_CPU_LIMIT:-2.0}
           memory: ${MEMORY_LIMIT:-2G}
     networks:
       - internal
