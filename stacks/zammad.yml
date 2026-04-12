@@ -16,7 +16,7 @@ services:
         condition: on-failure
 
   zammad-init:
-    image: &zammad-image zammad/zammad-docker-compose:${VERSION:-7.0.0-0066}
+    image: &zammad-image zammad/zammad-docker-compose:${VERSION:-7.0.1-0002}
     command: ["zammad-init"]
     volumes: &zammad-volumes
       - ${VOLUME_PATH}var:/opt/zammad/var
