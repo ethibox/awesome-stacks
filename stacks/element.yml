@@ -1,11 +1,11 @@
 # DOMAIN=example.com docker stack deploy -c element.yml element
-# register_new_matrix_user -c /data/homeserver.yaml https://element.localhost # Create an admin user
+# docker exec -it $(docker ps -qf 'name=element_synapse\.') register_new_matrix_user -c /data/homeserver.yaml http://localhost:8008
 # UPDATE users SET admin = 1 WHERE name = '@username:yourserver.com'; # Set admin role
 # https://matrix.org/federationtester # To check config
 
 services:
   web:
-    image: vectorim/element-web:${VERSION:-v1.12.11}
+    image: vectorim/element-web:${VERSION:-v1.12.15}
     user: root
     command:
       - /bin/sh
@@ -33,7 +33,7 @@ services:
       - internal
 
   synapse:
-    image: ghcr.io/element-hq/synapse:${SYNAPSE_VERSION:-v1.148.0}
+    image: ghcr.io/element-hq/synapse:${SYNAPSE_VERSION:-v1.151.0}
     entrypoint: /bin/sh
     command:
       - -c
