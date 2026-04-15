@@ -2629,7 +2629,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/rallly.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "766de59e5e659976c7209f0901763a73bee5b470"
       },
       "env": [
         {
