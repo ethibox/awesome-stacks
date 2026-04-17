@@ -3,7 +3,7 @@
 get_pattern() {
   local current="$1"
   local major
-  major=$(echo "$current" | grep -oE '^[vV]?[0-9]+')
+  major=$(echo "$current" | grep -oE '^([^0-9]*[0-9]+\.[0-9]+-)?[vV]?[0-9]+' | sed 's/\./\\./g')
   
   if [[ "$current" =~ ^stable ]]; then
     echo "^stable-[0-9]+$"
@@ -52,7 +52,7 @@ update_app() {
 }
 
 main() {
-  local apps=(${@:-nextcloud discourse rocketchat n8n mastodon mattermost metabase jitsi kanboard matomo mediawiki grist zammad wordpress nocobase wekan mautic calendso})
+  local apps=(${@:-nextcloud discourse rocketchat n8n mastodon mattermost metabase jitsi kanboard matomo mediawiki grist zammad wordpress nocobase wekan mautic calendso freescout})
   for app in "${apps[@]}"; do
     update_app "$app"
   done
