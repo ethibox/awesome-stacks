@@ -2,12 +2,12 @@
 
 services:
   app:
-    image: ${IMAGE:-mautic/mautic}:${VERSION:-7-apache}
-    volumes:
+    image: &mautic-image ${IMAGE:-mautic/mautic}:${VERSION:-7-apache}
+    volumes: &mautic-volumes
       - ${VOLUME_PATH}config:/var/www/html/config
       - ${VOLUME_PATH}files:/var/www/html/docroot/media/files
       - ${VOLUME_PATH}images:/var/www/html/docroot/media/images
-    environment:
+    environment: &mautic-environment
       - MAUTIC_DB_USER=mautic
       - MAUTIC_DB_HOST=mariadb
       - MAUTIC_DB_DATABASE=mautic
@@ -24,6 +24,25 @@ services:
     networks:
       - internal
       - traefik
+
+  cron:
+    image: *mautic-image
+    entrypoint: /bin/bash
+    command: -c "while true; do
+      php /var/www/html/bin/console mautic:segments:update --no-interaction --no-ansi;
+      php /var/www/html/bin/console mautic:campaigns:update --no-interaction --no-ansi;
+      php /var/www/html/bin/console mautic:campaigns:trigger --no-interaction --no-ansi;
+      php /var/www/html/bin/console mautic:broadcasts:send --no-interaction --no-ansi;
+      php /var/www/html/bin/console mautic:webhooks:process --no-interaction --no-ansi;
+      sleep 300; done"
+    volumes: *mautic-volumes
+    environment: *mautic-environment
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
