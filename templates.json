@@ -3356,6 +3356,22 @@
         "stackfile": "stacks/affine.yml",
         "commit": "008138cfdd249fd6892dbeefc628e17524c55234"
       }
+    },
+    {
+      "type": 2,
+      "title": "SignaturePDF",
+      "description": "SignaturePDF est une application web open-source pour signer, modifier et organiser vos documents PDF.",
+      "categories": [
+        "Docs"
+      ],
+      "enabled": true,
+      "logo": "https://i.imgur.com/JDonaz0.png",
+      "website": "https://pdf.24eme.fr/",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/signaturepdf.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
     }
   ]
 }
