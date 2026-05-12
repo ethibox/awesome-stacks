@@ -3372,6 +3372,22 @@
         "stackfile": "stacks/signaturepdf.yml",
         "commit": "26cecbce9aa018d9e553b46b2f6f99bb8df90999"
       }
+    },
+    {
+      "type": 2,
+      "title": "DocuSeal",
+      "description": "DocuSeal est une plateforme open-source de signature électronique de documents PDF, alternative à DocuSign.",
+      "categories": [
+        "Docs"
+      ],
+      "enabled": true,
+      "logo": "https://i.imgur.com/aaqRzLv.png",
+      "website": "https://docuseal.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/docuseal.yml",
+        "commit": "251bb0747e262b3838082e459454df59f8d511be"
+      }
     }
   ]
 }
