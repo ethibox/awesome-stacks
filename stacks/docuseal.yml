@@ -1,0 +1,50 @@
+# DOMAIN=example.com docker stack deploy -c docuseal.yml docuseal
+
+services:
+  app:
+    image: docuseal/docuseal:${VERSION:-2.5.3}
+    environment:
+      - FORCE_SSL=${DOMAIN:-docuseal.localhost}
+      - DATABASE_URL=postgresql://docuseal:myp%40ssw0rd@postgres:5432/docuseal
+    volumes:
+      - ${VOLUME_PATH}data:/data/docuseal
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.docuseal-${NUMBER:-1}.rule=Host(`${DOMAIN:-docuseal.localhost}`)
+        - traefik.http.services.docuseal-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=docuseal
+      - POSTGRES_USER=docuseal
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "docuseal"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+volumes:
+  data:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
