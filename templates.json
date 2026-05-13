@@ -1877,7 +1877,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/freescout.yml",
-        "commit": "1177bc4595c3eafaf1f0a41e1675bac64e54d3d9"
+        "commit": "bc984f674e7276e650444c005124e42245f6b5af"
       },
       "env": [
         {
