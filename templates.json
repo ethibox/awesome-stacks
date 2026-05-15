@@ -2087,7 +2087,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/grist.yml",
-        "commit": "3e24c8983099ea584efd5b7767d483127dd1599b"
+        "commit": "5d3b20c179fbf34fcc70fefe67860cc9ce02c174"
       },
       "env": [
         {
@@ -2135,6 +2135,10 @@
               "value": "false"
             }
           ]
+        },
+        {
+          "name": "ALLOWED_WEBHOOK_DOMAINS",
+          "label": "Allowed webhook domains"
         },
         {
           "name": "ASSISTANT_CHAT_COMPLETION_ENDPOINT",
