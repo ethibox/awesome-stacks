@@ -40,6 +40,7 @@ services:
       - ASSISTANT_LONGER_CONTEXT_MODEL=${ASSISTANT_LONGER_CONTEXT_MODEL}
       - ASSISTANT_CHAT_COMPLETION_ENDPOINT=${ASSISTANT_CHAT_COMPLETION_ENDPOINT:-https://api.openai.com/v1/chat/completions}
       - GRIST_SANDBOX_FLAVOR=${GRIST_SANDBOX_FLAVOR:-pyodide}
+      - ALLOWED_WEBHOOK_DOMAINS=${ALLOWED_WEBHOOK_DOMAINS}
       - GRIST_NODEMAILER_CONFIG={"host":"${SMTP_HOST:-smtp.example.com}","port":${SMTP_PORT:-587},"auth":{"user":"${SMTP_USERNAME}","pass":"${SMTP_PASSWORD}"}}
       - GRIST_NODEMAILER_SENDER={"name":"Grist","email":"${SMTP_FROM:-noreply@example.com}"}
     healthcheck:
