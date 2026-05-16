@@ -4,7 +4,8 @@ get_pattern() {
   local current="$1"
   local major
   major=$(echo "$current" | grep -oE '^([^0-9]*[0-9]+\.[0-9]+-)?[vV]?[0-9]+' | sed 's/\./\\./g')
-  
+  grep -q -- --major /proc/$$/cmdline && major=$(echo "$major" | sed -E 's/[0-9]+$/[0-9]+/')
+
   if [[ "$current" =~ ^stable ]]; then
     echo "^stable-[0-9]+$"
   elif [[ "$current" =~ alpine ]]; then
