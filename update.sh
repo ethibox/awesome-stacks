@@ -59,4 +59,4 @@ main() {
   done
 }
 
-main "$@"
+main ${@//--major/}
