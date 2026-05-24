@@ -2,7 +2,7 @@
 
 services:
   peertube:
-    image: chocobozzz/peertube:${VERSION:-v8.1.7}
+    image: chocobozzz/peertube:${VERSION:-v8.1.8}
     ports:
       - target: 1935
         published: ${RTMP_PORT:-1935}
