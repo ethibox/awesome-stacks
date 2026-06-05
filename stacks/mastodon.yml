@@ -12,7 +12,7 @@
 
 services:
   web:
-    image: &mastodon-image ghcr.io/mastodon/mastodon:${VERSION:-v4.5.9}
+    image: &mastodon-image ghcr.io/mastodon/mastodon:${VERSION:-v4.5.11}
     environment: &mastodon-environment
       - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
       - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
@@ -56,7 +56,7 @@ services:
       - internal
 
   streaming:
-    image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.5.9}
+    image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.5.11}
     environment: *mastodon-environment
     command: node ./streaming
     healthcheck:
