@@ -24,7 +24,7 @@ services:
       - traefik
 
   app:
-    image: &nextcloud-image nextcloud:${VERSION:-33.0.3-fpm-alpine}
+    image: &nextcloud-image nextcloud:${VERSION:-33.0.5-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
