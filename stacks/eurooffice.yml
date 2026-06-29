@@ -1,0 +1,31 @@
+# DOMAIN=example.com docker stack deploy -c eurooffice.yml eurooffice
+
+services:
+  eurooffice:
+    image: ghcr.io/euro-office/documentserver:${VERSION:-v9.3.1}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsSL http://localhost/healthcheck || exit 1"]
+    environment:
+      - JWT_ENABLED=${JWT_ENABLED:-true}
+      - JWT_SECRET=${JWT_SECRET:-mys3cr3t}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.eurooffice-${NUMBER:-1}.rule=Host(`${DOMAIN:-eurooffice.localhost}`)
+        - traefik.http.routers.eurooffice-${NUMBER:-1}.middlewares=eurooffice-${NUMBER:-1}-headers
+        - traefik.http.middlewares.eurooffice-${NUMBER:-1}-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
+        - traefik.http.services.eurooffice-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
