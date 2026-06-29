@@ -3392,6 +3392,28 @@
         "stackfile": "stacks/docuseal.yml",
         "commit": "251bb0747e262b3838082e459454df59f8d511be"
       }
+    },
+    {
+      "type": 2,
+      "title": "EuroOffice",
+      "description": "EuroOffice est une suite bureautique open-source pour éditer collaborativement documents, feuilles de calcul et présentations.",
+      "categories": [
+        "Docs"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/pvXmBOG.png",
+      "website": "https://github.com/Euro-Office/DocumentServer",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/eurooffice.yml",
+        "commit": "abdbb3636f5b9cf7833e7306ac638ba109862fd6"
+      },
+      "env": [
+        {
+          "name": "JWT_SECRET",
+          "preset": true
+        }
+      ]
     }
   ]
 }
