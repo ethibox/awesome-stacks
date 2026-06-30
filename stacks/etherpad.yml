@@ -13,7 +13,7 @@ services:
         condition: on-failure
 
   web:
-    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-2.6.1}
+    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-3.3.2}
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
       - ${VOLUME_PATH}var:/opt/etherpad-lite/var
@@ -25,8 +25,6 @@ services:
       - DB_USER=etherpad
       - DB_PASS=myp@ssw0rd
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
-    healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:9001/health']
     deploy:
       resources:
         limits:
