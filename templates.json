@@ -2087,7 +2087,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/grist.yml",
-        "commit": "6749e937cb12f74758da89e0e93b1bbf14624b94"
+        "commit": "6d984d486193447572cf954d8922b87401edb91b"
       },
       "env": [
         {
