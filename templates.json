@@ -496,7 +496,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/zammad.yml",
-        "commit": "43dbe73941fa81386a3e94aca041d0efbd3d6259"
+        "commit": "64c64f014101d81a37d00b88b00a4d9e6e5dc316"
       }
     },
     {
