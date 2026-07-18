@@ -512,7 +512,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/rocketchat.yml",
-        "commit": "79271f5d5bd194f41df1e4ad43ccdf6580e99e12"
+        "commit": "726b62859c316f7a4a8ea531820a0aceeb56caaa"
       }
     },
     {
