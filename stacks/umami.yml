@@ -2,7 +2,7 @@
 
 services:
   umami:
-    image: umamisoftware/umami:${VERSION:-3.0.3}
+    image: umamisoftware/umami:${VERSION:-3.2.0}
     environment:
       - DATABASE_TYPE=postgresql
       - DATABASE_URL=postgresql://umami:myp@ssw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/umami
