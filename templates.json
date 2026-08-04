@@ -529,7 +529,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/peertube.yml",
-        "commit": "ba65d82f0dbabcfa96d3d661958cfaab2743d3af"
+        "commit": "7ede7949e3f7be96e9d0c9caea546b613ac74cd5"
       },
       "env": [
         {
