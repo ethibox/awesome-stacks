@@ -2475,7 +2475,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/vaultwarden.yml",
-        "commit": "619e4d125a3002cf287218511fb211fec761a510"
+        "commit": "9ebbb535cac219202e0c5068dd448e7b6cc3677f"
       },
       "env": [
         {
