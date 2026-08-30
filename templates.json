@@ -828,7 +828,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wekan.yml",
-        "commit": "796540abd16cff2f2846869b0995ad6c05942d87"
+        "commit": "48198a3950a38469e411f98316372ab709e3e453"
       },
       "env": [
         {
