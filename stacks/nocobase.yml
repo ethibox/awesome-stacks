@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: nocobase/nocobase:${VERSION:-2.1.28}
+    image: nocobase/nocobase:${VERSION:-2.2.4}
     environment:
       - APP_ENV=production
       - INIT_ROOT_EMAIL=${ADMIN_EMAIL:-admin@example.com}
