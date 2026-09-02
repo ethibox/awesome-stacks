@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: healthchecks/healthchecks:${VERSION:-v4.0}
+    image: healthchecks/healthchecks:${VERSION:-v4.4}
     command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; uwsgi /opt/healthchecks/docker/uwsgi.ini'
     environment:
       - ALLOWED_HOSTS=${DOMAIN:-healthchecks.localhost}
