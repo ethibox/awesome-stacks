@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: &lufi-image ethibox/lufi:${VERSION:-0.07.3}
+    image: &lufi-image ethibox/lufi:${VERSION:-0.07.4}
     environment: &lufi-environment
       - MAX_DELAY=${MAX_DELAY:-30}
       - SECRET=${SECRET:-mys3cr3t}
