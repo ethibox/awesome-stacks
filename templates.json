@@ -1657,7 +1657,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/lufi.yml",
-        "commit": "93984b2e39c53555d668001cbc90903fce29262e"
+        "commit": "5505fb593f1f89041833247f266fb43e8e8681e6"
       },
       "env": [
         {
