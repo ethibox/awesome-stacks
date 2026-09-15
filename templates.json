@@ -326,7 +326,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mastodon.yml",
-        "commit": "2142a7861c4392efe4c5f8edc69f108c273a0b87"
+        "commit": "842fd6552ba70b8ce8e30f06d55a8e947babb266"
       },
       "env": [
         {
