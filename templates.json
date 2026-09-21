@@ -1498,6 +1498,21 @@
               "value": "true"
             }
           ]
+        },
+        {
+          "name": "OPEN_REGISTRATION",
+          "label": "Open registration",
+          "type": "select",
+          "select": [
+            {
+              "text": "true",
+              "value": "true"
+            },
+            {
+              "text": "false",
+              "value": "false"
+            }
+          ]
         }
       ]
     },
