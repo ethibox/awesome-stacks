@@ -326,7 +326,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mastodon.yml",
-        "commit": "842fd6552ba70b8ce8e30f06d55a8e947babb266"
+        "commit": "4bec9ae214920e399f18630212e473f2a87c4bdd"
       },
       "env": [
         {
@@ -363,6 +363,15 @@
           "name": "SMTP_PORT",
           "label": "SMTP Port",
           "type": "number"
+        },
+        {
+          "name": "HCAPTCHA_SITE_KEY",
+          "label": "hCaptcha Site Key"
+        },
+        {
+          "name": "HCAPTCHA_SECRET_KEY",
+          "label": "hCaptcha Secret Key",
+          "type": "password"
         },
         {
           "name": "SECRET_KEY_BASE",
