@@ -245,7 +245,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/discourse.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "f27f86942d608ddbf31d224445d66eeb883e335c"
       },
       "env": [
         {
