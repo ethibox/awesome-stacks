@@ -1,0 +1,25 @@
+# DOMAIN=example.com docker stack deploy -c openwebui.yml openwebui
+
+services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:${VERSION:-v0.11.4}
+    environment:
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+    volumes:
+      - ${VOLUME_PATH}data:/app/backend/data
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.openwebui-${NUMBER:-1}.rule=Host(`${DOMAIN:-openwebui.localhost}`)
+        - traefik.http.services.openwebui-${NUMBER:-1}.loadbalancer.server.port=8080
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
