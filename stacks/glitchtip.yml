@@ -1,12 +1,13 @@
 # DOMAIN=example.com docker stack deploy -c glitchtip.yml glitchtip
 
 x-glitchtip: &glitchtip
-  image: glitchtip/glitchtip:${VERSION:-v5.2.1}
+  image: glitchtip/glitchtip:${VERSION:-6.2.6}
   environment:
     - GLITCHTIP_DOMAIN=https://${DOMAIN:-glitchtip.localhost}
     - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
     - EMAIL_URL=smtp://${SMTP_USER}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT}
     - CELERY_WORKER_CONCURRENCY=${CELERY_WORKER_CONCURRENCY:-1}
+    - GLITCHTIP_ENABLE_MCP=${GLITCHTIP_ENABLE_MCP:-False}
     - DEFAULT_FROM_EMAIL=${SMTP_FROM}
   volumes:
     - ${VOLUME_PATH}uploads:/code/uploads
@@ -21,14 +22,14 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.glitchtip-${NUMBER:-1}.rule=Host(`${DOMAIN:-glitchtip.localhost}`)
-        - traefik.http.services.glitchtip-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.services.glitchtip-${NUMBER:-1}.loadbalancer.server.port=8000
     networks:
       - traefik
       - internal
 
   worker:
     <<: *glitchtip
-    command: ./bin/run-celery-with-beat.sh
+    command: ./bin/run-worker.sh
     deploy:
       resources:
         limits:
@@ -38,7 +39,7 @@ services:
 
   migrate:
     <<: *glitchtip
-    command: ./manage.py migrate
+    command: ./bin/run-migrate.sh
     deploy:
       restart_policy:
         condition: on-failure
