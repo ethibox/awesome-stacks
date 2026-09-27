@@ -3380,7 +3380,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/uptime-kuma.yml",
-        "commit": "95279ba422c89d3706af83eae3557cd36409dbf0"
+        "commit": "51a3710f75a1bef4667b766ef6cbd01cc04f523c"
       }
     },
     {
