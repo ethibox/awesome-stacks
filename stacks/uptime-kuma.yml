@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: louislam/uptime-kuma:${VERSION:-2.2.1-slim}
+    image: louislam/uptime-kuma:${VERSION:-2.5.5-slim}
     environment:
       - UPTIME_KUMA_DB_PORT=3306
       - UPTIME_KUMA_DB_TYPE=mariadb
