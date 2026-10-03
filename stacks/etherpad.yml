@@ -3,19 +3,21 @@
 services:
   init:
     image: busybox
-    command: chown -R 5001:5001 /opt/etherpad-lite/src/plugin_packages /opt/etherpad-lite/var
+    command: chown -R 5001:5001 /opt/etherpad-lite/src/plugin_packages /opt/etherpad-lite/var /opt/etherpad-lite/src/static/images
     user: root
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
+      - ${VOLUME_PATH}images:/opt/etherpad-lite/src/static/images
       - ${VOLUME_PATH}var:/opt/etherpad-lite/var
     deploy:
       restart_policy:
         condition: on-failure
 
   web:
-    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-3.3.2}
+    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-3.3.6}
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
+      - ${VOLUME_PATH}images:/opt/etherpad-lite/src/static/images
       - ${VOLUME_PATH}var:/opt/etherpad-lite/var
     environment:
       - NODE_ENV=production
@@ -25,6 +27,11 @@ services:
       - DB_USER=etherpad
       - DB_PASS=myp@ssw0rd
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - TRUST_PROXY=${TRUST_PROXY:-true}
+      - EP__ep_image_upload__storage__type=local
+      - EP__ep_image_upload__storage__baseFolder=/opt/etherpad-lite/src/static/images
+      - EP__ep_image_upload__storage__baseURL=https://${DOMAIN:-etherpad.localhost}/static/images/
+      - EP__ep_image_upload__maxFileSize=5000000
     deploy:
       resources:
         limits:
@@ -53,6 +60,7 @@ services:
 volumes:
   var:
   plugins:
+  images:
   postgres:
 
 networks:
