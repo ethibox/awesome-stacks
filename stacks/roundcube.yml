@@ -1,0 +1,62 @@
+# DOMAIN=example.com docker stack deploy -c roundcube.yml roundcube
+
+services:
+  web:
+    image: roundcube/roundcubemail:${VERSION:-1.7.4-apache}
+    volumes:
+      - ${VOLUME_PATH}html:/var/www/html
+      - ${VOLUME_PATH}tmp:/tmp/roundcube-temp
+    environment:
+      - ROUNDCUBEMAIL_DB_TYPE=pgsql
+      - ROUNDCUBEMAIL_DB_HOST=postgres
+      - ROUNDCUBEMAIL_DB_NAME=roundcube
+      - ROUNDCUBEMAIL_DB_USER=roundcube
+      - ROUNDCUBEMAIL_DB_PASSWORD=myp@ssw0rd
+      - ROUNDCUBEMAIL_DEFAULT_HOST=${IMAP_HOST:-ssl://imap.example.com}
+      - ROUNDCUBEMAIL_DEFAULT_PORT=${IMAP_PORT:-993}
+      - ROUNDCUBEMAIL_SMTP_SERVER=${SMTP_HOST:-tls://smtp.example.com}
+      - ROUNDCUBEMAIL_SMTP_PORT=${SMTP_PORT:-587}
+      - ROUNDCUBEMAIL_SKIN=${SKIN:-elastic}
+      - ROUNDCUBEMAIL_PLUGINS=${PLUGINS:-archive,zipdownload,managesieve,markasjunk}
+      - ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE=${UPLOAD_MAX_FILESIZE:-25M}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.roundcube-${NUMBER:-1}.rule=Host(`${DOMAIN:-roundcube.localhost}`)
+        - traefik.http.services.roundcube-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=roundcube
+      - POSTGRES_USER=roundcube
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "roundcube"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  html:
+  tmp:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
