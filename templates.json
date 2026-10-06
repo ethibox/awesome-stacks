@@ -972,7 +972,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/etherpad.yml",
-        "commit": "8ac3d1a3d8f2d5b58bf64f336125b7a3164acb9e"
+        "commit": "a93bb28acba176b7c72419694983f32a3bb396cd"
       },
       "env": [
         {
