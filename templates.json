@@ -3453,6 +3453,46 @@
           "preset": true
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Roundcube",
+      "description": "Roundcube est un client de messagerie web open-source pour consulter et envoyer vos emails depuis votre navigateur.",
+      "categories": [
+        "Communication"
+      ],
+      "enabled": true,
+      "logo": "https://avatars.githubusercontent.com/roundcube",
+      "website": "https://roundcube.net",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/roundcube.yml",
+        "commit": "09a0641dd6241c7c7fa2d698dcb8f8ef9e66a9af"
+      },
+      "env": [
+        {
+          "name": "IMAP_HOST",
+          "label": "IMAP Host",
+          "value": "ssl://imap.example.com"
+        },
+        {
+          "name": "IMAP_PORT",
+          "label": "IMAP Port",
+          "value": "993",
+          "type": "number"
+        },
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP Host",
+          "value": "tls://smtp.example.com"
+        },
+        {
+          "name": "SMTP_PORT",
+          "label": "SMTP Port",
+          "value": "587",
+          "type": "number"
+        }
+      ]
     }
   ]
 }
