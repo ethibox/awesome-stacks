@@ -3493,6 +3493,100 @@
           "type": "number"
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "OpenAthlete",
+      "description": "OpenAthlete est une plateforme d'entraînement open-source pour suivre vos activités sportives et planifier vos séances.",
+      "categories": [
+        "Sport"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/vMQ5eX9.png",
+      "website": "https://openathlete.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/openathlete.yml",
+        "commit": "6466866eaaf5284e4fd840126fab094b8c8465ae"
+      },
+      "env": [
+        {
+          "name": "HASH_PEPPER",
+          "preset": true
+        },
+        {
+          "name": "JWT_SECRET_KEY",
+          "preset": true
+        },
+        {
+          "name": "SIGNUP_MODE",
+          "label": "Inscriptions",
+          "type": "select",
+          "select": [
+            {
+              "text": "Ouvertes",
+              "value": "open"
+            },
+            {
+              "text": "Sur invitation",
+              "value": "invite"
+            },
+            {
+              "text": "Fermées",
+              "value": "closed"
+            }
+          ]
+        },
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP Host"
+        },
+        {
+          "name": "SMTP_PORT",
+          "label": "SMTP Port",
+          "value": "587",
+          "type": "number"
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP From",
+          "type": "email"
+        },
+        {
+          "name": "SMTP_USERNAME",
+          "label": "SMTP Username"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "label": "SMTP password",
+          "type": "password"
+        },
+        {
+          "name": "SMTP_SSL",
+          "label": "SMTP SSL",
+          "type": "select",
+          "select": [
+            {
+              "text": "non",
+              "value": "false"
+            },
+            {
+              "text": "oui",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "name": "OPENAI_API_KEY",
+          "label": "OpenAI API Key",
+          "type": "password"
+        },
+        {
+          "name": "ANTHROPIC_API_KEY",
+          "label": "Anthropic API Key",
+          "type": "password"
+        }
+      ]
     }
   ]
 }
