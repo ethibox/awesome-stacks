@@ -1,0 +1,88 @@
+# DOMAIN=example.com docker stack deploy -c openathlete.yml openathlete
+
+services:
+  web:
+    image: ghcr.io/openathleteorg/openathlete-web:${VERSION:-1.1.0}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.openathlete-${NUMBER:-1}.rule=Host(`${DOMAIN:-openathlete.localhost}`)
+        - traefik.http.services.openathlete-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  api:
+    image: ghcr.io/openathleteorg/openathlete-api:${VERSION:-1.1.0}
+    environment:
+      - ENV=production
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://openathlete:mypassw0rd@postgres:5432/openathlete
+      - REDIS_URL=redis://redis:6379/0
+      - HASH_PEPPER=${HASH_PEPPER:-728a07936ff7db2463e2f75ba7d79f85b3229fe0348f600a08757a3c417fe049} # openssl rand -hex 32
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-bf0c501839dbb5c39ed5c85d105e741635d306771d6a793fad39a116005a37b5} # openssl rand -hex 32
+      - APP_URL=https://${DOMAIN:-openathlete.localhost}
+      - FRONTEND_URL=https://${DOMAIN:-openathlete.localhost}
+      - SIGNUP_MODE=${SIGNUP_MODE:-open}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SSL:-false}
+      - SMTP_USER=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - EMAIL_FROM=${SMTP_FROM}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ENABLE_ACTIVITY_IMPORT=${ENABLE_ACTIVITY_IMPORT:-true}
+      - ENABLE_ACTIVITY_PROCESSING=${ENABLE_ACTIVITY_PROCESSING:-true}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-pgvector/pgvector}:${POSTGRES_VERSION:-pg16}
+    environment:
+      - POSTGRES_DB=openathlete
+      - POSTGRES_USER=openathlete
+      - POSTGRES_PASSWORD=mypassw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "openathlete"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+volumes:
+  redis:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
