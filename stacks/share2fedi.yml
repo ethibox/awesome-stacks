@@ -1,0 +1,20 @@
+# DOMAIN=example.com docker stack deploy -c share2fedi.yml share2fedi
+
+services:
+  web:
+    image: kytta/share2fedi:${VERSION:-4.0.0-alpha.10}
+    environment:
+      - PM2_INSTANCES=${PM2_INSTANCES:-1}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.share2fedi-${NUMBER:-1}.rule=Host(`${DOMAIN:-share2fedi.localhost}`)
+        - traefik.http.services.share2fedi-${NUMBER:-1}.loadbalancer.server.port=3000
+
+networks:
+  default:
+    external: true
+    name: traefik-net
