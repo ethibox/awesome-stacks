@@ -3587,6 +3587,22 @@
           "type": "password"
         }
       ]
+    },
+    {
+      "type": 2,
+      "title": "Share2Fedi",
+      "description": "Share2Fedi est une page de partage open-source pour publier du contenu sur n'importe quelle instance du Fediverse (Mastodon, Misskey, etc.).",
+      "categories": [
+        "Social"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/pN41tnJ.png",
+      "website": "https://s2f.kytta.dev",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/share2fedi.yml",
+        "commit": "5e825aaa0f1dfabbd9d59c076fb6e4193378a646"
+      }
     }
   ]
 }
