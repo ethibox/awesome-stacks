@@ -664,7 +664,7 @@
         "Communication"
       ],
       "manual": true,
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/OA6qh1g.jpg",
       "website": "https://cal.com/",
       "repository": {
@@ -890,7 +890,7 @@
       "categories": [
         "Finance"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/r6TPGAZ.jpg",
       "website": "https://www.invoiceninja.com",
       "repository": {
@@ -1219,7 +1219,7 @@
       "categories": [
         "Analytics"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/I9vDBEy.png",
       "website": "https://usefathom.com",
       "repository": {
@@ -1250,7 +1250,7 @@
       "categories": [
         "Communication"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/oUlWx8o.png",
       "website": "https://flarum.org",
       "repository": {
@@ -1381,7 +1381,7 @@
       "categories": [
         "Communication"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/9FI6uV2.png",
       "website": "https://commento.io",
       "repository": {
@@ -2086,7 +2086,7 @@
       "categories": [
         "No-code"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/430br17.jpg",
       "website": "https://www.nocodb.com/",
       "repository": {
@@ -2121,7 +2121,7 @@
         "Gestion de projet"
       ],
       "manual": true,
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/yg1cgZ2.jpg",
       "website": "https://www.focalboard.com/",
       "repository": {
@@ -2271,7 +2271,7 @@
       "categories": [
         "No-code"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/S1zp24t.png",
       "website": "https://www.nocobase.com/",
       "repository": {
@@ -2918,7 +2918,7 @@
       "categories": [
         "Analytics"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/4q5znvz.png",
       "website": "https://chartbrew.com",
       "repository": {
