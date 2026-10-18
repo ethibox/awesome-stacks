@@ -2829,7 +2829,7 @@
     {
       "type": 2,
       "title": "Postiz",
-      "version": "latest",
+      "version": "2.25.1",
       "description": "Postiz est un outil open-source de planification et de publication sur les réseaux sociaux.",
       "categories": [
         "Marketing"
@@ -2840,7 +2840,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/postiz.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "ca5bd12b1d238d48dbdba829d3aaa5751a2f954e"
       }
     },
     {
