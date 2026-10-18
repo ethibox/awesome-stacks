@@ -17,5 +17,5 @@ versions() {
 }
 
 JSON=$(jq --argjson versions "$(versions)" \
-  '.templates[] |= ($versions[.repository.stackfile] as $version | if $version then {type, title, $version} + . else . end)' \
+  '.templates[] |= ($versions[.repository.stackfile] as $version | if $version then {type, title, $version} + del(.version) else . end)' \
   templates.json) && echo "$JSON" > templates.json
