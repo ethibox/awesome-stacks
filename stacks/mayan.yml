@@ -19,6 +19,9 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/var/lib/mayan
     deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.mayan-${NUMBER:-1}.rule=Host(`${DOMAIN:-mayan.localhost}`)
