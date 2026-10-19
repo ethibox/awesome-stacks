@@ -1,0 +1,63 @@
+# DOMAIN=example.com docker stack deploy -c mayan.yml mayan
+
+services:
+  app:
+    image: mayanedms/mayanedms:${VERSION:-v4.12.2}
+    environment:
+      - MAYAN_DOCKER_WAIT=postgres:5432 redis:6379
+      - MAYAN_DATABASE_ENGINE=django.db.backends.postgresql
+      - MAYAN_DATABASE_HOST=postgres
+      - MAYAN_DATABASE_NAME=${POSTGRES_DB:-mayan}
+      - MAYAN_DATABASE_USER=${POSTGRES_USER:-mayan}
+      - MAYAN_DATABASE_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - MAYAN_CELERY_BROKER_URL=redis://redis:6379/0
+      - MAYAN_CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - MAYAN_CSRF_TRUSTED_ORIGINS=[https://${DOMAIN:-mayan.localhost}]
+      - MAYAN_SECURE_PROXY_SSL_HEADER=[HTTP_X_FORWARDED_PROTO, https]
+      - MAYAN_AUTOADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - MAYAN_AUTOADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}data:/var/lib/mayan
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mayan-${NUMBER:-1}.rule=Host(`${DOMAIN:-mayan.localhost}`)
+        - traefik.http.services.mayan-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-mayan}
+      - POSTGRES_USER=${POSTGRES_USER:-mayan}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "mayan"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+  redis:
+  data:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
