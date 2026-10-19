@@ -123,7 +123,7 @@
       "version": "1.2.54",
       "description": "Kanboard est un logiciel open-source de gestion de projet Kanban, simple et efficace.",
       "categories": [
-        "Gestion de projet"
+        "Projets"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/u2k4Aip.png",
@@ -193,7 +193,7 @@
       "version": "18.0",
       "description": "Odoo est une suite open-source d'applications de gestion d'entreprise (ERP, CRM, comptabilité).",
       "categories": [
-        "Finance"
+        "Facturation"
       ],
       "manual": true,
       "enabled": true,
@@ -225,7 +225,7 @@
       "version": "5.13.0",
       "description": "Matomo est un logiciel open-source de mesure de statistiques web.",
       "categories": [
-        "Analytics"
+        "Statistiques"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/cp7xpLM.jpg",
@@ -242,7 +242,7 @@
       "version": "2026.7.3",
       "description": "Discourse est une plateforme de forum open-source moderne pour créer des communautés en ligne.",
       "categories": [
-        "Communication"
+        "Réseau social"
       ],
       "manual": true,
       "enabled": true,
@@ -324,7 +324,7 @@
       "version": "4.7.2",
       "description": "Mastodon est un réseau social open-source décentralisé sans publicité ni tracking.",
       "categories": [
-        "Social"
+        "Réseau social"
       ],
       "manual": true,
       "enabled": true,
@@ -416,7 +416,7 @@
       "version": "7.1.2",
       "description": "WordPress est l'application web open-source la plus utilisée au monde pour créer un beau site web.",
       "categories": [
-        "Blog"
+        "Site web"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/7WXHj55.png",
@@ -433,7 +433,7 @@
       "version": "2.6.0",
       "description": "Formbricks est un outil open-source de création de formulaires et sondages pour collecter des retours utilisateurs.",
       "categories": [
-        "Marketing"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/GK6PrCY.png",
@@ -506,7 +506,7 @@
       "version": "7.1.3",
       "description": "Zammad est un système de support client open-source pour gérer tickets, emails et chats.",
       "categories": [
-        "Marketing"
+        "Communication"
       ],
       "manual": true,
       "enabled": true,
@@ -541,7 +541,7 @@
       "version": "8.3.1",
       "description": "PeerTube est une plateforme d'hébergement vidéo open-source décentralisée, sans publicité ni algorithme.",
       "categories": [
-        "Social"
+        "Réseau social"
       ],
       "manual": true,
       "enabled": true,
@@ -845,7 +845,7 @@
       "version": "12.18",
       "description": "Wekan est un outil de gestion de projet open-source avec des tableaux Kanban pour organiser vos tâches.",
       "categories": [
-        "Gestion de projet"
+        "Projets"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/CGvMmHR.png",
@@ -982,7 +982,7 @@
       "version": "3.3.7",
       "description": "Etherpad est un éditeur en ligne open-source qui permet une édition collaborative en temps réel.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/adNS6S5.png",
@@ -1013,7 +1013,7 @@
       "version": "6.0.4",
       "description": "Ghost est une plateforme open-source pour la création et la gestion d'une publication en ligne moderne.",
       "categories": [
-        "Blog"
+        "Site web"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/aVvA5ow.png",
@@ -1049,9 +1049,7 @@
       "title": "Castopod",
       "version": "1.13.7",
       "description": "Castopod est une plateforme de podcasting open-source pour héberger et diffuser vos podcasts.",
-      "categories": [
-        "Blog"
-      ],
+      "categories": [],
       "manual": true,
       "enabled": true,
       "logo": "https://i.imgur.com/XrJEjVD.png",
@@ -1082,7 +1080,7 @@
       "version": "6.9.0",
       "description": "Taiga est une plateforme de gestion de projet open-source complète pour les équipes agiles.",
       "categories": [
-        "Gestion de projet"
+        "Projets"
       ],
       "manual": true,
       "enabled": true,
@@ -1119,7 +1117,7 @@
       "version": "7",
       "description": "Mautic est un logiciel open-source d'automatisation du marketing pour gérer vos campagnes email, SMS et réseaux sociaux.",
       "categories": [
-        "Marketing"
+        "Vente"
       ],
       "manual": true,
       "enabled": true,
@@ -1151,7 +1149,7 @@
       "version": "20.0.1",
       "description": "Dolibarr ERP & CRM est un progiciel web open-source moderne et facile à utiliser pour la gestion de votre entreprise.",
       "categories": [
-        "Finance"
+        "Facturation"
       ],
       "manual": true,
       "enabled": true,
@@ -1200,7 +1198,7 @@
       "version": "0.63.15.5",
       "description": "Metabase est un outil open-source d'analyse de données pour créer des tableaux de bord et explorer vos données.",
       "categories": [
-        "Analytics"
+        "Statistiques"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/AhEp6lV.png",
@@ -1304,7 +1302,7 @@
       "version": "8",
       "description": "PrestaShop est un logiciel open-source de e-commerce pour créer et gérer votre boutique en ligne.",
       "categories": [
-        "Finance"
+        "Vente"
       ],
       "manual": true,
       "enabled": true,
@@ -1334,7 +1332,7 @@
       "version": "1.46.0",
       "description": "MediaWiki est un logiciel wiki open-source, à l'origine utilisé par Wikipédia.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "manual": true,
       "enabled": true,
@@ -1431,7 +1429,7 @@
       "version": "0.11.2",
       "description": "PixelFed est un réseau social open-source de partage de photos décentralisé, sans publicité ni tracking.",
       "categories": [
-        "Social"
+        "Réseau social"
       ],
       "manual": true,
       "enabled": true,
@@ -1554,7 +1552,7 @@
       "version": "8.1.3",
       "description": "SuiteCRM est une application open-source de gestion de la relation client pour suivre vos prospects et clients.",
       "categories": [
-        "Marketing"
+        "Vente"
       ],
       "manual": true,
       "enabled": true,
@@ -1590,7 +1588,7 @@
       "version": "2.5.311",
       "description": "Wiki.js est une application wiki open-source moderne avec édition Markdown et contrôle d'accès granulaire.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/a6GELLc.png",
@@ -1937,7 +1935,7 @@
       "version": "php8.1-1.17.999",
       "description": "FreeScout est un helpdesk open-source léger pour gérer les emails de support client.",
       "categories": [
-        "Marketing"
+        "Communication"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/yxKOhHb.jpg",
@@ -1967,7 +1965,7 @@
       "version": "5.2.2",
       "description": "Mobilizon est une plateforme open-source pour créer et partager des événements sans dépendre des grandes plateformes.",
       "categories": [
-        "Social"
+        "Réseau social"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/OX6i2Ji.jpg",
@@ -2153,7 +2151,7 @@
       "version": "1.7.20",
       "description": "Grist est un tableur open-source hybride combinant les fonctionnalités d'un tableur et d'une base de données.",
       "categories": [
-        "No-code"
+        "Documents"
       ],
       "manual": true,
       "enabled": true,
@@ -2300,7 +2298,7 @@
       "version": "25.11.6",
       "description": "BookStack est une application open-source de gestion des connaissances sous forme de livres, chapitres et pages.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/JJ4LnUD.png",
@@ -2469,7 +2467,7 @@
       "version": "4.2.0",
       "description": "Omeka est une plateforme open-source de publication et d'archivage numérique destinée aux universités et musées.",
       "categories": [
-        "Blog"
+        "Site web"
       ],
       "manual": true,
       "enabled": true,
@@ -2518,9 +2516,7 @@
       "title": "Moodle",
       "version": "4.5",
       "description": "Moodle est une plateforme d'apprentissage en ligne open-source pour créer et gérer des formations.",
-      "categories": [
-        "Docs"
-      ],
+      "categories": [],
       "enabled": true,
       "logo": "https://i.imgur.com/Xb8jEOK.png",
       "website": "https://moodle.com/",
@@ -2576,7 +2572,7 @@
       "version": "0.25.0",
       "description": "Memos est un outil open-source de prise de notes léger et respectueux de la vie privée.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/MlTef7m.png",
@@ -2626,7 +2622,7 @@
       "version": "0.17.1",
       "description": "Keila est un outil open-source d'envoi de newsletters avec segmentation des contacts et statistiques.",
       "categories": [
-        "Marketing"
+        "Communication"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/260OnQX.jpeg",
@@ -2696,7 +2692,7 @@
       "version": "6.1.0",
       "description": "Listmonk est un gestionnaire de newsletter open-source haute performance avec gestion des listes et des campagnes.",
       "categories": [
-        "Marketing"
+        "Communication"
       ],
       "manual": true,
       "enabled": true,
@@ -2832,7 +2828,7 @@
       "version": "2.25.1",
       "description": "Postiz est un outil open-source de planification et de publication sur les réseaux sociaux.",
       "categories": [
-        "Marketing"
+        "Réseau social"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/wpUqmnb.png",
@@ -2849,7 +2845,7 @@
       "version": "1.16.7",
       "description": "Twenty est un CRM open-source moderne et flexible pour gérer vos relations clients.",
       "categories": [
-        "Marketing"
+        "Vente"
       ],
       "manual": true,
       "enabled": true,
@@ -2884,7 +2880,7 @@
       "version": "1.6.1",
       "description": "Outline est un wiki open-source rapide et collaboratif pour centraliser la documentation de votre équipe.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "manual": true,
       "enabled": true,
@@ -2933,7 +2929,7 @@
       "version": "1.3.19.1",
       "description": "Paheko est un outil open-source de gestion d'association simple, complet et efficace.",
       "categories": [
-        "Finance"
+        "Facturation"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/WiiBjb1.png",
@@ -2950,7 +2946,7 @@
       "version": "1.8.0",
       "description": "Teable est un tableur open-source et collaboratif avec interface no-code pour gérer vos données.",
       "categories": [
-        "No-code"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/XZCiv1V.png",
@@ -2967,7 +2963,7 @@
       "version": "2.1.0",
       "description": "Vikunja est un gestionnaire de tâches open-source avec listes, tableaux Kanban et calendrier.",
       "categories": [
-        "Gestion de projet"
+        "Projets"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/Yd4nxf3.png",
@@ -3077,7 +3073,7 @@
       "version": "3.2.0",
       "description": "Umami est un outil d'analyse web open-source simple, rapide et respectueux de la vie privée.",
       "categories": [
-        "Analytics"
+        "Statistiques"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/dpipP4s.png",
@@ -3221,7 +3217,7 @@
       "version": "4.4",
       "description": "Healthchecks est un outil open-source de surveillance de tâches planifiées (cron jobs) avec alertes en cas d'échec.",
       "categories": [
-        "Analytics"
+        "Statistiques"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/qLOjLMl.png",
@@ -3399,7 +3395,7 @@
       "version": "0.12.0",
       "description": "Solidtime est une application open-source de suivi du temps de travail pour les freelances et les équipes.",
       "categories": [
-        "Gestion de projet"
+        "Projets"
       ],
       "manual": true,
       "enabled": true,
@@ -3458,7 +3454,7 @@
       "version": "2.5.5",
       "description": "Uptime Kuma est un outil de monitoring open-source pour surveiller la disponibilité de vos sites et services.",
       "categories": [
-        "Analytics"
+        "Statistiques"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/Ms4YoC4.png",
@@ -3475,7 +3471,7 @@
       "version": "0.26.3",
       "description": "AFFiNE est un espace de travail open-source combinant notes, tableaux blancs et gestion de tâches.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "manual": true,
       "enabled": true,
@@ -3510,7 +3506,7 @@
       "version": "2.5.3",
       "description": "DocuSeal est une plateforme open-source de signature électronique de documents PDF, alternative à DocuSign.",
       "categories": [
-        "Docs"
+        "Documents"
       ],
       "enabled": true,
       "logo": "https://i.imgur.com/aaqRzLv.png",
