@@ -3552,7 +3552,7 @@
       "categories": [
         "Communication"
       ],
-      "enabled": true,
+      "enabled": false,
       "logo": "https://i.imgur.com/3JoblJZ.png",
       "website": "https://roundcube.net",
       "repository": {
