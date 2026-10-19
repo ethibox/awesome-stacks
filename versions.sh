@@ -16,6 +16,7 @@ versions() {
     done | jq -s add
 }
 
-JSON=$(jq --argjson versions "$(versions)" \
-  '.templates[] |= ($versions[.repository.stackfile] as $version | if $version then {type, title, $version} + del(.version) else . end)' \
-  templates.json) && echo "$JSON" > templates.json
+JSON=$(jq --argjson versions "$(versions)" '
+  .templates[] |= ($versions[.repository.stackfile] as $version | if $version then {type, title, $version} + del(.version) else . end)
+  | .templates |= [range(length) as $index | {id: ($index + 1)} + (.[$index] | del(.id))]
+' templates.json) && echo "$JSON" > templates.json
