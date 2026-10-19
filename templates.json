@@ -3692,6 +3692,43 @@
         "stackfile": "stacks/share2fedi.yml",
         "commit": "5e825aaa0f1dfabbd9d59c076fb6e4193378a646"
       }
+    },
+    {
+      "type": 2,
+      "title": "Mayan",
+      "version": "4.12.2",
+      "description": "Mayan EDMS est un logiciel de gestion électronique de documents (GED) open-source avec OCR, métadonnées, workflows et gestion des versions.",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/4YckBkg.png",
+      "website": "https://www.mayan-edms.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/mayan.yml",
+        "commit": "f3e7104ca88c50f47177a115a2c2983944fc5a58"
+      },
+      "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
     }
   ]
 }
