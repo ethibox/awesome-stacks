@@ -3803,7 +3803,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mayan.yml",
-        "commit": "f3e7104ca88c50f47177a115a2c2983944fc5a58"
+        "commit": "93a37b87d2e95fe7696955490965b5494a3bdb1c"
       },
       "env": [
         {
