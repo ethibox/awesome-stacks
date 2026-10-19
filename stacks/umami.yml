@@ -2,11 +2,12 @@
 
 services:
   umami:
-    image: umamisoftware/umami:${VERSION:-3.2.0}
+    image: umamisoftware/umami:${VERSION:-3.4.0}
     environment:
       - DATABASE_TYPE=postgresql
       - DATABASE_URL=postgresql://umami:myp@ssw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/umami
       - APP_SECRET=${APP_SECRET:-replace-me-with-a-random-string}
+      - MCP_ENABLED=${MCP_ENABLED:-0}
     healthcheck:
       test: ["CMD-SHELL", "curl http://localhost:3000/api/heartbeat"]
     deploy:
