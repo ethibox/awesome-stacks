@@ -3149,7 +3149,7 @@
       "id": 79,
       "type": 2,
       "title": "Umami",
-      "version": "3.2.0",
+      "version": "3.4.0",
       "description": "Umami est un outil d'analyse web open-source simple, rapide et respectueux de la vie privée.",
       "categories": [
         "Statistiques"
@@ -3160,7 +3160,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/umami.yml",
-        "commit": "491e3dc904930f69d646f734de075fecda6a99a9"
+        "commit": "f7262f3e79f405fdce7ea976d0a0cc503e95f561"
       },
       "env": [
         {
