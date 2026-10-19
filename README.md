@@ -33,8 +33,10 @@ docker swarm init
 
 ```bash
 docker network create -d overlay traefik-net
-docker stack deploy -c stacks/traefik.yml traefik
+ACME_EMAIL=you@example.org docker stack deploy -c stacks/traefik.yml traefik
 ```
+
+To get a valid Let's Encrypt certificate, your domain must point to your server and ports 80 and 443 must be open.
 
 ## 📦 Usage
 
