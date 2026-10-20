@@ -3,7 +3,7 @@
 
 services:
   crowdsec:
-    image: crowdsecurity/crowdsec:${VERSION:-v1.7.7}
+    image: crowdsecurity/crowdsec:${VERSION:-v1.8.1}
     environment:
       - COLLECTIONS=${COLLECTIONS:-crowdsecurity/traefik}
       - CUSTOM_HOSTNAME=${CUSTOM_HOSTNAME:-crowdsec}
@@ -17,29 +17,12 @@ services:
           memory: ${MEMORY_LIMIT:-2G}
     networks:
       - traefik
-      - internal
-
-  bouncer:
-    image: fbonalair/traefik-crowdsec-bouncer:latest
-    environment:
-      - CROWDSEC_BOUNCER_API_KEY=${CROWDSEC_BOUNCER_API_KEY}
-      - CROWDSEC_AGENT_HOST=crowdsec:8080
-    deploy:
-      resources:
-        limits:
-          memory: ${MEMORY_LIMIT:-2G}
-    networks:
-      - traefik
-      - internal
 
 volumes:
   data:
   config:
 
 networks:
-  internal:
-    driver: overlay
-    attachable: true
   traefik:
     external: true
     name: traefik-net
