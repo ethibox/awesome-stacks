@@ -5,7 +5,7 @@
       "id": 1,
       "type": 2,
       "title": "Nextcloud",
-      "version": "34.0.3",
+      "version": "35.0.2",
       "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore.",
       "categories": [
         "Stockage"
@@ -16,7 +16,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nextcloud.yml",
-        "commit": "bab77a7b800e0ee8270c70b9cc7ed3e84db1778d"
+        "commit": "2021b732a1786d62e41d64a3b2f8531e036d8d24"
       },
       "env": [
         {
