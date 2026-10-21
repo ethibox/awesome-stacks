@@ -1871,21 +1871,27 @@
       "id": 42,
       "type": 2,
       "title": "CodiMD",
+      "version": "2.6.1",
       "description": "CodiMD est un éditeur open-source qui vous permet de créer des notes collaboratives en temps réel.",
       "categories": [
         "Docs"
       ],
       "enabled": false,
       "logo": "https://i.imgur.com/tJXNcVZ.png",
-      "website": "https://demo.codimd.org",
+      "website": "https://github.com/hackmdio/codimd",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
-        "stackfile": "stacks/codimd.yml"
+        "stackfile": "stacks/codimd.yml",
+        "commit": "3e509a34ea71583309ca08af7293f498b8960932"
       },
       "env": [
         {
+          "name": "CMD_SESSION_SECRET",
+          "preset": true
+        },
+        {
           "name": "CMD_ALLOW_EMAIL_REGISTER",
-          "label": "CMD_ALLOW_EMAIL_REGISTER",
+          "label": "Allow email registration",
           "type": "select",
           "select": [
             {
@@ -1900,7 +1906,7 @@
         },
         {
           "name": "CMD_DEFAULT_PERMISSION",
-          "label": "CMD_DEFAULT_PERMISSION",
+          "label": "Default note permission",
           "type": "select",
           "select": [
             {
