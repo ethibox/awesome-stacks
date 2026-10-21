@@ -123,7 +123,7 @@
       "id": 3,
       "type": 2,
       "title": "Kanboard",
-      "version": "1.2.54",
+      "version": "1.2.55",
       "description": "Kanboard est un logiciel open-source de gestion de projet Kanban, simple et efficace.",
       "categories": [
         "Projets"
@@ -134,7 +134,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/kanboard.yml",
-        "commit": "d987912f0ecb6539046a5b951f078444c17e38c8"
+        "commit": "1d80aef551f2b40a139ef5174759aa2a728041e5"
       },
       "env": [
         {
