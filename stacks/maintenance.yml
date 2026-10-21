@@ -1,5 +1,7 @@
 # DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
 # MESSAGE="Custom message" DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
+# IP=1.2.3.4 DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
+# IPS='ClientIP(`1.2.3.4`) || ClientIP(`5.6.7.8`)' DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
 
 services:
   web:
@@ -41,7 +43,7 @@ services:
           memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
-        - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`) && !ClientIP(`${IP:-127.0.0.1}`)
+        - traefik.http.routers.maintenance-${NUMBER:-1}.rule=Host(`${DOMAIN:-maintenance.localhost}`) && !(ClientIP(`${IP:-127.0.0.1}`) || ${IPS:-ClientIP(`127.0.0.1`)})
         - traefik.http.routers.maintenance-${NUMBER:-1}.priority=50
         - traefik.http.services.maintenance-${NUMBER:-1}.loadbalancer.server.port=80
         - traefik.http.routers.maintenance-${NUMBER:-1}.middlewares=maintenance-${NUMBER:-1}
