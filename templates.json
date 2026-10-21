@@ -3836,12 +3836,12 @@
         "Développement"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/rhddVGC.png",
+      "logo": "https://i.imgur.com/QBalgAs.png",
       "website": "https://www.adminer.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/adminer.yml",
-        "commit": "e96a784dc431e5aae4085f5df45ff47f6526794e"
+        "commit": "074eed994e94f687e25c33802f918291df925b49"
       },
       "env": [
         {
