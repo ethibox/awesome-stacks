@@ -3825,6 +3825,31 @@
           "disabled": true
         }
       ]
+    },
+    {
+      "id": 97,
+      "type": 2,
+      "title": "Adminer",
+      "version": "6.1.2",
+      "description": "Adminer est un outil open-source léger de gestion de bases de données (MySQL, MariaDB, PostgreSQL, SQLite, etc.) dans un seul fichier PHP.",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/rhddVGC.png",
+      "website": "https://www.adminer.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/adminer.yml",
+        "commit": "e96a784dc431e5aae4085f5df45ff47f6526794e"
+      },
+      "env": [
+        {
+          "name": "BASIC_AUTH",
+          "label": "Basic auth (htpasswd)",
+          "type": "password"
+        }
+      ]
     }
   ]
 }
