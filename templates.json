@@ -2200,7 +2200,7 @@
       "id": 52,
       "type": 2,
       "title": "Grist",
-      "version": "1.7.20",
+      "version": "1.7.21",
       "description": "Grist est un tableur open-source hybride combinant les fonctionnalités d'un tableur et d'une base de données.",
       "categories": [
         "Documents"
@@ -2212,7 +2212,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/grist.yml",
-        "commit": "ad664e7f97ea9617f17975b6ba7e9c23646f0f53"
+        "commit": "1bda0d9b32c24b66e2463f45140d796bb00a28e2"
       },
       "env": [
         {
