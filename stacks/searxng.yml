@@ -12,7 +12,17 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.searxng-${NUMBER:-1}.rule=Host(`${DOMAIN:-searxng.localhost}`)
+        - traefik.http.routers.searxng-${NUMBER:-1}.middlewares=searxng-${NUMBER:-1}-security
         - traefik.http.services.searxng-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.STSSeconds=63072000
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.STSIncludeSubdomains=true
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.STSPreload=true
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.ForceSTSHeader=true
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.FrameDeny=true
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.ContentTypeNosniff=true
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.ReferrerPolicy=no-referrer
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.ContentSecurityPolicy=upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;
+        - traefik.http.middlewares.searxng-${NUMBER:-1}-security.headers.CustomResponseHeaders.Permissions-Policy=geolocation=(), microphone=(), camera=()
     networks:
       - internal
       - traefik
