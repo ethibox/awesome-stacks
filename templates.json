@@ -227,7 +227,7 @@
       "id": 5,
       "type": 2,
       "title": "Matomo",
-      "version": "5.13.0",
+      "version": "5.14.0",
       "description": "Matomo est un logiciel open-source de mesure de statistiques web.",
       "categories": [
         "Statistiques"
@@ -238,7 +238,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/matomo.yml",
-        "commit": "eae8ed72809b58e9ece90b68579c8c08388c8bbf"
+        "commit": "e79fb430745bfef00f5142e3379fb627a8da3dc1"
       }
     },
     {
