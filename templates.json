@@ -2349,7 +2349,7 @@
       "id": 54,
       "type": 2,
       "title": "Bookstack",
-      "version": "25.11.6",
+      "version": "26.09.2",
       "description": "BookStack est une application open-source de gestion des connaissances sous forme de livres, chapitres et pages.",
       "categories": [
         "Documents"
@@ -2360,7 +2360,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/bookstack.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "2f62046602bc6ad13e5e883d171171547b5dc821"
       },
       "env": [
         {
