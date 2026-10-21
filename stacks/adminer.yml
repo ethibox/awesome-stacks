@@ -3,6 +3,8 @@
 services:
   adminer:
     image: adminer:${VERSION:-6.1.2}
+    environment:
+      - ADMINER_PLUGINS=dark-switcher
     deploy:
       resources:
         limits:
