@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: linuxserver/bookstack:${VERSION:-25.11.6}
+    image: linuxserver/bookstack:${VERSION:-26.09.2}
     environment:
       - APP_URL=https://${DOMAIN:-bookstack.localhost}
       - ALLOW_ROBOTS=${ALLOW_ROBOTS:-true}
@@ -39,7 +39,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
@@ -47,6 +47,7 @@ services:
       - MYSQL_DATABASE=bookstack
       - MYSQL_USER=bookstack
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     deploy:
       resources:
         limits:
