@@ -57,7 +57,7 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:${MARIADB_VERSION:-10.5.9}
+    image: mariadb:${MARIADB_VERSION:-11.4}
     command: --max-allowed-packet=64MB
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
@@ -66,6 +66,7 @@ services:
       - MYSQL_DATABASE=matomo
       - MYSQL_USER=matomo
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     deploy:
       resources:
         limits:
