@@ -3856,6 +3856,41 @@
           "type": "password"
         }
       ]
+    },
+    {
+      "id": 98,
+      "type": 2,
+      "title": "SearXNG",
+      "version": "latest",
+      "description": "SearXNG est un métamoteur de recherche open-source qui agrège les résultats sans tracer les utilisateurs.",
+      "categories": [
+        "Recherche"
+      ],
+      "enabled": false,
+      "logo": "https://i.imgur.com/yKWJBkI.png",
+      "website": "https://docs.searxng.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/searxng.yml",
+        "commit": "bb4701ed6f16f51922945917dd1d2acaf598e754"
+      },
+      "env": [
+        {
+          "name": "SEARXNG_PUBLIC_INSTANCE",
+          "label": "Public instance",
+          "type": "select",
+          "select": [
+            {
+              "text": "false",
+              "value": "false"
+            },
+            {
+              "text": "true",
+              "value": "true"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
