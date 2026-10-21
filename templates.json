@@ -1651,7 +1651,7 @@
       "id": 35,
       "type": 2,
       "title": "Passbolt",
-      "version": "5.9.0",
+      "version": "5.17.0",
       "description": "Passbolt est un gestionnaire de mots de passe open-source pour partager et stocker en toute sécurité les identifiants de votre équipe.",
       "categories": [
         "Sécurité"
@@ -1663,7 +1663,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/passbolt.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "c4acf280a0690e63b1eea21e8e702909ce306a0d"
       },
       "env": [
         {
