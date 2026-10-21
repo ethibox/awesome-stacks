@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: gristlabs/grist:${VERSION:-1.7.20}
+    image: gristlabs/grist:${VERSION:-1.7.21}
     command:
       - /bin/sh
       - -c
