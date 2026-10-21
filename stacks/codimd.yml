@@ -1,0 +1,63 @@
+# DOMAIN=example.com docker stack deploy -c codimd.yml codimd
+
+services:
+  init:
+    image: busybox
+    command: chown -R 1500:1500 /home/hackmd/app/public/uploads
+    user: root
+    volumes:
+      - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  app:
+    image: hackmdio/hackmd:${VERSION:-2.6.1}
+    volumes:
+      - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
+    environment:
+      - CMD_USECDN=${CMD_USECDN:-false}
+      - CMD_DOMAIN=${DOMAIN:-codimd.localhost}
+      - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
+      - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
+      - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
+      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:-mys3cr3t} # openssl rand -hex 32
+      - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
+      - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
+      - CMD_DB_URL=postgres://codimd:myp@ssw0rd@postgres:5432/codimd
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.codimd-${NUMBER:-1}.rule=Host(`${DOMAIN:-codimd.localhost}`)
+        - traefik.http.services.codimd-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=codimd
+      - POSTGRES_USER=codimd
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "codimd"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  uploads:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
