@@ -1136,7 +1136,7 @@
       "id": 22,
       "type": 2,
       "title": "Mautic",
-      "version": "7",
+      "version": "7.2.1",
       "description": "Mautic est un logiciel open-source d'automatisation du marketing pour gérer vos campagnes email, SMS et réseaux sociaux.",
       "categories": [
         "Vente"
@@ -1148,7 +1148,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mautic.yml",
-        "commit": "8a41d95fa64f7974a3c9262567265aad0b754c87"
+        "commit": "c38891bae90e0feb39c0372573a75d2692586ece"
       },
       "env": [
         {
