@@ -1,4 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
+# MESSAGE="Custom message" DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
 
 services:
   web:
@@ -19,7 +20,7 @@ services:
             </head>
             <body class="bg-gray-900 text-white min-h-screen flex justify-center items-center text-center font-['Roboto']">
                 <main>
-                    <p class="mt-2 p-2 sm:p-0 sm:text-xl">Une opération de maintenance est actuellement en cours. 🛠️</p>
+                    <p class="mt-2 p-2 sm:p-0 sm:text-xl">${MESSAGE:-Une opération de maintenance est actuellement en cours. 🛠️}</p>
                     <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Nous mettons tout en œuvre pour rétablir l'accès le plus rapidement possible. 🚀</p>
                     <p class="mt-4 p-2 sm:p-0 sm:text-lg text-gray-400">Merci pour votre patience ! 😊</p>
                     <p class="mt-8 p-2 sm:p-0 sm:text-base text-gray-500">Si besoin, vous pouvez nous contacter sur <a href="mailto:contact@ethibox.fr" class="underline">contact@ethibox.fr</a></p>
