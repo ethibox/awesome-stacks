@@ -15,7 +15,7 @@ services:
         condition: on-failure
 
   passbolt:
-    image: passbolt/passbolt:${VERSION:-5.9.0-1-ce}
+    image: passbolt/passbolt:${VERSION:-5.17.0-1-ce}
     command: "/usr/bin/wait-for.sh -t 0 mariadb:3306 -- /docker-entrypoint.sh"
     environment:
       - APP_FULL_BASE_URL=https://${DOMAIN:-passbolt.localhost}
@@ -55,6 +55,7 @@ services:
       - MYSQL_DATABASE=passbolt
       - MYSQL_USER=passbolt
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     deploy:
       resources:
         limits:
