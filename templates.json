@@ -1983,7 +1983,7 @@
       "id": 45,
       "type": 2,
       "title": "FreeScout",
-      "version": "php8.1-1.17.999",
+      "version": "2.2.21",
       "description": "FreeScout est un helpdesk open-source léger pour gérer les emails de support client.",
       "categories": [
         "Communication"
@@ -1994,7 +1994,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/freescout.yml",
-        "commit": "bc984f674e7276e650444c005124e42245f6b5af"
+        "commit": "d294e73871a75f9babcab8b16a004ec08f0c3379"
       },
       "env": [
         {
