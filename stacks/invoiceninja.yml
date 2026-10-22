@@ -5,11 +5,11 @@ services:
     image: ethibox/nginx-proxy:latest
     environment:
       - HTTPS=${HTTPS:-1}
-      - NGINX_ROOT_PATH=/var/www/html/public
+      - NGINX_ROOT_PATH=/var/www/app/public
       - SERVER_NAME={{ index .Service.Labels "com.docker.stack.namespace" }}_app
     volumes:
-      - ${VOLUME_PATH}data:/var/www/html/public
-      - ${VOLUME_PATH}storage:/var/www/html/storage
+      - ${VOLUME_PATH}data:/var/www/app/public
+      - ${VOLUME_PATH}storage:/var/www/app/storage
     deploy:
       labels:
         - traefik.enable=true
@@ -20,18 +20,19 @@ services:
       - traefik
 
   app:
-    image: ${IMAGE:-invoiceninja/invoiceninja-debian}:${VERSION:-5.12.40}
+    image: ${IMAGE:-invoiceninja/invoiceninja}:${VERSION:-5.13.50}
     volumes:
-      - ${VOLUME_PATH}data:/var/www/html/public
-      - ${VOLUME_PATH}storage:/var/www/html/storage
+      - ${VOLUME_PATH}data:/var/www/app/public
+      - ${VOLUME_PATH}storage:/var/www/app/storage
     environment:
       - APP_LOCALE=fr
       - APP_ENV=${APP_ENV:-production}
       - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=https://${DOMAIN:-invoiceninja.localhost}
       - REQUIRE_HTTPS=${REQUIRE_HTTPS:-true}
-      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
+      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString} # echo "base64:$(openssl rand -base64 32)"
       - APP_CIPHER=AES-256-CBC
+      - API_SECRET=${API_SECRET:-} # openssl rand -hex 24
       - LOCK_SENT_INVOICES=${LOCK_SENT_INVOICES:-false}
       - DB_USERNAME1=invoiceninja
       - DB_PASSWORD1=myp@ssw0rd
@@ -53,7 +54,7 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:${MARIADB_VERSION:-10.6}
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
@@ -61,6 +62,7 @@ services:
       - MYSQL_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=invoiceninja
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal
 
