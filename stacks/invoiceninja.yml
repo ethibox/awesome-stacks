@@ -1,6 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c invoiceninja.yml invoiceninja
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1500:1500 /var/www/app/public /var/www/app/storage
+    user: root
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/app/public
+      - ${VOLUME_PATH}storage:/var/www/app/storage
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   nginx:
     image: ethibox/nginx-proxy:latest
     environment:
@@ -32,11 +43,12 @@ services:
       - REQUIRE_HTTPS=${REQUIRE_HTTPS:-true}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString} # echo "base64:$(openssl rand -base64 32)"
       - API_SECRET=${API_SECRET:-} # openssl rand -hex 24
-      - DB_USERNAME1=invoiceninja
-      - DB_PASSWORD1=myp@ssw0rd
-      - DB_HOST1=mariadb
-      - DB_DATABASE1=invoiceninja
+      - DB_USERNAME=invoiceninja
+      - DB_PASSWORD=myp@ssw0rd
+      - DB_HOST=mariadb
+      - DB_DATABASE=invoiceninja
       - MULTI_DB_ENABLED=false
+      - QUEUE_CONNECTION=database
       - PRECONFIGURED_INSTALL=true
       - MAIL_HOST=${MAIL_HOST:-smtp.example.com}
       - MAIL_USERNAME=${MAIL_USERNAME:-username}
