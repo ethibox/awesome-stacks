@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: roundcube/roundcubemail:${VERSION:-1.7.4-apache}
+    image: roundcube/roundcubemail:${VERSION:-1.7.5-apache}
     volumes:
       - ${VOLUME_PATH}html:/var/www/html
       - ${VOLUME_PATH}tmp:/tmp/roundcube-temp
