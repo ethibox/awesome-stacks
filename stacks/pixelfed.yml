@@ -1,39 +1,42 @@
 # DOMAIN=example.com docker stack deploy -c pixelfed.yml pixelfed
-# docker exec -it pixelfed_app php artisan migrate:fresh --force
-# UPDATE users SET is_admin = 1 WHERE id = 1;
+# docker exec -it $(docker ps -qf name=pixelfed_app) php artisan user:admin <username>
 
 services:
+  init:
+    image: &pixelfed-image ethibox/pixelfed:${VERSION:-v0.15.2}
+    user: root
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        cp -r --update=none /var/www/html/storage/. /data
+        chown -R 33:33 /data
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
-    image: ethibox/pixelfed:${VERSION:-v0.11.2}
-    environment:
+    image: *pixelfed-image
+    environment: &pixelfed-environment
       - APP_NAME=${APP_NAME:-PixelFed}
-      - APP_ENV=${APP_ENV:-production}
       - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
-      - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=https://${DOMAIN:-pixelfed.localhost}
-
-      - ADMIN_DOMAIN=${DOMAIN:-pixelfed.localhost}
       - APP_DOMAIN=${DOMAIN:-pixelfed.localhost}
-      - SESSION_DOMAIN=${DOMAIN:-pixelfed.localhost}
-      - TRUST_PROXIES="*"
+      - TRUST_PROXIES=*
 
-      - LOG_CHANNEL=stack
+      - AUTORUN_ENABLED=true
 
       - DB_CONNECTION=mysql
       - DB_HOST=mariadb
-      - DB_PORT=3306
       - DB_DATABASE=pixelfed
       - DB_USERNAME=pixelfed
       - DB_PASSWORD=myp@ssw0rd
 
-      - BROADCAST_DRIVER=log
       - CACHE_DRIVER=redis
       - SESSION_DRIVER=redis
       - QUEUE_DRIVER=redis
-
       - REDIS_HOST=redis
-      - REDIS_PASSWORD=null
-      - REDIS_PORT=6379
 
       - MAIL_DRIVER=${MAIL_DRIVER:-log}
       - MAIL_HOST=${MAIL_HOST:-smtp.example.com}
@@ -47,19 +50,15 @@ services:
       - OPEN_REGISTRATION=${OPEN_REGISTRATION:-true}
       - ENFORCE_EMAIL_VERIFICATION=${ENFORCE_EMAIL_VERIFICATION:-false}
 
-      - MAX_PHOTO_SIZE=15000
       - MAX_CAPTION_LENGTH=150
-      - MAX_ALBUM_LENGTH=4
-
       - HORIZON_DARKMODE=true
-      - HORIZON_EMBED=true
 
       - ACTIVITY_PUB=${ACTIVITY_PUB:-false}
-      - REMOTE_FOLLOW=${REMOTE_FOLLOW:-false}
-
-      - INSTANCE_CONTACT_EMAIL=${INSTANCE_CONTACT_EMAIL}
+      - AP_REMOTE_FOLLOW=${REMOTE_FOLLOW:-false}
+    healthcheck:
+      start_period: 5m
     volumes:
-      - ${VOLUME_PATH}data:/var/www/storage
+      - ${VOLUME_PATH}data:/var/www/html/storage
     deploy:
       resources:
         limits:
@@ -67,13 +66,29 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.pixelfed-${NUMBER:-1}.rule=Host(`${DOMAIN:-pixelfed.localhost}`)
-        - traefik.http.services.pixelfed-${NUMBER:-1}.loadbalancer.server.port=80
+        - traefik.http.services.pixelfed-${NUMBER:-1}.loadbalancer.server.port=8080
     networks:
       - traefik
       - internal
 
+  worker:
+    image: *pixelfed-image
+    environment: *pixelfed-environment
+    entrypoint: php /var/www/html/artisan horizon
+    healthcheck:
+      test: ["CMD", "healthcheck-horizon"]
+      start_period: 10s
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html/storage
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
@@ -81,6 +96,7 @@ services:
       - MYSQL_DATABASE=pixelfed
       - MYSQL_USER=pixelfed
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     deploy:
       resources:
         limits:
@@ -89,7 +105,7 @@ services:
       - internal
 
   redis:
-    image: redis:6-alpine
+    image: redis:7-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
     deploy:
