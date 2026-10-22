@@ -1359,7 +1359,7 @@
       "id": 30,
       "type": 2,
       "title": "Mediawiki",
-      "version": "1.46.0",
+      "version": "1.46.2",
       "description": "MediaWiki est un logiciel wiki open-source, à l'origine utilisé par Wikipédia.",
       "categories": [
         "Documents"
@@ -1371,7 +1371,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mediawiki.yml",
-        "commit": "674ff60932fb303f3d1bd53207616b8236a0ed07"
+        "commit": "189e80130be2f712a1af7096a6c0748232f574d6"
       },
       "env": [
         {
