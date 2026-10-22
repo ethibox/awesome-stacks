@@ -3642,7 +3642,7 @@
       "id": 93,
       "type": 2,
       "title": "Roundcube",
-      "version": "1.7.4",
+      "version": "1.7.5",
       "description": "Roundcube est un client de messagerie web open-source pour consulter et envoyer vos emails depuis votre navigateur.",
       "categories": [
         "Communication"
@@ -3653,7 +3653,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/roundcube.yml",
-        "commit": "09a0641dd6241c7c7fa2d698dcb8f8ef9e66a9af"
+        "commit": "f7ec0b8c223e629f6244d8d2bd83cb44fc295ce8"
       },
       "env": [
         {
