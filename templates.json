@@ -913,7 +913,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/invoiceninja.yml",
-        "commit": "75f90a39e071004342192a02af1dc8e2536761f6"
+        "commit": "ed1251d1710ddc141d435f7f73fb8b451a65f0fd"
       },
       "env": [
         {
