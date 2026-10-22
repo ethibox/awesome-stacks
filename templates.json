@@ -902,7 +902,7 @@
       "id": 17,
       "type": 2,
       "title": "Invoice-ninja",
-      "version": "5.12.40",
+      "version": "5.13.50",
       "description": "Invoice Ninja est une application open-source pour la facturation de vos clients.",
       "categories": [
         "Finance"
@@ -913,7 +913,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/invoiceninja.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "aaedfc425110733078ab9be9556c59c70e0032b0"
       },
       "env": [
         {
