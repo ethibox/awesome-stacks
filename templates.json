@@ -1458,7 +1458,7 @@
       "id": 32,
       "type": 2,
       "title": "Pixelfed",
-      "version": "0.11.2",
+      "version": "0.15.2",
       "description": "PixelFed est un réseau social open-source de partage de photos décentralisé, sans publicité ni tracking.",
       "categories": [
         "Réseau social"
@@ -1470,7 +1470,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/pixelfed.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "6a00615a0888ccd3e15fb6af92a19a54126a2b41"
       },
       "env": [
         {
