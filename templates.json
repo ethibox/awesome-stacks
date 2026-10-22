@@ -2528,7 +2528,7 @@
       "id": 58,
       "type": 2,
       "title": "Omeka",
-      "version": "4.2.0",
+      "version": "4.2.1",
       "description": "Omeka est une plateforme open-source de publication et d'archivage numérique destinée aux universités et musées.",
       "categories": [
         "Site web"
@@ -2540,7 +2540,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/omeka.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "a5323078871c8d7b3e89912b46804c858fb05df5"
       }
     },
     {
