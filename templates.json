@@ -1941,7 +1941,7 @@
       "id": 43,
       "type": 2,
       "title": "Pytition",
-      "version": "latest",
+      "version": "2.9",
       "description": "Pytition est un outil open-source auto-hébergé pour créer et gérer des pétitions en ligne.",
       "categories": [
         "Social"
@@ -1952,8 +1952,68 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/pytition.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
-      }
+        "commit": "b746b65edcf487abfe927bf3108f8af86ca75beb"
+      },
+      "env": [
+        {
+          "name": "SECRET_KEY",
+          "preset": true
+        },
+        {
+          "name": "SMTP_HOST",
+          "label": "SMTP Host"
+        },
+        {
+          "name": "SMTP_USER",
+          "label": "SMTP User"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "label": "SMTP Password",
+          "type": "password"
+        },
+        {
+          "name": "SMTP_PORT",
+          "label": "SMTP Port",
+          "value": "587",
+          "type": "number"
+        },
+        {
+          "name": "SMTP_TLS",
+          "label": "SMTP TLS",
+          "type": "select",
+          "select": [
+            {
+              "text": "Oui",
+              "value": "True"
+            },
+            {
+              "text": "Non",
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP From",
+          "type": "email"
+        },
+        {
+          "name": "ALLOW_REGISTER",
+          "label": "Les utilisateurs peuvent s'inscrire",
+          "type": "select",
+          "select": [
+            {
+              "text": "Oui",
+              "value": "True"
+            },
+            {
+              "text": "Non",
+              "value": "False"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 44,
