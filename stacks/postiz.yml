@@ -50,7 +50,7 @@ services:
       - internal
  
   postgres:
-    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-12-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=postiz
       - POSTGRES_USER=postiz

@@ -31,7 +31,7 @@ services:
       - traefik
 
   postgres:
-    image: ${POSTGRES_IMAGE:-ankane/pgvector}:${POSTGRES_VERSION:-latest}
+    image: ${POSTGRES_IMAGE:-pgvector/pgvector}:${POSTGRES_VERSION:-pg16}
     environment:
       - POSTGRES_DB=khoj
       - POSTGRES_USER=khoj
