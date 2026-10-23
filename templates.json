@@ -858,7 +858,7 @@
       "id": 16,
       "type": 2,
       "title": "Wekan",
-      "version": "12.57",
+      "version": "12.63",
       "description": "Wekan est un outil de gestion de projet open-source avec des tableaux Kanban pour organiser vos tâches.",
       "categories": [
         "Projets"
@@ -869,7 +869,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wekan.yml",
-        "commit": "7be3b6f40142f73d4e65c6370a962113a5c95c09"
+        "commit": "229eba32e4abae3acd4b0cae41747bca913461e7"
       },
       "env": [
         {
