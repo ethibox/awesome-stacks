@@ -20,7 +20,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.6
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
@@ -28,6 +28,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-wikijs}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal
 

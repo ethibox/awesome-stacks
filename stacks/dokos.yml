@@ -81,7 +81,7 @@ services:
       - internal
 
   mariadb:
-    image: mariadb:10.6
+    image: mariadb:${MARIADB_VERSION:-11.4}
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -89,6 +89,7 @@ services:
       - --skip-innodb-read-only-compressed
     environment:
       - MARIADB_ROOT_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     networks:

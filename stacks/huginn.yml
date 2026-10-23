@@ -19,7 +19,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
@@ -27,6 +27,7 @@ services:
       - MYSQL_DATABASE=huginn
       - MYSQL_USER=huginn
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal
 

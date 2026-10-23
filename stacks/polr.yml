@@ -29,12 +29,13 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-11.4}
     environment:
       - MYSQL_ROOT_PASSWORD=myp@ssw0rd
       - MYSQL_DATABASE=polr
       - MYSQL_USER=polr
       - MYSQL_PASSWORD=myp@ssw0rd
+      - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     deploy:
