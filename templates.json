@@ -2383,7 +2383,7 @@
       "id": 53,
       "type": 2,
       "title": "Nocobase",
-      "version": "2.2.29",
+      "version": "2.2.31",
       "description": "NocoBase est une plateforme no-code open-source pour créer des applications métier avec une interface flexible et extensible.",
       "categories": [
         "No-code"
@@ -2394,7 +2394,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nocobase.yml",
-        "commit": "f2c86963746b5862459a395132e9dd9efcac99d0"
+        "commit": "c5095dfa8f1688a1b39eb7813e273ff68dd2433a"
       },
       "env": [
         {
