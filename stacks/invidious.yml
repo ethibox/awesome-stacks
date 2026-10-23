@@ -50,7 +50,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14-alpine}
     entrypoint: /bin/sh
     command:
       - -c

@@ -56,7 +56,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14-alpine}
     environment:
       - POSTGRES_DB=mattermost
       - POSTGRES_USER=mattermost

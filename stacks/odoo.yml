@@ -46,7 +46,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_DB=postgres

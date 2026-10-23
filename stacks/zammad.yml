@@ -84,7 +84,7 @@ services:
       - internal
 
   zammad-postgresql:
-    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
     command: postgres -c 'max_connections=250'
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "zammad"]

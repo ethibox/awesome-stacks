@@ -40,7 +40,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-peertube}
       - POSTGRES_USER=${POSTGRES_USER:-peertube}

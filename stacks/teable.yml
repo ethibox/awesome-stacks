@@ -24,7 +24,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=teable
       - POSTGRES_USER=teable

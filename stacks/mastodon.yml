@@ -89,7 +89,7 @@ services:
       - internal
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-14-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14-alpine}
     command: postgres -c 'max_connections=250'
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
