@@ -2074,7 +2074,7 @@
       "id": 46,
       "type": 2,
       "title": "Mobilizon",
-      "version": "5.2.2",
+      "version": "5.2.4",
       "description": "Mobilizon est une plateforme open-source pour créer et partager des événements sans dépendre des grandes plateformes.",
       "categories": [
         "Réseau social"
@@ -2085,7 +2085,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mobilizon.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "990ba8669d7ee702a0a2e05ff02d53aa65829d5a"
       },
       "env": [
         {
