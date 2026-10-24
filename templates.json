@@ -3215,7 +3215,7 @@
       "id": 79,
       "type": 2,
       "title": "Umami",
-      "version": "3.4.0",
+      "version": "3.4.1",
       "description": "Umami est un outil d'analyse web open-source simple, rapide et respectueux de la vie privée.",
       "categories": [
         "Statistiques"
@@ -3226,12 +3226,31 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/umami.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "21dcc989d6fe6f384a8d8251542cd0cbfda1fc8e"
       },
       "env": [
         {
           "name": "APP_SECRET",
           "preset": true
+        },
+        {
+          "name": "MCP_ENABLED",
+          "label": "Enable MCP server",
+          "type": "select",
+          "select": [
+            {
+              "text": "No",
+              "value": "0"
+            },
+            {
+              "text": "Yes",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "name": "IGNORE_IP",
+          "label": "Ignored IPs (comma separated)"
         }
       ]
     },
