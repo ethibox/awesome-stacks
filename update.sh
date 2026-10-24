@@ -2,16 +2,15 @@
 
 get_pattern() {
   local current="$1"
-  local major
+  local major suffix
   major=$(echo "$current" | grep -oE '^([^0-9]*[0-9]+\.[0-9]+-)?[vV]?[0-9]+' | sed 's/\./\\./g')
   grep -q -- --major /proc/$$/cmdline && major=$(echo "$major" | sed -E 's/[0-9]+$/[0-9]+/')
+  suffix=$(echo "$current" | sed -E 's/^([^0-9]*[0-9]+\.[0-9]+-)?[vV]?[0-9][0-9.]*(-[0-9]+)?//' | sed -E 's/\./\\./g; s/[0-9]+/[0-9]+/g')
 
   if [[ "$current" =~ ^stable ]]; then
     echo "^stable-[0-9]+$"
-  elif [[ "$current" =~ alpine ]]; then
-    echo "^$major\.[0-9.]+(-fpm)?-alpine$"
   else
-    echo "^$major\.[0-9.]+(-[0-9]+)?$"
+    echo "^$major\.[0-9.]+(-[0-9]+)?$suffix$"
   fi
 }
 
@@ -22,9 +21,9 @@ get_latest_version() {
   [[ "$api_path" != */* ]] && api_path="library/$api_path"
 
   if [[ "$image" =~ ghcr.io ]]; then
-    curl -s "https://api.github.com/repos/$api_path/tags" | jq -r '.[].name' 2>/dev/null | grep -E "$pattern" | sort -V | tail -n 1
+    curl -s "https://api.github.com/repos/$api_path/tags" | jq -r '.[].name' 2>/dev/null | grep -E "$pattern" | grep -vE '[0-9]{8}' | sort -V | tail -n 1
   else
-    curl -s "https://registry.hub.docker.com/v2/repositories/$api_path/tags?page_size=100" | jq -r '.results[].name' 2>/dev/null | grep -E "$pattern" | sort -V | tail -n 1
+    curl -s "https://registry.hub.docker.com/v2/repositories/$api_path/tags?page_size=100" | jq -r '.results[].name' 2>/dev/null | grep -E "$pattern" | grep -vE '[0-9]{8}' | sort -V | tail -n 1
   fi
 }
 
@@ -53,7 +52,7 @@ update_app() {
 }
 
 main() {
-  local apps=(${@:-traefik nextcloud discourse rocketchat n8n mastodon mattermost metabase jitsi kanboard matomo mediawiki grist zammad wordpress nocobase wekan mautic calendso freescout etherpad bookstack})
+  local apps=(${@:-traefik nextcloud discourse rocketchat n8n mastodon mattermost metabase jitsi kanboard matomo mediawiki grist zammad wordpress nocobase wekan mautic calendso freescout etherpad bookstack adminer calibre codimd collabora crowdsec drawio element eurooffice focalboard ghost glitchtip healthchecks invoiceninja keycloak listmonk lufi mayan mobilizon nocodb odoo omeka openathlete passbolt peertube pixelfed pytition rallly roundcube share2fedi signaturepdf umami uptime-kuma vaultwarden writefreely})
   for app in "${apps[@]}"; do
     update_app "$app"
   done
