@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: ghcr.io/openathleteorg/openathlete-web:${VERSION:-1.1.0}
+    image: ghcr.io/openathleteorg/openathlete-web:${VERSION:-1.2.0}
     deploy:
       resources:
         limits:
@@ -16,7 +16,7 @@ services:
       - traefik
 
   api:
-    image: ghcr.io/openathleteorg/openathlete-api:${VERSION:-1.1.0}
+    image: ghcr.io/openathleteorg/openathlete-api:${VERSION:-1.2.0}
     environment:
       - ENV=production
       - NODE_ENV=production
