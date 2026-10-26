@@ -2,7 +2,7 @@
 
 services:
   calibre:
-    image: crocodilestick/calibre-web-automated:${VERSION:-v4.0.6}
+    image: crocodilestick/calibre-web-automated:${VERSION:-v4.0.8}
     environment:
       - PUID=1000
       - PGID=1000
