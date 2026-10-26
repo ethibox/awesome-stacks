@@ -1726,7 +1726,7 @@
       "id": 37,
       "type": 2,
       "title": "Calibre",
-      "version": "4.0.6",
+      "version": "4.0.8",
       "description": "Calibre Web est une application web open-source offrant une interface claire pour la navigation, la lecture et le téléchargement de livres électroniques.",
       "categories": [
         "Stockage"
@@ -1737,7 +1737,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/calibre.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "652dc1ec52dabf3636fc838d08d34417656ad034"
       }
     },
     {
