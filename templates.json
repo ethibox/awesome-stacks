@@ -550,7 +550,7 @@
       "id": 12,
       "type": 2,
       "title": "Peertube",
-      "version": "8.3.1",
+      "version": "8.3.2",
       "description": "PeerTube est une plateforme d'hébergement vidéo open-source décentralisée, sans publicité ni algorithme.",
       "categories": [
         "Réseau social"
@@ -562,7 +562,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/peertube.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "1e13cd4bc18c1c12538f9a9d29404836e408f357"
       },
       "env": [
         {
