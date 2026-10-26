@@ -11,7 +11,7 @@
         "Stockage"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/ecFVnV8.png",
+      "logo": "https://ethibox.fr/images/logos/nextcloud.png",
       "website": "https://nextcloud.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -94,7 +94,7 @@
         "Communication"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/aWStYef.png",
+      "logo": "https://ethibox.fr/images/logos/mattermost.png",
       "website": "https://mattermost.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -129,7 +129,7 @@
         "Projets"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/u2k4Aip.png",
+      "logo": "https://ethibox.fr/images/logos/kanboard.png",
       "website": "https://kanboard.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -201,7 +201,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/70iKt9a.png",
+      "logo": "https://ethibox.fr/images/logos/odoo.png",
       "website": "https://www.odoo.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -233,7 +233,7 @@
         "Statistiques"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/cp7xpLM.jpg",
+      "logo": "https://ethibox.fr/images/logos/matomo.png",
       "website": "https://matomo.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -252,7 +252,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/KXbPDbg.png",
+      "logo": "https://ethibox.fr/images/logos/discourse.png",
       "website": "https://www.discourse.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -335,7 +335,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/DOv1rxd.png",
+      "logo": "https://ethibox.fr/images/logos/mastodon.png",
       "website": "https://joinmastodon.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -427,7 +427,7 @@
         "Site web"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/7WXHj55.png",
+      "logo": "https://ethibox.fr/images/logos/wordpress.png",
       "website": "https://fr.wordpress.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -445,7 +445,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/GK6PrCY.png",
+      "logo": "https://ethibox.fr/images/logos/formbricks.png",
       "website": "https://formbricks.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -520,7 +520,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/DdGF1Sh.png",
+      "logo": "https://ethibox.fr/images/logos/zammad.png",
       "website": "https://zammad.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -538,7 +538,7 @@
         "Communication"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/mTR06gP.png",
+      "logo": "https://ethibox.fr/images/logos/rocketchat.png",
       "website": "https://rocket.chat",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -557,7 +557,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/1DO4t48.png",
+      "logo": "https://ethibox.fr/images/logos/peertube.png",
       "website": "https://joinpeertube.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -634,7 +634,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/HbXTiUF.jpg",
+      "logo": "https://ethibox.fr/images/logos/n8n.png",
       "website": "https://n8n.io/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -679,7 +679,7 @@
       ],
       "manual": true,
       "enabled": false,
-      "logo": "https://i.imgur.com/OA6qh1g.jpg",
+      "logo": "https://ethibox.fr/images/logos/calendso.png",
       "website": "https://cal.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -782,7 +782,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/WoW73Oc.jpg",
+      "logo": "https://ethibox.fr/images/logos/chatwoot.png",
       "website": "https://www.chatwoot.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -864,7 +864,7 @@
         "Projets"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/CGvMmHR.png",
+      "logo": "https://ethibox.fr/images/logos/wekan.png",
       "website": "https://wekan.github.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -908,7 +908,7 @@
         "Finance"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/r6TPGAZ.jpg",
+      "logo": "https://ethibox.fr/images/logos/invoice-ninja.png",
       "website": "https://www.invoiceninja.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1003,7 +1003,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/adNS6S5.png",
+      "logo": "https://ethibox.fr/images/logos/etherpad.png",
       "website": "https://etherpad.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1035,7 +1035,7 @@
         "Site web"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/aVvA5ow.png",
+      "logo": "https://ethibox.fr/images/logos/ghost.png",
       "website": "https://ghost.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1072,7 +1072,7 @@
       "categories": [],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/XrJEjVD.png",
+      "logo": "https://ethibox.fr/images/logos/castopod.png",
       "website": "https://castopod.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1105,7 +1105,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/dCk82vq.png",
+      "logo": "https://ethibox.fr/images/logos/taiga.png",
       "website": "https://taiga.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1143,7 +1143,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/8wl7tBF.png",
+      "logo": "https://ethibox.fr/images/logos/mautic.png",
       "website": "https://www.mautic.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1176,7 +1176,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/ayV1kB4.png",
+      "logo": "https://ethibox.fr/images/logos/dolibarr.png",
       "website": "https://www.dolibarr.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1208,7 +1208,7 @@
         "Communication"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/1QrflaM.png",
+      "logo": "https://ethibox.fr/images/logos/element.png",
       "website": "https://element.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1226,7 +1226,7 @@
         "Statistiques"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/AhEp6lV.png",
+      "logo": "https://ethibox.fr/images/logos/metabase.png",
       "website": "https://www.metabase.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1244,7 +1244,7 @@
         "Analytics"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/I9vDBEy.png",
+      "logo": "https://ethibox.fr/images/logos/fathom.png",
       "website": "https://usefathom.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1276,7 +1276,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/oUlWx8o.png",
+      "logo": "https://ethibox.fr/images/logos/flarum.png",
       "website": "https://flarum.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1309,7 +1309,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/9vcfCvU.png",
+      "logo": "https://ethibox.fr/images/logos/jitsi.png",
       "website": "https://meet.jit.si",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1335,7 +1335,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/qhLnwBy.png",
+      "logo": "https://ethibox.fr/images/logos/prestashop.png",
       "website": "https://www.prestashop.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1366,7 +1366,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/tilc0nt.png",
+      "logo": "https://ethibox.fr/images/logos/mediawiki.png",
       "website": "https://www.mediawiki.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1411,7 +1411,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/9FI6uV2.png",
+      "logo": "https://ethibox.fr/images/logos/commento.png",
       "website": "https://commento.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1465,7 +1465,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/mBVrouU.png",
+      "logo": "https://ethibox.fr/images/logos/pixelfed.png",
       "website": "https://pixelfed.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1589,7 +1589,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/3lvjIbM.png",
+      "logo": "https://ethibox.fr/images/logos/suitecrm.png",
       "website": "https://suitecrm.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1625,7 +1625,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/a6GELLc.png",
+      "logo": "https://ethibox.fr/images/logos/wikijs.png",
       "website": "https://wiki.js.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1658,7 +1658,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/S6GsK8U.png",
+      "logo": "https://ethibox.fr/images/logos/passbolt.png",
       "website": "https://www.passbolt.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1714,7 +1714,7 @@
         "Stockage"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/64kIbPN.png",
+      "logo": "https://ethibox.fr/images/logos/wallabag.png",
       "website": "https://www.wallabag.it/fr/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1732,7 +1732,7 @@
         "Stockage"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/wYmdUN2.png",
+      "logo": "https://ethibox.fr/images/logos/calibre.png",
       "website": "https://github.com/crocodilestick/Calibre-Web-Automated",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1750,7 +1750,7 @@
         "Stockage"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/Q4r221x.png",
+      "logo": "https://ethibox.fr/images/logos/lufi.png",
       "website": "https://framalibre.org/content/lufi",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1788,7 +1788,7 @@
         "Marketing"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/KXpAzna.png",
+      "logo": "https://ethibox.fr/images/logos/polr.png",
       "website": "https://polrproject.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1826,7 +1826,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/4y32ar8.png",
+      "logo": "https://ethibox.fr/images/logos/rainloop.png",
       "website": "https://www.rainloop.net",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1859,7 +1859,7 @@
         "Stockage"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/pcAst1V.png",
+      "logo": "https://ethibox.fr/images/logos/gogs.png",
       "website": "https://gogs.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1877,7 +1877,7 @@
         "Docs"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/tJXNcVZ.png",
+      "logo": "https://ethibox.fr/images/logos/codimd.png",
       "website": "https://github.com/hackmdio/codimd",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -1947,7 +1947,7 @@
         "Social"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/7bcUMxB.png",
+      "logo": "https://ethibox.fr/images/logos/pytition.png",
       "website": "https://framalibre.org/content/pytition",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2025,7 +2025,7 @@
         "Analytics"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/hTkK25O.png",
+      "logo": "https://ethibox.fr/images/logos/posthog.png",
       "website": "https://posthog.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2049,7 +2049,7 @@
         "Communication"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/yxKOhHb.jpg",
+      "logo": "https://ethibox.fr/images/logos/freescout.png",
       "website": "https://freescout.net/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2080,7 +2080,7 @@
         "Réseau social"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/OX6i2Ji.jpg",
+      "logo": "https://ethibox.fr/images/logos/mobilizon.png",
       "website": "https://framalibre.org/content/mobilizon",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2138,7 +2138,7 @@
         "Finance"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/GHmCIMY.jpg",
+      "logo": "https://ethibox.fr/images/logos/kresus.png",
       "website": "https://kresus.org/fr/index.html",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2182,7 +2182,7 @@
         "Sécurité"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/MBpK9LK.jpg",
+      "logo": "https://ethibox.fr/images/logos/searx.png",
       "website": "https://www.searx.me/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2200,7 +2200,7 @@
         "No-code"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/430br17.jpg",
+      "logo": "https://ethibox.fr/images/logos/nocodb.png",
       "website": "https://www.nocodb.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2236,7 +2236,7 @@
       ],
       "manual": true,
       "enabled": false,
-      "logo": "https://i.imgur.com/yg1cgZ2.jpg",
+      "logo": "https://ethibox.fr/images/logos/focalboard.png",
       "website": "https://www.focalboard.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2254,7 +2254,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/xklY3FN.png",
+      "logo": "https://ethibox.fr/images/logos/ntfy.png",
       "website": "https://ntfy.sh/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2273,7 +2273,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/sTYQbEJ.png",
+      "logo": "https://ethibox.fr/images/logos/grist.png",
       "website": "https://www.getgrist.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2389,7 +2389,7 @@
         "No-code"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/S1zp24t.png",
+      "logo": "https://ethibox.fr/images/logos/nocobase.png",
       "website": "https://www.nocobase.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2421,7 +2421,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/JJ4LnUD.png",
+      "logo": "https://ethibox.fr/images/logos/bookstack.png",
       "website": "https://bookstackapp.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2525,7 +2525,7 @@
       ],
       "manual": true,
       "enabled": false,
-      "logo": "https://i.imgur.com/pWgJd6Q.png",
+      "logo": "https://ethibox.fr/images/logos/gogocarto.png",
       "website": "https://gitlab.com/Seballot/gogocarto",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2543,7 +2543,7 @@
         "No-code"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/BAY6klX.png",
+      "logo": "https://ethibox.fr/images/logos/appsmith.png",
       "website": "https://appsmith.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2562,7 +2562,7 @@
       ],
       "manual": true,
       "enabled": false,
-      "logo": "https://i.imgur.com/wxofSzi.png",
+      "logo": "https://ethibox.fr/images/logos/dokos.png",
       "website": "https://dokos.io/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2595,7 +2595,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/tpZBUI6.png",
+      "logo": "https://ethibox.fr/images/logos/omeka.png",
       "website": "https://omeka.org/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2614,7 +2614,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/KhMOja6.png",
+      "logo": "https://ethibox.fr/images/logos/piwigo.png",
       "website": "https://fr.piwigo.org/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2644,7 +2644,7 @@
       "description": "Moodle est une plateforme d'apprentissage en ligne open-source pour créer et gérer des formations.",
       "categories": [],
       "enabled": true,
-      "logo": "https://i.imgur.com/Xb8jEOK.png",
+      "logo": "https://ethibox.fr/images/logos/moodle.png",
       "website": "https://moodle.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2677,7 +2677,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/OhQNBuO.jpeg",
+      "logo": "https://ethibox.fr/images/logos/vaultwarden.png",
       "website": "https://github.com/dani-garcia/vaultwarden",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2703,7 +2703,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/MlTef7m.png",
+      "logo": "https://ethibox.fr/images/logos/memos.png",
       "website": "https://usememos.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2721,7 +2721,7 @@
         "Automatisation"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/FMgsYUe.jpeg",
+      "logo": "https://ethibox.fr/images/logos/automatisch.png",
       "website": "https://automatisch.io/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2755,7 +2755,7 @@
         "Communication"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/260OnQX.jpeg",
+      "logo": "https://ethibox.fr/images/logos/keila.png",
       "website": "https://keila.io/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2827,7 +2827,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/26dkpKq.png",
+      "logo": "https://ethibox.fr/images/logos/listmonk.png",
       "website": "https://listmonk.app/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2845,7 +2845,7 @@
         "Communication"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/m2dqLMM.png",
+      "logo": "https://ethibox.fr/images/logos/rallly.png",
       "website": "https://rallly.co/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2904,7 +2904,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/9wJD9XH.png",
+      "logo": "https://ethibox.fr/images/logos/sympa.png",
       "website": "https://sympa.community/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2948,7 +2948,7 @@
         "Automatisation"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/euWHFgq.png",
+      "logo": "https://ethibox.fr/images/logos/activepieces.png",
       "website": "https://activepieces.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2966,7 +2966,7 @@
         "Réseau social"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/wpUqmnb.png",
+      "logo": "https://ethibox.fr/images/logos/postiz.png",
       "website": "https://postiz.com/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -2985,7 +2985,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/7lMXvhX.png",
+      "logo": "https://ethibox.fr/images/logos/twenty.png",
       "website": "https://twenty.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3021,7 +3021,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/uN0Fjmg.png",
+      "logo": "https://ethibox.fr/images/logos/outline.png",
       "website": "https://getoutline.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3053,7 +3053,7 @@
         "Analytics"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/4q5znvz.png",
+      "logo": "https://ethibox.fr/images/logos/chartbrew.png",
       "website": "https://chartbrew.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3071,7 +3071,7 @@
         "Facturation"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/WiiBjb1.png",
+      "logo": "https://ethibox.fr/images/logos/paheko.png",
       "website": "https://paheko.cloud",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3089,7 +3089,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/XZCiv1V.png",
+      "logo": "https://ethibox.fr/images/logos/teable.png",
       "website": "https://teable.io/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3107,7 +3107,7 @@
         "Projets"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/Yd4nxf3.png",
+      "logo": "https://ethibox.fr/images/logos/vikunja.png",
       "website": "https://vikunja.io/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3125,7 +3125,7 @@
         "Sécurité"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/qkJIEqu.png",
+      "logo": "https://ethibox.fr/images/logos/authentik.png",
       "website": "https://goauthentik.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3157,7 +3157,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/YNP1mii.png",
+      "logo": "https://ethibox.fr/images/logos/nextcloud-talk.png",
       "website": "https://nextcloud.com/talk",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3196,7 +3196,7 @@
         "Docs"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/LVtcZqi.png",
+      "logo": "https://ethibox.fr/images/logos/collabora.png",
       "website": "https://collaboraoffice.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3221,7 +3221,7 @@
         "Statistiques"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/dpipP4s.png",
+      "logo": "https://ethibox.fr/images/logos/umami.png",
       "website": "https://umami.is",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3264,7 +3264,7 @@
         "Sécurité"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/b0zqDfd.png",
+      "logo": "https://ethibox.fr/images/logos/keycloak.png",
       "website": "https://keycloak.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3294,7 +3294,7 @@
         "Analytics"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/aUdsy6n.png",
+      "logo": "https://ethibox.fr/images/logos/glitchtip.png",
       "website": "https://glitchtip.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3353,7 +3353,7 @@
         "Stockage"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/HxiROwc.png",
+      "logo": "https://ethibox.fr/images/logos/booklore.png",
       "website": "https://booklore.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3371,7 +3371,7 @@
         "Docs"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/qmTBRNg.png",
+      "logo": "https://ethibox.fr/images/logos/drawio.png",
       "website": "https://www.drawio.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3389,7 +3389,7 @@
         "Statistiques"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/qLOjLMl.png",
+      "logo": "https://ethibox.fr/images/logos/healthchecks.png",
       "website": "https://healthchecks.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3485,7 +3485,7 @@
         "Stockage"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/893Vvda.png",
+      "logo": "https://ethibox.fr/images/logos/kosync.png",
       "website": "https://github.com/koreader/kosync",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3519,7 +3519,7 @@
         "Analytics"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/6CFlVVm.png",
+      "logo": "https://ethibox.fr/images/logos/monitoring.png",
       "website": "https://grafana.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3571,7 +3571,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/5B4tJdI.png",
+      "logo": "https://ethibox.fr/images/logos/solidtime.png",
       "website": "https://solidtime.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3630,7 +3630,7 @@
         "Statistiques"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/Ms4YoC4.png",
+      "logo": "https://ethibox.fr/images/logos/uptime-kuma.png",
       "website": "https://uptime.kuma.pet",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3649,7 +3649,7 @@
       ],
       "manual": true,
       "enabled": true,
-      "logo": "https://i.imgur.com/uX5GuD4.png",
+      "logo": "https://ethibox.fr/images/logos/affine.png",
       "website": "https://affine.pro",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3667,7 +3667,7 @@
         "Docs"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/JDonaz0.png",
+      "logo": "https://ethibox.fr/images/logos/signaturepdf.png",
       "website": "https://pdf.24eme.fr/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3685,7 +3685,7 @@
         "Documents"
       ],
       "enabled": true,
-      "logo": "https://i.imgur.com/aaqRzLv.png",
+      "logo": "https://ethibox.fr/images/logos/docuseal.png",
       "website": "https://docuseal.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3703,7 +3703,7 @@
         "Docs"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/pvXmBOG.png",
+      "logo": "https://ethibox.fr/images/logos/eurooffice.png",
       "website": "https://github.com/Euro-Office/DocumentServer",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3727,7 +3727,7 @@
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/3JoblJZ.png",
+      "logo": "https://ethibox.fr/images/logos/roundcube.png",
       "website": "https://roundcube.net",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3769,7 +3769,7 @@
         "Sport"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/vMQ5eX9.png",
+      "logo": "https://ethibox.fr/images/logos/openathlete.png",
       "website": "https://openathlete.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3865,7 +3865,7 @@
         "Social"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/pN41tnJ.png",
+      "logo": "https://ethibox.fr/images/logos/share2fedi.png",
       "website": "https://s2f.kytta.dev",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3883,7 +3883,7 @@
         "Documents"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/4YckBkg.png",
+      "logo": "https://ethibox.fr/images/logos/mayan.png",
       "website": "https://www.mayan-edms.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3921,7 +3921,7 @@
         "Développement"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/QBalgAs.png",
+      "logo": "https://ethibox.fr/images/logos/adminer.png",
       "website": "https://www.adminer.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
@@ -3946,7 +3946,7 @@
         "Recherche"
       ],
       "enabled": false,
-      "logo": "https://i.imgur.com/yKWJBkI.png",
+      "logo": "https://ethibox.fr/images/logos/searxng.png",
       "website": "https://docs.searxng.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
