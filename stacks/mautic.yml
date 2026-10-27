@@ -3,6 +3,13 @@
 services:
   app:
     image: &mautic-image ${IMAGE:-mautic/mautic}:${VERSION:-7.2.1-apache}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        chown www-data:www-data /var/www/html/config
+        until su www-data -s /bin/bash -c 'php /var/www/html/bin/console mautic:install --force --db_host="$$MAUTIC_DB_HOST" --db_port=3306 --db_name="$$MAUTIC_DB_DATABASE" --db_user="$$MAUTIC_DB_USER" --db_password="$$MAUTIC_DB_PASSWORD" --admin_username="$$ADMIN_USERNAME" --admin_email="$$ADMIN_EMAIL" --admin_password="$$ADMIN_PASSWORD" https://${DOMAIN:-mautic.localhost}'; do sleep 5; done
+        exec /entrypoint.sh
     volumes: &mautic-volumes
       - ${VOLUME_PATH}config:/var/www/html/config
       - ${VOLUME_PATH}files:/var/www/html/docroot/media/files
@@ -13,6 +20,9 @@ services:
       - MAUTIC_DB_DATABASE=mautic
       - MAUTIC_DB_PASSWORD=myp@ssw0rd
       - MAUTIC_TRUSTED_PROXIES=["REMOTE_ADDR"]
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
     deploy:
       resources:
         limits:
