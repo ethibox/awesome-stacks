@@ -1103,20 +1103,25 @@
       "categories": [
         "Projets"
       ],
-      "manual": true,
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/taiga.png",
       "website": "https://taiga.io",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/taiga.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "9d68532a26cb15e5fda1be51c4b29de5640d01f0"
       },
       "env": [
         {
           "name": "SECRET_KEY",
           "value": "mys3cr3t",
           "preset": true
+        },
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
         },
         {
           "name": "ADMIN_USERNAME",
