@@ -1468,16 +1468,33 @@
       "categories": [
         "Réseau social"
       ],
-      "manual": true,
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/pixelfed.png",
       "website": "https://pixelfed.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/pixelfed.yml",
-        "commit": "6a00615a0888ccd3e15fb6af92a19a54126a2b41"
+        "commit": "104d161414050d27cb38af432f20db837dc9099a"
       },
       "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        },
         {
           "name": "APP_NAME",
           "label": "App Name"
