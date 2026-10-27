@@ -2,30 +2,26 @@
 
 services:
   app:
-    image: listmonk/listmonk:${VERSION:-v6.1.0}
+    image: listmonk/listmonk:${VERSION:-v6.2.0}
     command:
       - /bin/sh
       - -c
       - |
-        if [ "$$INSTALL" = "true" ]; then
-          ./listmonk --install --yes
-        fi
         rm config.toml
         ./listmonk --new-config
-        if [ "$$UPGRADE" = "true" ]; then
-          ./listmonk --upgrade --yes
-        fi
+        ./listmonk --install --idempotent --yes
+        ./listmonk --upgrade --yes
         ./listmonk
     environment:
       - LISTMONK_app__address=0.0.0.0:9000
       - LISTMONK_db__host=postgres
       - LISTMONK_db__password=myp@ssw0rd
+      - LISTMONK_ADMIN_USER=${ADMIN_USERNAME:-admin}
+      - LISTMONK_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - POSTGRES_DB=listmonk
       - POSTGRES_USER=listmonk
       - POSTGRES_PASSWORD=myp@ssw0rd
       - DB_HOST=postgres
-      - INSTALL=${INSTALL:-false}
-      - UPGRADE=${UPGRADE:-false}
     deploy:
       resources:
         limits:
@@ -39,7 +35,7 @@ services:
       - traefik
 
   postgres:
-    image: postgres:12-alpine
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
     environment:
       - POSTGRES_DB=listmonk
       - POSTGRES_USER=listmonk
