@@ -1146,16 +1146,21 @@
       "categories": [
         "Vente"
       ],
-      "manual": true,
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/mautic.png",
       "website": "https://www.mautic.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mautic.yml",
-        "commit": "c38891bae90e0feb39c0372573a75d2692586ece"
+        "commit": "60e919975e7430927afb29f5aca329096fb71a88"
       },
       "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
+        },
         {
           "name": "ADMIN_USERNAME",
           "label": "Admin username",
