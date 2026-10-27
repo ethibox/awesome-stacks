@@ -3226,12 +3226,20 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/umami.yml",
-        "commit": "21dcc989d6fe6f384a8d8251542cd0cbfda1fc8e"
+        "commit": "bc55c4d1373cf27b93378d737c53c4ef750e9276"
       },
       "env": [
         {
           "name": "APP_SECRET",
           "preset": true
+        },
+        {
+          "name": "COLLECT_API_ENDPOINT",
+          "label": "Custom collect endpoint (e.g. /api/data)"
+        },
+        {
+          "name": "TRACKER_SCRIPT_NAME",
+          "label": "Custom tracker script name (e.g. app.js)"
         },
         {
           "name": "MCP_ENABLED",
