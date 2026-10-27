@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c taiga.yml taiga
-# docker exec -it $(docker ps -qf name=taiga_back) python manage.py createsuperuser
 
 services:
   web:
@@ -36,6 +35,9 @@ services:
       - RABBITMQ_VHOST=taiga
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PASS=mypassword
+      - DJANGO_SUPERUSER_USERNAME=${ADMIN_USERNAME:-admin}
+      - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - DJANGO_SUPERUSER_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     volumes: &taiga-volumes
       - ${VOLUME_PATH}static:/taiga/static
       - ${VOLUME_PATH}media:/taiga/media
@@ -44,6 +46,13 @@ services:
 
   back:
     image: taigaio/taiga-back:${VERSION:-6.9.0}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        python manage.py migrate
+        python manage.py createsuperuser --noinput || true
+        exec /taiga-back/docker/entrypoint.sh
     environment: *taiga-environment
     volumes:
       - ${VOLUME_PATH}static:/taiga-back/static
