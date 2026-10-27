@@ -2820,20 +2820,33 @@
       "id": 65,
       "type": 2,
       "title": "Listmonk",
-      "version": "6.1.0",
+      "version": "6.2.0",
       "description": "Listmonk est un gestionnaire de newsletter open-source haute performance avec gestion des listes et des campagnes.",
       "categories": [
         "Communication"
       ],
-      "manual": true,
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/listmonk.png",
       "website": "https://listmonk.app/",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/listmonk.yml",
-        "commit": "a191d8db06f6e6643df6c41a3f5f1bc76dfaada8"
-      }
+        "commit": "59ce6278d28f27a932920b5e81fd54c8d11332cb"
+      },
+      "env": [
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
     },
     {
       "id": 66,
