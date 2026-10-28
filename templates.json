@@ -2232,7 +2232,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nocodb.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "30adb814d8c5f596c80843ecdddd2a265a7aa500"
       },
       "env": [
         {
