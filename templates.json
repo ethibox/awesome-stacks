@@ -4018,6 +4018,30 @@
           ]
         }
       ]
+    },
+    {
+      "id": 99,
+      "type": 2,
+      "title": "Invidious",
+      "version": "master",
+      "description": "Invidious est une interface open-source alternative à YouTube, sans publicité ni tracking.",
+      "categories": [
+        "Réseau social"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/invidious.png",
+      "website": "https://invidious.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/invidious.yml",
+        "commit": "8aaf2e00733913fc7e2146370b3b70ef54798c3d"
+      },
+      "env": [
+        {
+          "name": "PROXY",
+          "label": "Proxy URL"
+        }
+      ]
     }
   ]
 }
