@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c invidious.yml invidious
-# docker run quay.io/invidious/youtube-trusted-session-generator
 
 services:
   web:
@@ -8,21 +7,17 @@ services:
       INVIDIOUS_CONFIG: |
         hmac_key: ${HMAC_KEY:-random_hmac_key} # pwgen 20 1
         domain: ${DOMAIN:-invidious.localhost}
-        channel_threads: 1
+        https_only: ${HTTPS_ONLY:-true}
         check_tables: true
-        signature_server: inv_sig_helper:12999
-        feed_threads: 1
         db:
+          host: postgres
+          dbname: invidious
           user: invidious
           password: myp@ssw0rd
-          host: postgres
           port: 5432
-          dbname: invidious
-        full_refresh: false
-        https_only: ${HTTPS_ONLY:-true}
-        visitor_data: ${VISITOR_DATA:-false}
-        po_token: ${PO_TOKEN:-random_token}
-        popular_enabled: ${POPULAR_ENABLED:-true}
+        invidious_companion:
+          - private_url: http://companion:8282/companion
+        invidious_companion_key: ${COMPANION_KEY:-randomcompanionk} # pwgen 16 1
         default_user_preferences:
           default_home: Trending
     deploy:
@@ -37,42 +32,27 @@ services:
       - internal
       - traefik
 
-  inv_sig_helper:
-    image: quay.io/invidious/inv-sig-helper:latest
-    init: true
-    command: ["--tcp", "0.0.0.0:12999"]
+  companion:
+    image: quay.io/invidious/invidious-companion:${COMPANION_VERSION:-latest}
     environment:
-      - RUST_LOG=info
+      - SERVER_SECRET_KEY=${COMPANION_KEY:-randomcompanionk}
+      - PROXY=${PROXY:-}
     cap_drop:
       - ALL
     read_only: true
+    volumes:
+      - ${VOLUME_PATH}companion:/var/tmp/youtubei.js
     networks:
       - internal
 
   postgres:
     image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
-    entrypoint: /bin/sh
-    command:
-      - -c
-      - |
-        mkdir -p /config/sql
-        wget -O /config/sql/annotations.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/annotations.sql
-        wget -O /config/sql/channel_videos.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/channel_videos.sql
-        wget -O /config/sql/channels.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/channels.sql
-        wget -O /config/sql/nonces.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/nonces.sql
-        wget -O /config/sql/playlist_videos.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/playlist_videos.sql
-        wget -O /config/sql/playlists.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/playlists.sql
-        wget -O /config/sql/session_ids.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/session_ids.sql
-        wget -O /config/sql/users.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/users.sql
-        wget -O /config/sql/videos.sql https://raw.githubusercontent.com/iv-org/invidious/master/config/sql/videos.sql
-        wget -O /docker-entrypoint-initdb.d/init-invidious-db.sh https://raw.githubusercontent.com/iv-org/invidious/master/docker/init-invidious-db.sh
-        sed -i -e s/kemal/$$POSTGRES_USER/g /config/sql/*
-        chmod +x /docker-entrypoint-initdb.d/init-invidious-db.sh
-        /usr/local/bin/docker-entrypoint.sh postgres
     environment:
       - POSTGRES_DB=invidious
       - POSTGRES_USER=invidious
       - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "invidious"]
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
@@ -80,6 +60,7 @@ services:
 
 volumes:
   postgres:
+  companion:
 
 networks:
   internal:
