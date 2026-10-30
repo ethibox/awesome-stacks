@@ -1230,7 +1230,7 @@
       "id": 25,
       "type": 2,
       "title": "Metabase",
-      "version": "0.63.15.5",
+      "version": "0.65.2.3",
       "description": "Metabase est un outil open-source d'analyse de données pour créer des tableaux de bord et explorer vos données.",
       "categories": [
         "Statistiques"
@@ -1241,7 +1241,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/metabase.yml",
-        "commit": "c38da8bdc319760a7d37741dd872dfdd609a5cc1"
+        "commit": "98f2d4d6bfb98de70054f6a122e75ddd6c77b1e4"
       }
     },
     {
