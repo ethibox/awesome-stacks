@@ -2,22 +2,37 @@
 
 services:
   web:
-    image: ${IMAGE:-ethibox/writefreely}:${VERSION:-0.15.1}
+    image: ${IMAGE:-ethibox/writefreely}:${VERSION:-0.17.2}
     entrypoint: /bin/sh
     command:
-      - -c
+      - -ec
       - |
-        set -e
-        wget -O /go/config.ini https://git.io/Ju8Wf
+        cat > /go/config.ini <<EOF
+        [server]
+        port = 8080
+        bind = 0.0.0.0
+
+        [database]
+        type     = mysql
+        username = writefreely
+        password = myp@ssw0rd
+        database = writefreely
+        host     = mariadb
+        port     = 3306
+
+        [app]
+        site_name         = ${APP_TITLE:-Writefreely}
+        host              = https://${DOMAIN:-writefreely.localhost}
+        theme             = ${APP_THEME:-write}
+        webfonts          = ${APP_WEBFONT:-true}
+        open_registration = ${APP_OPENREGISTRATION:-true}
+        federation        = ${APP_FEDERATION:-true}
+        EOF
+
         if [ "${DISABLE_ROBOTS:-false}" = "true" ]; then
-          wget -O /go/static/robots.txt https://pastebin.com/raw/tqR8CFkZ
+          printf 'User-agent: *\nDisallow: /\n' > /go/static/robots.txt
         fi
-        sed -i -e s%#APP_URL%https://${DOMAIN:-writefreely.localhost}%g /go/config.ini
-        sed -i -e s/#APP_OPENREGISTRATION/${APP_OPENREGISTRATION:-true}/g /go/config.ini
-        sed -i -e s/#APP_FEDERATION/${APP_FEDERATION:-true}/g /go/config.ini
-        sed -i -e s/#APP_THEME/${APP_THEME:-write}/g /go/config.ini
-        sed -i -e s/#APP_TITLE/${APP_TITLE:-Writefreely}/g /go/config.ini
-        sed -i -e s/#APP_WEBFONT/${APP_WEBFONT:-true}/g /go/config.ini
+
         cmd/writefreely/writefreely --init-db
         cmd/writefreely/writefreely --gen-keys
         cmd/writefreely/writefreely
@@ -36,7 +51,7 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
@@ -44,6 +59,7 @@ services:
       - MYSQL_DATABASE=writefreely
       - MYSQL_PASSWORD=myp@ssw0rd
       - MYSQL_USER=writefreely
+      - MARIADB_AUTO_UPGRADE=1
     deploy:
       resources:
         limits:
