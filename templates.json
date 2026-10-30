@@ -4042,6 +4042,76 @@
           "label": "Proxy URL"
         }
       ]
+    },
+    {
+      "id": 100,
+      "type": 2,
+      "title": "WriteFreely",
+      "version": "0.17.2",
+      "description": "WriteFreely est une plateforme de blog open-source minimaliste et fédérée, pensée pour l'écriture.",
+      "categories": [
+        "Site web"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/writefreely.png",
+      "website": "https://writefreely.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/writefreely.yml",
+        "commit": "14329f32e80d3cb3e2273d45072aed9a2daf1922"
+      },
+      "env": [
+        {
+          "name": "APP_TITLE",
+          "label": "Site name",
+          "value": "Writefreely"
+        },
+        {
+          "name": "APP_OPENREGISTRATION",
+          "label": "Open registration",
+          "type": "select",
+          "select": [
+            {
+              "text": "true",
+              "value": "true"
+            },
+            {
+              "text": "false",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "name": "APP_FEDERATION",
+          "label": "Federation",
+          "type": "select",
+          "select": [
+            {
+              "text": "true",
+              "value": "true"
+            },
+            {
+              "text": "false",
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "name": "DISABLE_ROBOTS",
+          "label": "Disable search engine indexing",
+          "type": "select",
+          "select": [
+            {
+              "text": "false",
+              "value": "false"
+            },
+            {
+              "text": "true",
+              "value": "true"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
