@@ -1381,7 +1381,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mediawiki.yml",
-        "commit": "189e80130be2f712a1af7096a6c0748232f574d6"
+        "commit": "5210c224c6cdbdb453603a00071d5f8aba9548bd"
       },
       "env": [
         {
