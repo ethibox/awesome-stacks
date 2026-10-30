@@ -10,6 +10,7 @@ services:
       - JWT_SECRET=${JWT_SECRET:-mys3cr3t}
       - DATABASE_URL=postgresql://postiz:myp@ssw0rd@postgres:5432/postiz
       - REDIS_URL=redis://redis:6379
+      - TEMPORAL_ADDRESS=temporal:7233
       - BACKEND_INTERNAL_URL=http://localhost:3000
       - IS_GENERAL=true
       - STORAGE_PROVIDER=local
@@ -20,7 +21,7 @@ services:
       - X_CLIENT=${X_CLIENT}
       - X_SECRET=${X_SECRET}
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000 || exit 1"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').catch(() => process.exit(1))"]
     volumes:
       - ${VOLUME_PATH}config:/config/
       - ${VOLUME_PATH}uploads:/uploads/
@@ -35,6 +36,38 @@ services:
     networks:
       - internal
       - traefik
+
+  temporal:
+    image: temporalio/auto-setup:${TEMPORAL_VERSION:-1.29.7}
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=postiz
+      - POSTGRES_PWD=myp@ssw0rd
+      - POSTGRES_SEEDS=postgres
+      - ENABLE_ES=true
+      - ES_SEEDS=elasticsearch
+      - ES_VERSION=v8
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  elasticsearch:
+    image: elasticsearch:${ELASTICSEARCH_VERSION:-8.19.23}
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    volumes:
+      - ${VOLUME_PATH}elasticsearch:/usr/share/elasticsearch/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
 
   redis:
     image: redis:7-alpine
@@ -71,6 +104,7 @@ volumes:
   config:
   uploads:
   postgres:
+  elasticsearch:
 
 networks:
   internal:
