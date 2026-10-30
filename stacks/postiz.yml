@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: ghcr.io/gitroomhq/postiz-app:${VERSION:-v2.25.1}
+    image: ghcr.io/gitroomhq/postiz-app:${VERSION:-v2.25.3}
     environment:
       - MAIN_URL=https://${DOMAIN:-postiz.localhost}
       - FRONTEND_URL=https://${DOMAIN:-postiz.localhost}
