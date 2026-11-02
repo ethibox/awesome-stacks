@@ -997,7 +997,7 @@
       "id": 18,
       "type": 2,
       "title": "Etherpad",
-      "version": "3.3.10",
+      "version": "3.3.13",
       "description": "Etherpad est un éditeur en ligne open-source qui permet une édition collaborative en temps réel.",
       "categories": [
         "Documents"
@@ -1008,7 +1008,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/etherpad.yml",
-        "commit": "7909719bedd6c1343dda67a1cd8f51fb0ac92432"
+        "commit": "e157979137ec52b96927c1527a5a234bca3ef187"
       },
       "env": [
         {
