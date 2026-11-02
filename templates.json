@@ -245,7 +245,7 @@
       "id": 6,
       "type": 2,
       "title": "Discourse",
-      "version": "2026.7.3",
+      "version": "2026.7.4",
       "description": "Discourse est une plateforme de forum open-source moderne pour créer des communautés en ligne.",
       "categories": [
         "Réseau social"
@@ -257,7 +257,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/discourse.yml",
-        "commit": "f27f86942d608ddbf31d224445d66eeb883e335c"
+        "commit": "fb5f73826c8151989df2d1ce7a18db861bf8311e"
       },
       "env": [
         {
