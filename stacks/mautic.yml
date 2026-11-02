@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: &mautic-image ${IMAGE:-mautic/mautic}:${VERSION:-7.2.1-apache}
+    image: &mautic-image ${IMAGE:-mautic/mautic}:${VERSION:-7.2.2-apache}
     entrypoint: /bin/sh
     command:
       - -c
