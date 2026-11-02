@@ -2879,7 +2879,7 @@
       "id": 66,
       "type": 2,
       "title": "Rallly",
-      "version": "4.8.1",
+      "version": "4.16.4",
       "description": "Rallly est un outil open-source de planification de réunion pour trouver facilement un créneau commun.",
       "categories": [
         "Communication"
@@ -2890,7 +2890,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/rallly.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "92b892cad4594589a33ba883da401928b01d474b"
       },
       "env": [
         {
