@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: kytta/share2fedi:${VERSION:-4.0.0-alpha.10}
+    image: kytta/share2fedi:${VERSION:-4.0.0-alpha.12}
     environment:
       - PM2_INSTANCES=${PM2_INSTANCES:-1}
     deploy:
