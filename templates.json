@@ -1212,7 +1212,7 @@
       "id": 24,
       "type": 2,
       "title": "Element",
-      "version": "1.12.15",
+      "version": "1.12.33",
       "description": "Element est une application de collaboration open-source avec messagerie, partage de fichiers et visioconférence.",
       "categories": [
         "Communication"
@@ -1223,7 +1223,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/element.yml",
-        "commit": "15eeaf8aee326d5924efbac64c92dc38e7d43b66"
+        "commit": "44cbfcd4f2a37a79d218e31c24213860cd02adf9"
       }
     },
     {
