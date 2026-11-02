@@ -2697,7 +2697,7 @@
       "id": 61,
       "type": 2,
       "title": "Vaultwarden",
-      "version": "1.37.1",
+      "version": "1.37.5",
       "description": "Vaultwarden est un serveur open-source compatible Bitwarden pour gérer vos mots de passe en toute sécurité.",
       "categories": [
         "Sécurité"
@@ -2709,7 +2709,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/vaultwarden.yml",
-        "commit": "9ebbb535cac219202e0c5068dd448e7b6cc3677f"
+        "commit": "e4e287349f26760863b90840b1f3a9e635d9cd19"
       },
       "env": [
         {
