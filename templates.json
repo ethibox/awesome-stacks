@@ -3413,7 +3413,7 @@
       "id": 83,
       "type": 2,
       "title": "Drawio",
-      "version": "29.7.12",
+      "version": "32.6.9",
       "description": "Draw.io est un éditeur de diagrammes open-source pour créer des schémas, organigrammes et diagrammes techniques.",
       "categories": [
         "Docs"
@@ -3424,7 +3424,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/drawio.yml",
-        "commit": "277f890b86199d2d3a4d0d0d265f98f4077db89d"
+        "commit": "340428b700202322ad7e6abbf309d24a87c4f5d5"
       }
     },
     {
