@@ -421,7 +421,7 @@
       "id": 8,
       "type": 2,
       "title": "Wordpress",
-      "version": "7.1.3",
+      "version": "7.1.4",
       "description": "WordPress est l'application web open-source la plus utilisée au monde pour créer un beau site web.",
       "categories": [
         "Site web"
@@ -432,7 +432,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wordpress.yml",
-        "commit": "bd27bf5c49e096799e0f91fcc9276301cc120471"
+        "commit": "e45a3d48292612f5606546d473dd0266d06b8a35"
       }
     },
     {
