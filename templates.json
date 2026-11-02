@@ -3672,7 +3672,7 @@
       "id": 88,
       "type": 2,
       "title": "Uptime-Kuma",
-      "version": "2.5.5",
+      "version": "2.5.9",
       "description": "Uptime Kuma est un outil de monitoring open-source pour surveiller la disponibilité de vos sites et services.",
       "categories": [
         "Statistiques"
@@ -3683,7 +3683,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/uptime-kuma.yml",
-        "commit": "51a3710f75a1bef4667b766ef6cbd01cc04f523c"
+        "commit": "2fabc4b775ec2bcc4c638fa8e6a0b535ef521093"
       }
     },
     {
