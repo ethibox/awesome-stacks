@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: vaultwarden/server:${VERSION:-1.37.1}
+    image: vaultwarden/server:${VERSION:-1.37.5}
     environment:
       - DOMAIN=https://${DOMAIN:-vaultwarden.localhost}
       - ADMIN_TOKEN=${ADMIN_TOKEN} # ./vaultwarden hash
