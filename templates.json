@@ -627,7 +627,7 @@
       "id": 13,
       "type": 2,
       "title": "n8n",
-      "version": "2.43.7",
+      "version": "2.46.4",
       "description": "n8n est un outil d'automatisation de workflows open-source pour connecter vos applications et automatiser vos tâches.",
       "categories": [
         "Automatisation"
@@ -639,7 +639,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/n8n.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "a0925caf9a75db47f10f794f061e40374efd343b"
       },
       "env": [
         {
