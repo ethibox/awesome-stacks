@@ -513,7 +513,7 @@
       "id": 10,
       "type": 2,
       "title": "Zammad",
-      "version": "7.1.3",
+      "version": "7.2.2",
       "description": "Zammad est un système de support client open-source pour gérer tickets, emails et chats.",
       "categories": [
         "Communication"
@@ -525,7 +525,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/zammad.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "671ea22c3c342788ff1c4c1996f5afeed334e13e"
       }
     },
     {
