@@ -88,7 +88,7 @@
       "id": 2,
       "type": 2,
       "title": "Mattermost",
-      "version": "11.10.1",
+      "version": "11.11.3",
       "description": "Mattermost est une plateforme de messagerie instantanée open-source pour collaborer en équipe.",
       "categories": [
         "Communication"
@@ -99,7 +99,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mattermost.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "fd48f186f53747867585c3388a5b469d0dbc9335"
       },
       "env": [
         {
