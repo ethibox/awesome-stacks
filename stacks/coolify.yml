@@ -1,0 +1,101 @@
+# APP_KEY=base64:$(openssl rand -base64 32) ADMIN_EMAIL=<email> ADMIN_PASSWORD=<strong-password> DOMAIN=example.com docker stack deploy -c coolify.yml coolify
+
+services:
+  init:
+    image: coollabsio/coolify:${VERSION:-4.6.0}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        cd /var/www/html/storage/app
+        if [ ! -d ssh/keys ]; then
+          ssh-keygen -t ed25519 -f /tmp/key -N '' -C coolify
+          cat /tmp/key.pub >> /root/.ssh/authorized_keys
+          mkdir ssh/keys
+          mv /tmp/key ssh/keys/id.root@host.docker.internal
+        fi
+        chown -R www-data ssh images
+    user: root
+    volumes:
+      - /root/.ssh:/root/.ssh
+      - ${VOLUME_PATH}ssh:/var/www/html/storage/app/ssh
+      - ${VOLUME_PATH}images:/var/www/html/storage/app/images
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  coolify:
+    image: coollabsio/coolify:${VERSION:-4.6.0}
+    environment:
+      - AUTOUPDATE=false
+      - DB_HOST=postgres
+      - DB_PASSWORD=myp@ssw0rd
+      - REDIS_HOST=redis
+      - APP_KEY=${APP_KEY:?} # openssl rand -base64 32
+      - ROOT_USER_EMAIL=${ADMIN_EMAIL:?}
+      - ROOT_USER_PASSWORD=${ADMIN_PASSWORD:?}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:8080/login && ls storage/app/ssh/keys/*"]
+    volumes:
+      - ${VOLUME_PATH}ssh:/var/www/html/storage/app/ssh
+      - ${VOLUME_PATH}images:/var/www/html/storage/app/images
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.coolify-${NUMBER:-1}.rule=Host(`${DOMAIN:-coolify.localhost}`)
+        - traefik.http.routers.coolify-${NUMBER:-1}.service=coolify-${NUMBER:-1}
+        - traefik.http.services.coolify-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.routers.coolify-realtime-${NUMBER:-1}.rule=Host(`${DOMAIN:-coolify.localhost}`) && PathPrefix(`/app/`)
+        - traefik.http.routers.coolify-realtime-${NUMBER:-1}.service=coolify-realtime-${NUMBER:-1}
+        - traefik.http.services.coolify-realtime-${NUMBER:-1}.loadbalancer.server.port=6001
+        - traefik.http.routers.coolify-terminal-${NUMBER:-1}.rule=Host(`${DOMAIN:-coolify.localhost}`) && PathPrefix(`/terminal/ws`)
+        - traefik.http.routers.coolify-terminal-${NUMBER:-1}.service=coolify-terminal-${NUMBER:-1}
+        - traefik.http.services.coolify-terminal-${NUMBER:-1}.loadbalancer.server.port=6002
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=coolify
+      - POSTGRES_USER=coolify
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - ${VOLUME_PATH}redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+volumes:
+  ssh:
+  images:
+  postgres:
+  redis:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
