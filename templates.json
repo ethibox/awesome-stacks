@@ -3431,7 +3431,7 @@
       "id": 84,
       "type": 2,
       "title": "Healthchecks",
-      "version": "4.4",
+      "version": "5.0.3",
       "description": "Healthchecks est un outil open-source de surveillance de tâches planifiées (cron jobs) avec alertes en cas d'échec.",
       "categories": [
         "Statistiques"
@@ -3442,7 +3442,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/healthchecks.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "c900e8e31c0d2a4893ae9b6f3926ff089005f83c"
       },
       "env": [
         {
