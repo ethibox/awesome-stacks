@@ -3963,7 +3963,7 @@
       "id": 97,
       "type": 2,
       "title": "Adminer",
-      "version": "6.2.0",
+      "version": "6.3.0",
       "description": "Adminer est un outil open-source léger de gestion de bases de données (MySQL, MariaDB, PostgreSQL, SQLite, etc.) dans un seul fichier PHP.",
       "categories": [
         "Développement"
@@ -3974,7 +3974,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/adminer.yml",
-        "commit": "210d92a2e2a99b7d78d3cc8a4749569c8f5154f1"
+        "commit": "9e7042cb03621a189e049c767d59e29d560530c9"
       },
       "env": [
         {
