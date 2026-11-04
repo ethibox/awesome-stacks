@@ -1,0 +1,87 @@
+# DOMAIN=example.com docker stack deploy -c decidim.yml decidim
+# bin/rails decidim_system:create_admin
+
+services:
+  app:
+    image: &decidim-image decidim/decidim:${VERSION:-0.31.6}
+    command: sh -c "bin/rails db:migrate &&bin/rails server -b 0.0.0.0"
+    environment: &decidim-environment
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-replace-me-with-a-random-string-of-exactly-128-characters-replace-me-with-a-random-string-of-exactly-128-characters-replace-me-w}  # openssl rand -hex 64
+      - DATABASE_URL=postgres://decidim:myp%40ssw0rd@postgres:5432/decidim
+      - REDIS_URL=redis://redis:6379
+      - QUEUE_ADAPTER=sidekiq
+      - DECIDIM_MAILER_SENDER=${SMTP_FROM:-decidim@example.com}
+      - SMTP_ADDRESS=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_DOMAIN=${SMTP_DOMAIN}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsH 'X-Forwarded-Proto: https' http://127.0.0.1:3000/up"]
+      start_period: 5m
+    volumes:
+      - &decidim-storage ${VOLUME_PATH}storage:/code/storage
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.decidim-${NUMBER:-1}.rule=Host(`${DOMAIN:-decidim.localhost}`)
+        - traefik.http.services.decidim-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  sidekiq:
+    image: *decidim-image
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    environment: *decidim-environment
+    volumes:
+      - *decidim-storage
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  redis:
+    image: redis:8-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-17-alpine}
+    environment:
+      - POSTGRES_DB=decidim
+      - POSTGRES_USER=decidim
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "decidim"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+volumes:
+  storage:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
