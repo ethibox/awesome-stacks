@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: linuxserver/jackett:${VERSION:-0.22.1421}
+    image: linuxserver/jackett:${VERSION:-0.24.3014}
     volumes:
       - ${VOLUME_PATH}config:/config 
     deploy:
