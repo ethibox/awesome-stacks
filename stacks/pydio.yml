@@ -2,7 +2,7 @@
 
 services:
   pydio:
-    image: pydio/cells:${VERSION:-2.2.9}
+    image: pydio/cells:${VERSION:-2.2.12}
     volumes:
       - ${VOLUME_PATH}data:/var/cells
     environment:
