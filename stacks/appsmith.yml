@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: appsmith/appsmith-ce:${VERSION:-v1.9.58}
+    image: appsmith/appsmith-ce:${VERSION:-v1.99}
     volumes:
       - ${VOLUME_PATH}data:/stacks:/appsmith-stacks
     deploy:
