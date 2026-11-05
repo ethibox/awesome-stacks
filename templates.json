@@ -2582,7 +2582,7 @@
       "id": 57,
       "type": 2,
       "title": "Dokos",
-      "version": "4.28.1",
+      "version": "4.71.2",
       "description": "Dokos est une plateforme open-source de gestion d'entreprise avec facturation, comptabilité et gestion de projets.",
       "categories": [
         "Finance"
@@ -2594,7 +2594,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dokos.yml",
-        "commit": "0eb0ded75b6090a352cc2cc7933e70906d88c23e"
+        "commit": "422973f6a3b88ba9c681823d91ba10d2ffbb4971"
       },
       "env": [
         {
