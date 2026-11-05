@@ -2,7 +2,7 @@
 
 services:
   beszel:
-    image: henrygd/beszel:${VERSION:-0.17.0}
+    image: henrygd/beszel:${VERSION:-0.21.1}
     volumes:
       - ${VOLUME_PATH}data:/beszel_data
       - ${VOLUME_PATH}socket:/beszel_socket
@@ -16,7 +16,7 @@ services:
       - internal
 
   agent:
-    image: henrygd/beszel-agent:${VERSION:-0.17.0}
+    image: henrygd/beszel-agent:${VERSION:-0.21.1}
     volumes:
       - ${VOLUME_PATH}socket:/beszel_socket
       - ${VOLUME_PATH}agent:/var/lib/beszel-agent
