@@ -328,7 +328,7 @@
       "id": 7,
       "type": 2,
       "title": "Mastodon",
-      "version": "4.7.4",
+      "version": "4.7.5",
       "description": "Mastodon est un réseau social open-source décentralisé sans publicité ni tracking.",
       "categories": [
         "Réseau social"
@@ -340,7 +340,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mastodon.yml",
-        "commit": "dd0d2d076af82407cf67781cf6ceb1c298ca49e4"
+        "commit": "b9e6775d48dc4884f0fd6bc4be6567a3d65f9da5"
       },
       "env": [
         {
