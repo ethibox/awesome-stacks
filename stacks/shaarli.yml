@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: ghcr.io/shaarli/shaarli:${VERSION:-v0.14.0}
+    image: ghcr.io/shaarli/shaarli:${VERSION:-v0.16.10}
     volumes:
       - ${VOLUME_PATH}data:/var/www/shaarli/data
       - ${VOLUME_PATH}cache:/var/www/shaarli/cache
