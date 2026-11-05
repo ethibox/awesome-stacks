@@ -3141,7 +3141,7 @@
       "id": 75,
       "type": 2,
       "title": "Vikunja",
-      "version": "2.1.0",
+      "version": "2.8.0",
       "description": "Vikunja est un gestionnaire de tâches open-source avec listes, tableaux Kanban et calendrier.",
       "categories": [
         "Projets"
@@ -3152,7 +3152,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/vikunja.yml",
-        "commit": "3989ede2797f4b56c546db0430191947956a878d"
+        "commit": "7677865d045a4e51533c3e3fa3c2fe1b2c59bdf6"
       }
     },
     {
