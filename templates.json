@@ -1179,7 +1179,7 @@
       "id": 23,
       "type": 2,
       "title": "Dolibarr",
-      "version": "20.0.1",
+      "version": "20.0.4",
       "description": "Dolibarr ERP & CRM est un progiciel web open-source moderne et facile à utiliser pour la gestion de votre entreprise.",
       "categories": [
         "Facturation"
@@ -1191,7 +1191,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dolibarr.yml",
-        "commit": "0eb0ded75b6090a352cc2cc7933e70906d88c23e"
+        "commit": "1006b7accd64435b82914b82703937d49de8b105"
       },
       "env": [
         {
