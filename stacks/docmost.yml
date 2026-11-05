@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: docmost/docmost:${VERSION:-0.8.1}
+    image: docmost/docmost:${VERSION:-0.97.0}
     environment:
       - APP_SECRET=${APP_SECRET:-UWnum8qzylZ4unS36YjNnTsQlxRX14bg}
       - APP_URL=https://${DOMAIN:-docmost.localhost}
