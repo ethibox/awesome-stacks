@@ -775,7 +775,7 @@
       "id": 15,
       "type": 2,
       "title": "Chatwoot",
-      "version": "4.8.0",
+      "version": "4.19.1",
       "description": "Chatwoot est une plateforme de support client open-source avec chat en direct, email et réseaux sociaux.",
       "categories": [
         "Communication"
@@ -787,7 +787,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/chatwoot.yml",
-        "commit": "1b2ec2aca39e8debe704a0fb25f470d57167b29d"
+        "commit": "d9841fee15006c0fe4d7451deb2845baed7c12d8"
       },
       "env": [
         {
