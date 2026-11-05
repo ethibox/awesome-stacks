@@ -3811,7 +3811,7 @@
       "id": 94,
       "type": 2,
       "title": "OpenAthlete",
-      "version": "1.2.0",
+      "version": "1.4.0",
       "description": "OpenAthlete est une plateforme d'entraînement open-source pour suivre vos activités sportives et planifier vos séances.",
       "categories": [
         "Sport"
@@ -3822,7 +3822,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/openathlete.yml",
-        "commit": "e1b7a719060653b98e2a3441dacca4bfb548838e"
+        "commit": "696718abc506596198833fc397b96310f2a59e5e"
       },
       "env": [
         {
