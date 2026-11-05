@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: espocrm/espocrm:${VERSION:-7-apache}
+    image: espocrm/espocrm:${VERSION:-7.5.6-apache}
     volumes:
       - ${VOLUME_PATH}espocrm:/var/www/html
     environment:
