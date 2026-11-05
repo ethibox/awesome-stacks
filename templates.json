@@ -1029,7 +1029,7 @@
       "id": 19,
       "type": 2,
       "title": "Ghost",
-      "version": "6.0.4",
+      "version": "6.75.0",
       "description": "Ghost est une plateforme open-source pour la création et la gestion d'une publication en ligne moderne.",
       "categories": [
         "Site web"
@@ -1040,7 +1040,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/ghost.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "43f0a3f3fd9bdc674b212731e83196c05474d28d"
       },
       "env": [
         {
