@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: automatischio/automatisch:${VERSION:-0.13.1}
+    image: automatischio/automatisch:${VERSION:-0.15.0}
     environment:
       - PORT=3000
       - REDIS_HOST=redis
