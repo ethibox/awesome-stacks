@@ -2742,7 +2742,7 @@
       "id": 63,
       "type": 2,
       "title": "Automatisch",
-      "version": "0.13.1",
+      "version": "0.15.0",
       "description": "Automatisch est un outil d'automatisation open-source pour synchroniser des données entre services web sans coder.",
       "categories": [
         "Automatisation"
@@ -2753,7 +2753,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/automatisch.yml",
-        "commit": "f2c86963746b5862459a395132e9dd9efcac99d0"
+        "commit": "bb7bd7e4783d68bdaacd2a716c3bbea9d5fd0df7"
       },
       "env": [
         {
