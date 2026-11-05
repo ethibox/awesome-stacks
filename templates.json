@@ -1338,7 +1338,7 @@
       "id": 29,
       "type": 2,
       "title": "Prestashop",
-      "version": "8",
+      "version": "8.2.8",
       "description": "PrestaShop est un logiciel open-source de e-commerce pour créer et gérer votre boutique en ligne.",
       "categories": [
         "Vente"
@@ -1350,7 +1350,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/prestashop.yml",
-        "commit": "0eb0ded75b6090a352cc2cc7933e70906d88c23e"
+        "commit": "a1c84d3dbfd886aa0f8f03e1988be1beb9742380"
       },
       "env": [
         {
