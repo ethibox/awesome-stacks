@@ -14,7 +14,7 @@ services:
         condition: on-failure
 
   web:
-    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-3.3.13}
+    image: ${IMAGE:-etherpad/etherpad}:${VERSION:-3.3.15}
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
       - ${VOLUME_PATH}images:/opt/etherpad-lite/src/static/images
