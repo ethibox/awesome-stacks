@@ -12,7 +12,7 @@ services:
         condition: on-failure
 
   app:
-    image: vikunja/vikunja:${VERSION:-2.1.0}
+    image: vikunja/vikunja:${VERSION:-2.8.0}
     environment:
       - VIKUNJA_DATABASE_TYPE=mysql
       - VIKUNJA_DATABASE_HOST=mariadb
