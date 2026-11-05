@@ -2564,7 +2564,7 @@
       "id": 56,
       "type": 2,
       "title": "Appsmith",
-      "version": "1.9.58",
+      "version": "1.99",
       "description": "Appsmith est un outil no-code open-source pour créer des applications web et des tableaux de bord.",
       "categories": [
         "No-code"
@@ -2575,7 +2575,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/appsmith.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "d9b81a2c73107e161027ce68f9cc63c3f2d61b9a"
       }
     },
     {
