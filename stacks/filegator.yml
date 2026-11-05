@@ -2,7 +2,7 @@
 
 services:
   filegator:
-    image: filegator/filegator:${VERSION:-v7.10.1}
+    image: filegator/filegator:${VERSION:-v7.16.9}
     volumes:
       - ${VOLUME_PATH}data:/var/www/filegator/repository
     deploy:
