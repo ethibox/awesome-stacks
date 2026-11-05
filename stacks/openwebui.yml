@@ -2,7 +2,7 @@
 
 services:
   openwebui:
-    image: ghcr.io/open-webui/open-webui:${VERSION:-v0.11.4}
+    image: ghcr.io/open-webui/open-webui:${VERSION:-v0.13.0}
     environment:
       - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
       - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
