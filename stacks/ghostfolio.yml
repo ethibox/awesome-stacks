@@ -2,7 +2,7 @@
 
 services:
   ghostfolio:
-    image: ghostfolio/ghostfolio:${VERSION:-2.185.0}
+    image: ghostfolio/ghostfolio:${VERSION:-2.255.0}
     environment:
       - DATABASE_URL=postgresql://ghostfolio:myp@ssw0rd@postgres:5432/ghostfolio
       - ACCESS_TOKEN_SALT=${ACCESS_TOKEN_SALT:-mys3cr3t}
