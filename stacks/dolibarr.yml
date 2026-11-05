@@ -4,7 +4,7 @@
 
 services:
   dolibarr:
-    image: ${IMAGE:-dolibarr/dolibarr}:${VERSION:-20.0.1}
+    image: ${IMAGE:-dolibarr/dolibarr}:${VERSION:-20.0.4}
     environment:
       - DOLI_DB_HOST=mariadb
       - DOLI_DB_NAME=dolibarr
