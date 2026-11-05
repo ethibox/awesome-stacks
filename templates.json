@@ -3054,7 +3054,7 @@
       "id": 71,
       "type": 2,
       "title": "Outline",
-      "version": "1.6.1",
+      "version": "1.12.0",
       "description": "Outline est un wiki open-source rapide et collaboratif pour centraliser la documentation de votre équipe.",
       "categories": [
         "Documents"
@@ -3066,7 +3066,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/outline.yml",
-        "commit": "eb0fd3b5e416c73736b4e8f57a8b791f000a337d"
+        "commit": "54c3492f4dffd4bec5e46c4362b5de3fd1a6d0ed"
       },
       "env": [
         {
