@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: codeberg.org/forgejo/forgejo:${VERSION:-12}
+    image: codeberg.org/forgejo/forgejo:${VERSION:-12.0.4}
     environment:
       - USER_UID=1000
       - USER_GID=1000
