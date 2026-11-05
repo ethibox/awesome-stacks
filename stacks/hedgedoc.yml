@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: linuxserver/hedgedoc:${VERSION:-1.10.6}
+    image: linuxserver/hedgedoc:${VERSION:-1.12.2}
     volumes:
       - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
     environment:
