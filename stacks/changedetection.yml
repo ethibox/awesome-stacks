@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: dgtlmoon/changedetection.io:${VERSION:-0.49.0}
+    image: dgtlmoon/changedetection.io:${VERSION:-0.70.1}
     environment:
       - WEBDRIVER_URL=http://chrome:4444/wd/hub
     volumes:
