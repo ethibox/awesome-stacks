@@ -532,7 +532,7 @@
       "id": 11,
       "type": 2,
       "title": "Rocketchat",
-      "version": "8.7.1",
+      "version": "8.9.0",
       "description": "Rocket.Chat est une plateforme de communication open-source avec messagerie, appels vidéo et partage de fichiers.",
       "categories": [
         "Communication"
@@ -543,7 +543,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/rocketchat.yml",
-        "commit": "aca3ada6208dff7493baa58ccb34a5a3b0f60e75"
+        "commit": "bad81630034a321681e058effdb8c7e3160d456b"
       }
     },
     {
