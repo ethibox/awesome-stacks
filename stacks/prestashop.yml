@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: prestashop/prestashop:${VERSION:-8}
+    image: prestashop/prestashop:${VERSION:-8.2.8}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html
     environment:
