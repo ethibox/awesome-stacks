@@ -1,20 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c authentik.yml authentik
 
-x-authentik: &authentik
-  image: ghcr.io/goauthentik/server:${VERSION:-2025.10.3}
-  environment:
-    - AUTHENTIK_REDIS__HOST=redis
-    - AUTHENTIK_POSTGRESQL__HOST=postgres
-    - AUTHENTIK_POSTGRESQL__USER=${POSTGRES_USER:-authentik}
-    - AUTHENTIK_POSTGRESQL__NAME=${POSTGRES_DB:-authentik}
-    - AUTHENTIK_POSTGRESQL__PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
-    - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:-mys3cr3t}
-    - AUTHENTIK_BOOTSTRAP_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
-    - AUTHENTIK_BOOTSTRAP_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-
 services:
   server:
-    <<: *authentik
+    image: &authentik-image ghcr.io/goauthentik/server:${VERSION:-2026.8.5}
+    environment: &authentik-environment
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgres
+      - AUTHENTIK_POSTGRESQL__USER=${POSTGRES_USER:-authentik}
+      - AUTHENTIK_POSTGRESQL__NAME=${POSTGRES_DB:-authentik}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:-mys3cr3t}
+      - AUTHENTIK_BOOTSTRAP_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - AUTHENTIK_BOOTSTRAP_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     command: server
     volumes:
       - ${VOLUME_PATH}media:/media
@@ -29,7 +26,8 @@ services:
       - traefik
 
   worker:
-    <<: *authentik
+    image: *authentik-image
+    environment: *authentik-environment
     command: worker
     user: root
     volumes:
