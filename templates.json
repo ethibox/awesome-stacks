@@ -1646,7 +1646,7 @@
       "id": 34,
       "type": 2,
       "title": "Wikijs",
-      "version": "2.5.311",
+      "version": "3.1.0",
       "description": "Wiki.js est une application wiki open-source moderne avec édition Markdown et contrôle d'accès granulaire.",
       "categories": [
         "Documents"
@@ -1657,7 +1657,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wikijs.yml",
-        "commit": "0eb0ded75b6090a352cc2cc7933e70906d88c23e"
+        "commit": "782bd0f17c03ec3bc6685c7421f9cb0141db25d9"
       },
       "env": [
         {
