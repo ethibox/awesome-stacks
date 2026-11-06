@@ -2,14 +2,14 @@
 
 services:
   web:
-    image: requarks/wiki:${VERSION:-2.5.311}
+    image: requarks/wiki:${VERSION:-3.1.0}
     environment:
-      - DB_TYPE=mysql
-      - DB_HOST=mariadb
-      - DB_PORT=3306
+      - DB_HOST=postgres
       - DB_USER=wikijs
       - DB_NAME=wikijs
       - DB_PASS=myp@ssw0rd
+      - ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     deploy:
       labels:
         - traefik.enable=true
@@ -19,21 +19,21 @@ services:
       - internal
       - traefik
 
-  mariadb:
-    image: mariadb:${MARIADB_VERSION:-11.4}
-    volumes:
-      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-17-alpine}
     environment:
-      - MYSQL_USER=${MYSQL_USER:-wikijs}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-wikijs}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
-      - MARIADB_AUTO_UPGRADE=1
+      - POSTGRES_DB=wikijs
+      - POSTGRES_USER=wikijs
+      - POSTGRES_PASSWORD=myp@ssw0rd
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "wikijs"]
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
       - internal
 
 volumes:
-  mariadb:
+  postgres:
 
 networks:
   internal:
