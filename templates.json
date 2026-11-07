@@ -16,7 +16,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nextcloud.yml",
-        "commit": "67515169f007da42a24874c82c85ae5f16d2ae6b"
+        "commit": "2fd2563f6bfd664f1a5b3b40e2b6d0c653f99e42"
       },
       "env": [
         {
@@ -238,7 +238,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/matomo.yml",
-        "commit": "acc3708ac6c9c02f35f839494b280bd16ed93869"
+        "commit": "2fd2563f6bfd664f1a5b3b40e2b6d0c653f99e42"
       }
     },
     {
@@ -432,7 +432,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wordpress.yml",
-        "commit": "e45a3d48292612f5606546d473dd0266d06b8a35"
+        "commit": "2fd2563f6bfd664f1a5b3b40e2b6d0c653f99e42"
       }
     },
     {
@@ -913,7 +913,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/invoiceninja.yml",
-        "commit": "95c55c3dbda87d35a47706cae9154a397a1c29dc"
+        "commit": "2fd2563f6bfd664f1a5b3b40e2b6d0c653f99e42"
       },
       "env": [
         {
@@ -1109,7 +1109,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/taiga.yml",
-        "commit": "9d68532a26cb15e5fda1be51c4b29de5640d01f0"
+        "commit": "2fd2563f6bfd664f1a5b3b40e2b6d0c653f99e42"
       },
       "env": [
         {
