@@ -1,0 +1,28 @@
+# DOCKER_ENDPOINT=tcp://socket-proxy:2375 docker stack deploy -c traefik.yml -c socket-proxy.yml traefik
+
+services:
+  traefik:
+    volumes:
+      - /dev/null:/var/run/docker.sock
+    networks:
+      - default
+      - socket-proxy
+
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:${VERSION:-v0.5.0}
+    environment:
+      TASKS: 1
+      NODES: 1
+      SERVICES: 1
+      NETWORKS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - socket-proxy
+
+networks:
+  socket-proxy:
+    driver: overlay
