@@ -3974,13 +3974,17 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/adminer.yml",
-        "commit": "9e7042cb03621a189e049c767d59e29d560530c9"
+        "commit": "baba4dede03a8dee15c2f6325093972955343425"
       },
       "env": [
         {
           "name": "BASIC_AUTH",
           "label": "Basic auth (htpasswd)",
           "type": "password"
+        },
+        {
+          "name": "ALLOWED_IPS",
+          "label": "Allowed IPs (ex: 1.2.3.4/32,10.0.0.0/8)"
         }
       ]
     },
