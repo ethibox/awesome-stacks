@@ -22,6 +22,8 @@ services:
       - ${VOLUME_PATH}data:/var/www/app/public
       - ${VOLUME_PATH}storage:/var/www/app/storage
     deploy:
+      update_config:
+        order: start-first
       labels:
         - traefik.enable=true
         - traefik.http.routers.invoiceninja-${NUMBER:-1}.rule=Host(`${DOMAIN:-invoiceninja.localhost}`)

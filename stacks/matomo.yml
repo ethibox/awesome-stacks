@@ -10,6 +10,8 @@ services:
       - ${VOLUME_PATH}data:/var/www/html:ro
       - ${VOLUME_PATH}config:/var/www/html/config:ro
     deploy:
+      update_config:
+        order: start-first
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}

@@ -13,6 +13,8 @@ services:
     volumes:
       - ${VOLUME_PATH}data:/var/www/html
     deploy:
+      update_config:
+        order: start-first
       labels:
         - traefik.enable=true
         - traefik.http.routers.crater-${NUMBER:-1}.rule=Host(`${DOMAIN:-crater.localhost}`)

@@ -10,6 +10,8 @@ services:
       - ${VOLUME_PATH}static:/taiga/static
       - ${VOLUME_PATH}media:/taiga/media
     deploy:
+      update_config:
+        order: start-first
       labels:
         - traefik.enable=true
         - traefik.http.routers.taiga-${NUMBER:-1}.rule=Host(`${DOMAIN:-taiga.localhost}`)

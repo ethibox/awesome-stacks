@@ -8,6 +8,8 @@ services:
     volumes:
       - ${VOLUME_PATH}wordpress:/var/www/html
     deploy:
+      update_config:
+        order: start-first
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
