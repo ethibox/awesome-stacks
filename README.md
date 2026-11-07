@@ -38,6 +38,12 @@ ACME_EMAIL=you@example.org docker stack deploy -c stacks/traefik.yml traefik
 
 To get a valid Let's Encrypt certificate, your domain must point to your server and ports 80 and 443 must be open.
 
+For better security, you can deploy Traefik behind a [Docker socket proxy](./stacks/socket-proxy.yml) to give it read-only access to the Docker API:
+
+```bash
+DOCKER_ENDPOINT=tcp://socket-proxy:2375 ACME_EMAIL=you@example.org docker stack deploy -c stacks/traefik.yml -c stacks/socket-proxy.yml traefik
+```
+
 ## 📦 Usage
 
 Deploy your apps with one command!
