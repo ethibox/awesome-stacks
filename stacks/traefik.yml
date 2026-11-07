@@ -9,7 +9,7 @@ services:
       - --providers.swarm
       - --providers.swarm.network=traefik-net
       - --providers.swarm.exposedByDefault=false
-      - --providers.swarm.endpoint=unix:///var/run/docker.sock
+      - --providers.swarm.endpoint=${DOCKER_ENDPOINT:-unix:///var/run/docker.sock}
       - --providers.file.directory=/config
       - --entrypoints.https.proxyProtocol.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
       - --entrypoints.https.forwardedHeaders.trustedIPs=${TRUSTED_IPS:-127.0.0.1}
