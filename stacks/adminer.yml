@@ -13,7 +13,8 @@ services:
         - traefik.enable=true
         - traefik.http.routers.adminer-${NUMBER:-1}.rule=Host(`${DOMAIN:-adminer.localhost}`)
         - traefik.http.services.adminer-${NUMBER:-1}.loadbalancer.server.port=8080
-        - traefik.http.routers.adminer-${NUMBER:-1}.middlewares=adminer-${NUMBER:-1}-auth
+        - traefik.http.routers.adminer-${NUMBER:-1}.middlewares=adminer-${NUMBER:-1}-ip,adminer-${NUMBER:-1}-auth
+        - traefik.http.middlewares.adminer-${NUMBER:-1}-ip.ipallowlist.sourcerange=${ALLOWED_IPS:-0.0.0.0/0,::/0}
         - traefik.http.middlewares.adminer-${NUMBER:-1}-auth.basicauth.users=${BASIC_AUTH:-admin:htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
     networks:
       - internal
