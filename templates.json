@@ -3599,22 +3599,9 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/monitoring.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "14b012413205939f967defaddd09b126b272d473"
       },
       "env": [
-        {
-          "name": "PROM_USER",
-          "label": "Prometheus Admin Username",
-          "value": "admin",
-          "disabled": true
-        },
-        {
-          "name": "PROM_PASSWORD",
-          "label": "Prometheus Admin Password (htpasswd)",
-          "type": "password",
-          "value": "htpasswd",
-          "disabled": true
-        },
         {
           "name": "SMTP_HOST",
           "label": "SMTP Host"
@@ -3632,6 +3619,10 @@
           "name": "SMTP_FROM",
           "label": "SMTP From",
           "type": "email"
+        },
+        {
+          "name": "ALLOWED_IPS",
+          "label": "Allowed IPs (ex: 1.2.3.4/32,10.0.0.0/8)"
         }
       ]
     },
