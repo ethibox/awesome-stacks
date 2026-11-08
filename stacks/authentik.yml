@@ -29,12 +29,10 @@ services:
     image: *authentik-image
     environment: *authentik-environment
     command: worker
-    user: root
     volumes:
       - ${VOLUME_PATH}media:/media
       - ${VOLUME_PATH}certs:/certs
       - ${VOLUME_PATH}templates:/templates
-      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - internal
 
