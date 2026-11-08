@@ -34,22 +34,10 @@ services:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
-    networks:
-      - internal
-
-  web:
-    image: mattermost/mattermost-prod-web:latest
-    environment:
-      - APP_PORT_NUMBER=8065
-      - APP_HOST={{ index .Service.Labels "com.docker.stack.namespace" }}_app
-    deploy:
-      resources:
-        limits:
-          memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
         - traefik.http.routers.mattermost-${NUMBER:-1}.rule=Host(`${DOMAIN:-mattermost.localhost}`)
-        - traefik.http.services.mattermost-${NUMBER:-1}.loadbalancer.server.port=8080
+        - traefik.http.services.mattermost-${NUMBER:-1}.loadbalancer.server.port=8065
     networks:
       - internal
       - traefik
