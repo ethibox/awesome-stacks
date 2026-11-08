@@ -1,8 +1,10 @@
-# DOMAIN=example.com docker stack deploy -c grafana.yml grafana
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c grafana.yml grafana
 
 services:
   grafana:
-    image: grafana/grafana:${VERSION:-8.1.1}
+    image: grafana/grafana:${VERSION:-13.3.0}
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}grafana:/var/lib/grafana
     deploy:
