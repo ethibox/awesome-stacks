@@ -59,7 +59,7 @@ services:
       - traefik
 
   minio:
-    image: minio/minio:${MINIO_VERSION:-RELEASE.2025-04-22T22-12-26Z-cpuv1}
+    image: ${MINIO_IMAGE:-ethibox/minio}:${MINIO_VERSION:-RELEASE.2025-04-22T22-12-26Z-cpuv1}
     command: server /data --console-address ":9001"
     volumes:
       - ${VOLUME_PATH}minio:/data
@@ -74,7 +74,7 @@ services:
       - internal
 
   minio-init:
-    image: minio/mc
+    image: ${MC_IMAGE:-ethibox/mc}:${MC_VERSION:-RELEASE.2025-08-13T08-35-41Z}
     entrypoint:
       - /bin/sh
       - -c
