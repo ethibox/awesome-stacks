@@ -16,7 +16,7 @@ services:
         CSRF_TRUSTED_ORIGINS = ['https://${DOMAIN:-pytition.localhost}']
         STATIC_ROOT = '/static'
         MEDIA_ROOT = '/mediaroot'
-        DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'HOST': 'postgres', 'NAME': 'pytition', 'USER': 'pytition', 'PASSWORD': 'myp@ssw0rd'}}
+        DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'HOST': 'postgres', 'NAME': 'pytition', 'USER': 'pytition', 'PASSWORD': '${POSTGRES_PASSWORD:-myp@ssw0rd}'}}
         EMAIL_HOST = '${SMTP_HOST:-smtp.example.com}'
         EMAIL_PORT = ${SMTP_PORT:-587}
         EMAIL_HOST_USER = '${SMTP_USER:-}'
@@ -48,7 +48,7 @@ services:
     environment:
       - POSTGRES_DB=pytition
       - POSTGRES_USER=pytition
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "pytition"]
     volumes:

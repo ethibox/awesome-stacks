@@ -15,7 +15,7 @@ services:
       - PHOTOPRISM_DATABASE_SERVER=mariadb:3306
       - PHOTOPRISM_DATABASE_NAME=photoprism
       - PHOTOPRISM_DATABASE_USER=photoprism
-      - PHOTOPRISM_DATABASE_PASSWORD=myp@ssw0rd
+      - PHOTOPRISM_DATABASE_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}originals:/photoprism/originals
       - ${VOLUME_PATH}storage:/photoprism/storage

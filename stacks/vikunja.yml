@@ -18,7 +18,7 @@ services:
       - VIKUNJA_DATABASE_HOST=mariadb
       - VIKUNJA_DATABASE_USER=vikunja
       - VIKUNJA_DATABASE_DATABASE=vikunja
-      - VIKUNJA_DATABASE_PASSWORD=myp@ssw0rd
+      - VIKUNJA_DATABASE_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - VIKUNJA_SERVICE_JWTSECRET=${JWT_SECRET:?}
       - VIKUNJA_SERVICE_PUBLICURL=https://${DOMAIN:-vikunja.localhost}
     volumes:

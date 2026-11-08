@@ -13,7 +13,7 @@ services:
           host: postgres
           dbname: invidious
           user: invidious
-          password: myp@ssw0rd
+          password: ${POSTGRES_PASSWORD:-myp@ssw0rd}
           port: 5432
         invidious_companion:
           - private_url: http://companion:8282/companion
@@ -50,7 +50,7 @@ services:
     environment:
       - POSTGRES_DB=invidious
       - POSTGRES_USER=invidious
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "invidious"]
     volumes:

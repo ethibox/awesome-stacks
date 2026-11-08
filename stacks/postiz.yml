@@ -8,7 +8,7 @@ services:
       - FRONTEND_URL=https://${DOMAIN:-postiz.localhost}
       - NEXT_PUBLIC_BACKEND_URL=https://${DOMAIN:-postiz.localhost}/api
       - JWT_SECRET=${JWT_SECRET:?}
-      - DATABASE_URL=postgresql://postiz:myp@ssw0rd@postgres:5432/postiz
+      - DATABASE_URL=postgresql://postiz:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/postiz
       - REDIS_URL=redis://redis:6379
       - TEMPORAL_ADDRESS=temporal:7233
       - BACKEND_INTERNAL_URL=http://localhost:3000
@@ -43,7 +43,7 @@ services:
       - DB=postgres12
       - DB_PORT=5432
       - POSTGRES_USER=postiz
-      - POSTGRES_PWD=myp@ssw0rd
+      - POSTGRES_PWD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - POSTGRES_SEEDS=postgres
       - ENABLE_ES=true
       - ES_SEEDS=elasticsearch
@@ -87,7 +87,7 @@ services:
     environment:
       - POSTGRES_DB=postiz
       - POSTGRES_USER=postiz
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postiz"]
     volumes:

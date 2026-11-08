@@ -49,7 +49,7 @@ services:
     environment:
       - POSTGRES_DB=plausible
       - POSTGRES_USER=plausible
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     deploy:

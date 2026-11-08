@@ -18,7 +18,7 @@ services:
       - MAUTIC_DB_USER=mautic
       - MAUTIC_DB_HOST=mariadb
       - MAUTIC_DB_DATABASE=mautic
-      - MAUTIC_DB_PASSWORD=myp@ssw0rd
+      - MAUTIC_DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MAUTIC_TRUSTED_PROXIES=["REMOTE_ADDR"]
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
@@ -59,8 +59,8 @@ services:
     environment:
       - MYSQL_USER=mautic
       - MYSQL_DATABASE=mautic
-      - MYSQL_PASSWORD=myp@ssw0rd
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql

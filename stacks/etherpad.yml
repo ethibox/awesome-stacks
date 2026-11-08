@@ -25,7 +25,7 @@ services:
       - DB_HOST=postgres
       - DB_NAME=etherpad
       - DB_USER=etherpad
-      - DB_PASS=myp@ssw0rd
+      - DB_PASS=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - TRUST_PROXY=${TRUST_PROXY:-true}
       - EP__ep_image_upload__storage__type=local
@@ -49,7 +49,7 @@ services:
     environment:
       - POSTGRES_DB=etherpad
       - POSTGRES_USER=etherpad
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "etherpad"]
     volumes:

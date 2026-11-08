@@ -15,9 +15,9 @@ services:
       - POSTGRES_HOST=postgres
       - POSTGRES_USERNAME=chatwoot
       - POSTGRES_DATABASE=chatwoot
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - REDIS_URL=redis://redis:6379
-      - REDIS_PASSWORD=myp@ssw0rd
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-myp@ssw0rd}
       - MAILER_SENDER_EMAIL=${MAILER_SENDER_EMAIL}
       - SMTP_ADDRESS=${SMTP_ADDRESS}
       - SMTP_AUTHENTICATION=plain
@@ -63,7 +63,7 @@ services:
     environment:
       - POSTGRES_DB=chatwoot
       - POSTGRES_USER=chatwoot
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "chatwoot"]
     volumes:

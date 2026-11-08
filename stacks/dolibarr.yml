@@ -9,7 +9,7 @@ services:
       - DOLI_DB_HOST=mariadb
       - DOLI_DB_NAME=dolibarr
       - DOLI_DB_USER=dolibarr
-      - DOLI_DB_PASSWORD=myp@ssw0rd
+      - DOLI_DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - DOLI_ADMIN_LOGIN=${ADMIN_USERNAME:-admin}
       - DOLI_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
@@ -29,10 +29,10 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=dolibarr
       - MYSQL_USER=dolibarr
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal

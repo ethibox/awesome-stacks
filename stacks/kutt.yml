@@ -17,7 +17,7 @@ services:
       - DB_HOST=postgres
       - DB_NAME=kutt
       - DB_USER=kutt
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - REDIS_HOST=redis
       - DISALLOW_REGISTRATION=${DISALLOW_REGISTRATION:-false}
     deploy:
@@ -41,7 +41,7 @@ services:
     environment:
       - POSTGRES_DB=kutt
       - POSTGRES_USER=kutt
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "kutt"]
     volumes:

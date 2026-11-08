@@ -6,7 +6,7 @@ services:
     environment:
       - APP_PORT=22300
       - DB_CLIENT=pg
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - POSTGRES_DATABASE=joplin
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=joplin
@@ -26,7 +26,7 @@ services:
     environment:
       - POSTGRES_DB=joplin
       - POSTGRES_USER=joplin
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "joplin"]
     volumes:

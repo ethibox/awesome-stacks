@@ -46,7 +46,7 @@ services:
       - APP_KEY=${APP_KEY:?} # echo "base64:$(openssl rand -base64 32)"
       - API_SECRET=${API_SECRET:-} # openssl rand -hex 24
       - DB_USERNAME=invoiceninja
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - DB_HOST=mariadb
       - DB_DATABASE=invoiceninja
       - MULTI_DB_ENABLED=false
@@ -71,9 +71,9 @@ services:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
       - MYSQL_USER=invoiceninja
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=invoiceninja
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal

@@ -8,7 +8,7 @@ services:
     environment:
       - DB_SERVER=mariadb
       - DB_USER=prestashop
-      - DB_PASSWD=myp@ssw0rd
+      - DB_PASSWD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - DB_NAME=prestashop
       - PS_DEV_MODE=${PS_DEV_MODE:-0}
       - PS_LANGUAGE=${PS_LANGUAGE:-fr}
@@ -35,10 +35,10 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=prestashop
       - MYSQL_USER=prestashop
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal

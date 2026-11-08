@@ -12,7 +12,7 @@ services:
       - DB_HOST=postgres
       - DB_DATABASE=nocobase
       - DB_USER=nocobase
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}storage:/app/nocobase/storage
     healthcheck:
@@ -34,7 +34,7 @@ services:
     environment:
       - POSTGRES_DB=nocobase
       - POSTGRES_USER=nocobase
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "nocobase"]
     volumes:

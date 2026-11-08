@@ -6,7 +6,7 @@ services:
     environment:
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true
       - HASURA_GRAPHQL_ADMIN_SECRET=${ADMIN_SECRET:?}
-      - HASURA_GRAPHQL_DATABASE_URL=postgres://hasura@postgres:5432/hasura?password=myp@ssw0rd
+      - HASURA_GRAPHQL_DATABASE_URL=postgres://hasura@postgres:5432/hasura?password=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - HASURA_GRAPHQL_ENABLED_LOG_TYPES=startup, http-log, webhook-log, websocket-log, query-log
     deploy:
       labels:
@@ -22,7 +22,7 @@ services:
     environment:
       - POSTGRES_DB=hasura
       - POSTGRES_USER=hasura
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:

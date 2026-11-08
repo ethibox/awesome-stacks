@@ -6,7 +6,7 @@ services:
     environment:
       - DB_HOST=postgres
       - DB_USERNAME=gamevault
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - DB_SYSTEM=postgresql
       - SERVER_ACCOUNT_ACTIVATION_DISABLED=${SERVER_ACCOUNT_ACTIVATION_DISABLED:-false}
       - SERVER_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
@@ -26,7 +26,7 @@ services:
     environment:
       - POSTGRES_DB=gamevault
       - POSTGRES_USER=gamevault
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "gamevault"]
     volumes:

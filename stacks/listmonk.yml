@@ -15,12 +15,12 @@ services:
     environment:
       - LISTMONK_app__address=0.0.0.0:9000
       - LISTMONK_db__host=postgres
-      - LISTMONK_db__password=myp@ssw0rd
+      - LISTMONK_db__password=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - LISTMONK_ADMIN_USER=${ADMIN_USERNAME:-admin}
       - LISTMONK_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - POSTGRES_DB=listmonk
       - POSTGRES_USER=listmonk
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - DB_HOST=postgres
     deploy:
       resources:
@@ -39,7 +39,7 @@ services:
     environment:
       - POSTGRES_DB=listmonk
       - POSTGRES_USER=listmonk
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "listmonk"]
     volumes:

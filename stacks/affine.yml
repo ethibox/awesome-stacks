@@ -10,7 +10,7 @@ x-affine: &affine
     - AFFINE_INDEXER_ENABLED=false
     - AFFINE_SERVER_HOST=${DOMAIN:-affine.localhost}
     - AFFINE_SERVER_EXTERNAL_URL=https://${DOMAIN:-affine.localhost}
-    - DATABASE_URL=postgresql://affine:myp@ssw0rd@postgres:5432/affine
+    - DATABASE_URL=postgresql://affine:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/affine
 
 services:
   affine:
@@ -45,7 +45,7 @@ services:
     environment:
       - POSTGRES_DB=affine
       - POSTGRES_USER=affine
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "affine"]
     volumes:

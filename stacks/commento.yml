@@ -6,7 +6,7 @@ services:
     environment:
       - COMMENTO_ORIGIN=https://${DOMAIN:-commento.localhost}
       - COMMENTO_PORT=8080
-      - COMMENTO_POSTGRES=postgres://commento:myp@ssw0rd@postgres:5432/commento?sslmode=disable
+      - COMMENTO_POSTGRES=postgres://commento:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/commento?sslmode=disable
       - COMMENTO_FORBID_NEW_OWNERS=${COMMENTO_FORBID_NEW_OWNERS:-false}
       - COMMENTO_SMTP_HOST=${SMTP_HOST:-smtp.example.com}
       - COMMENTO_SMTP_PORT=${SMTP_PORT:-587}
@@ -30,7 +30,7 @@ services:
     environment:
       - POSTGRES_DB=commento
       - POSTGRES_USER=commento
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     deploy:

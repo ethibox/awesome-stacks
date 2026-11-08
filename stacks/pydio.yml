@@ -23,10 +23,10 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=pydio
       - MYSQL_USER=pydio
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal

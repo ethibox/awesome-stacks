@@ -10,7 +10,7 @@ services:
       - POSTGRES_HOST=postgres
       - POSTGRES_DATABASE=automatisch
       - POSTGRES_USERNAME=automatisch
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - PROTOCOL=https
       - HOST=${DOMAIN:-automatisch.localhost}
       - API_URL=https://${DOMAIN:-automatisch.localhost}
@@ -43,7 +43,7 @@ services:
     environment:
       - POSTGRES_DB=automatisch
       - POSTGRES_USER=automatisch
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "automatisch"]
     volumes:

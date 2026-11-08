@@ -15,7 +15,7 @@ services:
       - MAILER_SMTP_USER=${SMTP_USERNAME}
       - MAILER_SMTP_PASSWORD=${SMTP_PASSWORD}
       - MAILER_ENABLE_STARTTLS=${SMTP_TLS:-false}
-      - DB_URL=postgres://keila:myp@ssw0rd@postgres/keila
+      - DB_URL=postgres://keila:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres/keila
     volumes:
       - ${VOLUME_PATH}uploads:/opt/app/uploads
     deploy:
@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_DB=keila
       - POSTGRES_USER=keila
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "keila"]
     volumes:

@@ -12,7 +12,7 @@ services:
       - DB_HOST=mariadb
       - DB_NAME=freescout
       - DB_USER=freescout
-      - DB_PASS=myp@ssw0rd
+      - DB_PASS=${MYSQL_PASSWORD:-myp@ssw0rd}
       - APP_URL=https://${DOMAIN:-freescout.localhost}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - ADMIN_PASS=${ADMIN_PASSWORD:?}

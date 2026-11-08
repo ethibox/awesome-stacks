@@ -18,7 +18,7 @@ services:
       - DISCOURSE_DB_HOST=postgres
       - DISCOURSE_DB_NAME=discourse
       - DISCOURSE_DB_USERNAME=discourse
-      - DISCOURSE_DB_PASSWORD=myp@ssw0rd
+      - DISCOURSE_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - DISCOURSE_REDIS_HOST=redis
       - DISCOURSE_REDIS_PORT=6379
       - DISCOURSE_SMTP_PORT=${SMTP_PORT:-587}
@@ -52,10 +52,10 @@ services:
     image: ${POSTGRES_IMAGE:-discourse/postgres}:${POSTGRES_VERSION:-pg16}
     environment:
       - DB_USER=discourse
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - POSTGRES_DB=discourse
       - POSTGRES_USER=discourse
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "discourse"]
     volumes:

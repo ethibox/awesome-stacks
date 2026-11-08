@@ -32,7 +32,7 @@ services:
       - POSTGRES_DB=taiga
       - POSTGRES_USER=taiga
       - POSTGRES_HOST=postgres
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - RABBITMQ_USER=taiga
       - RABBITMQ_VHOST=taiga
       - RABBITMQ_HOST=rabbitmq
@@ -101,7 +101,7 @@ services:
     environment:
       - POSTGRES_DB=taiga
       - POSTGRES_USER=taiga
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "taiga"]
     volumes:

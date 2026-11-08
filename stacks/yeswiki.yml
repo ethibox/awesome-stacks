@@ -18,7 +18,7 @@ services:
     environment:
       - YESWIKI_MYSQL_HOST=mariadb
       - YESWIKI_MYSQL_USER=yeswiki
-      - YESWIKI_MYSQL_PASSWORD=myp@ssw0rd
+      - YESWIKI_MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - YESWIKI_MYSQL_DATABASE=yeswiki
     deploy:
       labels:
@@ -34,10 +34,10 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=yeswiki
       - MYSQL_USER=yeswiki
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     networks:
       - internal

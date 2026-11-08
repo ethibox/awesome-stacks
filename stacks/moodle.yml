@@ -10,7 +10,7 @@ services:
       - MOODLE_DATABASE_NAME=moodle
       - MOODLE_DATABASE_HOST=mariadb
       - MOODLE_DATABASE_PORT_NUMBER=3306
-      - MOODLE_DATABASE_PASSWORD=myp@ssw0rd
+      - MOODLE_DATABASE_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}moodle:/bitnami/moodle
       - ${VOLUME_PATH}moodledata:/bitnami/moodledata

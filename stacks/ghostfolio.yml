@@ -4,7 +4,7 @@ services:
   ghostfolio:
     image: ghostfolio/ghostfolio:${VERSION:-2.255.0}
     environment:
-      - DATABASE_URL=postgresql://ghostfolio:myp@ssw0rd@postgres:5432/ghostfolio
+      - DATABASE_URL=postgresql://ghostfolio:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/ghostfolio
       - ACCESS_TOKEN_SALT=${ACCESS_TOKEN_SALT:?}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY:?}
       - REDIS_HOST=redis
@@ -24,7 +24,7 @@ services:
     environment:
       - POSTGRES_DB=ghostfolio
       - POSTGRES_USER=ghostfolio
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "ghostfolio"]
     volumes:

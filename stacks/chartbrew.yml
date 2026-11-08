@@ -9,7 +9,7 @@ x-chartbrew: &chartbrew
     - CB_DB_PORT=3306
     - CB_DB_NAME=chartbrew
     - CB_DB_USERNAME=chartbrew
-    - CB_DB_PASSWORD=myp@ssw0rd
+    - CB_DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
     - CB_REDIS_HOST=redis
     - CB_REDIS_PORT=6379
     - CB_ENCRYPTION_KEY=${CB_ENCRYPTION_KEY:?}

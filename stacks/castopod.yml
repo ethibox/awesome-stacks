@@ -9,10 +9,10 @@ services:
     environment:
       - MYSQL_DATABASE=castopod
       - MYSQL_USER=castopod
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - CP_CACHE_HANDLER=redis
       - CP_REDIS_HOST=redis
-      - CP_REDIS_PASSWORD=myp@ssw0rd
+      - CP_REDIS_PASSWORD=${REDIS_PASSWORD:-myp@ssw0rd}
       - CP_ANALYTICS_SALT=${CP_ANALYTICS_SALT:?}
       - CP_BASEURL=https://${DOMAIN:-castopod.localhost}
     deploy:
@@ -39,7 +39,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    command: --requirepass myp@ssw0rd
+    command: --requirepass ${REDIS_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}redis:/data
     networks:

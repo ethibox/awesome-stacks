@@ -23,7 +23,7 @@ services:
       - MOBILIZON_REPLY_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - MOBILIZON_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - MOBILIZON_INSTANCE_REGISTRATIONS_OPEN=true
-      - MOBILIZON_DATABASE_PASSWORD=myp@ssw0rd
+      - MOBILIZON_DATABASE_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - MOBILIZON_DATABASE_USERNAME=mobilizon
       - MOBILIZON_DATABASE_DBNAME=mobilizon
       - MOBILIZON_DATABASE_HOST=postgres
@@ -52,7 +52,7 @@ services:
     environment:
       - POSTGRES_DB=mobilizon
       - POSTGRES_USER=mobilizon
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     deploy:

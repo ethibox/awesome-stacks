@@ -7,7 +7,7 @@ services:
       - DB_HOST=mariadb
       - DB_DATABASE=polr
       - DB_USERNAME=polr
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
@@ -31,10 +31,10 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=polr
       - MYSQL_USER=polr
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql

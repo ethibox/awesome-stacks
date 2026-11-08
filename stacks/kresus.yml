@@ -11,7 +11,7 @@ services:
       - KRESUS_DB_HOST=postgres
       - KRESUS_DB_PORT=5432
       - KRESUS_DB_USERNAME=kresus
-      - KRESUS_DB_PASSWORD=myp@ssw0rd
+      - KRESUS_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - KRESUS_EMAIL_TRANSPORT=${EMAIL_TRANSPORT:-smtp}
       - KRESUS_EMAIL_FROM=${SMTP_FROM}
       - KRESUS_EMAIL_HOST=${SMTP_HOST}
@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_DB=kresus
       - POSTGRES_USER=kresus
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "kresus"]
     volumes:

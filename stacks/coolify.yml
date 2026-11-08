@@ -29,7 +29,7 @@ services:
     environment:
       - AUTOUPDATE=false
       - DB_HOST=postgres
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - REDIS_HOST=redis
       - APP_KEY=${APP_KEY:?} # openssl rand -base64 32
       - ROOT_USER_EMAIL=${ADMIN_EMAIL:?}
@@ -65,7 +65,7 @@ services:
     environment:
       - POSTGRES_DB=coolify
       - POSTGRES_USER=coolify
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     deploy:

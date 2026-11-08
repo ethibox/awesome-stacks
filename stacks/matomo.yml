@@ -28,7 +28,7 @@ services:
     environment: &matomo-environment
       - MATOMO_DATABASE_USERNAME=matomo
       - MATOMO_DATABASE_DBNAME=matomo
-      - MATOMO_DATABASE_PASSWORD=myp@ssw0rd
+      - MATOMO_DATABASE_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MATOMO_DATABASE_HOST=mariadb
     volumes: &matomo-volumes
       - ${VOLUME_PATH}config:/var/www/html/config
@@ -64,10 +64,10 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=matomo
       - MYSQL_USER=matomo
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     deploy:
       resources:

@@ -9,7 +9,7 @@ services:
       - MB_DB_DBNAME=metabase
       - MB_DB_PORT=3306
       - MB_DB_USER=metabase
-      - MB_DB_PASS=myp@ssw0rd
+      - MB_DB_PASS=${MYSQL_PASSWORD:-myp@ssw0rd}
     deploy:
       resources:
         limits:
@@ -25,10 +25,10 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_USER=metabase
       - MYSQL_DATABASE=metabase
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql

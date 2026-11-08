@@ -14,7 +14,7 @@ services:
       - DB_HOST=postgres
       - POSTGRES_DB=maybe
       - POSTGRES_USER=maybe
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     deploy:
       labels:
         - traefik.enable=true
@@ -29,7 +29,7 @@ services:
     environment:
       - POSTGRES_DB=maybe
       - POSTGRES_USER=maybe
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "maybe"]
     volumes:

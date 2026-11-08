@@ -53,7 +53,7 @@ services:
       - OVERWRITEPROTOCOL=${OVERWRITEPROTOCOL:-https}
       - TRUSTED_PROXIES=${TRUSTED_PROXIES:-10.0.0.0/8 172.16.0.0/12}
       - REDIS_HOST=redis
-      - REDIS_HOST_PASSWORD=myp@ssw0rd
+      - REDIS_HOST_PASSWORD=${REDIS_PASSWORD:-myp@ssw0rd}
       - OBJECTSTORE_S3_HOST=${OBJECTSTORE_S3_HOST}
       - OBJECTSTORE_S3_BUCKET=${OBJECTSTORE_S3_BUCKET}
       - AWS_ACCESS_KEY_ID=${OBJECTSTORE_S3_KEY}
@@ -125,7 +125,7 @@ services:
   redis:
     image: redis:7-alpine
     environment:
-      - REDIS_HOST_PASSWORD=myp@ssw0rd
+      - REDIS_HOST_PASSWORD=${REDIS_PASSWORD:-myp@ssw0rd}
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_HOST_PASSWORD'
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]

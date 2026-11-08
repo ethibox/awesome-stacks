@@ -38,10 +38,10 @@ services:
       - VERSION=${VERSION:-v6.2.0}
       - NODE_ENV=production
       - POSTGRES_USER=calendso
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - POSTGRES_DB=calendso
-      - DATABASE_URL=postgresql://calendso:myp@ssw0rd@postgres:5432/calendso
-      - DATABASE_DIRECT_URL=postgresql://calendso:myp@ssw0rd@postgres:5432/calendso
+      - DATABASE_URL=postgresql://calendso:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/calendso
+      - DATABASE_DIRECT_URL=postgresql://calendso:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/calendso
       - NEXT_PUBLIC_WEBAPP_URL=https://${DOMAIN:-calendso.localhost}
       - NEXT_PUBLIC_WEBSITE_URL=https://${DOMAIN:-calendso.localhost}
       - NEXT_PUBLIC_API_V2_URL=https://${DOMAIN:-calendso.localhost}/api/v2
@@ -99,7 +99,7 @@ services:
     environment:
       - POSTGRES_DB=calendso
       - POSTGRES_USER=calendso
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "calendso", "-d", "calendso"]
     volumes:

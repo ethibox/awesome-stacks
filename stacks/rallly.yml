@@ -4,7 +4,7 @@ services:
   web:
     image: lukevella/rallly:${VERSION:-4.16.4}
     environment:
-      - DATABASE_URL=postgres://rallly:myp@ssw0rd@postgres/rallly
+      - DATABASE_URL=postgres://rallly:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres/rallly
       - NEXT_PUBLIC_BASE_URL=https://${DOMAIN:-rallly.localhost}
       - NEXTAUTH_URL=https://${DOMAIN:-rallly.localhost}
       - NEXT_PUBLIC_SELF_HOSTED=${NEXT_PUBLIC_SELF_HOSTED:-true}
@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_DB=rallly
       - POSTGRES_USER=rallly
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "rallly"]
     volumes:

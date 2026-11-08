@@ -25,7 +25,7 @@ services:
     environment:
       - POSTGRES_DB=docuseal
       - POSTGRES_USER=docuseal
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "docuseal"]
     volumes:

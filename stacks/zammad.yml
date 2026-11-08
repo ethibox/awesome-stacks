@@ -25,7 +25,7 @@ services:
       - NGINX_SERVER_SCHEME=https
       - POSTGRESQL_DB=zammad
       - POSTGRESQL_USER=zammad
-      - POSTGRESQL_PASS=myp@ssw0rd
+      - POSTGRESQL_PASS=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - POSTGRESQL_HOST=zammad-postgresql
       - POSTGRESQL_OPTIONS=${POSTGRESQL_OPTIONS:-?pool=50}
       - MEMCACHE_SERVERS=${MEMCACHE_SERVERS:-zammad-memcached:11211}
@@ -93,7 +93,7 @@ services:
     environment:
       - POSTGRES_DB=zammad
       - POSTGRES_USER=zammad
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     deploy:
       resources:
         limits:

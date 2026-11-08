@@ -7,7 +7,7 @@ services:
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=mailtrain
       - MYSQL_USER=mailtrain
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - URL_BASE_PUBLIC=https://${DOMAIN:-mailtrain.localhost}
       - URL_BASE_SANDBOX=https://${DOMAIN:-mailtrain.localhost}
       - URL_BASE_TRUSTED=https://${DOMAIN:-mailtrain.localhost}
@@ -26,10 +26,10 @@ services:
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=mailtrain
       - MYSQL_USER=mailtrain
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mysql:/var/lib/mysql

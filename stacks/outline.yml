@@ -41,7 +41,7 @@ services:
     environment:
       - POSTGRES_DB=outline
       - POSTGRES_USER=outline
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "outline"]
     volumes:

@@ -11,7 +11,7 @@ services:
       - ROUNDCUBEMAIL_DB_HOST=postgres
       - ROUNDCUBEMAIL_DB_NAME=roundcube
       - ROUNDCUBEMAIL_DB_USER=roundcube
-      - ROUNDCUBEMAIL_DB_PASSWORD=myp@ssw0rd
+      - ROUNDCUBEMAIL_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - ROUNDCUBEMAIL_DEFAULT_HOST=${IMAP_HOST:-ssl://imap.example.com}
       - ROUNDCUBEMAIL_DEFAULT_PORT=${IMAP_PORT:-993}
       - ROUNDCUBEMAIL_SMTP_SERVER=${SMTP_HOST:-tls://smtp.example.com}
@@ -36,7 +36,7 @@ services:
     environment:
       - POSTGRES_DB=roundcube
       - POSTGRES_USER=roundcube
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "roundcube"]
     volumes:

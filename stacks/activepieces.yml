@@ -8,7 +8,7 @@ services:
       - AP_POSTGRES_HOST=postgres
       - AP_POSTGRES_DATABASE=activepieces
       - AP_POSTGRES_USERNAME=activepieces
-      - AP_POSTGRES_PASSWORD=myp@ssw0rd
+      - AP_POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - AP_REDIS_HOST=redis
       - AP_REDIS_PORT=6379
       - AP_FRONTEND_URL=https://${DOMAIN:-activepieces.localhost}
@@ -40,7 +40,7 @@ services:
     environment:
       - POSTGRES_DB=activepieces
       - POSTGRES_USER=activepieces
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "activepieces"]
     volumes:

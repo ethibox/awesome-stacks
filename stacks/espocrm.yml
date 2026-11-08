@@ -9,7 +9,7 @@ services:
       - ESPOCRM_SITE_URL=https://${DOMAIN:-espocrm.localhost}
       - ESPOCRM_DATABASE_HOST=mariadb
       - ESPOCRM_DATABASE_USER=espocrm
-      - ESPOCRM_DATABASE_PASSWORD=myp@ssw0rd
+      - ESPOCRM_DATABASE_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - ESPOCRM_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ESPOCRM_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     deploy:

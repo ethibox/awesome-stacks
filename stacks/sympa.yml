@@ -10,7 +10,7 @@ services:
         export SMTP_FROM_DOMAIN=`echo $${SMTP_FROM} | cut -d '@' -f2`
         echo "email $$SMTP_FROM_USER" >> /etc/sympa/sympa/sympa.conf
         sed -i -e 's/pgsql/postgres/g' \
-               -e 's/password$$/myp@ssw0rd/g' \
+               -e 's/password$$/${POSTGRES_PASSWORD:-myp@ssw0rd}/g' \
                -e 's/domain example.com/domain '$$SMTP_FROM_DOMAIN'/g' \
                -e 's/admin@example.com/'$$SMTP_FROM'/g' \
                -e 's/example.com/'$$DOMAIN'/g' /etc/sympa/sympa/sympa.conf
@@ -40,7 +40,7 @@ services:
     environment:
       - POSTGRES_DB=sympa
       - POSTGRES_USER=sympa
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "sympa"]
     volumes:

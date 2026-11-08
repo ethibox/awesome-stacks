@@ -5,7 +5,7 @@ services:
     image: formbricks/formbricks:${VERSION:-2.6.0}
     environment:
       - WEBAPP_URL=https://${DOMAIN:-formbricks.localhost}
-      - DATABASE_URL=postgresql://formbricks:myp@ssw0rd@postgres:5432/formbricks?schema=public
+      - DATABASE_URL=postgresql://formbricks:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/formbricks?schema=public
       - MAIL_FROM=${SMTP_FROM:-noreply@example.com}
       - SMTP_HOST=${SMTP_HOST:-smtp.example.com}
       - SMTP_PORT=${SMTP_PORT:-587}
@@ -37,7 +37,7 @@ services:
     environment:
       - POSTGRES_DB=formbricks
       - POSTGRES_USER=formbricks
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "formbricks"]
     volumes:

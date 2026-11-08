@@ -15,7 +15,7 @@ services:
         [database]
         type     = mysql
         username = writefreely
-        password = myp@ssw0rd
+        password = ${MYSQL_PASSWORD:-myp@ssw0rd}
         database = writefreely
         host     = mariadb
         port     = 3306
@@ -55,9 +55,9 @@ services:
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=myp@ssw0rd
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
       - MYSQL_DATABASE=writefreely
-      - MYSQL_PASSWORD=myp@ssw0rd
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_USER=writefreely
       - MARIADB_AUTO_UPGRADE=1
     deploy:

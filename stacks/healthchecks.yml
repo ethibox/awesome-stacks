@@ -11,7 +11,7 @@ services:
       - DB_HOST=postgres
       - DB_USER=healthchecks
       - DB_NAME=healthchecks
-      - DB_PASSWORD=myp@ssw0rd
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - DB_PORT=5432
       - DB_SSLMODE=prefer
       - DEBUG=${DEBUG:-False}
@@ -48,7 +48,7 @@ services:
     environment:
       - POSTGRES_DB=healthchecks
       - POSTGRES_USER=healthchecks
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "healthchecks"]
     volumes:

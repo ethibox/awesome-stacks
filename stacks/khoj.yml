@@ -13,7 +13,7 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_USER=khoj
       - POSTGRES_HOST=postgres
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - KHOJ_DEBUG=${KHOJ_DEBUG:-False}
       - KHOJ_DOMAIN=${DOMAIN:-khoj.localhost}
       - KHOJ_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
@@ -35,7 +35,7 @@ services:
     environment:
       - POSTGRES_DB=khoj
       - POSTGRES_USER=khoj
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "khoj"]
     volumes:

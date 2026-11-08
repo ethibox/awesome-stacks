@@ -24,7 +24,7 @@ services:
       - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:?} # openssl rand -hex 32
       - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
       - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
-      - CMD_DB_URL=postgres://codimd:myp@ssw0rd@postgres:5432/codimd
+      - CMD_DB_URL=postgres://codimd:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/codimd
     deploy:
       resources:
         limits:
@@ -42,7 +42,7 @@ services:
     environment:
       - POSTGRES_DB=codimd
       - POSTGRES_USER=codimd
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "codimd"]
     volumes:

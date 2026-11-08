@@ -10,7 +10,7 @@ services:
       - PG_HOST=postgres
       - PG_PORT=5432
       - PG_USER=botpress
-      - PG_PASSWORD=myp@ssw0rd
+      - PG_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     deploy:
       labels:
         - traefik.enable=true
@@ -25,7 +25,7 @@ services:
     environment:
       - POSTGRES_DB=botpress
       - POSTGRES_USER=botpress
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "botpress"]
     volumes:

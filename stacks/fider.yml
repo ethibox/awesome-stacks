@@ -5,7 +5,7 @@ services:
     image: getfider/fider:${VERSION:-main}
     environment:
       - BASE_URL=https://${DOMAIN:-fider.localhost}
-      - DATABASE_URL=postgres://fider:myp@ssw0rd@postgres:5432/fider?sslmode=disable
+      - DATABASE_URL=postgres://fider:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/fider?sslmode=disable
       - JWT_SECRET=${JWT_SECRET:?}
       - EMAIL_NOREPLY=${SMTP_FROM:-noreply@example.com}
       - EMAIL_SMTP_HOST=${SMTP_HOST:-smtp.example.com}
@@ -27,7 +27,7 @@ services:
     environment:
       - POSTGRES_DB=fider
       - POSTGRES_USER=fider
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "fider"]
     volumes:

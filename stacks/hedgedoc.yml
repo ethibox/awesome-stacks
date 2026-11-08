@@ -13,7 +13,7 @@ services:
       - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
       - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
       - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:?}
-      - CMD_DB_URL=postgres://hedgedoc:myp@ssw0rd@postgres:5432/hedgedoc
+      - CMD_DB_URL=postgres://hedgedoc:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/hedgedoc
     deploy:
       labels:
         - traefik.enable=true
@@ -28,7 +28,7 @@ services:
     environment:
       - POSTGRES_DB=hedgedoc
       - POSTGRES_USER=hedgedoc
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:

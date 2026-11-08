@@ -8,7 +8,7 @@ services:
       - REDMINE_DB_POSTGRES=postgres
       - REDMINE_DB_USERNAME=redmine
       - REDMINE_DB_DATABASE=redmine
-      - REDMINE_DB_PASSWORD=myp@ssw0rd
+      - REDMINE_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     deploy:
       labels:
         - traefik.enable=true
@@ -23,7 +23,7 @@ services:
     environment:
       - POSTGRES_DB=redmine
       - POSTGRES_USER=redmine
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "redmine"]
     volumes:

@@ -4,7 +4,7 @@ x-glitchtip: &glitchtip
   image: glitchtip/glitchtip:${VERSION:-6.2.6}
   environment:
     - GLITCHTIP_DOMAIN=https://${DOMAIN:-glitchtip.localhost}
-    - DATABASE_URL=postgres://glitchtip:myp@ssw0rd@postgres:5432/postgres
+    - DATABASE_URL=postgres://glitchtip:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/postgres
     - EMAIL_URL=smtp://${SMTP_USER}:${SMTP_PASSWORD}@${SMTP_HOST}:${SMTP_PORT}
     - CELERY_WORKER_CONCURRENCY=${CELERY_WORKER_CONCURRENCY:-1}
     - GLITCHTIP_ENABLE_MCP=${GLITCHTIP_ENABLE_MCP:-False}
@@ -62,7 +62,7 @@ services:
     environment:
       - POSTGRES_DB=glitchtip
       - POSTGRES_USER=glitchtip
-      - POSTGRES_PASSWORD=myp@ssw0rd
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "glitchtip"]
     volumes:
