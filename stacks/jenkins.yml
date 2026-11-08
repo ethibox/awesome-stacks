@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: jenkinsci/blueocean:${VERSION:-1.24.8}
+    image: jenkins/jenkins:${VERSION:-2.589}
     user: root
     volumes:
       - ${VOLUME_PATH}data:/var/jenkins_home
