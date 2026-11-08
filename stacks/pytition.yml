@@ -9,9 +9,10 @@ services:
       - -c
       - |
         cat << 'EOF' > pytition/pytition/settings/__init__.py
+        import os
         from .base import *
         DEBUG = False
-        SECRET_KEY = '${SECRET_KEY:?}' # openssl rand -hex 32
+        SECRET_KEY = os.environ['SECRET_KEY']
         ALLOWED_HOSTS = ['${DOMAIN:-pytition.localhost}']
         CSRF_TRUSTED_ORIGINS = ['https://${DOMAIN:-pytition.localhost}']
         STATIC_ROOT = '/static'
@@ -29,6 +30,8 @@ services:
         pdm run python pytition/manage.py collectstatic --noinput
         pdm run python pytition/manage.py compilemessages
         exec pdm run uwsgi --http :8000 --chdir pytition --module pytition.wsgi --static-map /static=/static --static-map /mediaroot=/mediaroot
+    environment:
+      - SECRET_KEY=${SECRET_KEY:?} # openssl rand -hex 32
     volumes:
       - ${VOLUME_PATH}media:/mediaroot
     deploy:
