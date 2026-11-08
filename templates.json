@@ -2534,19 +2534,24 @@
           "type": "select",
           "select": [
             {
-              "text": "No encryption",
-              "value": "null"
-            },
-            {
               "text": "TLS",
               "value": "tls"
+            },
+            {
+              "text": "No encryption",
+              "value": "null"
             }
           ]
         },
         {
-          "name": "SMTP_FROM_NAME",
+          "name": "SMTP_FROM",
           "label": "SMTP From",
           "type": "email"
+        },
+        {
+          "name": "SMTP_FROM_NAME",
+          "label": "SMTP From Name",
+          "value": "BookStack"
         },
         {
           "name": "SMTP_USERNAME",
@@ -2556,6 +2561,10 @@
           "name": "SMTP_PASSWORD",
           "label": "SMTP Password",
           "type": "password"
+        },
+        {
+          "name": "APP_KEY",
+          "preset": true
         }
       ]
     },
