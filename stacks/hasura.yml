@@ -2,7 +2,7 @@
 
 services:
   graphql-engine:
-    image: hasura/graphql-engine:${VERSION:-v2.0.6}
+    image: hasura/graphql-engine:${VERSION:-v2.51.4}
     environment:
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true
       - HASURA_GRAPHQL_ADMIN_SECRET=${ADMIN_SECRET:?}
