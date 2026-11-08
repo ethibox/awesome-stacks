@@ -1,10 +1,20 @@
 # DOMAIN=example.com docker stack deploy -c monitoring.yml monitoring
-# chown -R nobody:root prometheus/
 
 services:
+  init:
+    image: busybox
+    command: sh -c "chown -R 472 /grafana && chown -R nobody /prometheus /config"
+    volumes:
+      - ${VOLUME_PATH}config:/config
+      - ${VOLUME_PATH}grafana:/grafana
+      - ${VOLUME_PATH}prometheus:/prometheus
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
   grafana:
-    image: grafana/grafana:${GRAFANA_VERSION:-12.4.0}
-    user: root
+    image: grafana/grafana:${GRAFANA_VERSION:-12.4.14}
     environment:
       - GF_SMTP_ENABLED=true
       - GF_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
@@ -22,12 +32,14 @@ services:
         - traefik.enable=true
         - traefik.http.routers.grafana-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`)
         - traefik.http.services.grafana-${NUMBER:-1}.loadbalancer.server.port=3000
+        - traefik.http.routers.grafana-${NUMBER:-1}.middlewares=grafana-${NUMBER:-1}-ip
+        - traefik.http.middlewares.grafana-${NUMBER:-1}-ip.ipallowlist.sourcerange=${ALLOWED_IPS:-0.0.0.0/0,::/0}
     networks:
       - internal
       - traefik
 
   prometheus:
-    image: prom/prometheus:v3.10.0
+    image: prom/prometheus:v3.16.0
     entrypoint: /bin/sh
     command:
       - -c
@@ -35,8 +47,7 @@ services:
         if [ ! -f /etc/prometheus/prometheus.yml ]; then
         cat << EOF > /etc/prometheus/prometheus.yml
         global:
-          scrape_interval:     30s
-          evaluation_interval: 30s
+          scrape_interval: 30s
 
         scrape_configs:
           - job_name: prometheus
@@ -67,34 +78,22 @@ services:
         EOF
         fi
 
-        if [ ! -f /etc/prometheus/process-conf.yml ]; then
-        cat << EOF > /etc/prometheus/process-conf.yml
+        [ -f /etc/prometheus/process-conf.yml ] || cat << EOF > /etc/prometheus/process-conf.yml
         process_names:
           - name: "{{.Comm}}"
             cmdline:
             - '.+'
         EOF
-        fi
 
         prometheus --config.file=/etc/prometheus/prometheus.yml \
         --storage.tsdb.path=/prometheus \
         --storage.tsdb.retention.time=7d \
         --storage.tsdb.retention.size=20GB \
-        --storage.tsdb.wal-compression \
-        --web.console.libraries=/usr/share/prometheus/console_libraries \
-        --web.console.templates=/usr/share/prometheus/consoles \
-        --web.route-prefix=/prometheus \
-        --web.external-url=https://${DOMAIN:-grafana.localhost}/prometheus
+        --web.route-prefix=/prometheus
     volumes:
       - ${VOLUME_PATH}prometheus:/prometheus
       - ${VOLUME_PATH}config:/etc/prometheus/
     deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.grafana-prom-${NUMBER:-1}.rule=Host(`${DOMAIN:-grafana.localhost}`) && PathPrefix(`/prometheus/`)
-        - traefik.http.services.grafana-prom-${NUMBER:-1}.loadbalancer.server.port=9090
-        - traefik.http.routers.grafana-prom-${NUMBER:-1}.middlewares=grafana-prom-${NUMBER:-1}-auth
-        - traefik.http.middlewares.grafana-prom-${NUMBER:-1}-auth.basicauth.users=${PROM_USER:-admin}:${PROM_PASSWORD:-htpasswd} # htpasswd -bnBC 10 'admin' 'myp@ssw0rd'
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-8G}
@@ -102,10 +101,9 @@ services:
           memory: ${MEMORY_RESERVATION:-4G}
     networks:
       - internal
-      - traefik
 
   cadvisor:
-    image: ghcr.io/google/cadvisor:0.56.2
+    image: ghcr.io/google/cadvisor:0.60.6
     command: -docker_only=true -housekeeping_interval=15s -disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process,advtcp,hugetlb,referenced_memory
     volumes:
       - /:/rootfs:ro
@@ -121,20 +119,17 @@ services:
       - internal
 
   node-exporter:
-    image: prom/node-exporter:v1.10.2
+    image: prom/node-exporter:v1.12.1
     hostname: "{{.Node.Hostname}}"
     volumes:
-      - /:/rootfs:ro
-      - /mnt:/mnt:ro
+      - /:/rootfs:ro,rslave
       - /sys:/host/sys:ro
       - /proc:/host/proc:ro
-      - /etc/hostname:/etc/hostname:ro
-    environment:
-      - NODE_ID={{.Node.ID}}
     command:
+      - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--path.procfs=/host/proc'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.filesystem.mount-points-exclude=^/(dev|etc|proc|run/credentials/.+|sys|var/lib/docker/.+)($$|/)'
       - '--no-collector.ipvs'
     deploy:
       mode: global
@@ -148,11 +143,12 @@ services:
 
   process-exporter:
     image: ncabatoff/process-exporter:0.8.7
-    command: --procfs /host/proc -config.path /etc/process-exporter/process-conf.yml
+    command: --procfs /host/proc --config.path /etc/process-exporter/process-conf.yml
     volumes:
       - /proc:/host/proc:ro
       - ${VOLUME_PATH}config:/etc/process-exporter:ro
     deploy:
+      mode: global
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2G}
