@@ -1709,25 +1709,43 @@
           ]
         },
         {
-          "name": "SMTP_FROM",
-          "preset": true
-        },
-        {
           "name": "SMTP_HOST",
-          "preset": true
+          "label": "SMTP Host"
         },
         {
           "name": "SMTP_USER",
-          "preset": true
+          "label": "SMTP User"
         },
         {
           "name": "SMTP_PASSWORD",
-          "preset": true
+          "label": "SMTP Password",
+          "type": "password"
         },
         {
           "name": "SMTP_PORT",
+          "label": "SMTP Port",
           "value": "587",
-          "preset": true
+          "type": "number"
+        },
+        {
+          "name": "SMTP_FROM",
+          "label": "SMTP From",
+          "type": "email"
+        },
+        {
+          "name": "SMTP_TLS",
+          "label": "SMTP TLS",
+          "type": "select",
+          "select": [
+            {
+              "text": "true",
+              "value": "true"
+            },
+            {
+              "text": "false",
+              "value": "false"
+            }
+          ]
         }
       ]
     },
