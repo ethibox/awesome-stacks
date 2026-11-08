@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c posthog.yml posthog
+# DOMAIN=example.com SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c posthog.yml posthog
 
 x-posthog: &posthog
   image: posthog/posthog:${VERSION:-release-1.43.0}
@@ -7,7 +7,7 @@ x-posthog: &posthog
     - IS_DOCKER=true
     - IS_BEHIND_PROXY=true
     - REDIS_URL=redis://redis:6379/
-    - SECRET_KEY=${SECRET_KEY:-mys3cr3t}  # openssl rand -hex 32
+    - SECRET_KEY=${SECRET_KEY:?} # openssl rand -hex 32
     - DISABLE_SECURE_SSL_REDIRECT=true
     - SITE_URL=https://${DOMAIN:-posthog.localhost}
     - JS_URL=https://${DOMAIN:-posthog.localhost}

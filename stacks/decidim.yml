@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c decidim.yml decidim
+# DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 64) docker stack deploy -c decidim.yml decidim
 # bin/rails decidim_system:create_admin
 
 services:
@@ -6,7 +6,7 @@ services:
     image: &decidim-image decidim/decidim:${VERSION:-0.31.6}
     command: sh -c "bin/rails db:migrate &&bin/rails server -b 0.0.0.0"
     environment: &decidim-environment
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-replace-me-with-a-random-string-of-exactly-128-characters-replace-me-with-a-random-string-of-exactly-128-characters-replace-me-w}  # openssl rand -hex 64
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # openssl rand -hex 64
       - DATABASE_URL=postgres://decidim:myp%40ssw0rd@postgres:5432/decidim
       - REDIS_URL=redis://redis:6379
       - QUEUE_ADAPTER=sidekiq

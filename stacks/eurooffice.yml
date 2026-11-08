@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c eurooffice.yml eurooffice
+# DOMAIN=example.com JWT_SECRET=$(openssl rand -hex 32) docker stack deploy -c eurooffice.yml eurooffice
 
 services:
   eurooffice:
@@ -7,7 +7,7 @@ services:
       test: ["CMD-SHELL", "curl -fsSL http://localhost/healthcheck || exit 1"]
     environment:
       - JWT_ENABLED=${JWT_ENABLED:-true}
-      - JWT_SECRET=${JWT_SECRET:-mys3cr3t}
+      - JWT_SECRET=${JWT_SECRET:?}
     deploy:
       resources:
         limits:

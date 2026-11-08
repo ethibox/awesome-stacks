@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c listmonk.yml listmonk
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c listmonk.yml listmonk
 
 services:
   app:
@@ -17,7 +17,7 @@ services:
       - LISTMONK_db__host=postgres
       - LISTMONK_db__password=myp@ssw0rd
       - LISTMONK_ADMIN_USER=${ADMIN_USERNAME:-admin}
-      - LISTMONK_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - LISTMONK_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - POSTGRES_DB=listmonk
       - POSTGRES_USER=listmonk
       - POSTGRES_PASSWORD=myp@ssw0rd

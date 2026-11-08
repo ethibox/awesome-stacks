@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c dolibarr.yml dolibarr
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c dolibarr.yml dolibarr
 # chown -R 33:33 data documents
 # wget https://github.com/Dolibarr/dolibarr/archive/20.0.1.tar.gz
 
@@ -11,7 +11,7 @@ services:
       - DOLI_DB_USER=dolibarr
       - DOLI_DB_PASSWORD=myp@ssw0rd
       - DOLI_ADMIN_LOGIN=${ADMIN_USERNAME:-admin}
-      - DOLI_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - DOLI_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html
       - ${VOLUME_PATH}documents:/var/www/documents

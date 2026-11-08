@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c activepieces.yml activepieces
+# DOMAIN=example.com AP_ENCRYPTION_KEY=$(openssl rand -hex 16) AP_JWT_SECRET=$(openssl rand -hex 32) docker stack deploy -c activepieces.yml activepieces
 
 services:
   web:
@@ -12,8 +12,8 @@ services:
       - AP_REDIS_HOST=redis
       - AP_REDIS_PORT=6379
       - AP_FRONTEND_URL=https://${DOMAIN:-activepieces.localhost}
-      - AP_ENCRYPTION_KEY=${AP_ENCRYPTION_KEY:-81916d955d175163e784d68de04cd863} # openssl rand -hex 16
-      - AP_JWT_SECRET=${AP_JWT_SECRET:-mys3cr3t}
+      - AP_ENCRYPTION_KEY=${AP_ENCRYPTION_KEY:?} # openssl rand -hex 16
+      - AP_JWT_SECRET=${AP_JWT_SECRET:?}
       - AP_ENVIRONMENT=prod
     volumes:
       - ${VOLUME_PATH}cache:/usr/src/app/cache

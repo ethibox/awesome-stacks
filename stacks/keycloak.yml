@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c keycloak.yml keycloak
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c keycloak.yml keycloak
 
 services:
   init:
@@ -24,7 +24,7 @@ services:
       - KC_PROXY_HEADERS=xforwarded
       - KC_HOSTNAME=${DOMAIN:-keycloak.localhost}
       - KC_BOOTSTRAP_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
-      - KC_BOOTSTRAP_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}data:/opt/keycloak/data
       - ${VOLUME_PATH}providers:/opt/keycloak/providers

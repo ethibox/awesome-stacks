@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c firefly.yml firefly
+# DOMAIN=example.com APP_KEY=$(openssl rand -hex 16) docker stack deploy -c firefly.yml firefly
 
 services:
   app:
@@ -14,7 +14,7 @@ services:
       - TRUSTED_PROXIES=**
       - APP_ENV=${APP_ENV:-local}
       - APP_LOG_LEVEL=${APP_LOG_LEVEL:-notice}
-      - APP_KEY=${APP_KEY:-S0m3R@nd0mStr1ngOf32Ch@rsEx@ctly}
+      - APP_KEY=${APP_KEY:?}
       - APP_URL=https://${DOMAIN:-firefly.localhost}
     deploy:
       labels:

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c peertube.yml peertube
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd PEERTUBE_SECRET=$(openssl rand -hex 32) docker stack deploy -c peertube.yml peertube
 
 services:
   peertube:
@@ -22,8 +22,8 @@ services:
       - PEERTUBE_SMTP_FROM=${SMTP_FROM}
       - PEERTUBE_SMTP_TLS=${SMTP_TLS:-true}
       - PEERTUBE_SMTP_DISABLE_STARTTLS=false
-      - PEERTUBE_SECRET=${PEERTUBE_SECRET:-mys3cr3t} # openssl rand -hex 32
-      - PT_INITIAL_ROOT_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - PEERTUBE_SECRET=${PEERTUBE_SECRET:?} # openssl rand -hex 32
+      - PT_INITIAL_ROOT_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}data:/data
       - ${VOLUME_PATH}config:/config

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c prestashop.yml prestashop
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c prestashop.yml prestashop
 
 services:
   app:
@@ -20,7 +20,7 @@ services:
       - PS_FOLDER_INSTALL=${PS_FOLDER_INSTALL:-install-secure}
       - PS_HANDLE_DYNAMIC_DOMAIN=${PS_HANDLE_DYNAMIC_DOMAIN:-0}
       - ADMIN_MAIL=${ADMIN_EMAIL:-admin@example.com}
-      - ADMIN_PASSWD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWD=${ADMIN_PASSWORD:?}
     deploy:
       labels:
         - traefik.enable=true

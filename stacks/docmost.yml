@@ -1,10 +1,10 @@
-# DOMAIN=example.com docker stack deploy -c docmost.yml docmost
+# DOMAIN=example.com APP_SECRET=$(openssl rand -hex 32) docker stack deploy -c docmost.yml docmost
 
 services:
   app:
     image: docmost/docmost:${VERSION:-0.97.0}
     environment:
-      - APP_SECRET=${APP_SECRET:-UWnum8qzylZ4unS36YjNnTsQlxRX14bg}
+      - APP_SECRET=${APP_SECRET:?}
       - APP_URL=https://${DOMAIN:-docmost.localhost}
       - DATABASE_URL=postgresql://docmost:myp%40ssw0rd@postgres:5432/docmost?schema=public
       - REDIS_URL=redis://redis:6379

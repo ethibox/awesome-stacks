@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c plausible.yml plausible
+# DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -base64 48) docker stack deploy -c plausible.yml plausible
 
 services:
   plausible:
@@ -6,7 +6,7 @@ services:
     command: sh -c "/entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
     environment:
       - BASE_URL=https://${DOMAIN:-plausible.localhost}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-replace-me-with-a-random-string-of-at-least-sixty-four-characters}  # openssl rand -base64 48
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # openssl rand -base64 48
       - DATABASE_URL=postgres://plausible:myp%40ssw0rd@postgres:5432/plausible
       - CLICKHOUSE_DATABASE_URL=http://clickhouse:8123/plausible
       - MAILER_EMAIL=${SMTP_FROM:-plausible@example.com}

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c hedgedoc.yml hedgedoc
+# DOMAIN=example.com CMD_SESSION_SECRET=$(openssl rand -hex 32) docker stack deploy -c hedgedoc.yml hedgedoc
 
 services:
   app:
@@ -12,7 +12,7 @@ services:
       - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
       - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
       - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
-      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:-myhedgedocs3cr3t}
+      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:?}
       - CMD_DB_URL=postgres://hedgedoc:myp@ssw0rd@postgres:5432/hedgedoc
     deploy:
       labels:

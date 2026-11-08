@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c fathom.yml fathom
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c fathom.yml fathom
 
 services:
   web:
@@ -11,7 +11,7 @@ services:
         ./fathom server
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}fathom:/app
     deploy:

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c gamevault.yml gamevault
+# DOMAIN=example.com SERVER_ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c gamevault.yml gamevault
 
 services:
   app:
@@ -10,7 +10,7 @@ services:
       - DB_SYSTEM=postgresql
       - SERVER_ACCOUNT_ACTIVATION_DISABLED=${SERVER_ACCOUNT_ACTIVATION_DISABLED:-false}
       - SERVER_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
-      - SERVER_ADMIN_PASSWORD=${SERVER_ADMIN_PASSWORD:-myp@ssw0rd}
+      - SERVER_ADMIN_PASSWORD=${SERVER_ADMIN_PASSWORD:?}
       - RAWG_API_KEY=${RAWG_API_KEY:-yourapikeyhere}
     deploy:
       labels:

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c postiz.yml postiz
+# DOMAIN=example.com JWT_SECRET=$(openssl rand -hex 32) docker stack deploy -c postiz.yml postiz
 
 services:
   web:
@@ -7,7 +7,7 @@ services:
       - MAIN_URL=https://${DOMAIN:-postiz.localhost}
       - FRONTEND_URL=https://${DOMAIN:-postiz.localhost}
       - NEXT_PUBLIC_BACKEND_URL=https://${DOMAIN:-postiz.localhost}/api
-      - JWT_SECRET=${JWT_SECRET:-mys3cr3t}
+      - JWT_SECRET=${JWT_SECRET:?}
       - DATABASE_URL=postgresql://postiz:myp@ssw0rd@postgres:5432/postiz
       - REDIS_URL=redis://redis:6379
       - TEMPORAL_ADDRESS=temporal:7233

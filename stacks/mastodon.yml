@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c mastodon.yml mastodon
+# DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c mastodon.yml mastodon
 # chown -R 991:991 system/
 # docker exec -it web bin/rails db:encryption:init
 # docker exec -it web bin/rails secret # OTP_SECRET and SECRET_KEY_BASE
@@ -16,7 +16,7 @@ services:
     environment: &mastodon-environment
       - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
       - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"DEFAULT_KEY"}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
       - OTP_SECRET=${OTP_SECRET}
       - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
       - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}

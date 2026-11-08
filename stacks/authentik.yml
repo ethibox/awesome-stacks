@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c authentik.yml authentik
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd AUTHENTIK_SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c authentik.yml authentik
 
 services:
   server:
@@ -9,8 +9,8 @@ services:
       - AUTHENTIK_POSTGRESQL__USER=${POSTGRES_USER:-authentik}
       - AUTHENTIK_POSTGRESQL__NAME=${POSTGRES_DB:-authentik}
       - AUTHENTIK_POSTGRESQL__PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
-      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:-mys3cr3t}
-      - AUTHENTIK_BOOTSTRAP_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?}
+      - AUTHENTIK_BOOTSTRAP_PASSWORD=${ADMIN_PASSWORD:?}
       - AUTHENTIK_BOOTSTRAP_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     command: server
     volumes:

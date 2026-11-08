@@ -1,11 +1,11 @@
-# DOMAIN=example.com docker stack deploy -c invidious.yml invidious
+# DOMAIN=example.com COMPANION_KEY=$(openssl rand -hex 8) HMAC_KEY=$(openssl rand -hex 32) docker stack deploy -c invidious.yml invidious
 
 services:
   web:
     image: quay.io/invidious/invidious:${VERSION:-master}
     environment:
       INVIDIOUS_CONFIG: |
-        hmac_key: ${HMAC_KEY:-random_hmac_key} # pwgen 20 1
+        hmac_key: ${HMAC_KEY:?} # pwgen 20 1
         domain: ${DOMAIN:-invidious.localhost}
         https_only: ${HTTPS_ONLY:-true}
         check_tables: true
@@ -17,7 +17,7 @@ services:
           port: 5432
         invidious_companion:
           - private_url: http://companion:8282/companion
-        invidious_companion_key: ${COMPANION_KEY:-randomcompanionk} # pwgen 16 1
+        invidious_companion_key: ${COMPANION_KEY:?} # pwgen 16 1
         default_user_preferences:
           default_home: Trending
     deploy:
@@ -35,7 +35,7 @@ services:
   companion:
     image: quay.io/invidious/invidious-companion:${COMPANION_VERSION:-latest}
     environment:
-      - SERVER_SECRET_KEY=${COMPANION_KEY:-randomcompanionk}
+      - SERVER_SECRET_KEY=${COMPANION_KEY:?}
       - PROXY=${PROXY:-}
     cap_drop:
       - ALL

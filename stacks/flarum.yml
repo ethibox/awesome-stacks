@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c flarum.yml flarum
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c flarum.yml flarum
 
 services:
   flarum:
@@ -20,7 +20,7 @@ services:
     environment:
       - FORUM_URL=https://${DOMAIN:-flarum.localhost}
       - FLARUM_ADMIN_USER=${ADMIN_USER:-admin}
-      - FLARUM_ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - FLARUM_ADMIN_PASS=${ADMIN_PASSWORD:?}
       - FLARUM_ADMIN_MAIL=${ADMIN_EMAIL:-admin@example.com}
       - FLARUM_TITLE=${FLARUM_TITLE:-Flarum}
       - DB_HOST=mariadb

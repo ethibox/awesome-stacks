@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c serpbear.yml serpbear
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd APIKEY=$(openssl rand -hex 32) SECRET=$(openssl rand -hex 32) docker stack deploy -c serpbear.yml serpbear
 
 services:
   web:
@@ -8,9 +8,9 @@ services:
     environment:
       - NEXT_PUBLIC_APP_URL=https://${DOMAIN:-serpbear.localhost}
       - USER=${ADMIN_USERNAME:-admin}
-      - PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
-      - SECRET=${SECRET:-4715aed3216f7b0a38e6b534a958362654e96d10fbc04700770d572af3dce43625dd}
-      - APIKEY=${APIKEY:-5saedXklbslhnapihe2pihp3pih4fdnakhjwq5}
+      - PASSWORD=${ADMIN_PASSWORD:?}
+      - SECRET=${SECRET:?}
+      - APIKEY=${APIKEY:?}
     deploy:
       labels:
         - traefik.enable=true

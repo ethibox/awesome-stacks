@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c wikijs.yml wikijs
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c wikijs.yml wikijs
 
 services:
   web:
@@ -8,7 +8,7 @@ services:
       - DB_USER=wikijs
       - DB_NAME=wikijs
       - DB_PASS=myp@ssw0rd
-      - ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASS=${ADMIN_PASSWORD:?}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     deploy:
       labels:

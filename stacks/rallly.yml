@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c rallly.yml rallly
+# DOMAIN=example.com SECRET_PASSWORD=$(openssl rand -hex 32) docker stack deploy -c rallly.yml rallly
 
 services:
   web:
@@ -8,7 +8,7 @@ services:
       - NEXT_PUBLIC_BASE_URL=https://${DOMAIN:-rallly.localhost}
       - NEXTAUTH_URL=https://${DOMAIN:-rallly.localhost}
       - NEXT_PUBLIC_SELF_HOSTED=${NEXT_PUBLIC_SELF_HOSTED:-true}
-      - SECRET_PASSWORD=${SECRET_PASSWORD:-XzAKLTuVLv0I1DtXx6/LsNUEttSsZ5Zr}
+      - SECRET_PASSWORD=${SECRET_PASSWORD:?}
       - SUPPORT_EMAIL=${SMTP_FROM:-admin@example.com}
       - SMTP_HOST=${SMTP_HOST}
       - SMTP_USER=${SMTP_USERNAME}

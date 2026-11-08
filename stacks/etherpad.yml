@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c etherpad.yml etherpad
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c etherpad.yml etherpad
 
 services:
   init:
@@ -26,7 +26,7 @@ services:
       - DB_NAME=etherpad
       - DB_USER=etherpad
       - DB_PASS=myp@ssw0rd
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - TRUST_PROXY=${TRUST_PROXY:-true}
       - EP__ep_image_upload__storage__type=local
       - EP__ep_image_upload__storage__baseFolder=/opt/etherpad-lite/src/static/images

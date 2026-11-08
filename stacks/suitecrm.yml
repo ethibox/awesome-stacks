@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c suitecrm.yml suitecrm
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c suitecrm.yml suitecrm
 
 services:
   suitecrm:
@@ -10,7 +10,7 @@ services:
       - SUITECRM_DATABASE_NAME=suitecrm
       - SUITECRM_DATABASE_PASSWORD=myp@ssw0rd
       - SUITECRM_USERNAME=${ADMIN_USERNAME:-admin}
-      - SUITECRM_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - SUITECRM_PASSWORD=${ADMIN_PASSWORD:?}
       - SUITECRM_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     volumes:
       - ${VOLUME_PATH}data:/bitnami

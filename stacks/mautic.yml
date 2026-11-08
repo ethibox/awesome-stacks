@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c mautic.yml mautic
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c mautic.yml mautic
 
 services:
   app:
@@ -22,7 +22,7 @@ services:
       - MAUTIC_TRUSTED_PROXIES=["REMOTE_ADDR"]
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     deploy:
       resources:
         limits:

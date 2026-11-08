@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c freescout.yml freescout
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c freescout.yml freescout
 
 services:
   web:
@@ -15,7 +15,7 @@ services:
       - DB_PASS=myp@ssw0rd
       - APP_URL=https://${DOMAIN:-freescout.localhost}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - ADMIN_PASS=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASS=${ADMIN_PASSWORD:?}
       - ENABLE_SSL_PROXY=${ENABLE_SSL_PROXY:-true}
       - FREESCOUT_APP_DEBUG=${DISPLAY_ERRORS:-false}
       - FREESCOUT_APP_TIMEZONE=Europe/Paris

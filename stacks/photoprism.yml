@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c photoprism.yml photoprism
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c photoprism.yml photoprism
 # chown -R 1000:1000 photoprism
 
 services:
@@ -8,7 +8,7 @@ services:
       - PHOTOPRISM_UID=${UID:-1000}
       - PHOTOPRISM_GID=${GID:-1000}
       - PHOTOPRISM_ADMIN_USER=${ADMIN_USER:-admin}
-      - PHOTOPRISM_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - PHOTOPRISM_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - PHOTOPRISM_AUTH_MODE=password
       - PHOTOPRISM_SITE_URL=https://${DOMAIN:-photoprism.localhost}
       - PHOTOPRISM_DATABASE_DRIVER=mysql

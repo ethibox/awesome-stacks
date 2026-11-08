@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c taiga.yml taiga
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c taiga.yml taiga
 
 services:
   web:
@@ -23,11 +23,11 @@ services:
   front:
     image: taigaio/taiga-front:${VERSION:-6.9.0}
     environment: &taiga-environment
-      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - SECRET_KEY=${SECRET_KEY:?}
       - TAIGA_SITES_SCHEME=https
       - TAIGA_ASYNC_RABBITMQ_HOST=rabbitmq
       - TAIGA_EVENTS_RABBITMQ_HOST=rabbitmq
-      - TAIGA_SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - TAIGA_SECRET_KEY=${SECRET_KEY:?}
       - TAIGA_SITES_DOMAIN=${DOMAIN:-taiga.localhost}
       - POSTGRES_DB=taiga
       - POSTGRES_USER=taiga
@@ -38,7 +38,7 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PASS=mypassword
       - DJANGO_SUPERUSER_USERNAME=${ADMIN_USERNAME:-admin}
-      - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD:?}
       - DJANGO_SUPERUSER_EMAIL=${ADMIN_EMAIL:-admin@example.com}
     volumes: &taiga-volumes
       - ${VOLUME_PATH}static:/taiga/static
@@ -87,7 +87,7 @@ services:
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
     environment:
-      - RABBITMQ_ERLANG_COOKIE=${SECRET_KEY:-mys3cr3t}
+      - RABBITMQ_ERLANG_COOKIE=${SECRET_KEY:?}
       - RABBITMQ_DEFAULT_PASS=mypassword
       - RABBITMQ_DEFAULT_VHOST=taiga
       - RABBITMQ_DEFAULT_USER=taiga

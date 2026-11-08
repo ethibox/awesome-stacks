@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c polr.yml polr
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c polr.yml polr
 
 services:
   polr:
@@ -9,7 +9,7 @@ services:
       - DB_USERNAME=polr
       - DB_PASSWORD=myp@ssw0rd
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - APP_NAME=${APP_NAME:-My Polr}
       - APP_PROTOCOL=https://

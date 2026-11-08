@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c plume.yml plume
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd ROCKET_SECRET_KEY=$(openssl rand -base64 32) docker stack deploy -c plume.yml plume
 
 services:
   server:
@@ -18,10 +18,10 @@ services:
     environment:
       - BASE_URL=${DOMAIN:-plume.localhost}
       - MAIL_SERVER=${MAIL_SERVER:-example.org}
-      - ROCKET_SECRET_KEY=${ROCKET_SECRET_KEY:-Hw5KPcdin+w8YNvUB9/0ZQgf1N5PVnPOnj4fGTBcgF0=}
+      - ROCKET_SECRET_KEY=${ROCKET_SECRET_KEY:?}
       - INSTANCE_NAME=${INSTANCE_NAME:-Plume}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@domain.name}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}media:/app/static/media
       - ${VOLUME_PATH}search_index:/app/search_index

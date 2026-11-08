@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c nextcloud-talk.yml nextcloud-talk
+# DOMAIN=example.com INTERNAL_SECRET=$(openssl rand -hex 32) SIGNALING_SECRET=$(openssl rand -hex 32) TURN_SECRET=$(openssl rand -hex 32) docker stack deploy -c nextcloud-talk.yml nextcloud-talk
 
 services:
   web:
@@ -7,9 +7,9 @@ services:
       - TALK_PORT=${TALK_PORT:-3478}
       - TALK_HOST=${DOMAIN:-nextcloud-talk.localhost}
       - NC_DOMAIN=${NC_DOMAIN:-nextcloud.example.com}
-      - SIGNALING_SECRET=${SIGNALING_SECRET:-mys3cr3t}
-      - INTERNAL_SECRET=${INTERNAL_SECRET:-mys3cr3t}
-      - TURN_SECRET=${TURN_SECRET:-mys3cr3t}
+      - SIGNALING_SECRET=${SIGNALING_SECRET:?}
+      - INTERNAL_SECRET=${INTERNAL_SECRET:?}
+      - TURN_SECRET=${TURN_SECRET:?}
       - TZ=${TZ:-Europe/Paris}
     ports:
       - target: 3478

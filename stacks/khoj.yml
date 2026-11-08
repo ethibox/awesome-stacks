@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c khoj.yml khoj
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd KHOJ_DJANGO_SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c khoj.yml khoj
 
 services:
   server:
@@ -16,10 +16,10 @@ services:
       - POSTGRES_PASSWORD=myp@ssw0rd
       - KHOJ_DEBUG=${KHOJ_DEBUG:-False}
       - KHOJ_DOMAIN=${DOMAIN:-khoj.localhost}
-      - KHOJ_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - KHOJ_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - KHOJ_ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - KHOJ_TELEMETRY_DISABLE=${KHOJ_TELEMETRY_DISABLE:-True}
-      - KHOJ_DJANGO_SECRET_KEY=${KHOJ_DJANGO_SECRET_KEY:-mys3cr3t}
+      - KHOJ_DJANGO_SECRET_KEY=${KHOJ_DJANGO_SECRET_KEY:?}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     deploy:
       labels:

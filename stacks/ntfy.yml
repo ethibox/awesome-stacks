@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c ntfy.yml ntfy
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c ntfy.yml ntfy
 
 services:
   web:
@@ -14,7 +14,7 @@ services:
         ntfy serve
     environment:
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
-      - NTFY_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - NTFY_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}config:/etc/ntfy
       - ${VOLUME_PATH}data:/var/lib/ntfy

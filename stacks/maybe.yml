@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c maybe.yml maybe
+# DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c maybe.yml maybe
 
 services:
   app:
@@ -10,7 +10,7 @@ services:
       - RAILS_FORCE_SSL=false
       - RAILS_ASSUME_SSL=false
       - GOOD_JOB_EXECUTION_MODE=async
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
       - DB_HOST=postgres
       - POSTGRES_DB=maybe
       - POSTGRES_USER=maybe

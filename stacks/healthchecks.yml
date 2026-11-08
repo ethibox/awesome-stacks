@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c healthchecks.yml healthchecks
+# DOMAIN=example.com SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c healthchecks.yml healthchecks
 
 services:
   app:
@@ -24,7 +24,7 @@ services:
       - EMAIL_USE_SSL=${SMTP_SSL:-False}
       - EMAIL_USE_VERIFICATION=True
       - SITE_NAME=Healthchecks
-      - SECRET_KEY=${SECRET_KEY:-mys3cr3t}
+      - SECRET_KEY=${SECRET_KEY:?}
       - WEBHOOKS_ENABLED=${WEBHOOKS_ENABLED:-False}
       - REGISTRATION_OPEN=${REGISTRATION_OPEN:-True}
       - PING_EMAIL_DOMAIN=${DOMAIN:-healthchecks.localhost}

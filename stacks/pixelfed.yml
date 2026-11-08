@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c pixelfed.yml pixelfed
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd APP_KEY=base64:$(openssl rand -base64 32) docker stack deploy -c pixelfed.yml pixelfed
 
 services:
   init:
@@ -25,7 +25,7 @@ services:
         exec frankenphp run --config /etc/frankenphp/Caddyfile --adapter caddyfile
     environment: &pixelfed-environment
       - APP_NAME=${APP_NAME:-PixelFed}
-      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
+      - APP_KEY=${APP_KEY:?}
       - APP_URL=https://${DOMAIN:-pixelfed.localhost}
       - APP_DOMAIN=${DOMAIN:-pixelfed.localhost}
       - TRUST_PROXIES=*
@@ -34,7 +34,7 @@ services:
 
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
 
       - DB_CONNECTION=mysql
       - DB_HOST=mariadb

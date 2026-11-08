@@ -1,14 +1,14 @@
-# DOMAIN=example.com docker stack deploy -c directus.yml directus
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd KEY=$(openssl rand -hex 32) SECRET=$(openssl rand -hex 32) docker stack deploy -c directus.yml directus
 
 services:
   directus:
     image: directus/directus:${VERSION:-11.1.0}
     environment:
-      - KEY=${KEY:-255d861b-5ea1-5996-9aa3-922530ec40b1}
+      - KEY=${KEY:?}
       - ACCESS_TOKEN_TTL=${ACCESS_TOKEN_TTL:-15m}
-      - SECRET=${SECRET:-6116487b-cda1-52c2-b5b5-c8022c45e263}
+      - SECRET=${SECRET:?}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - DB_CLIENT=mysql
       - DB_HOST=mariadb
       - DB_PORT=3306

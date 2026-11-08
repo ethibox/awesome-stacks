@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c chartbrew.yml chartbrew
+# DOMAIN=example.com CB_ENCRYPTION_KEY=$(openssl rand -hex 32) docker stack deploy -c chartbrew.yml chartbrew
 
 x-chartbrew: &chartbrew
   environment:
@@ -12,7 +12,7 @@ x-chartbrew: &chartbrew
     - CB_DB_PASSWORD=myp@ssw0rd
     - CB_REDIS_HOST=redis
     - CB_REDIS_PORT=6379
-    - CB_ENCRYPTION_KEY=${CB_ENCRYPTION_KEY:-e7ea6e81c299c0a06739e3c619afe9365bd9f533e59f00420cab9c070fbe75e9}
+    - CB_ENCRYPTION_KEY=${CB_ENCRYPTION_KEY:?}
     - VITE_APP_API_HOST=https://${DOMAIN:-chartbrew.localhost}/api
     - VITE_APP_CLIENT_HOST=https://${DOMAIN:-chartbrew.localhost}
     - VITE_APP_CLIENT_PORT=4018

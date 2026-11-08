@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c crater.yml crater
+# DOMAIN=example.com APP_KEY=base64:$(openssl rand -base64 32) docker stack deploy -c crater.yml crater
 # docker exec -u crater -it crater_crater git clone https://github.com/bytefury/crater .
 # docker exec -u crater -it composer install -d html
 # docker service update --force crater_app chmod -R 777 html/storage/
@@ -26,7 +26,7 @@ services:
   app:
     image: ethibox/crater:${VERSION:-4.2.0}
     environment:
-      - APP_KEY=${APP_KEY:-S0meR@nd0mStringS0meR@nd0mString}
+      - APP_KEY=${APP_KEY:?}
     volumes:
       - ${VOLUME_PATH}data:/var/www/html
     networks:

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c twenty.yml twenty
+# DOMAIN=example.com APP_SECRET=$(openssl rand -base64 32) docker stack deploy -c twenty.yml twenty
 
 services:
   app:
@@ -13,7 +13,7 @@ services:
       - STORAGE_TYPE=${STORAGE_TYPE:-local}
       - ENABLE_DB_MIGRATIONS=${ENABLE_DB_MIGRATIONS:-true}
       - IS_MULTIWORKSPACE_ENABLED=${IS_MULTIWORKSPACE_ENABLED:-false}
-      - APP_SECRET=${APP_SECRET:-onoUicllnXTKiO6J+OGSFQFtdw9uyucAyxw3ztKXu+8=} # openssl rand -base64 32
+      - APP_SECRET=${APP_SECRET:?} # openssl rand -base64 32
     volumes: &twenty-volumes
       - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
       - ${VOLUME_PATH}docker:/app/docker-data

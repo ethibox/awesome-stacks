@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c chatwoot.yml chatwoot
+# DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c chatwoot.yml chatwoot
 # bundle exec rails db:chatwoot_prepare
 # bundle exec rails db:seed
 # bundle exec rails db:migrate
@@ -7,7 +7,7 @@ services:
   web:
     image: &chatwoot-image chatwoot/chatwoot:${VERSION:-v4.19.1}
     environment: &chatwoot-environment
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-"replace_with_lengthy_secure_hex"}  # bundle exec rake secret
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # bundle exec rake secret
       - FRONTEND_URL=https://${DOMAIN:-chatwoot.localhost}
       - NODE_ENV=${NODE_ENV:-production}
       - RAILS_ENV=${RAILS_ENV:-production}

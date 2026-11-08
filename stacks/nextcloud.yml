@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c nextcloud.yml nextcloud
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c nextcloud.yml nextcloud
 
 services:
   nginx:
@@ -67,7 +67,7 @@ services:
       - PHP_MEMORY_LIMIT=${PHP_MEMORY_LIMIT:-512M}
       - PHP_UPLOAD_LIMIT=${PHP_UPLOAD_LIMIT:-512M}
       - NEXTCLOUD_ADMIN_USER=${ADMIN_USERNAME:-admin}
-      - NEXTCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - NEXTCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - NC_default_phone_region=${NC_default_phone_region:-FR}
       - NC_loglevel=${NC_loglevel:-2}
       - NC_maintenance_window_start=1

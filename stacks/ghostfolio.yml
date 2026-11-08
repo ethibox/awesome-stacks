@@ -1,12 +1,12 @@
-# DOMAIN=example.com docker stack deploy -c ghostfolio.yml ghostfolio
+# DOMAIN=example.com ACCESS_TOKEN_SALT=$(openssl rand -hex 32) JWT_SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c ghostfolio.yml ghostfolio
 
 services:
   ghostfolio:
     image: ghostfolio/ghostfolio:${VERSION:-2.255.0}
     environment:
       - DATABASE_URL=postgresql://ghostfolio:myp@ssw0rd@postgres:5432/ghostfolio
-      - ACCESS_TOKEN_SALT=${ACCESS_TOKEN_SALT:-mys3cr3t}
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-mys3cr3t}
+      - ACCESS_TOKEN_SALT=${ACCESS_TOKEN_SALT:?}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:?}
       - REDIS_HOST=redis
     healthcheck:
       test: ['CMD-SHELL', 'curl -f http://localhost:3333/api/v1/health']

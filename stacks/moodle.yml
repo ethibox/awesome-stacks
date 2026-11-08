@@ -1,11 +1,11 @@
-# DOMAIN=example.com docker stack deploy -c moodle.yml moodle
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c moodle.yml moodle
 
 services:
   moodle:
     image: bitnami/moodle:${VERSION:-4.5}
     environment:
       - MOODLE_USERNAME=${ADMIN_USERNAME:-admin}
-      - MOODLE_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - MOODLE_PASSWORD=${ADMIN_PASSWORD:?}
       - MOODLE_DATABASE_USER=moodle
       - MOODLE_DATABASE_NAME=moodle
       - MOODLE_DATABASE_HOST=mariadb

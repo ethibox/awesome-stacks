@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c phpbb.yml phpbb
+# DOMAIN=example.com PHPBB_PASSWORD=myp@ssw0rd docker stack deploy -c phpbb.yml phpbb
 
 services:
   phpbb:
@@ -10,7 +10,7 @@ services:
       - PHPBB_DATABASE_NAME=phpbb
       - PHPBB_DATABASE_PASSWORD=myp@ssw0rd
       - PHPBB_USERNAME=${PHPBB_USERNAME:-admin}
-      - PHPBB_PASSWORD=${PHPBB_PASSWORD:-myp@ssw0rd}
+      - PHPBB_PASSWORD=${PHPBB_PASSWORD:?}
       - PHPBB_EMAIL=${EMAIL:-admin@example.com}
     volumes:
       - ${VOLUME_PATH}phpbb:/bitnami

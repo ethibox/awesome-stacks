@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c castopod.yml castopod
+# DOMAIN=example.com CP_ANALYTICS_SALT=$(openssl rand -hex 32) docker stack deploy -c castopod.yml castopod
 # php spark install:create-superadmin # Create first admin user
 
 services:
@@ -13,7 +13,7 @@ services:
       - CP_CACHE_HANDLER=redis
       - CP_REDIS_HOST=redis
       - CP_REDIS_PASSWORD=myp@ssw0rd
-      - CP_ANALYTICS_SALT=${CP_ANALYTICS_SALT:-changeme}
+      - CP_ANALYTICS_SALT=${CP_ANALYTICS_SALT:?}
       - CP_BASEURL=https://${DOMAIN:-castopod.localhost}
     deploy:
       labels:

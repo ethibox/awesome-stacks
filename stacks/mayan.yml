@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c mayan.yml mayan
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c mayan.yml mayan
 
 services:
   app:
@@ -15,7 +15,7 @@ services:
       - MAYAN_CSRF_TRUSTED_ORIGINS=[https://${DOMAIN:-mayan.localhost}]
       - MAYAN_SECURE_PROXY_SSL_HEADER=[HTTP_X_FORWARDED_PROTO, https]
       - MAYAN_AUTOADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-      - MAYAN_AUTOADMIN_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
+      - MAYAN_AUTOADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
       - ${VOLUME_PATH}data:/var/lib/mayan
     deploy:

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c writebook.yml writebook
+# DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c writebook.yml writebook
 # chown -R 1000:1000 storage/
 
 services:
@@ -7,7 +7,7 @@ services:
     volumes:
       - ${VOLUME_PATH}storage:/rails/storage
     environment:
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
     deploy:
       labels:
         - traefik.enable=true

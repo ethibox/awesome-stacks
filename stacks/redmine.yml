@@ -1,10 +1,10 @@
-# DOMAIN=example.com docker stack deploy -c redmine.yml redmine
+# DOMAIN=example.com REDMINE_SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c redmine.yml redmine
 
 services:
   web:
     image: redmine:${VERSION:-4.2.2-alpine}
     environment:
-      - REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE:-mys3cr3t}
+      - REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE:?}
       - REDMINE_DB_POSTGRES=postgres
       - REDMINE_DB_USERNAME=redmine
       - REDMINE_DB_DATABASE=redmine
