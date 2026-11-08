@@ -1415,7 +1415,7 @@
       "id": 31,
       "type": 2,
       "title": "Commento",
-      "version": "latest",
+      "version": "1.8.0",
       "description": "Commento est un système de commentaires open-source rapide et léger pour animer la discussion sur votre site.",
       "categories": [
         "Communication"
@@ -1426,7 +1426,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/commento.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "02d5653642515772139fce9a0965fce3f05a7ccb"
       },
       "env": [
         {
