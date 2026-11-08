@@ -2,7 +2,7 @@
 
 services:
   gogs:
-    image: gogs/gogs:${VERSION:-0.12.3}
+    image: gogs/gogs:${VERSION:-0.14.3}
     user: root
     ports:
       - {target: 22, published: 10022, mode: host, protocol: tcp}
