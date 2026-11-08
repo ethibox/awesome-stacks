@@ -32,7 +32,6 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /app/packages/twenty-server/.local-storage /app/docker-data
-    user: root
     volumes: *twenty-volumes
     deploy:
       restart_policy:

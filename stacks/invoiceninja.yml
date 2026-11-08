@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1500:1500 /var/www/app/public /var/www/app/storage
-    user: root
     volumes:
       - ${VOLUME_PATH}data:/var/www/app/public
       - ${VOLUME_PATH}storage:/var/www/app/storage

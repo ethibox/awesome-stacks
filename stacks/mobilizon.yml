@@ -5,7 +5,6 @@ services:
   init:
     image: busybox
     command: chown -R 65534:65534 /var/lib/mobilizon/uploads
-    user: root
     volumes:
       - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads
     deploy:

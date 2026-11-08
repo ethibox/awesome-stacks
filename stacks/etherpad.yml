@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 5001:5001 /opt/etherpad-lite/src/plugin_packages /opt/etherpad-lite/var /opt/etherpad-lite/src/static/images
-    user: root
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages
       - ${VOLUME_PATH}images:/opt/etherpad-lite/src/static/images

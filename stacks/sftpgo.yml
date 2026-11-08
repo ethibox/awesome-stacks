@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /srv/sftpgo /var/lib/sftpgo
-    user: root
     volumes:
       - ${VOLUME_PATH}data:/srv/sftpgo
       - ${VOLUME_PATH}config:/var/lib/sftpgo

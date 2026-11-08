@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /opt/keycloak/data /opt/keycloak/providers
-    user: root
     volumes:
       - ${VOLUME_PATH}data:/opt/keycloak/data
       - ${VOLUME_PATH}providers:/opt/keycloak/providers

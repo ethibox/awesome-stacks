@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 2000:2000 /mattermost/data /mattermost/config /mattermost/plugins
-    user: root
     volumes:
       - ${VOLUME_PATH}data:/mattermost/data
       - ${VOLUME_PATH}config:/mattermost/config

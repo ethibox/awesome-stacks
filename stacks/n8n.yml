@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /home/node/.n8n
-    user: root
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:

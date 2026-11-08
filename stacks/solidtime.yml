@@ -6,7 +6,6 @@
 services:
   init:
     image: busybox
-    user: root
     working_dir: /var/www/html/storage
     entrypoint: /bin/sh -c
     command:

@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /opt/sonarqube/data /opt/sonarqube/extensions /opt/sonarqube/logs
-    user: root
     volumes:
       - ${VOLUME_PATH}logs:/opt/sonarqube/logs
       - ${VOLUME_PATH}data:/opt/sonarqube/data

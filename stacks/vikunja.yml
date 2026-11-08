@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /app/vikunja/files
-    user: root
     volumes:
       - ${VOLUME_PATH}files:/app/vikunja/files
     deploy:

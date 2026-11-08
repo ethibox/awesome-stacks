@@ -6,7 +6,6 @@ services:
   init:
     image: busybox
     command: chown -R 33:33 /etc/passbolt/gpg /etc/passbolt/jwt
-    user: root
     volumes:
       - ${VOLUME_PATH}gpg:/etc/passbolt/gpg
       - ${VOLUME_PATH}jwt:/etc/passbolt/jwt

@@ -6,7 +6,6 @@ services:
   zammad-chown:
     image: busybox
     command: chown -R 1000:1000 /opt/zammad/var /opt/zammad/storage /usr/share/elasticsearch/data
-    user: root
     volumes:
       - ${VOLUME_PATH}var:/opt/zammad/var
       - ${VOLUME_PATH}storage:/opt/zammad/storage

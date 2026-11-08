@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: chown -R 1500:1500 /home/hackmd/app/public/uploads
-    user: root
     volumes:
       - ${VOLUME_PATH}uploads:/home/hackmd/app/public/uploads
     deploy:

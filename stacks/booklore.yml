@@ -4,7 +4,6 @@ services:
   init:
     image: busybox
     command: sh -c "chown -R ${APP_USER_ID:-1000}:${APP_GROUP_ID:-1000} /app/data /books /bookdrop"
-    user: root
     environment:
       - APP_USER_ID=${APP_USER_ID:-1000}
       - APP_GROUP_ID=${APP_GROUP_ID:-1000}
