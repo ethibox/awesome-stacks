@@ -2,13 +2,13 @@
 
 services:
   keila:
-    image: pentacent/keila:${VERSION:-0.17.1}
+    image: pentacent/keila:${VERSION:-0.40.2}
     environment:
       - KEILA_USER=${ADMIN_EMAIL:-admin@example.com}
       - KEILA_PASSWORD=${ADMIN_PASSWORD:-myp@ssw0rd}
       - URL_SCHEMA=${URL_SCHEMA:-https}
       - URL_HOST=${DOMAIN:-keila.localhost}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3t} # openssl rand -base64 64
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-mys3cr3tmys3cr3tmys3cr3tmys3cr3tmys3cr3tmys3cr3tmys3cr3tmys3cr3t} # openssl rand -base64 48
       - MAILER_SMTP_PORT=${SMTP_PORT:-587}
       - MAILER_SMTP_FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
       - MAILER_SMTP_HOST=${SMTP_HOST}
