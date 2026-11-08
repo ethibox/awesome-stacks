@@ -2776,7 +2776,7 @@
       "id": 64,
       "type": 2,
       "title": "Keila",
-      "version": "0.17.1",
+      "version": "0.40.2",
       "description": "Keila est un outil open-source d'envoi de newsletters avec segmentation des contacts et statistiques.",
       "categories": [
         "Communication"
@@ -2787,7 +2787,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/keila.yml",
-        "commit": "f2c86963746b5862459a395132e9dd9efcac99d0"
+        "commit": "6c41a43f36059c51060e41eae39158cf78903f3b"
       },
       "env": [
         {
