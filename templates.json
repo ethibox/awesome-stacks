@@ -1997,7 +1997,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/pytition.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "860a182f6307d49a51f73bd4e1769510276b1988"
       },
       "env": [
         {
