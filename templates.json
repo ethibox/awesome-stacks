@@ -3197,7 +3197,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/authentik.yml",
-        "commit": "5f32c0dbba6d9703105055cca2814bd326680e9f"
+        "commit": "8c7a2241a430d3266243e262d0e1f170f2c4df4f"
       },
       "env": [
         {
