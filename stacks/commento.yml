@@ -2,7 +2,7 @@
 
 services:
   server:
-    image: ${IMAGE:-registry.gitlab.com/commento/commento}:${VERSION:-latest}
+    image: ${IMAGE:-registry.gitlab.com/commento/commento}:${VERSION:-v1.8.0}
     environment:
       - COMMENTO_ORIGIN=https://${DOMAIN:-commento.localhost}
       - COMMENTO_PORT=8080
