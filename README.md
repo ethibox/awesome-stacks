@@ -5,10 +5,10 @@ Deploy 150+ open-source web apps with one Docker command.
 ## ✨ Features
 
 - 🚀 **Easy to use**: Deploy your favorite apps with one command
-- ⚡ **Zero config** : No need to configure anything, just deploy
 - 🔒 **Secure**: Use Traefik and Let's Encrypt to secure your apps
 - 🔧 **Customizable**: Change the domain, the volume path, the version, etc.
 - 🛳️ **Portainer support**: Use `templates.json` to deploy apps with Portainer
+- ⚡ **Minimal config**: Only set your passwords and secret keys, everything else has a default
 
 ## 📋 Requirements
 
@@ -51,8 +51,10 @@ Deploy your apps with one command!
 Here an example with [Nextcloud](./stacks/nextcloud.yml):
 
 ```bash
-docker stack deploy -c stacks/nextcloud.yml nextcloud
+ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c stacks/nextcloud.yml nextcloud
 ```
+
+Required variables (passwords, secret keys) are listed in the comment at the top of each `.yml` file. The deployment fails if one is missing.
 
 Go to https://nextcloud.localhost and enjoy your app!
 
