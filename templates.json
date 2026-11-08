@@ -1898,7 +1898,7 @@
       "id": 41,
       "type": 2,
       "title": "Gogs",
-      "version": "0.12.3",
+      "version": "0.14.3",
       "description": "Gogs est un service Git open-source auto-hébergé léger pour héberger vos dépôts de code.",
       "categories": [
         "Stockage"
@@ -1909,7 +1909,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/gogs.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "c6b5c2312d9fd87e47d32246fad5fc9c4d790604"
       }
     },
     {
