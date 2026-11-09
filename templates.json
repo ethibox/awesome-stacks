@@ -3823,7 +3823,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/openathlete.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "59c9abfb2756ed581f107a0e6296f1c1153937ad"
       },
       "env": [
         {
