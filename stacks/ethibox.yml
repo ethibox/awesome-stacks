@@ -1,8 +1,8 @@
-# DOMAIN=example.com docker stack deploy -c ethibox.yml ethibox
+# DOMAIN=example.com JWT_SECRET=$(openssl rand -hex 32) docker stack deploy -c ethibox.yml ethibox
 
 services:
   web:
-    image: ${IMAGE:-ethibox/ethibox}:${VERSION:-latest}
+    image: ${IMAGE:-ethibox/ethibox}:${VERSION:-2.22.0}
     environment:
       - DATABASE_TYPE=${DATABASE_TYPE:-mariadb}
       - DATABASE_HOST=${DATABASE_HOST:-mariadb}
@@ -12,7 +12,7 @@ services:
       - NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - ROOT_DOMAIN=${ROOT_DOMAIN:-localhost}
-      - JWT_SECRET=${JWT_SECRET-mys3cr3t}
+      - JWT_SECRET=${JWT_SECRET:?}
       - WEBHOOK_URL=${WEBHOOK_URL}
     volumes:
       - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock
