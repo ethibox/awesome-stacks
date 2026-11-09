@@ -1,4 +1,4 @@
-# DOMAIN=example.com PASSWORD=myp@ssw0rd STORE_ACCESS_KEY=myaccesskey STORE_SECRET_KEY=mys3cr3tkey docker stack deploy -c notea.yml notea
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd STORE_END_POINT=https://s3.example.com STORE_ACCESS_KEY=myaccesskey STORE_SECRET_KEY=mys3cr3tkey docker stack deploy -c notea.yml notea
 
 services:
   web:
@@ -7,9 +7,9 @@ services:
       - STORE_ACCESS_KEY=${STORE_ACCESS_KEY:?}
       - STORE_SECRET_KEY=${STORE_SECRET_KEY:?}
       - STORE_BUCKET=${STORE_BUCKET:-notea}
-      - STORE_END_POINT=${STORE_END_POINT:-http://play.minio.io}
+      - STORE_END_POINT=${STORE_END_POINT:?}
       - STORE_FORCE_PATH_STYLE=true
-      - PASSWORD=${PASSWORD:?}
+      - PASSWORD=${ADMIN_PASSWORD:?}
       - COOKIE_SECURE=${COOKIE_SECURE:-true}
     deploy:
       labels:
