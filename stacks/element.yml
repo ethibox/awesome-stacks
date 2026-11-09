@@ -1,6 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c element.yml element
 # docker exec -it $(docker ps -qf 'name=element_synapse\.') register_new_matrix_user -c /data/homeserver.yaml http://localhost:8008
-# UPDATE users SET admin = 1 WHERE name = '@username:yourserver.com'; # Set admin role
 # https://matrix.org/federationtester # To check config
 
 services:
@@ -13,7 +12,7 @@ services:
       - |
         mkdir -p /app/.well-known/matrix
         echo '{"m.server": "'$$DOMAIN':443"}' > /app/.well-known/matrix/server
-        echo '{"m.homeserver":{"base_url":"'https'://'$$DOMAIN'"},"m.identity_server":{"base_url":"https://vector.im"}}' > /app/.well-known/matrix/client
+        echo '{"m.homeserver":{"base_url":"https://'$$DOMAIN'"},"m.identity_server":{"base_url":"https://vector.im"}}' > /app/.well-known/matrix/client
         sed -i -e 's/"breadcrumbs": true/"breadcrumbs": true,\n        "language": "'$$LANGUAGE'"/g' /app/config.json
         sed -i "s#https://matrix-client.matrix.org#https://$$DOMAIN#g; s/matrix.org/$$DOMAIN/g" /app/config.json
         exec /docker-entrypoint.sh nginx -g 'daemon off;'
@@ -33,30 +32,23 @@ services:
       - internal
 
   synapse:
-    image: ghcr.io/element-hq/synapse:${SYNAPSE_VERSION:-v1.151.0}
+    image: ghcr.io/element-hq/synapse:${SYNAPSE_VERSION:-v1.164.2}
     entrypoint: /bin/sh
     command:
       - -c
       - |
         /start.py generate
         sed -i -e '/^[^#]*log_config:/s/^/#/' /data/homeserver.yaml
-        if ! grep -q 'enable_registration' /data/homeserver.yaml; then
-          sed -i "/registration_shared_secret/a enable_registration: $$ENABLE_REGISTRATION" /data/homeserver.yaml
-        fi
-        if ! grep -q 'enable_registration_without_verification' /data/homeserver.yaml; then
-          sed -i "/registration_shared_secret/a enable_registration_without_verification: $$DISABLE_VERIFICATION" /data/homeserver.yaml
-        fi
-        if [ -n "$$AUTO_JOIN_ROOM" ] && ! grep -q 'auto_join_rooms' /data/homeserver.yaml; then
-          echo -e "\nauto_join_rooms:\n  - \"$$AUTO_JOIN_ROOM\"" >> /data/homeserver.yaml
-        fi
-        exec /start.py
+        echo "enable_registration: $$ENABLE_REGISTRATION" > /data/env.yaml
+        echo "enable_registration_without_verification: $$DISABLE_VERIFICATION" >> /data/env.yaml
+        [ -n "$$AUTO_JOIN_ROOM" ] && echo "auto_join_rooms: [\"$$AUTO_JOIN_ROOM\"]" >> /data/env.yaml
+        exec /start.py run -c /data/homeserver.yaml -c /data/env.yaml
     environment:
       - AUTO_JOIN_ROOM=${AUTO_JOIN_ROOM}
       - ENABLE_REGISTRATION=${ENABLE_REGISTRATION:-true}
       - DISABLE_VERIFICATION=${DISABLE_VERIFICATION:-true}
       - SYNAPSE_SERVER_NAME=${DOMAIN:-element.localhost}
       - SYNAPSE_REPORT_STATS=no
-      - SYNAPSE_NO_TLS=yes
     volumes:
       - ${VOLUME_PATH}synapse:/data
     deploy:
@@ -72,12 +64,12 @@ services:
       - internal
 
   synapse-admin:
-    image: ghcr.io/etkecc/synapse-admin:${SYNAPSE_ADMIN_VERSION:-v0.11.4-etke54}
+    image: ghcr.io/etkecc/ketesa:${SYNAPSE_ADMIN_VERSION:-v1.5.2-subpath-admin}
     entrypoint: /bin/sh
     command:
       - -c
       - |
-        echo '{ "restrictBaseUrl": "https://'"$$DOMAIN"'" }' > /var/public/config.json
+        echo '{ "restrictBaseUrl": "https://'"$$DOMAIN"'" }' > /var/public/admin/config.json
         exec /usr/local/bin/entrypoint.sh static-web-server
     environment:
       - DOMAIN=${DOMAIN:-element.localhost}
@@ -88,11 +80,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.rule=Host(`${DOMAIN:-element.localhost}`) && PathPrefix(`/admin`)
-        - traefik.http.routers.element-synapse-admin-${NUMBER:-1}.middlewares=element-synapse-admin-${NUMBER:-1},element-synapse-admin_path-${NUMBER:-1}
         - traefik.http.services.element-synapse-admin-${NUMBER:-1}.loadbalancer.server.port=8080
-        - traefik.http.middlewares.element-synapse-admin-${NUMBER:-1}.redirectregex.regex=^(.*)/admin$$
-        - traefik.http.middlewares.element-synapse-admin-${NUMBER:-1}.redirectregex.replacement=$${1}/admin/
-        - traefik.http.middlewares.element-synapse-admin_path-${NUMBER:-1}.stripprefix.prefixes=/admin
     networks:
       - traefik
       - internal
