@@ -1864,35 +1864,20 @@
     {
       "id": 40,
       "type": 2,
-      "title": "Rainloop",
-      "version": "latest",
-      "description": "Rainloop est un client de messagerie open-source simple, moderne et rapide basé sur le web.",
+      "title": "SnappyMail",
+      "version": "2.38.2.1",
+      "description": "SnappyMail est un client de messagerie open-source simple, moderne et rapide basé sur le web.",
       "categories": [
         "Communication"
       ],
       "enabled": false,
-      "logo": "https://ethibox.fr/images/logos/rainloop.png",
-      "website": "https://www.rainloop.net",
+      "logo": "https://ethibox.fr/images/logos/snappymail.png",
+      "website": "https://snappymail.eu",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
-        "stackfile": "stacks/rainloop.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
-      },
-      "env": [
-        {
-          "name": "ADMIN_USERNAME",
-          "label": "Admin username",
-          "value": "admin",
-          "disabled": true
-        },
-        {
-          "name": "INITIAL_ADMIN_PASSWORD",
-          "label": "Initial admin password",
-          "type": "password",
-          "value": "12345",
-          "disabled": true
-        }
-      ]
+        "stackfile": "stacks/snappymail.yml",
+        "commit": "9f4949d92af6c4920a29a6543d4cab04abd9033c"
+      }
     },
     {
       "id": 41,
