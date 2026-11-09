@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c kutt.yml kutt
+# DOMAIN=example.com JWT_SECRET=$(openssl rand -hex 32) docker stack deploy -c kutt.yml kutt
 
 services:
   kutt:
@@ -7,7 +7,7 @@ services:
     environment:
       - SITE_NAME=${SITE_NAME:-Kutt}
       - DEFAULT_DOMAIN=${DOMAIN:-kutt.localhost}
-      - JWT_SECRET=${JWT_SECRET-mys3cr3t}
+      - JWT_SECRET=${JWT_SECRET:?}
       - MAIL_HOST=${SMTP_HOST}
       - MAIL_PORT=${SMTP_PORT}
       - MAIL_USER=${SMTP_USER}
