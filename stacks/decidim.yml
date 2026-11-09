@@ -6,7 +6,7 @@ services:
     image: &decidim-image decidim/decidim:${VERSION:-0.31.6}
     command: sh -c "bin/rails db:migrate &&bin/rails server -b 0.0.0.0"
     environment: &decidim-environment
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # openssl rand -hex 64
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
       - DATABASE_URL=postgres://decidim:myp%40ssw0rd@postgres:5432/decidim
       - REDIS_URL=redis://redis:6379
       - QUEUE_ADAPTER=sidekiq

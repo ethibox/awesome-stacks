@@ -20,7 +20,7 @@ services:
       - CMD_URL_ADDPORT=${CMD_URL_ADDPORT:-false}
       - CMD_ALLOW_FREEURL=${CMD_ALLOW_FREEURL:-true}
       - CMD_PROTOCOL_USESSL=${CMD_PROTOCOL_USESSL:-true}
-      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:?} # openssl rand -hex 32
+      - CMD_SESSION_SECRET=${CMD_SESSION_SECRET:?}
       - CMD_ALLOW_EMAIL_REGISTER=${CMD_ALLOW_EMAIL_REGISTER:-true}
       - CMD_DEFAULT_PERMISSION=${CMD_DEFAULT_PERMISSION:-editable}
       - CMD_DB_URL=postgres://codimd:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/codimd

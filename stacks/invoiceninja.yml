@@ -42,7 +42,7 @@ services:
       - APP_DEBUG=${APP_DEBUG:-false}
       - APP_URL=https://${DOMAIN:-invoiceninja.localhost}
       - REQUIRE_HTTPS=${REQUIRE_HTTPS:-true}
-      - APP_KEY=${APP_KEY:?} # echo "base64:$(openssl rand -base64 32)"
+      - APP_KEY=${APP_KEY:?}
       - API_SECRET=${API_SECRET:-} # openssl rand -hex 24
       - DB_USERNAME=invoiceninja
       - DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}

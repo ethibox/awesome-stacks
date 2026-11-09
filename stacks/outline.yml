@@ -14,8 +14,8 @@ services:
       - FILE_STORAGE_LOCAL_ROOT_DIR=/var/lib/outline/data
       - URL=https://${DOMAIN:-outline.localhost}
       - DATABASE_URL=postgres://outline:myp%40ssw0rd@postgres:5432/outline
-      - SECRET_KEY=${SECRET_KEY:?} # openssl rand -hex 32
-      - UTILS_SECRET=${UTILS_SECRET:?} # openssl rand -hex 32
+      - SECRET_KEY=${SECRET_KEY:?}
+      - UTILS_SECRET=${UTILS_SECRET:?}
       - OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
       - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
       - OIDC_AUTH_URI=${OIDC_AUTH_URI}

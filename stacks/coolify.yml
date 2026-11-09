@@ -1,4 +1,4 @@
-# APP_KEY=base64:$(openssl rand -base64 32) ADMIN_EMAIL=<email> ADMIN_PASSWORD=<strong-password> DOMAIN=example.com docker stack deploy -c coolify.yml coolify
+# DOMAIN=example.com ADMIN_EMAIL=admin@example.com ADMIN_PASSWORD=myp@ssw0rd APP_KEY=base64:$(openssl rand -base64 32) docker stack deploy -c coolify.yml coolify
 
 services:
   init:
@@ -31,7 +31,7 @@ services:
       - DB_HOST=postgres
       - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - REDIS_HOST=redis
-      - APP_KEY=${APP_KEY:?} # openssl rand -base64 32
+      - APP_KEY=${APP_KEY:?}
       - ROOT_USER_EMAIL=${ADMIN_EMAIL:?}
       - ROOT_USER_PASSWORD=${ADMIN_PASSWORD:?}
     extra_hosts:

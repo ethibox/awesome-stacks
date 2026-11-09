@@ -31,7 +31,7 @@ services:
         pdm run python pytition/manage.py compilemessages
         exec pdm run uwsgi --http :8000 --chdir pytition --module pytition.wsgi --static-map /static=/static --static-map /mediaroot=/mediaroot
     environment:
-      - SECRET_KEY=${SECRET_KEY:?} # openssl rand -hex 32
+      - SECRET_KEY=${SECRET_KEY:?}
     volumes:
       - ${VOLUME_PATH}media:/mediaroot
     deploy:

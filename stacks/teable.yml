@@ -7,7 +7,7 @@ services:
       - NEXT_ENV_IMAGES_ALL_REMOTE=true
       - PUBLIC_ORIGIN=https://${DOMAIN:-teable.localhost}
       - PRISMA_DATABASE_URL=postgresql://teable:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/teable
-      - SECRET_KEY=${SECRET_KEY:?} # openssl rand -hex 32
+      - SECRET_KEY=${SECRET_KEY:?}
       - BACKEND_CACHE_REDIS_URI=redis://default@redis:6379/0
       - BACKEND_CACHE_PROVIDER=redis
     volumes:

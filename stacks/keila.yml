@@ -8,7 +8,7 @@ services:
       - KEILA_PASSWORD=${ADMIN_PASSWORD:?}
       - URL_SCHEMA=${URL_SCHEMA:-https}
       - URL_HOST=${DOMAIN:-keila.localhost}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # openssl rand -base64 48
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
       - MAILER_SMTP_PORT=${SMTP_PORT:-587}
       - MAILER_SMTP_FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
       - MAILER_SMTP_HOST=${SMTP_HOST}
