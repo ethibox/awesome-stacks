@@ -1,4 +1,4 @@
-# DOMAIN=example.com JWT_SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c openathlete.yml openathlete
+# DOMAIN=example.com JWT_SECRET_KEY=$(openssl rand -hex 32) HASH_PEPPER=$(openssl rand -hex 32) docker stack deploy -c openathlete.yml openathlete
 
 services:
   web:
@@ -23,7 +23,7 @@ services:
       - PORT=3000
       - DATABASE_URL=postgresql://openathlete:mypassw0rd@postgres:5432/openathlete
       - REDIS_URL=redis://redis:6379/0
-      - HASH_PEPPER=${HASH_PEPPER:-728a07936ff7db2463e2f75ba7d79f85b3229fe0348f600a08757a3c417fe049} # openssl rand -hex 32
+      - HASH_PEPPER=${HASH_PEPPER:?}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY:?}
       - APP_URL=https://${DOMAIN:-openathlete.localhost}
       - FRONTEND_URL=https://${DOMAIN:-openathlete.localhost}
