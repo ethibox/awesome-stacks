@@ -1,11 +1,11 @@
-# DOMAIN=example.com ADMIN_SECRET=mys3cr3t docker stack deploy -c hasura.yml hasura
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c hasura.yml hasura
 
 services:
   graphql-engine:
     image: hasura/graphql-engine:${VERSION:-v2.51.4}
     environment:
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true
-      - HASURA_GRAPHQL_ADMIN_SECRET=${ADMIN_SECRET:?}
+      - HASURA_GRAPHQL_ADMIN_SECRET=${ADMIN_PASSWORD:?}
       - HASURA_GRAPHQL_DATABASE_URL=postgres://hasura@postgres:5432/hasura?password=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - HASURA_GRAPHQL_ENABLED_LOG_TYPES=startup, http-log, webhook-log, websocket-log, query-log
     deploy:
