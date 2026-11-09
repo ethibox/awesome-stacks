@@ -1221,7 +1221,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/element.yml",
-        "commit": "44cbfcd4f2a37a79d218e31c24213860cd02adf9"
+        "commit": "bae61f7bb0e12bf55fef659695ab421e194be189"
       }
     },
     {
