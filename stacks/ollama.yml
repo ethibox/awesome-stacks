@@ -1,37 +1,24 @@
-# DOMAIN=example.com docker stack deploy -c ollama.yml ollama
+# DOMAIN=example.com ADMIN_EMAIL=admin@example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c openwebui.yml -c ollama.yml ollama
 
 services:
-  web:
-    image: ghcr.io/open-webui/open-webui:main
-    environment:
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
-      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
-    volumes:
-      - ${VOLUME_PATH}data:/app/backend/data
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.ollama-${NUMBER:-1}.rule=Host(`${DOMAIN:-ollama.localhost}`)
-        - traefik.http.services.ollama-${NUMBER:-1}.loadbalancer.server.port=8080
-    networks:
-      - internal
-      - traefik
-
   ollama:
-    image: ollama/ollama:${VERSION:-0.6.0}
+    image: ollama/ollama:${VERSION:-0.40.15}
     volumes:
       - ${VOLUME_PATH}ollama:/root/.ollama
     networks:
       - internal
 
+  openwebui:
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    networks:
+      - default
+      - internal
+
 volumes:
-  data:
   ollama:
 
 networks:
   internal:
     driver: overlay
     attachable: true
-  traefik:
-    external: true
-    name: traefik-net
