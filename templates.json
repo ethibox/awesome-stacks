@@ -2454,7 +2454,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/bookstack.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "6a221d64b74156284956e0bb148c39c5dcb87209"
       },
       "env": [
         {
