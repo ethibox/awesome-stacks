@@ -1,10 +1,12 @@
-# DOMAIN=example.com docker stack deploy -c openwebui.yml openwebui
+# DOMAIN=example.com ADMIN_EMAIL=admin@example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c openwebui.yml openwebui
 
 services:
   openwebui:
     image: ghcr.io/open-webui/open-webui:${VERSION:-v0.13.0}
     environment:
       - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+      - WEBUI_ADMIN_EMAIL=${ADMIN_EMAIL:?}
+      - WEBUI_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL:-https://api.openai.com/v1}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
