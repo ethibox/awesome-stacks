@@ -930,7 +930,6 @@
         },
         {
           "name": "APP_KEY",
-          "value": "S0meR@nd0mStringS0meR@nd0mString",
           "preset": true
         },
         {
@@ -1114,7 +1113,6 @@
       "env": [
         {
           "name": "SECRET_KEY",
-          "value": "mys3cr3t",
           "preset": true
         },
         {
