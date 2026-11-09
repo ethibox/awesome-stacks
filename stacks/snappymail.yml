@@ -1,0 +1,21 @@
+# DOMAIN=example.com docker stack deploy -c snappymail.yml snappymail
+# cat /var/lib/snappymail/_data_/_default_/admin_password.txt # Admin password for /?admin
+
+services:
+  snappymail:
+    image: djmaze/snappymail:${VERSION:-v2.38.2.1}
+    volumes:
+      - ${VOLUME_PATH}snappymail:/var/lib/snappymail
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.snappymail-${NUMBER:-1}.rule=Host(`${DOMAIN:-snappymail.localhost}`)
+        - traefik.http.services.snappymail-${NUMBER:-1}.loadbalancer.server.port=8888
+
+volumes:
+  snappymail:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
