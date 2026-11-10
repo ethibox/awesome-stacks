@@ -29,10 +29,11 @@ services:
       - traefik
 
   mariadb:
-    image: mariadb:10.6
+    image: mariadb:${MARIADB_VERSION:-11.4}
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     environment:
+      - MARIADB_AUTO_UPGRADE=1
       - MYSQL_DATABASE=${DATABASE_NAME:-ethibox}
       - MYSQL_USER=${DATABASE_USERNAME:-ethibox}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD:-myp@ssw0rd}
