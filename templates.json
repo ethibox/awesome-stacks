@@ -518,7 +518,6 @@
       "categories": [
         "Communication"
       ],
-      "manual": true,
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/zammad.png",
       "website": "https://zammad.org",
