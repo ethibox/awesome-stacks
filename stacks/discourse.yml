@@ -1,26 +1,33 @@
-# DOMAIN=example.com docker stack deploy -c discourse.yml discourse
-# rake admin:create
+# DOMAIN=example.com ADMIN_PASSWORD=$(openssl rand -hex 16) docker stack deploy -c discourse.yml discourse
+# ADMIN_PASSWORD must be at least 15 characters long
 
 services:
   app:
     image: discourse/discourse:${VERSION:-2026.7.5}
     command:
       - /bin/bash
-      - -c
+      - -ec
       - |
         rm -f /etc/runit/1.d/install-ssl
-        /sbin/boot
+        cd /var/www/discourse
+        su discourse -c 'bundle exec rake db:migrate'
+        su discourse -c 'bundle exec rails runner -' <<'RUBY'
+          email = ENV["DISCOURSE_DEVELOPER_EMAILS"]
+          exit if User.find_by_email(email)
+          admin = User.create!(username: "admin", email: email, password: ENV["ADMIN_PASSWORD"])
+          admin.grant_admin!
+          admin.activate
+        RUBY
+        exec /sbin/boot
     volumes:
       - ${VOLUME_PATH}data:/shared
     environment:
-      - LANG=${LANG:-fr_FR.UTF-8}
-      - DISCOURSE_DB_PORT=5432
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
       - DISCOURSE_DB_HOST=postgres
       - DISCOURSE_DB_NAME=discourse
       - DISCOURSE_DB_USERNAME=discourse
       - DISCOURSE_DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - DISCOURSE_REDIS_HOST=redis
-      - DISCOURSE_REDIS_PORT=6379
       - DISCOURSE_SMTP_PORT=${SMTP_PORT:-587}
       - DISCOURSE_SMTP_USER_NAME=${SMTP_USER}
       - DISCOURSE_SMTP_PASSWORD=${SMTP_PASSWORD}
@@ -30,9 +37,6 @@ services:
       - DISCOURSE_NOTIFICATION_EMAIL=${SMTP_FROM:-noreply@example.com}
       - DISCOURSE_HOSTNAME=${DOMAIN:-discourse.localhost}
       - DISCOURSE_FORCE_HTTPS=${FORCE_HTTPS:-true}
-      - GITLAB_APP_ID=${GITLAB_APP_ID}
-      - GITLAB_SECRET=${GITLAB_SECRET}
-      - GITLAB_URL=${GITLAB_URL}
     healthcheck:
       test: ["CMD-SHELL", "curl -fL http://localhost/srv/status || exit 1"]
       start_period: 1m
@@ -51,11 +55,10 @@ services:
   postgres:
     image: ${POSTGRES_IMAGE:-discourse/postgres}:${POSTGRES_VERSION:-pg16}
     environment:
-      - DB_USER=discourse
-      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
       - POSTGRES_DB=discourse
       - POSTGRES_USER=discourse
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "discourse"]
     volumes:
@@ -69,8 +72,6 @@ services:
 
   redis:
     image: redis:7-alpine
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
     deploy:
