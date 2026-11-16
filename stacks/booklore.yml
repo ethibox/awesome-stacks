@@ -16,7 +16,7 @@ services:
         condition: on-failure
 
   app:
-    image: booklore/booklore:${VERSION:-v1.16.5}
+    image: ghcr.io/booklore-app/booklore:${VERSION:-v2.4.0}
     environment:
       - BOOKLORE_PORT=6060
       - TZ=${TZ:-Europe/Paris}
