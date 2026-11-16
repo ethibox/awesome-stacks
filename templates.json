@@ -5,7 +5,7 @@
       "id": 1,
       "type": 2,
       "title": "Nextcloud",
-      "version": "35.0.2",
+      "version": "35.0.3",
       "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore.",
       "categories": [
         "Stockage"
@@ -16,7 +16,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nextcloud.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -531,7 +531,7 @@
       "id": 11,
       "type": 2,
       "title": "Rocketchat",
-      "version": "8.9.0",
+      "version": "8.9.1",
       "description": "Rocket.Chat est une plateforme de communication open-source avec messagerie, appels vidéo et partage de fichiers.",
       "categories": [
         "Communication"
@@ -542,7 +542,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/rocketchat.yml",
-        "commit": "bad81630034a321681e058effdb8c7e3160d456b"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
@@ -857,7 +857,7 @@
       "id": 16,
       "type": 2,
       "title": "Wekan",
-      "version": "12.87",
+      "version": "12.99",
       "description": "Wekan est un outil de gestion de projet open-source avec des tableaux Kanban pour organiser vos tâches.",
       "categories": [
         "Projets"
@@ -868,7 +868,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wekan.yml",
-        "commit": "5b55790feff15863d6b95df6a6c52618b6c9bcb0"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -995,7 +995,7 @@
       "id": 18,
       "type": 2,
       "title": "Etherpad",
-      "version": "3.3.15",
+      "version": "3.3.17",
       "description": "Etherpad est un éditeur en ligne open-source qui permet une édition collaborative en temps réel.",
       "categories": [
         "Documents"
@@ -1006,7 +1006,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/etherpad.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -1027,7 +1027,7 @@
       "id": 19,
       "type": 2,
       "title": "Ghost",
-      "version": "6.75.0",
+      "version": "6.77.0",
       "description": "Ghost est une plateforme open-source pour la création et la gestion d'une publication en ligne moderne.",
       "categories": [
         "Site web"
@@ -1038,7 +1038,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/ghost.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -1209,7 +1209,7 @@
       "id": 24,
       "type": 2,
       "title": "Element",
-      "version": "1.12.33",
+      "version": "1.12.35",
       "description": "Element est une application de collaboration open-source avec messagerie, partage de fichiers et visioconférence.",
       "categories": [
         "Communication"
@@ -1220,14 +1220,14 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/element.yml",
-        "commit": "bae61f7bb0e12bf55fef659695ab421e194be189"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
       "id": 25,
       "type": 2,
       "title": "Metabase",
-      "version": "0.65.2.6",
+      "version": "0.65.4.4",
       "description": "Metabase est un outil open-source d'analyse de données pour créer des tableaux de bord et explorer vos données.",
       "categories": [
         "Statistiques"
@@ -1238,7 +1238,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/metabase.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
@@ -1335,7 +1335,7 @@
       "id": 29,
       "type": 2,
       "title": "Prestashop",
-      "version": "8.2.8",
+      "version": "8.2.9",
       "description": "PrestaShop est un logiciel open-source de e-commerce pour créer et gérer votre boutique en ligne.",
       "categories": [
         "Vente"
@@ -1347,7 +1347,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/prestashop.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -1643,7 +1643,7 @@
       "id": 34,
       "type": 2,
       "title": "Wikijs",
-      "version": "3.1.0",
+      "version": "3.4.0",
       "description": "Wiki.js est une application wiki open-source moderne avec édition Markdown et contrôle d'accès granulaire.",
       "categories": [
         "Documents"
@@ -1654,7 +1654,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wikijs.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -1675,7 +1675,7 @@
       "id": 35,
       "type": 2,
       "title": "Passbolt",
-      "version": "5.17.0",
+      "version": "5.18.0",
       "description": "Passbolt est un gestionnaire de mots de passe open-source pour partager et stocker en toute sécurité les identifiants de votre équipe.",
       "categories": [
         "Sécurité"
@@ -1687,7 +1687,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/passbolt.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -1750,7 +1750,7 @@
       "id": 36,
       "type": 2,
       "title": "Wallabag",
-      "version": "2.6.15.1",
+      "version": "2.6.17",
       "description": "Wallabag est une application open-source pour sauvegarder vos pages web et les lire plus tard.",
       "categories": [
         "Stockage"
@@ -1761,7 +1761,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wallabag.yml",
-        "commit": "d3c41edd868e7f23c2c673813508af088a1fdfa1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
@@ -1880,7 +1880,7 @@
       "id": 41,
       "type": 2,
       "title": "Gogs",
-      "version": "0.14.3",
+      "version": "0.14.4",
       "description": "Gogs est un service Git open-source auto-hébergé léger pour héberger vos dépôts de code.",
       "categories": [
         "Stockage"
@@ -1891,7 +1891,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/gogs.yml",
-        "commit": "c6b5c2312d9fd87e47d32246fad5fc9c4d790604"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
@@ -2070,7 +2070,7 @@
       "id": 45,
       "type": 2,
       "title": "FreeScout",
-      "version": "2.2.23",
+      "version": "2.2.25",
       "description": "FreeScout est un helpdesk open-source léger pour gérer les emails de support client.",
       "categories": [
         "Communication"
@@ -2081,7 +2081,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/freescout.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -2442,7 +2442,7 @@
       "id": 54,
       "type": 2,
       "title": "Bookstack",
-      "version": "26.09.2",
+      "version": "26.09.3",
       "description": "BookStack est une application open-source de gestion des connaissances sous forme de livres, chapitres et pages.",
       "categories": [
         "Documents"
@@ -2453,7 +2453,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/bookstack.yml",
-        "commit": "6a221d64b74156284956e0bb148c39c5dcb87209"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -2888,7 +2888,7 @@
       "id": 66,
       "type": 2,
       "title": "Rallly",
-      "version": "4.16.4",
+      "version": "4.17.0",
       "description": "Rallly est un outil open-source de planification de réunion pour trouver facilement un créneau commun.",
       "categories": [
         "Communication"
@@ -2899,7 +2899,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/rallly.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -3009,7 +3009,7 @@
       "id": 69,
       "type": 2,
       "title": "Postiz",
-      "version": "2.25.3",
+      "version": "2.26.0",
       "description": "Postiz est un outil open-source de planification et de publication sur les réseaux sociaux.",
       "categories": [
         "Réseau social"
@@ -3020,7 +3020,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/postiz.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
@@ -3063,7 +3063,7 @@
       "id": 71,
       "type": 2,
       "title": "Outline",
-      "version": "1.12.0",
+      "version": "1.13.0",
       "description": "Outline est un wiki open-source rapide et collaboratif pour centraliser la documentation de votre équipe.",
       "categories": [
         "Documents"
@@ -3075,7 +3075,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/outline.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -3264,7 +3264,7 @@
       "id": 79,
       "type": 2,
       "title": "Umami",
-      "version": "3.4.1",
+      "version": "3.5.0",
       "description": "Umami est un outil d'analyse web open-source simple, rapide et respectueux de la vie privée.",
       "categories": [
         "Statistiques"
@@ -3275,7 +3275,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/umami.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -3672,7 +3672,7 @@
       "id": 88,
       "type": 2,
       "title": "Uptime-Kuma",
-      "version": "2.5.9",
+      "version": "2.5.11",
       "description": "Uptime Kuma est un outil de monitoring open-source pour surveiller la disponibilité de vos sites et services.",
       "categories": [
         "Statistiques"
@@ -3683,7 +3683,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/uptime-kuma.yml",
-        "commit": "2fabc4b775ec2bcc4c638fa8e6a0b535ef521093"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       }
     },
     {
@@ -3745,7 +3745,7 @@
       "id": 92,
       "type": 2,
       "title": "EuroOffice",
-      "version": "9.3.7",
+      "version": "9.3.8",
       "description": "EuroOffice est une suite bureautique open-source pour éditer collaborativement documents, feuilles de calcul et présentations.",
       "categories": [
         "Docs"
@@ -3756,7 +3756,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/eurooffice.yml",
-        "commit": "5f32c0dbba6d9703105055cca2814bd326680e9f"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -3769,7 +3769,7 @@
       "id": 93,
       "type": 2,
       "title": "Roundcube",
-      "version": "1.7.5",
+      "version": "1.7.6",
       "description": "Roundcube est un client de messagerie web open-source pour consulter et envoyer vos emails depuis votre navigateur.",
       "categories": [
         "Communication"
@@ -3780,7 +3780,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/roundcube.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
@@ -3811,7 +3811,7 @@
       "id": 94,
       "type": 2,
       "title": "OpenAthlete",
-      "version": "1.4.0",
+      "version": "1.6.0",
       "description": "OpenAthlete est une plateforme d'entraînement open-source pour suivre vos activités sportives et planifier vos séances.",
       "categories": [
         "Sport"
@@ -3822,7 +3822,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/openathlete.yml",
-        "commit": "59c9abfb2756ed581f107a0e6296f1c1153937ad"
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
       },
       "env": [
         {
