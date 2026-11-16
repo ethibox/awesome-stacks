@@ -44,9 +44,11 @@ update_app() {
 main() {
   command -v skopeo >/dev/null || { echo "skopeo is required: https://github.com/containers/skopeo/blob/main/install.md" >&2; exit 1; }
 
-  for app in ${@:-$(basename -s .yml stacks/*.yml)}; do
-    update_app "$app"
+  [ -z "$*" ] && set -- stacks/*.yml
+
+  for app in "$@"; do
+    update_app "$(basename "$app" .yml)"
   done
 }
 
-main ${@//--major/}
+main "${@/--major/}"
