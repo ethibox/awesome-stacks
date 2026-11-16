@@ -1,11 +1,21 @@
-# DOMAIN=example.com INTERNAL_SECRET=$(openssl rand -hex 32) SIGNALING_SECRET=$(openssl rand -hex 32) TURN_SECRET=$(openssl rand -hex 32) docker stack deploy -c nextcloud-talk.yml nextcloud-talk
+# DOMAIN=example.com NC_DOMAIN="nextcloud.example.com nextcloud2.example.com" INTERNAL_SECRET=$(openssl rand -hex 32) SIGNALING_SECRET=$(openssl rand -hex 32) TURN_SECRET=$(openssl rand -hex 32) docker stack deploy -c nextcloud-talk.yml nextcloud-talk
 
 services:
   web:
-    image: nextcloud/aio-talk:${VERSION:-latest}
+    image: nextcloud/aio-talk:${VERSION:-20261109_101109}
+    command:
+      - bash
+      - -c
+      - |
+        for domain in $$NC_DOMAIN; do
+          printf '\n[%s]\nurls = https://%s\nsecret = %s\n' "$$domain" "$$domain" "$$SIGNALING_SECRET" >> /conf/signaling.conf
+        done
+        sed -i "s/^backends = .*/backends = $$(echo $$NC_DOMAIN | tr ' ' ,)/" /conf/signaling.conf
+        exec dinit --system --container nats-server eturnal janus signaling
     environment:
       - TALK_PORT=${TALK_PORT:-3478}
       - TALK_HOST=${DOMAIN:-nextcloud-talk.localhost}
+      - TURN_DOMAIN=${DOMAIN:-nextcloud-talk.localhost}
       - NC_DOMAIN=${NC_DOMAIN:-nextcloud.example.com}
       - SIGNALING_SECRET=${SIGNALING_SECRET:?}
       - INTERNAL_SECRET=${INTERNAL_SECRET:?}
