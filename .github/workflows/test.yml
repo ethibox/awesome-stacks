@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+    paths: ['stacks/*.yml']
+  pull_request:
+    paths: ['stacks/*.yml']
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      stacks: ${{ steps.diff.outputs.stacks }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - id: diff
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          git diff --name-only --diff-filter=d $BASE HEAD -- 'stacks/*.yml' |
+            xargs -r basename -s .yml |
+            jq -Rnr '"stacks=\([inputs])"' >> $GITHUB_OUTPUT
+
+  deploy:
+    needs: changes
+    if: needs.changes.outputs.stacks != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        stack: ${{ fromJSON(needs.changes.outputs.stacks) }}
+    env:
+      STACK: ${{ matrix.stack }}
+    defaults:
+      run:
+        working-directory: stacks
+    steps:
+      - uses: actions/checkout@v5
+      - run: |
+          docker swarm init
+          docker network create -d overlay traefik-net
+          docker stack deploy -c traefik.yml traefik
+      - run: eval "$(head -1 $STACK.yml | sed 's/^# //; s/stack deploy/& --detach=false/')"
+      - run: |
+          grep -q traefik.enable=true $STACK.yml || exit 0
+          domain=$(grep -oP '^# DOMAIN=\K\S+' $STACK.yml)
+          curl -fsSko /dev/null --retry 30 --retry-delay 10 --retry-all-errors --resolve $domain:443:127.0.0.1 https://$domain
