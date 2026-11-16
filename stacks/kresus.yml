@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: bnjbvr/kresus:${VERSION:-latest}
+    image: bnjbvr/kresus:${VERSION:-0.26.0}
     volumes:
       - ${VOLUME_PATH}data:/home/user/data
     environment:

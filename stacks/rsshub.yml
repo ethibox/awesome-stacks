@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: diygod/rsshub:${VERSION:-latest}
+    image: diygod/rsshub:${VERSION:-2026-11-16}
     deploy:
       labels:
         - traefik.enable=true

@@ -33,7 +33,7 @@ services:
       - traefik
 
   companion:
-    image: quay.io/invidious/invidious-companion:${COMPANION_VERSION:-latest}
+    image: quay.io/invidious/invidious-companion:${COMPANION_VERSION:-2026.11.07-07ae73c}
     environment:
       - SERVER_SECRET_KEY=${COMPANION_KEY:?}
       - PROXY=${PROXY:-}

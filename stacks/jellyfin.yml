@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: jellyfin/jellyfin:${VERSION:-latest}
+    image: jellyfin/jellyfin:${VERSION:-10.11.11}
     volumes:
       - ${VOLUME_PATH}config:/config
       - ${VOLUME_PATH}cache:/cache

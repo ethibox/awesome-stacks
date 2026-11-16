@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: ghcr.io/maybe-finance/maybe:${VERSION:-latest}
+    image: ghcr.io/maybe-finance/maybe:${VERSION:-0.6.0}
     volumes:
       - ${VOLUME_PATH}storage:/rails/storage
     environment:

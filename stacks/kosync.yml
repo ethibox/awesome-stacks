@@ -2,7 +2,7 @@
 
 services:
   kosync:
-    image: ${IMAGE:-koreader/kosync}:${VERSION:-latest}
+    image: ${IMAGE:-koreader/kosync}:${VERSION:-v2.1.1}
     environment:
       - ENABLE_USER_REGISTRATION=${ENABLE_USER_REGISTRATION:-true}
     volumes:

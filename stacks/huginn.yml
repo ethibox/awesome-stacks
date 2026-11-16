@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: huginn/huginn:${VERSION:-latest}
+    image: huginn/huginn:${VERSION:-v2026.11.09}
     environment:
       - DATABASE_HOST=mariadb
       - HUGINN_DATABASE_NAME=huginn

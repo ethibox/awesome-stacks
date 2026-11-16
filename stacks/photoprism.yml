@@ -3,7 +3,7 @@
 
 services:
   photoprism:
-    image: photoprism/photoprism:${VERSION:-latest}
+    image: photoprism/photoprism:${VERSION:-261029}
     environment:
       - PHOTOPRISM_UID=${UID:-1000}
       - PHOTOPRISM_GID=${GID:-1000}

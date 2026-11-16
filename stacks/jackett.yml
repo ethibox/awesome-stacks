@@ -15,7 +15,7 @@ services:
       - traefik
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
     environment:
       - LOG_LEVEL=info
     networks:

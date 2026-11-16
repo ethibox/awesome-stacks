@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: audreyt/ethercalc:${VERSION:-latest}
+    image: audreyt/ethercalc:${VERSION:-0.20261101.3}
     environment:
       - REDIS_PORT_6379_TCP_ADDR=redis
       - REDIS_PORT_6379_TCP_PORT=6379
