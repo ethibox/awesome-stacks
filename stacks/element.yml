@@ -4,7 +4,7 @@
 
 services:
   web:
-    image: vectorim/element-web:${VERSION:-v1.12.33}
+    image: vectorim/element-web:${VERSION:-v1.12.35}
     user: root
     command:
       - /bin/sh

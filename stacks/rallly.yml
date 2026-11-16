@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: lukevella/rallly:${VERSION:-4.16.4}
+    image: lukevella/rallly:${VERSION:-4.17.0}
     environment:
       - DATABASE_URL=postgres://rallly:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres/rallly
       - NEXT_PUBLIC_BASE_URL=https://${DOMAIN:-rallly.localhost}

@@ -2,7 +2,7 @@
 
 services:
   ollama:
-    image: ollama/ollama:${VERSION:-0.40.15}
+    image: ollama/ollama:${VERSION:-0.40.16}
     volumes:
       - ${VOLUME_PATH}ollama:/root/.ollama
     networks:

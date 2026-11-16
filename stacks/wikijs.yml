@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: requarks/wiki:${VERSION:-3.1.0}
+    image: requarks/wiki:${VERSION:-3.4.0}
     environment:
       - DB_HOST=postgres
       - DB_USER=wikijs

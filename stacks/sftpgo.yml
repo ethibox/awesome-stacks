@@ -12,7 +12,7 @@ services:
         condition: on-failure
 
   app:
-    image: drakkan/sftpgo:${VERSION:-v2.7.0}
+    image: drakkan/sftpgo:${VERSION:-v2.7.6}
     environment:
       - SFTPGO_WEBDAVD__BINDINGS__0__PORT=8081
       - SFTPGO_WEBDAVD__BINDINGS__0__PREFIX=/webdav

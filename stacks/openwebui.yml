@@ -2,7 +2,7 @@
 
 services:
   openwebui:
-    image: ghcr.io/open-webui/open-webui:${VERSION:-v0.13.0}
+    image: ghcr.io/open-webui/open-webui:${VERSION:-v0.13.3}
     environment:
       - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
       - WEBUI_ADMIN_EMAIL=${ADMIN_EMAIL:?}

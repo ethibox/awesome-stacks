@@ -2,7 +2,7 @@
 
 services:
   grafana:
-    image: grafana/grafana:${VERSION:-13.3.0}
+    image: grafana/grafana:${VERSION:-13.3.1}
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
     volumes:
