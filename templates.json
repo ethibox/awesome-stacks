@@ -245,7 +245,7 @@
       "id": 6,
       "type": 2,
       "title": "Discourse",
-      "version": "2026.7.4",
+      "version": "2026.7.5",
       "description": "Discourse est une plateforme de forum open-source moderne pour créer des communautés en ligne.",
       "categories": [
         "Réseau social"
@@ -257,7 +257,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/discourse.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -439,7 +439,7 @@
       "id": 9,
       "type": 2,
       "title": "Formbricks",
-      "version": "2.6.0",
+      "version": "2.7.2",
       "description": "Formbricks est un outil open-source de création de formulaires et sondages pour collecter des retours utilisateurs.",
       "categories": [
         "Documents"
@@ -450,7 +450,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/formbricks.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -626,7 +626,7 @@
       "id": 13,
       "type": 2,
       "title": "n8n",
-      "version": "2.46.4",
+      "version": "2.48.4",
       "description": "n8n est un outil d'automatisation de workflows open-source pour connecter vos applications et automatiser vos tâches.",
       "categories": [
         "Automatisation"
@@ -638,7 +638,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/n8n.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -1065,7 +1065,7 @@
       "id": 20,
       "type": 2,
       "title": "Castopod",
-      "version": "1.13.7",
+      "version": "1.15.6",
       "description": "Castopod est une plateforme de podcasting open-source pour héberger et diffuser vos podcasts.",
       "categories": [],
       "manual": true,
@@ -1075,7 +1075,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/castopod.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -1096,7 +1096,7 @@
       "id": 21,
       "type": 2,
       "title": "Taiga",
-      "version": "6.9.0",
+      "version": "6.10.3",
       "description": "Taiga est une plateforme de gestion de projet open-source complète pour les équipes agiles.",
       "categories": [
         "Projets"
@@ -1107,7 +1107,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/taiga.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -1606,7 +1606,7 @@
       "id": 33,
       "type": 2,
       "title": "SuiteCRM",
-      "version": "8.1.3",
+      "version": "8.8.1",
       "description": "SuiteCRM est une application open-source de gestion de la relation client pour suivre vos prospects et clients.",
       "categories": [
         "Vente"
@@ -1618,7 +1618,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/suitecrm.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -2057,7 +2057,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/posthog.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -2221,7 +2221,7 @@
       "id": 49,
       "type": 2,
       "title": "NocoDB",
-      "version": "0.257.2",
+      "version": "0.301.5",
       "description": "NocoDB est une plateforme no-code open-source qui transforme n'importe quelle base de données en tableur collaboratif.",
       "categories": [
         "No-code"
@@ -2232,7 +2232,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nocodb.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -2275,7 +2275,7 @@
       "id": 51,
       "type": 2,
       "title": "Ntfy",
-      "version": "2.4.0",
+      "version": "2.38.1",
       "description": "Ntfy est un service de notifications push open-source simple pour envoyer des alertes vers vos appareils.",
       "categories": [
         "Communication"
@@ -2286,7 +2286,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/ntfy.yml",
-        "commit": "5f32c0dbba6d9703105055cca2814bd326680e9f"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       }
     },
     {
@@ -2410,7 +2410,7 @@
       "id": 53,
       "type": 2,
       "title": "Nocobase",
-      "version": "2.2.40",
+      "version": "2.2.46",
       "description": "NocoBase est une plateforme no-code open-source pour créer des applications métier avec une interface flexible et extensible.",
       "categories": [
         "No-code"
@@ -2421,7 +2421,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nocobase.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -2676,7 +2676,7 @@
       "id": 60,
       "type": 2,
       "title": "Moodle",
-      "version": "4.5",
+      "version": "4.5.4",
       "description": "Moodle est une plateforme d'apprentissage en ligne open-source pour créer et gérer des formations.",
       "categories": [],
       "enabled": true,
@@ -2685,7 +2685,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/moodle.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -2733,7 +2733,7 @@
       "id": 62,
       "type": 2,
       "title": "Memos",
-      "version": "0.25.0",
+      "version": "0.31.0",
       "description": "Memos est un outil open-source de prise de notes léger et respectueux de la vie privée.",
       "categories": [
         "Documents"
@@ -2744,7 +2744,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/memos.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       }
     },
     {
@@ -2991,7 +2991,7 @@
       "id": 68,
       "type": 2,
       "title": "Activepieces",
-      "version": "0.38.3",
+      "version": "0.93.0",
       "description": "Activepieces est un outil d'automatisation open-source pour connecter vos applications et automatiser vos tâches.",
       "categories": [
         "Automatisation"
@@ -3002,7 +3002,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/activepieces.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       }
     },
     {
@@ -3027,7 +3027,7 @@
       "id": 70,
       "type": 2,
       "title": "Twenty",
-      "version": "1.16.7",
+      "version": "1.23.9",
       "description": "Twenty est un CRM open-source moderne et flexible pour gérer vos relations clients.",
       "categories": [
         "Vente"
@@ -3039,7 +3039,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/twenty.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -3114,7 +3114,7 @@
       "id": 73,
       "type": 2,
       "title": "Paheko",
-      "version": "1.3.19.1",
+      "version": "1.3.24",
       "description": "Paheko est un outil open-source de gestion d'association simple, complet et efficace.",
       "categories": [
         "Facturation"
@@ -3125,7 +3125,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/paheko.yml",
-        "commit": "86e528873ade07deb04266fbb5cc39948c7744e2"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       }
     },
     {
@@ -3143,7 +3143,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/teable.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       }
     },
     {
@@ -3315,7 +3315,7 @@
       "id": 80,
       "type": 2,
       "title": "Keycloak",
-      "version": "26.5.4",
+      "version": "26.8.2",
       "description": "Keycloak est une solution open-source de gestion des identités et des accès destinée aux applications et services modernes.",
       "categories": [
         "Sécurité"
@@ -3326,7 +3326,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/keycloak.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -3612,7 +3612,7 @@
       "id": 87,
       "type": 2,
       "title": "Solidtime",
-      "version": "0.12.0",
+      "version": "0.22.1",
       "description": "Solidtime est une application open-source de suivi du temps de travail pour les freelances et les équipes.",
       "categories": [
         "Projets"
@@ -3624,7 +3624,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/solidtime.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       },
       "env": [
         {
@@ -3690,7 +3690,7 @@
       "id": 89,
       "type": 2,
       "title": "Affine",
-      "version": "0.26.3",
+      "version": "0.27.4",
       "description": "AFFiNE est un espace de travail open-source combinant notes, tableaux blancs et gestion de tâches.",
       "categories": [
         "Documents"
@@ -3702,7 +3702,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/affine.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
       }
     },
     {
