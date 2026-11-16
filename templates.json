@@ -250,14 +250,13 @@
       "categories": [
         "Réseau social"
       ],
-      "manual": true,
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/discourse.png",
       "website": "https://www.discourse.org",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/discourse.yml",
-        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
+        "commit": "260b4f79850f76f869f258117aebe429ad26309a"
       },
       "env": [
         {
@@ -293,34 +292,6 @@
           "name": "SMTP_FROM",
           "label": "Smtp From",
           "type": "email"
-        },
-        {
-          "name": "SMTP_AUTH",
-          "label": "SMTP authentication method",
-          "type": "select",
-          "select": [
-            {
-              "text": "login",
-              "value": "login"
-            },
-            {
-              "text": "plain",
-              "value": "plain"
-            }
-          ]
-        },
-        {
-          "name": "GITLAB_APP_ID",
-          "label": "Gitlab App ID"
-        },
-        {
-          "name": "GITLAB_SECRET",
-          "label": "Gitlab Secret",
-          "type": "password"
-        },
-        {
-          "name": "GITLAB_URL",
-          "label": "Gitlab URL"
         }
       ]
     },
