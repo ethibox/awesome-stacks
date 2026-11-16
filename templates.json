@@ -3171,7 +3171,7 @@
       "id": 77,
       "type": 2,
       "title": "Nextcloud-Talk",
-      "version": "latest",
+      "version": "20261109",
       "description": "Nextcloud Talk protège vos communications mieux que les autres plateformes d'équipe comme Microsoft Teams ou Slack.",
       "categories": [
         "Communication"
@@ -3182,12 +3182,12 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nextcloud-talk.yml",
-        "commit": "5f32c0dbba6d9703105055cca2814bd326680e9f"
+        "commit": "45290ff5f2fd98ef4d0da5c46d44099b5728d494"
       },
       "env": [
         {
           "name": "NC_DOMAIN",
-          "label": "Nextcloud Domain"
+          "label": "Nextcloud Domains (space separated)"
         },
         {
           "name": "SIGNALING_SECRET",
