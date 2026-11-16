@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: &twenty-image twentycrm/twenty:${VERSION:-v1.16.7}
+    image: &twenty-image twentycrm/twenty:${VERSION:-v1.23.9}
     environment: &twenty-environment
       - PORT=3000
       - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/${POSTGRES_DB:-twenty}

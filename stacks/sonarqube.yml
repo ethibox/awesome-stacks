@@ -13,7 +13,7 @@ services:
         condition: on-failure
 
   app:
-    image: sonarqube:${VERSION:-26.1.0.118079-community}
+    image: sonarqube:${VERSION:-26.11.0.134175-community}
     environment:
       - SONAR_JDBC_USERNAME=${POSTGRES_USER:-sonarqube}
       - SONAR_JDBC_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}

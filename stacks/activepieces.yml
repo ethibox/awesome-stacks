@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: ghcr.io/activepieces/activepieces:${VERSION:-0.38.3}
+    image: ghcr.io/activepieces/activepieces:${VERSION:-0.93.0}
     environment:
       - AP_POSTGRES_PORT=5432
       - AP_POSTGRES_HOST=postgres

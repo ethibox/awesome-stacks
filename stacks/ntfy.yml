@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: binwiederhier/ntfy:${VERSION:-v2.4.0}
+    image: binwiederhier/ntfy:${VERSION:-v2.38.1}
     entrypoint: /bin/sh
     command:
       - -c

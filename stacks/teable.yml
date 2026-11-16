@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: teableio/teable:${VERSION:-1.8.0-alpha-build.915-amd64}
+    image: teableio/teable:${VERSION:-1.8.0-alpha-build.991-amd64}
     environment:
       - NEXT_ENV_IMAGES_ALL_REMOTE=true
       - PUBLIC_ORIGIN=https://${DOMAIN:-teable.localhost}

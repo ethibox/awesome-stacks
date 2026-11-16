@@ -2,7 +2,7 @@
 
 services:
   directus:
-    image: directus/directus:${VERSION:-11.1.0}
+    image: directus/directus:${VERSION:-11.17.4}
     environment:
       - KEY=${KEY:?}
       - ACCESS_TOKEN_TTL=${ACCESS_TOKEN_TTL:-15m}

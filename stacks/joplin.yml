@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: joplin/server:${VERSION:-3.3.13}
+    image: joplin/server:${VERSION:-3.7.6}
     environment:
       - APP_PORT=22300
       - DB_CLIENT=pg

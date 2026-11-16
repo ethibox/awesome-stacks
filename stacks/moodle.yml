@@ -2,7 +2,7 @@
 
 services:
   moodle:
-    image: bitnami/moodle:${VERSION:-4.5}
+    image: bitnamilegacy/moodle:${VERSION:-4.5.4}
     environment:
       - MOODLE_USERNAME=${ADMIN_USERNAME:-admin}
       - MOODLE_PASSWORD=${ADMIN_PASSWORD:?}

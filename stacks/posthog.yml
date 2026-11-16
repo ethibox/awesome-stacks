@@ -69,7 +69,7 @@ services:
       - internal
 
   kafka:
-    image: bitnami/kafka:2.8.1-debian-10-r99
+    image: bitnamilegacy/kafka:2.8.1
     environment:
       - KAFKA_BROKER_ID=1001
       - KAFKA_CFG_RESERVED_BROKER_MAX_ID=1001

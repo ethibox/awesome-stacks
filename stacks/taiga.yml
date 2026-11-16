@@ -21,7 +21,7 @@ services:
       - traefik
 
   front:
-    image: taigaio/taiga-front:${VERSION:-6.9.0}
+    image: taigaio/taiga-front:${VERSION:-6.10.3}
     environment: &taiga-environment
       - SECRET_KEY=${SECRET_KEY:?}
       - TAIGA_SITES_SCHEME=https
@@ -47,7 +47,7 @@ services:
       - internal
 
   back:
-    image: taigaio/taiga-back:${VERSION:-6.9.0}
+    image: taigaio/taiga-back:${VERSION:-6.10.2}
     entrypoint: /bin/sh
     command:
       - -c
@@ -63,7 +63,7 @@ services:
       - internal
 
   async:
-    image: taigaio/taiga-back:${VERSION:-6.9.0}
+    image: taigaio/taiga-back:${VERSION:-6.10.2}
     environment: *taiga-environment
     volumes: *taiga-volumes
     entrypoint: /taiga-back/docker/async_entrypoint.sh
@@ -71,14 +71,14 @@ services:
       - internal
 
   events:
-    image: taigaio/taiga-events:${VERSION:-6.9.0}
+    image: taigaio/taiga-events:${VERSION:-6.10.0}
     environment: *taiga-environment
     volumes: *taiga-volumes
     networks:
       - internal
 
   protected:
-    image: taigaio/taiga-protected:${VERSION:-6.9.0}
+    image: taigaio/taiga-protected:${VERSION:-6.10.1}
     environment: *taiga-environment
     volumes: *taiga-volumes
     networks:

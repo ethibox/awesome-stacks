@@ -12,7 +12,7 @@ services:
         condition: on-failure
 
   web:
-    image: keycloak/keycloak:${VERSION:-26.5.4}
+    image: keycloak/keycloak:${VERSION:-26.8.2-2}
     command: start
     environment:
       - KC_DB=postgres

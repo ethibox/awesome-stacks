@@ -2,7 +2,7 @@
 
 services:
   cryptpad:
-    image: promasu/cryptpad:${VERSION:-v4.9.0-nginx-alpine}
+    image: promasu/cryptpad:${VERSION:-v4.14.1-nginx-alpine}
     environment:
       - CPAD_MAIN_DOMAIN=${DOMAIN:-cryptpad.localhost}
       - CPAD_HTTP2_DISABLE=true

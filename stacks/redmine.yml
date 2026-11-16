@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: redmine:${VERSION:-4.2.2-alpine}
+    image: redmine:${VERSION:-4.2.10-alpine}
     environment:
       - REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE:?}
       - REDMINE_DB_POSTGRES=postgres

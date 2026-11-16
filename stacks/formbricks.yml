@@ -2,7 +2,7 @@
 
 services:
   formbricks:
-    image: formbricks/formbricks:${VERSION:-2.6.0}
+    image: formbricks/formbricks:${VERSION:-2.7.2}
     environment:
       - WEBAPP_URL=https://${DOMAIN:-formbricks.localhost}
       - DATABASE_URL=postgresql://formbricks:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/formbricks?schema=public
