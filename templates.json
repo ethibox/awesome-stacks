@@ -3404,7 +3404,7 @@
       "id": 82,
       "type": 2,
       "title": "Booklore",
-      "version": "1.16.5",
+      "version": "2.4.0",
       "description": "Booklore est un gestionnaire et lecteur de livres open-source auto-hébergé pour organiser votre bibliothèque.",
       "categories": [
         "Stockage"
@@ -3415,7 +3415,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/booklore.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "a7f61b5259aae8c5099ea1ee17f7f238c67b6298"
       }
     },
     {
