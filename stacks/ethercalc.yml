@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c ethercalc ethercalc
+# DOMAIN=example.com docker stack deploy -c ethercalc.yml ethercalc
 
 services:
   web:

@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c shaarli.yml shaarli.yml
+# DOMAIN=example.com docker stack deploy -c shaarli.yml shaarli
 
 services:
   web:

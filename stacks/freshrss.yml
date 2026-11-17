@@ -1,4 +1,4 @@
-# DOMAIN=example.com docker stack deploy -c freshrss.yml freshrss.yml
+# DOMAIN=example.com docker stack deploy -c freshrss.yml freshrss
 
 services:
   web:
