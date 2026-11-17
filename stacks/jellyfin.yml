@@ -13,6 +13,11 @@ services:
         - traefik.http.routers.jellyfin-${NUMBER:-1}.rule=Host(`${DOMAIN:-jellyfin.localhost}`)
         - traefik.http.services.jellyfin-${NUMBER:-1}.loadbalancer.server.port=8096
 
+volumes:
+  config:
+  cache:
+  media:
+
 networks:
   default:
     external: true
