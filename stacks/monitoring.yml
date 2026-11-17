@@ -14,7 +14,7 @@ services:
         condition: on-failure
 
   grafana:
-    image: grafana/grafana:${GRAFANA_VERSION:-12.4.14}
+    image: grafana/grafana:${GRAFANA_VERSION:-13.3.1}
     environment:
       - GF_SMTP_ENABLED=true
       - GF_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
@@ -143,7 +143,7 @@ services:
 
   process-exporter:
     image: ncabatoff/process-exporter:0.8.7
-    command: --procfs /host/proc --config.path /etc/process-exporter/process-conf.yml
+    command: --procfs /host/proc --config.path /etc/process-exporter/process-conf.yml --recheck
     volumes:
       - /proc:/host/proc:ro
       - ${VOLUME_PATH}config:/etc/process-exporter:ro
