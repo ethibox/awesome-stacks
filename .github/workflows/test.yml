@@ -6,46 +6,59 @@ on:
     paths: ['stacks/*.yml']
   pull_request:
     paths: ['stacks/*.yml']
+  workflow_dispatch:
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      stacks: ${{ steps.diff.outputs.stacks }}
+      files: ${{ steps.list.outputs.files }}
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - id: diff
+
+      - id: list
+        working-directory: stacks
         env:
           BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
-          git diff --name-only --diff-filter=d $BASE HEAD -- 'stacks/*.yml' |
-            xargs -r basename -s .yml |
-            jq -Rnr '"stacks=\([inputs])"' >> $GITHUB_OUTPUT
+          if [ -n "$BASE" ]; then
+            files=$(git diff --name-only --relative --diff-filter=AMR $BASE HEAD -- '*.yml')
+          else
+            files=$(ls *.yml)
+          fi
+          echo "files=$(jq -nc '$ARGS.positional' --args $files)" >> $GITHUB_OUTPUT
 
   deploy:
     needs: changes
-    if: needs.changes.outputs.stacks != '[]'
+    if: needs.changes.outputs.files != '[]'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        stack: ${{ fromJSON(needs.changes.outputs.stacks) }}
-    env:
-      STACK: ${{ matrix.stack }}
+        file: ${{ fromJSON(needs.changes.outputs.files) }}
     defaults:
       run:
         working-directory: stacks
     steps:
       - uses: actions/checkout@v5
+
       - run: |
+          sudo sysctl -w vm.max_map_count=262144 # needed by Elasticsearch
           docker swarm init
           docker network create -d overlay traefik-net
           docker stack deploy -c traefik.yml traefik
-      - run: eval "$(head -1 $STACK.yml | sed 's/^# //; s/stack deploy/& --detach=false/')"
-      - run: |
-          grep -q traefik.enable=true $STACK.yml || exit 0
-          domain=$(grep -oP '^# DOMAIN=\K\S+' $STACK.yml)
-          curl -fsSko /dev/null --retry 30 --retry-delay 10 --retry-all-errors --resolve $domain:443:127.0.0.1 https://$domain
+
+      - run: eval "$(head -1 ${{ matrix.file }} | sed 's/^# //')"
+
+      - timeout-minutes: 15
+        run: |
+          grep -q traefik.enable=true ${{ matrix.file }} || exit 0
+          while curl -s -k -o /dev/null -w '%{http_code}' --resolve example.com:443:127.0.0.1 https://example.com |
+            grep -qE '000|404|5..'; do sleep 10; done
+
+      - if: failure()
+        run: |
+          docker node ps --no-trunc
+          for service in $(docker service ls -q); do docker service logs --tail 20 $service; done
