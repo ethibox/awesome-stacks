@@ -12,6 +12,8 @@ services:
             echo "Waiting for Keycloak at $$GRIST_OIDC_IDP_ISSUER..."
             sleep 5
           done
+        else
+          unset GRIST_OIDC_IDP_ISSUER # Grist enables OIDC even when empty
         fi
         exec node ./sandbox/supervisor.mjs
     volumes:
