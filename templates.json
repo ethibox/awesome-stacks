@@ -1046,7 +1046,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/castopod.yml",
-        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
+        "commit": "736bb9f46c94b4e035d67ee740eef9f3200360e3"
       },
       "env": [
         {
