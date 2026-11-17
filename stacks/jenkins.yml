@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: jenkins/jenkins:${VERSION:-2.590}
+    image: jenkins/jenkins:${VERSION:-2.591}
     user: root
     volumes:
       - ${VOLUME_PATH}data:/var/jenkins_home

@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: paheko/paheko:${VERSION:-1.3.24}
+    image: paheko/paheko:${VERSION:-1.3.25}
     volumes:
       - ${VOLUME_PATH}data:/var/www/paheko/data
     deploy:
