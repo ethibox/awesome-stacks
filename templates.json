@@ -1009,7 +1009,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/ghost.yml",
-        "commit": "e86a48a0431c9fcff665e144cefc0392efc9db0a"
+        "commit": "d1c8b70028afd0e7aa420e102e778571e88d2ef6"
       },
       "env": [
         {
