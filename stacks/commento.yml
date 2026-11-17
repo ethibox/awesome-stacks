@@ -31,6 +31,7 @@ services:
       - POSTGRES_DB=commento
       - POSTGRES_USER=commento
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - POSTGRES_INITDB_ARGS=-c password_encryption=md5
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     deploy:
