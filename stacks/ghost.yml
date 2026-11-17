@@ -34,6 +34,7 @@ services:
 
   mariadb:
     image: mariadb:${MARIADB_VERSION:-11.4}
+    command: --character-set-collations=utf8mb4=utf8mb4_general_ci
     environment:
       - MYSQL_USER=ghost
       - MYSQL_DATABASE=ghost
