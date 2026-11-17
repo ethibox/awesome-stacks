@@ -7,9 +7,6 @@ services:
       - /bin/sh
       - -c
       - |
-        apt update
-        apt install -y wget
-        wget -O /app/.env https://docs.joinplu.me/docker.sample.env
         plm migration run
         plm search init
         plm instance new -d $$BASE_URL -n $$INSTANCE_NAME
@@ -17,6 +14,8 @@ services:
         plume
     environment:
       - BASE_URL=${DOMAIN:-plume.localhost}
+      - DATABASE_URL=postgres://plume:myp%40ssw0rd@postgres:5432/plume
+      - ROCKET_ADDRESS=0.0.0.0
       - MAIL_SERVER=${MAIL_SERVER:-example.org}
       - ROCKET_SECRET_KEY=${ROCKET_SECRET_KEY:?}
       - INSTANCE_NAME=${INSTANCE_NAME:-Plume}
@@ -39,7 +38,7 @@ services:
     environment:
       - POSTGRES_DB=plume
       - POSTGRES_USER=plume
-      - POSTGRES_PASSWORD=passw0rd
+      - POSTGRES_PASSWORD=myp@ssw0rd
     volumes:
       - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
     networks:
