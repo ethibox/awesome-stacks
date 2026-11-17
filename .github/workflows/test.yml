@@ -7,6 +7,10 @@ on:
   pull_request:
     paths: ['stacks/*.yml']
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   changes:
     runs-on: ubuntu-latest
