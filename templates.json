@@ -3552,7 +3552,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/monitoring.yml",
-        "commit": "14b012413205939f967defaddd09b126b272d473"
+        "commit": "d27776bd6e8fec7227379c8e382fd1cbd8ccf2d1"
       },
       "env": [
         {
