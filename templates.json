@@ -1394,7 +1394,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/commento.yml",
-        "commit": "02d5653642515772139fce9a0965fce3f05a7ccb"
+        "commit": "f417c7af749c7ace3d49aa49e0664edeffe49104"
       },
       "env": [
         {
