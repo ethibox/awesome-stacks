@@ -1,7 +1,7 @@
 # DOMAIN=example.com CRON_SECRET=$(openssl rand -hex 32) ENCRYPTION_KEY=$(openssl rand -hex 32) NEXTAUTH_SECRET=$(openssl rand -hex 32) docker stack deploy -c formbricks.yml formbricks
 
 services:
-  formbricks:
+  app:
     image: formbricks/formbricks:${VERSION:-2.7.2}
     environment:
       - WEBAPP_URL=https://${DOMAIN:-formbricks.localhost}
@@ -33,7 +33,7 @@ services:
       - traefik
 
   postgres:
-    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
+    image: ${POSTGRES_IMAGE:-pgvector/pgvector}:${POSTGRES_VERSION:-pg16}
     environment:
       - POSTGRES_DB=formbricks
       - POSTGRES_USER=formbricks
