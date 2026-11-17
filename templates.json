@@ -421,7 +421,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/formbricks.yml",
-        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
+        "commit": "3de0c9e22dd73e40a97abeee8a36545261390c57"
       },
       "env": [
         {
