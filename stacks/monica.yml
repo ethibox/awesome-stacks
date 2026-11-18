@@ -1,0 +1,55 @@
+# DOMAIN=example.com APP_KEY=$(openssl rand -hex 16) docker stack deploy -c monica.yml monica
+
+services:
+  app:
+    image: monica:${VERSION:-4.1.2-apache}
+    environment:
+      - APP_KEY=${APP_KEY:?}
+      - APP_URL=https://${DOMAIN:-monica.localhost}
+      - APP_TRUSTED_PROXIES=*
+      - DB_HOST=mariadb
+      - DB_DATABASE=monica
+      - DB_USERNAME=monica
+      - DB_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - LOG_CHANNEL=stderr
+      - CACHE_DRIVER=database
+      - SESSION_DRIVER=database
+      - QUEUE_DRIVER=sync
+    volumes:
+      - ${VOLUME_PATH}storage:/var/www/html/storage
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.monica-${NUMBER:-1}.rule=Host(`${DOMAIN:-monica.localhost}`)
+        - traefik.http.services.monica-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  mariadb:
+    image: mariadb:${MARIADB_VERSION:-11.4}
+    volumes:
+      - ${VOLUME_PATH}mariadb:/var/lib/mysql
+    environment:
+      - MARIADB_AUTO_UPGRADE=1
+      - MYSQL_USER=${MYSQL_USER:-monica}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-monica}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+    networks:
+      - internal
+
+volumes:
+  storage:
+  mariadb:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
