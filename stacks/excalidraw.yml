@@ -1,0 +1,18 @@
+# DOMAIN=example.com docker stack deploy -c excalidraw.yml excalidraw
+
+services:
+  web:
+    image: excalidraw/excalidraw:${VERSION:-latest}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.excalidraw-${NUMBER:-1}.rule=Host(`${DOMAIN:-excalidraw.localhost}`)
+        - traefik.http.services.excalidraw-${NUMBER:-1}.loadbalancer.server.port=80
+
+networks:
+  default:
+    external: true
+    name: traefik-net
