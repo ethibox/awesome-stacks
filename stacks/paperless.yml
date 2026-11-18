@@ -1,0 +1,42 @@
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c paperless.yml paperless
+
+services:
+  web:
+    image: ghcr.io/paperless-ngx/paperless-ngx:${VERSION:-3.5.1}
+    environment:
+      - PAPERLESS_URL=https://${DOMAIN:-paperless.localhost}
+      - PAPERLESS_SECRET_KEY=${SECRET_KEY:?}
+      - PAPERLESS_REDIS=redis://redis:6379
+      - PAPERLESS_ADMIN_USER=${ADMIN_USER:-admin}
+      - PAPERLESS_ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
+    volumes:
+      - ${VOLUME_PATH}data:/usr/src/paperless/data
+      - ${VOLUME_PATH}media:/usr/src/paperless/media
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.paperless-${NUMBER:-1}.rule=Host(`${DOMAIN:-paperless.localhost}`)
+        - traefik.http.services.paperless-${NUMBER:-1}.loadbalancer.server.port=8000
+    networks:
+      - internal
+      - traefik
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal
+
+volumes:
+  data:
+  media:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
