@@ -1,0 +1,30 @@
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd SECRET_KEY_BASE=$(openssl rand -hex 64) docker stack deploy -c openproject.yml openproject
+
+services:
+  web:
+    image: openproject/openproject:${VERSION:-17.9.7}
+    environment:
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
+      - OPENPROJECT_HOST__NAME=${DOMAIN:-openproject.localhost}
+      - OPENPROJECT_SEED__ADMIN__USER__PASSWORD=${ADMIN_PASSWORD:?}
+      - OPENPROJECT_SEED__ADMIN__USER__PASSWORD__RESET=false
+    volumes:
+      - ${VOLUME_PATH}pgdata:/var/openproject/pgdata
+      - ${VOLUME_PATH}assets:/var/openproject/assets
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.openproject-${NUMBER:-1}.rule=Host(`${DOMAIN:-openproject.localhost}`)
+        - traefik.http.services.openproject-${NUMBER:-1}.loadbalancer.server.port=80
+
+volumes:
+  pgdata:
+  assets:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
