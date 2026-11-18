@@ -1,0 +1,53 @@
+# DOMAIN=example.com NEXTAUTH_SECRET=$(openssl rand -hex 32) MEILI_MASTER_KEY=$(openssl rand -hex 32) docker stack deploy -c karakeep.yml karakeep
+
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:${VERSION:-0.35.0}
+    environment:
+      - DATA_DIR=/data
+      - NEXTAUTH_URL=https://${DOMAIN:-karakeep.localhost}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:?}
+      - MEILI_ADDR=http://meilisearch:7700
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:?}
+      - BROWSER_WEB_URL=http://chrome:9222
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.karakeep-${NUMBER:-1}.rule=Host(`${DOMAIN:-karakeep.localhost}`)
+        - traefik.http.services.karakeep-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  chrome:
+    image: ghcr.io/karakeep-app/karakeep-chrome:157.0.8103.78-r1
+    command: --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-blink-features=AutomationControlled --window-size=1440,900
+    networks:
+      - internal
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.55.0
+    environment:
+      - MEILI_NO_ANALYTICS=true
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:?}
+    volumes:
+      - ${VOLUME_PATH}meilisearch:/meili_data
+    networks:
+      - internal
+
+volumes:
+  data:
+  meilisearch:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
