@@ -1,0 +1,72 @@
+# DOMAIN=example.com SECRET_KEY=$(openssl rand -hex 32) docker stack deploy -c penpot.yml penpot
+
+services:
+  penpot-frontend:
+    image: penpotapp/frontend:${VERSION:-2.19.3}
+    environment: &penpot-environment
+      - PENPOT_FLAGS=disable-email-verification disable-admin-console
+      - PENPOT_PUBLIC_URI=https://${DOMAIN:-penpot.localhost}
+      - PENPOT_SECRET_KEY=${SECRET_KEY:?}
+      - PENPOT_INTERNAL_URI=http://penpot-frontend:8080
+      - PENPOT_REDIS_URI=redis://valkey/0
+      - PENPOT_DATABASE_URI=postgresql://postgres/penpot
+      - PENPOT_DATABASE_USERNAME=penpot
+      - PENPOT_DATABASE_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - PENPOT_OBJECTS_STORAGE_BACKEND=fs
+      - PENPOT_OBJECTS_STORAGE_FS_DIRECTORY=/opt/data/assets
+    volumes:
+      - ${VOLUME_PATH}assets:/opt/data/assets
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.penpot-${NUMBER:-1}.rule=Host(`${DOMAIN:-penpot.localhost}`)
+        - traefik.http.services.penpot-${NUMBER:-1}.loadbalancer.server.port=8080
+    networks:
+      - internal
+      - traefik
+
+  penpot-backend:
+    image: penpotapp/backend:${VERSION:-2.19.3}
+    environment: *penpot-environment
+    volumes:
+      - ${VOLUME_PATH}assets:/opt/data/assets
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  penpot-exporter:
+    image: penpotapp/exporter:${VERSION:-2.19.3}
+    environment: *penpot-environment
+    networks:
+      - internal
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=penpot
+      - POSTGRES_USER=penpot
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  valkey:
+    image: valkey/valkey:8.1-alpine
+    networks:
+      - internal
+
+volumes:
+  assets:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
