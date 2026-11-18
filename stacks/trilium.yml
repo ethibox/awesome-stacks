@@ -1,0 +1,23 @@
+# DOMAIN=example.com docker stack deploy -c trilium.yml trilium
+
+services:
+  web:
+    image: triliumnext/trilium:${VERSION:-v0.107.0}
+    volumes:
+      - ${VOLUME_PATH}data:/home/node/trilium-data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.trilium-${NUMBER:-1}.rule=Host(`${DOMAIN:-trilium.localhost}`)
+        - traefik.http.services.trilium-${NUMBER:-1}.loadbalancer.server.port=8080
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
