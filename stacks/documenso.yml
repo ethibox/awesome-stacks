@@ -1,0 +1,67 @@
+# DOMAIN=example.com NEXTAUTH_SECRET=$(openssl rand -hex 32) ENCRYPTION_KEY=$(openssl rand -hex 32) ENCRYPTION_SECONDARY_KEY=$(openssl rand -hex 32) docker stack deploy -c documenso.yml documenso
+
+services:
+  init:
+    image: busybox
+    command: chown -R 1001 /opt/documenso
+    volumes:
+      - ${VOLUME_PATH}cert:/opt/documenso
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  app:
+    image: documenso/documenso:${VERSION:-v2.22.0}
+    command: ['sh', '-c', '[ -f /opt/documenso/cert.p12 ] || { openssl req -x509 -newkey rsa:2048 -nodes -days 3650 -subj /CN=documenso -keyout /tmp/key.pem -out /tmp/cert.pem && openssl pkcs12 -export -inkey /tmp/key.pem -in /tmp/cert.pem -out /opt/documenso/cert.p12 -passout env:NEXT_PRIVATE_SIGNING_PASSPHRASE; } || exit 1; exec sh start.sh']
+    environment:
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:?}
+      - NEXT_PRIVATE_ENCRYPTION_KEY=${ENCRYPTION_KEY:?}
+      - NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY=${ENCRYPTION_SECONDARY_KEY:?}
+      - NEXT_PRIVATE_SIGNING_LOCAL_FILE_PATH=/opt/documenso/cert.p12
+      - NEXT_PRIVATE_SIGNING_PASSPHRASE=${CERT_PASSWORD:-myp@ssw0rd}
+      - NEXT_PUBLIC_WEBAPP_URL=https://${DOMAIN:-documenso.localhost}
+      - NEXT_PRIVATE_DATABASE_URL=postgres://documenso:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/documenso
+      - NEXT_PRIVATE_SMTP_TRANSPORT=smtp-auth
+      - NEXT_PRIVATE_SMTP_HOST=${SMTP_HOST}
+      - NEXT_PRIVATE_SMTP_PORT=${SMTP_PORT:-587}
+      - NEXT_PRIVATE_SMTP_USERNAME=${SMTP_USERNAME}
+      - NEXT_PRIVATE_SMTP_PASSWORD=${SMTP_PASSWORD}
+      - NEXT_PRIVATE_SMTP_FROM_NAME=Documenso
+      - NEXT_PRIVATE_SMTP_FROM_ADDRESS=${SMTP_FROM:-noreply@example.com}
+      - DOCUMENSO_DISABLE_TELEMETRY=true
+    volumes:
+      - ${VOLUME_PATH}cert:/opt/documenso
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.documenso-${NUMBER:-1}.rule=Host(`${DOMAIN:-documenso.localhost}`)
+        - traefik.http.services.documenso-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=documenso
+      - POSTGRES_USER=documenso
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  cert:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
