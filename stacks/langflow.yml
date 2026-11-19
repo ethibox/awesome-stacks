@@ -1,0 +1,30 @@
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c langflow.yml langflow
+
+services:
+  web:
+    image: langflowai/langflow:${VERSION:-1.13.3}
+    environment:
+      - LANGFLOW_CONFIG_DIR=/app/langflow
+      - LANGFLOW_SAVE_DB_IN_CONFIG_DIR=true
+      - LANGFLOW_AUTO_LOGIN=false
+      - LANGFLOW_SUPERUSER=${ADMIN_USERNAME:-admin}
+      - LANGFLOW_SUPERUSER_PASSWORD=${ADMIN_PASSWORD:?}
+      - DO_NOT_TRACK=true
+    volumes:
+      - ${VOLUME_PATH}data:/app/langflow
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.langflow-${NUMBER:-1}.rule=Host(`${DOMAIN:-langflow.localhost}`)
+        - traefik.http.services.langflow-${NUMBER:-1}.loadbalancer.server.port=7860
+
+volumes:
+  data:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
