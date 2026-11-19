@@ -1,6 +1,16 @@
 # DOMAIN=example.com SECRET=$(openssl rand -hex 32) docker stack deploy -c lufi.yml lufi
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /usr/lufi/data /usr/lufi/files
+    volumes: &lufi-volumes
+      - ${VOLUME_PATH}data:/usr/lufi/data
+      - ${VOLUME_PATH}files:/usr/lufi/files
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     image: &lufi-image ethibox/lufi:${VERSION:-0.07.4}
     environment: &lufi-environment
@@ -13,9 +23,7 @@ services:
       - POLICY_WHEN_FULL=${POLICY_WHEN_FULL:-warn}
       - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-contact@example.com}
-    volumes: &lufi-volumes
-      - ${VOLUME_PATH}data:/usr/lufi/data
-      - ${VOLUME_PATH}files:/usr/lufi/files
+    volumes: *lufi-volumes
     deploy:
       resources:
         limits:
@@ -32,13 +40,13 @@ services:
     image: *lufi-image
     command:
       - /bin/sh
-      - -c
+      - -ec
       - |
         [ "$$ENABLE_CRON" = "true" ] || exit 0
         while true; do
-          carton exec script/lufi cron cleanfiles --mode production
-          carton exec script/lufi cron cleanbdd --mode production
-          carton exec script/lufi cron watch --mode production
+          script/lufi cron cleanfiles --mode production
+          script/lufi cron cleanbdd --mode production
+          script/lufi cron watch --mode production
           sleep $$CRON_DELAY
         done
     environment: *lufi-environment
