@@ -1,0 +1,27 @@
+# DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c siyuan.yml siyuan
+
+services:
+  web:
+    image: b3log/siyuan:${VERSION:-v3.8.10}
+    command: serve
+    environment:
+      - SIYUAN_WORKSPACE_PATH=/siyuan/workspace
+      - SIYUAN_ACCESS_AUTH_CODE=${ADMIN_PASSWORD:?}
+    volumes:
+      - ${VOLUME_PATH}workspace:/siyuan/workspace
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.siyuan-${NUMBER:-1}.rule=Host(`${DOMAIN:-siyuan.localhost}`)
+        - traefik.http.services.siyuan-${NUMBER:-1}.loadbalancer.server.port=6806
+
+volumes:
+  workspace:
+
+networks:
+  default:
+    external: true
+    name: traefik-net
