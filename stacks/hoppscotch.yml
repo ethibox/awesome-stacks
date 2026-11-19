@@ -1,0 +1,51 @@
+# DOMAIN=example.com DATA_ENCRYPTION_KEY=$(openssl rand -hex 16) docker stack deploy -c hoppscotch.yml hoppscotch
+
+services:
+  app:
+    image: hoppscotch/hoppscotch:${VERSION:-2026.10.1}
+    command: ['sh', '-c', 'pnpm exec prisma migrate deploy && exec node /usr/src/app/aio_run.mjs']
+    environment:
+      - DATABASE_URL=postgresql://hoppscotch:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/hoppscotch
+      - DATA_ENCRYPTION_KEY=${DATA_ENCRYPTION_KEY:?}
+      - ENABLE_SUBPATH_BASED_ACCESS=true
+      - TRUST_PROXY=true
+      - WHITELISTED_ORIGINS=https://${DOMAIN:-hoppscotch.localhost},app://hoppscotch
+      - VITE_BASE_URL=https://${DOMAIN:-hoppscotch.localhost}
+      - VITE_SHORTCODE_BASE_URL=https://${DOMAIN:-hoppscotch.localhost}
+      - VITE_ADMIN_URL=https://${DOMAIN:-hoppscotch.localhost}/admin
+      - VITE_BACKEND_GQL_URL=https://${DOMAIN:-hoppscotch.localhost}/backend/graphql
+      - VITE_BACKEND_WS_URL=wss://${DOMAIN:-hoppscotch.localhost}/backend/graphql
+      - VITE_BACKEND_API_URL=https://${DOMAIN:-hoppscotch.localhost}/backend/v1
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.hoppscotch-${NUMBER:-1}.rule=Host(`${DOMAIN:-hoppscotch.localhost}`)
+        - traefik.http.services.hoppscotch-${NUMBER:-1}.loadbalancer.server.port=80
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=hoppscotch
+      - POSTGRES_USER=hoppscotch
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
