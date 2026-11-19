@@ -1,0 +1,52 @@
+# DOMAIN=example.com docker stack deploy -c immich.yml immich
+
+services:
+  server:
+    image: ghcr.io/immich-app/immich-server:${VERSION:-v3.4.2}
+    environment:
+      - DB_USERNAME=immich
+      - DB_HOSTNAME=postgres
+      - DB_DATABASE_NAME=immich
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - IMMICH_MACHINE_LEARNING_ENABLED=false
+    volumes:
+      - ${VOLUME_PATH}data:/data
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.immich-${NUMBER:-1}.rule=Host(`${DOMAIN:-immich.localhost}`)
+        - traefik.http.services.immich-${NUMBER:-1}.loadbalancer.server.port=2283
+    networks:
+      - internal
+      - traefik
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-pgvector/pgvector}:${POSTGRES_VERSION:-pg16}
+    environment:
+      - POSTGRES_DB=immich
+      - POSTGRES_USER=immich
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal
+
+volumes:
+  data:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
