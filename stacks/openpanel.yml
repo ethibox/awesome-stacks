@@ -1,0 +1,104 @@
+# DOMAIN=example.com COOKIE_SECRET=$(openssl rand -hex 32) docker stack deploy -c openpanel.yml openpanel
+
+services:
+  api:
+    image: lindesvard/openpanel-api:${VERSION:-2.3.0}
+    command: sh -c "CI=true pnpm -r run migrate:deploy && pnpm start"
+    environment: &openpanel-environment
+      - NODE_ENV=production
+      - SELF_HOSTED=true
+      - DATABASE_URL=postgres://openpanel:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/openpanel?schema=public
+      - DATABASE_URL_DIRECT=postgres://openpanel:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/openpanel?schema=public
+      - REDIS_URL=redis://redis:6379
+      - CLICKHOUSE_URL=http://clickhouse:8123/openpanel
+      - DASHBOARD_URL=https://${DOMAIN:-openpanel.localhost}
+      - API_URL=https://${DOMAIN:-openpanel.localhost}/api
+      - API_URL_SSR=http://{{ index .Service.Labels "com.docker.stack.namespace" }}_api:3000
+      - COOKIE_SECRET=${COOKIE_SECRET:?}
+      - EMAIL_SENDER=${SMTP_FROM:-openpanel@example.com}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USERNAME:-}
+      - SMTP_PASS=${SMTP_PASSWORD:-}
+      - SMTP_SECURE=${SMTP_SSL:-false}
+      - DISABLE_PING=true
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.openpanel-api-${NUMBER:-1}.rule=Host(`${DOMAIN:-openpanel.localhost}`) && PathPrefix(`/api`)
+        - traefik.http.routers.openpanel-api-${NUMBER:-1}.middlewares=openpanel-api-stripprefix-${NUMBER:-1}
+        - traefik.http.services.openpanel-api-${NUMBER:-1}.loadbalancer.server.port=3000
+        - traefik.http.middlewares.openpanel-api-stripprefix-${NUMBER:-1}.stripprefix.prefixes=/api
+    networks:
+      - internal
+      - traefik
+
+  dashboard:
+    image: lindesvard/openpanel-dashboard:${VERSION:-2.3.0}
+    environment: *openpanel-environment
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.openpanel-${NUMBER:-1}.rule=Host(`${DOMAIN:-openpanel.localhost}`)
+        - traefik.http.services.openpanel-${NUMBER:-1}.loadbalancer.server.port=3000
+    networks:
+      - internal
+      - traefik
+
+  worker:
+    image: lindesvard/openpanel-worker:${VERSION:-2.3.0}
+    environment: *openpanel-environment
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-25.10-alpine}
+    environment:
+      - CLICKHOUSE_DB=openpanel
+      - CLICKHOUSE_SKIP_USER_SETUP=1
+    volumes:
+      - ${VOLUME_PATH}clickhouse:/var/lib/clickhouse
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-16-alpine}
+    environment:
+      - POSTGRES_DB=openpanel
+      - POSTGRES_USER=openpanel
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  clickhouse:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
