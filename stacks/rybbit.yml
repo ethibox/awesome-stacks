@@ -1,0 +1,90 @@
+# DOMAIN=example.com BETTER_AUTH_SECRET=$(openssl rand -hex 32) docker stack deploy -c rybbit.yml rybbit
+
+services:
+  backend:
+    image: ghcr.io/rybbit-io/rybbit-backend:${VERSION:-v2.9.3}
+    environment:
+      - NODE_ENV=production
+      - BASE_URL=https://${DOMAIN:-rybbit.localhost}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:?}
+      - CLICKHOUSE_HOST=http://clickhouse:8123
+      - CLICKHOUSE_DB=rybbit
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-myp@ssw0rd}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=rybbit
+      - POSTGRES_USER=rybbit
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DISABLE_TELEMETRY=true
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.rybbit-api-${NUMBER:-1}.rule=Host(`${DOMAIN:-rybbit.localhost}`) && PathPrefix(`/api`)
+        - traefik.http.services.rybbit-api-${NUMBER:-1}.loadbalancer.server.port=3001
+    networks:
+      - internal
+      - traefik
+
+  client:
+    image: ghcr.io/rybbit-io/rybbit-client:${VERSION:-v2.9.3}
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=https://${DOMAIN:-rybbit.localhost}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.rybbit-${NUMBER:-1}.rule=Host(`${DOMAIN:-rybbit.localhost}`)
+        - traefik.http.services.rybbit-${NUMBER:-1}.loadbalancer.server.port=3002
+    networks:
+      - internal
+      - traefik
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-26.3-alpine}
+    environment:
+      - CLICKHOUSE_DB=rybbit
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-myp@ssw0rd}
+      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
+    volumes:
+      - ${VOLUME_PATH}clickhouse:/var/lib/clickhouse
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-17-alpine}
+    environment:
+      - POSTGRES_DB=rybbit
+      - POSTGRES_USER=rybbit
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
+    volumes:
+      - ${VOLUME_PATH}postgres:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  clickhouse:
+  postgres:
+
+networks:
+  internal:
+    driver: overlay
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
