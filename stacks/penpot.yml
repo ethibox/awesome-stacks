@@ -8,7 +8,7 @@ services:
       - PENPOT_PUBLIC_URI=https://${DOMAIN:-penpot.localhost}
       - PENPOT_SECRET_KEY=${SECRET_KEY:?}
       - PENPOT_INTERNAL_URI=http://penpot-frontend:8080
-      - PENPOT_REDIS_URI=redis://valkey/0
+      - PENPOT_REDIS_URI=redis://redis/0
       - PENPOT_DATABASE_URI=postgresql://postgres/penpot
       - PENPOT_DATABASE_USERNAME=penpot
       - PENPOT_DATABASE_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}
@@ -54,8 +54,8 @@ services:
     networks:
       - internal
 
-  valkey:
-    image: valkey/valkey:8.1-alpine
+  redis:
+    image: redis:7-alpine
     networks:
       - internal
 
