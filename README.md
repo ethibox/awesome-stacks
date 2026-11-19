@@ -82,7 +82,9 @@ Refer to the `.yml` files in the [stacks](./stacks) directory to explore all ava
 
 ## 🛳️ Portainer
 
-In Portainer, go to **Settings → App Templates**, set the URL to `https://raw.githubusercontent.com/ethibox/awesome-stacks/master/templates.json` and save.
+In Portainer, go to **Settings → App Templates**, set and save this URL:
+
+https://raw.githubusercontent.com/ethibox/awesome-stacks/master/templates.json
 
 The apps then show up in the **App Templates** menu of your Swarm environment.
 
