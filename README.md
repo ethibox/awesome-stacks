@@ -65,12 +65,26 @@ You can customize the domain, the volume path or the version of your apps with e
 Here an example with [Ghost](./stacks/ghost.yml):
 
 ```bash
-DOMAIN=example.com VERSION=5 VOLUME_PATH=/mnt/ docker stack deploy -c stacks/ghost.yml ghost
+DOMAIN=example.com VERSION=6 VOLUME_PATH=/mnt/ docker stack deploy -c stacks/ghost.yml ghost
 ```
 
 Go to https://example.com and enjoy your app!
 
+To deploy the same app several times, give each instance its own stack name, `DOMAIN` and `NUMBER` (used to name its Traefik routes, default `1`):
+
+```bash
+NUMBER=2 DOMAIN=blog2.example.com docker stack deploy -c stacks/ghost.yml ghost2
+```
+
+If you use `VOLUME_PATH`, give each instance a different one too (e.g. `/mnt/ghost2/`).
+
 Refer to the `.yml` files in the [stacks](./stacks) directory to explore all available environment variables and customization options for each app if needed.
+
+## 🛳️ Portainer
+
+In Portainer, go to **Settings → App Templates**, set the URL to `https://raw.githubusercontent.com/ethibox/awesome-stacks/master/templates.json` and save.
+
+The apps then show up in the **App Templates** menu of your Swarm environment.
 
 ## 🎁 Support me
 
