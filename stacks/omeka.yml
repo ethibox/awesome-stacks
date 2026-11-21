@@ -1,10 +1,20 @@
 # DOMAIN=example.com docker stack deploy -c omeka.yml omeka
-# chown -R 33:33 files config modules
 # add database.ini & local.config.php in /config
 
 services:
+  init:
+    image: busybox
+    command: chown -R 33:33 /var/www/html/files /var/www/html/config /var/www/html/modules
+    volumes:
+      - ${VOLUME_PATH}files:/var/www/html/files
+      - ${VOLUME_PATH}config:/var/www/html/config
+      - ${VOLUME_PATH}modules:/var/www/html/modules
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   omeka:
-    image: ethibox/omeka:${VERSION:-4.2.1}
+    image: ethibox/omeka:${VERSION:-4.3.0-alpha}
     volumes:
       - ${VOLUME_PATH}files:/var/www/html/files
       - ${VOLUME_PATH}config:/var/www/html/config
