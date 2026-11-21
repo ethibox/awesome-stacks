@@ -1,0 +1,65 @@
+version: '3.7'
+
+services:
+  ztncui:
+    container_name: zerotier
+    hostname: zerotier
+    domainname: nhu.local
+    image: keynetworks/ztncui:${VERSION:-latest}
+    restart: always
+    ports:
+      - "3443:3443"
+      - "9993:9993"
+      - "3180:3180"
+    deploy:
+      labels:
+        - "traefik.port=3443"
+        - "traefik.frontend.rule=Host:${DOMAIN:-zerotier.nhu.local}"
+        - "traefik.enable=true"
+        - "docker-volume-backup.stop-during-backup=true"
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    environment:
+      - HTTPS_PORT=${HTTPS_PORT:-3443}
+      - ZTNCUI_PASSWD=${ZTNCUI_PASSWD:-admin}
+      - TZ=${TZ:-Asia/Kolkata}
+    networks:
+      - internal
+      - traefik
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+    volumes: 
+      - "ztncui:/opt/key-networks/ztncui/etc/"
+      - "zt1:/var/lib/zerotier-one/"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+
+  ztbackup:
+    image: futurice/docker-volume-backup:2.0.0
+    environment:
+      AWS_S3_BUCKET_NAME: bucket-name
+      AWS_ACCESS_KEY_ID: ${S3KEY}
+      AWS_SECRET_ACCESS_KEY: ${S3SECRET}
+      AWS_DEFAULT_REGION: ${S3REGION}
+      AWS_EXTRA_ARGS: --endpoint-url ${S3ENDPOINT}
+      TZ: TZ=${TZ:-Asia/Kolkata}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "zt1:/backup/zt1-data:ro"
+      - "ztncui:/backup/ztncui-data:ro"
+    networks:
+      - internal
+
+volumes:
+  ztncui:
+  zt1:
+
+networks:
+  internal:
+    attachable: true
+  traefik:
+    external: true
+    name: traefik-net
