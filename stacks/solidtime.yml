@@ -20,7 +20,7 @@ services:
         condition: on-failure
 
   app:
-    image: &solidtime-image solidtime/solidtime:${VERSION:-0.22.1}
+    image: &solidtime-image solidtime/solidtime:${VERSION:-0.23.0}
     environment: &solidtime-environment
       CONTAINER_MODE: http
       APP_URL: https://${DOMAIN:-solidtime.localhost}

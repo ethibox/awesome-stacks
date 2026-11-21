@@ -3,7 +3,7 @@
 
 services:
   castopod:
-    image: castopod/castopod:${VERSION:-1.15.6}
+    image: castopod/castopod:${VERSION:-1.15.7}
     volumes:
       - ${VOLUME_PATH}media:/var/www/castopod/public/media
     environment:

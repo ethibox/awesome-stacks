@@ -32,7 +32,7 @@ services:
       - traefik
 
   app:
-    image: ${IMAGE:-invoiceninja/invoiceninja}:${VERSION:-5.13.53}
+    image: ${IMAGE:-invoiceninja/invoiceninja}:${VERSION:-5.13.56}
     volumes:
       - ${VOLUME_PATH}data:/var/www/app/public
       - ${VOLUME_PATH}storage:/var/www/app/storage

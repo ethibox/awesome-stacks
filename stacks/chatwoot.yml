@@ -5,7 +5,7 @@
 
 services:
   web:
-    image: &chatwoot-image chatwoot/chatwoot:${VERSION:-v4.19.1}
+    image: &chatwoot-image chatwoot/chatwoot:${VERSION:-v4.20.1}
     environment: &chatwoot-environment
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # bundle exec rake secret
       - FRONTEND_URL=https://${DOMAIN:-chatwoot.localhost}

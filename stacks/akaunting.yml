@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: akaunting/akaunting:${VERSION:-3.3.1-v}
+    image: akaunting/akaunting:${VERSION:-3.3.2-v}
     entrypoint: ['sh', '-c', 'grep -qs APP_INSTALLED=true .env || export AKAUNTING_SETUP=true; exec akaunting-v.sh --start']
     environment:
       - APP_URL=https://${DOMAIN:-akaunting.localhost}

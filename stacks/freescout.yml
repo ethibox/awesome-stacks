@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: nfrastack/freescout:${VERSION:-2.2.25}
+    image: nfrastack/freescout:${VERSION:-2.2.26}
     volumes:
       - ${VOLUME_PATH}data:/data
       - ${VOLUME_PATH}logs:/logs

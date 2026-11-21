@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: coollabsio/coolify:${VERSION:-4.7.5}
+    image: coollabsio/coolify:${VERSION:-4.7.6}
     entrypoint:
       - /bin/sh
       - -c
@@ -25,7 +25,7 @@ services:
         condition: on-failure
 
   coolify:
-    image: coollabsio/coolify:${VERSION:-4.7.5}
+    image: coollabsio/coolify:${VERSION:-4.7.6}
     environment:
       - AUTOUPDATE=false
       - DB_HOST=postgres

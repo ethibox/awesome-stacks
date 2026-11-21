@@ -3,7 +3,7 @@
 
 services:
   app:
-    image: discourse/discourse:${VERSION:-2026.7.5}
+    image: discourse/discourse:${VERSION:-2026.7.6}
     command:
       - /bin/bash
       - -ec

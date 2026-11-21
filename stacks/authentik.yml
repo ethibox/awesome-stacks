@@ -2,7 +2,7 @@
 
 services:
   server:
-    image: &authentik-image ghcr.io/goauthentik/server:${VERSION:-2026.8.5}
+    image: &authentik-image ghcr.io/goauthentik/server:${VERSION:-2026.8.6}
     environment: &authentik-environment
       - AUTHENTIK_REDIS__HOST=redis
       - AUTHENTIK_POSTGRESQL__HOST=postgres

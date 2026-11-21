@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: b3log/siyuan:${VERSION:-v3.8.10}
+    image: b3log/siyuan:${VERSION:-v3.8.11}
     command: serve
     environment:
       - SIYUAN_WORKSPACE_PATH=/siyuan/workspace

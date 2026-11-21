@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: openproject/openproject:${VERSION:-17.9.7}
+    image: openproject/openproject:${VERSION:-17.9.8}
     environment:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
       - OPENPROJECT_HOST__NAME=${DOMAIN:-openproject.localhost}

@@ -14,7 +14,7 @@ services:
         condition: on-failure
 
   passbolt:
-    image: passbolt/passbolt:${VERSION:-5.18.0-1-ce}
+    image: passbolt/passbolt:${VERSION:-5.18.0-2-ce}
     command: "/usr/bin/wait-for.sh -t 0 mariadb:3306 -- /docker-entrypoint.sh"
     environment:
       - APP_FULL_BASE_URL=https://${DOMAIN:-passbolt.localhost}

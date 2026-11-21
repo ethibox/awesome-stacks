@@ -22,7 +22,7 @@ services:
       - traefik
 
   app:
-    image: wordpress:${VERSION:-7.1.4-fpm-alpine}
+    image: wordpress:${VERSION:-7.1.5-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
