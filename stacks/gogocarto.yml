@@ -1,22 +1,44 @@
-# DOMAIN=example.com docker stack deploy -c gogocarto.yml gogocarto
-# git clone https://gitlab.com/Seballot/gogocarto/ .
-# make init
-# chown -R www-data:www-data .
-# https://gogocarto.localhost/project/initialize
+# DOMAIN=example.com APP_SECRET=$(openssl rand -hex 32) docker stack deploy -c gogocarto.yml gogocarto
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /var/www/html
+    volumes:
+      - ${VOLUME_PATH}gogocarto:/var/www/html
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   gogocarto:
-    image: ethibox/gogocarto:${VERSION:-latest}
+    image: ethibox/gogocarto:${VERSION:-4.0.1}
+    entrypoint: /bin/sh
+    command:
+      - -ec
+      - |
+        if [ ! -f bin/console ]; then
+          git clone https://gitlab.com/seballot/gogocarto.git .
+          git checkout efcd10c5 # 4.0.1
+        fi
+        sudo cp docker/apache.conf /etc/apache2/sites-available/000-default.conf
+        sudo cp docker/custom-php-conf.ini /usr/local/etc/php/conf.d/
+        if [ ! -f .installed ]; then
+          git config --global url."https://gitlab.com/joshtronic/".insteadOf https://git.sherver.org/joshtronic/ # Broken redirect
+          make init
+          touch .installed
+        fi
+        bin/console db:migrate
+        exec apache2-foreground
     environment:
-      - APP_ENV=${APP_ENV:-prod}
-      - APP_DEBUG=${APP_DEBUG:-0}
+      - APP_ENV=prod
+      - APP_SECRET=${APP_SECRET:?}
       - BASE_PROTOCOL=https
       - BASE_URL=${DOMAIN:-gogocarto.localhost}
-      - MAILER_URL=smtp://${SMTP_HOST}:${SMTP_PORT:-587}?encryption=${SMTP_ENCRYPTION:-tls}&auth_mode=login&username=${SMTP_USERNAME}&password=${SMTP_PASSWORD}
+      - MAILER_DSN=smtp://${SMTP_USERNAME}:${SMTP_PASSWORD}@${SMTP_HOST:-localhost}:${SMTP_PORT:-587}
       - FROM_EMAIL=${SMTP_FROM:-noreply@example.com}
       - CONTACT_EMAIL=${CONTACT_EMAIL:-noreply@example.com}
     volumes:
-      - ${VOLUME_PATH}gogocarto:/var/www
+      - ${VOLUME_PATH}gogocarto:/var/www/html
     deploy:
       labels:
         - traefik.enable=true
@@ -27,7 +49,7 @@ services:
       - internal
 
   mongo:
-    image: mongo:4.0.3
+    image: mongo:${MONGO_VERSION:-8.0}
     volumes:
       - ${VOLUME_PATH}mongo:/data/db
     networks:
