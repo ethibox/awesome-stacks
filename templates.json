@@ -2492,7 +2492,7 @@
       "id": 54,
       "type": 2,
       "title": "GoGoCarto",
-      "version": "latest",
+      "version": "4.0.1",
       "description": "GoGoCarto est une application open-source pour créer des cartes collaboratives et interactives.",
       "categories": [
         "Social"
@@ -2504,7 +2504,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/gogocarto.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "280a2a7c082271beb3989b2e10be73d9a5d88b81"
       }
     },
     {
