@@ -99,7 +99,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mattermost.yml",
-        "commit": "2490839d685f384b7613322419d65ca74de92c6b"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -311,7 +311,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mastodon.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -486,7 +486,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/zammad.yml",
-        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       }
     },
     {
@@ -600,7 +600,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/n8n.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -874,7 +874,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/invoiceninja.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -968,7 +968,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/etherpad.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -1150,7 +1150,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dolibarr.yml",
-        "commit": "572027d707f57cad272588c807a728318a640fc6"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -1340,7 +1340,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mediawiki.yml",
-        "commit": "572027d707f57cad272588c807a728318a640fc6"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -1649,7 +1649,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/passbolt.yml",
-        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -1759,7 +1759,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/lufi.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -1871,7 +1871,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/codimd.yml",
-        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -2050,7 +2050,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mobilizon.yml",
-        "commit": "98570f544f51ccb2910471e8fcb89e2d18335878"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -2206,7 +2206,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/focalboard.yml",
-        "commit": "572027d707f57cad272588c807a728318a640fc6"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       }
     },
     {
@@ -2504,7 +2504,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/gogocarto.yml",
-        "commit": "280a2a7c082271beb3989b2e10be73d9a5d88b81"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       }
     },
     {
@@ -2541,7 +2541,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dokos.yml",
-        "commit": "21b5db7fda3ff21e197481874cb66388c39ae741"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -2574,7 +2574,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/omeka.yml",
-        "commit": "7f3a67459990adffbd9601c2c64e3a8b9a3c2d1b"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       }
     },
     {
@@ -2977,7 +2977,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/twenty.yml",
-        "commit": "21b5db7fda3ff21e197481874cb66388c39ae741"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -3013,7 +3013,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/outline.yml",
-        "commit": "572027d707f57cad272588c807a728318a640fc6"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -3099,7 +3099,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/vikunja.yml",
-        "commit": "9b90895ffef701f08a9949f7c508d166fa4f060e"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       }
     },
     {
@@ -3264,7 +3264,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/keycloak.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -3353,7 +3353,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/booklore.yml",
-        "commit": "9b90895ffef701f08a9949f7c508d166fa4f060e"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       }
     },
     {
@@ -3519,7 +3519,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/monitoring.yml",
-        "commit": "d27776bd6e8fec7227379c8e382fd1cbd8ccf2d1"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
@@ -3562,7 +3562,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/solidtime.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
       },
       "env": [
         {
