@@ -1150,7 +1150,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dolibarr.yml",
-        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+        "commit": "572027d707f57cad272588c807a728318a640fc6"
       },
       "env": [
         {
@@ -1340,7 +1340,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mediawiki.yml",
-        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+        "commit": "572027d707f57cad272588c807a728318a640fc6"
       },
       "env": [
         {
@@ -2206,7 +2206,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/focalboard.yml",
-        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+        "commit": "572027d707f57cad272588c807a728318a640fc6"
       }
     },
     {
@@ -2541,7 +2541,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dokos.yml",
-        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+        "commit": "572027d707f57cad272588c807a728318a640fc6"
       },
       "env": [
         {
@@ -3013,7 +3013,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/outline.yml",
-        "commit": "47405c8757c01199c77f80165932549110f708b5"
+        "commit": "572027d707f57cad272588c807a728318a640fc6"
       },
       "env": [
         {
