@@ -3727,7 +3727,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/eurooffice.yml",
-        "commit": "47405c8757c01199c77f80165932549110f708b5"
+        "commit": "010063d4b5cdf747b5bd4060df69fd52e13c7403"
       },
       "env": [
         {
