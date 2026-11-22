@@ -11,6 +11,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: ${CPU_LIMIT:-2.0}
           memory: ${MEMORY_LIMIT:-2G}
       labels:
         - traefik.enable=true
