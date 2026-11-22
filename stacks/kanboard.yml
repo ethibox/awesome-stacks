@@ -1,5 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c kanboard.yml kanboard
-# php cli user:reset-password <username> # Change user password
 
 services:
   kanboard:

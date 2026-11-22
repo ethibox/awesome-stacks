@@ -1,5 +1,4 @@
 # DOMAIN=example.com ADMIN_PASSWORD=$(openssl rand -hex 16) docker stack deploy -c discourse.yml discourse
-# ADMIN_PASSWORD must be at least 15 characters long
 
 services:
   app:

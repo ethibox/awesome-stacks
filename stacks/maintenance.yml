@@ -1,7 +1,4 @@
 # DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
-# MESSAGE="Custom message" DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
-# IP=1.2.3.4 DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
-# IPS='ClientIP(`1.2.3.4`) || ClientIP(`5.6.7.8`)' DOMAIN=example.com docker stack deploy -c maintenance.yml maintenance
 
 services:
   web:

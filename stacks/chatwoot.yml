@@ -1,7 +1,5 @@
 # DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c chatwoot.yml chatwoot
 # bundle exec rails db:chatwoot_prepare
-# bundle exec rails db:seed
-# bundle exec rails db:migrate
 
 services:
   web:

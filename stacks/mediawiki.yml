@@ -1,6 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c mediawiki.yml mediawiki
 # chown -R 33:33 data/
-# wget https://releases.wikimedia.org/mediawiki/1.43/mediawiki-1.43.1.tar.gz
 
 services:
   app:

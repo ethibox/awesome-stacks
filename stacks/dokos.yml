@@ -1,7 +1,6 @@
 # DOMAIN=example.com docker stack deploy -c dokos.yml dokos
 # chown -R 1000:1000 sites/
 # bench new-site --db-host mariadb dokos.localhost
-# Create common_site_config.json with default redis config
 
 services:
   init:

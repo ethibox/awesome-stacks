@@ -1,6 +1,5 @@
 # DOMAIN=example.com docker stack deploy -c element.yml element
 # docker exec -it $(docker ps -qf 'name=element_synapse\.') register_new_matrix_user -c /data/homeserver.yaml http://localhost:8008
-# https://matrix.org/federationtester # To check config
 
 services:
   web:
