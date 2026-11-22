@@ -6,7 +6,6 @@
       "type": 2,
       "title": "Nextcloud",
       "version": "35.0.3",
-      "description": "Nextcloud est un lieu sûr pour toutes vos données - Accédez et partagez vos fichiers, calendriers, contacts, courriels et plus encore.",
       "categories": [
         "Stockage"
       ],
@@ -89,7 +88,6 @@
       "type": 2,
       "title": "Mattermost",
       "version": "11.11.4",
-      "description": "Mattermost est une plateforme de messagerie instantanée open-source pour collaborer en équipe.",
       "categories": [
         "Communication"
       ],
@@ -124,7 +122,6 @@
       "type": 2,
       "title": "Kanboard",
       "version": "1.2.58",
-      "description": "Kanboard est un logiciel open-source de gestion de projet Kanban, simple et efficace.",
       "categories": [
         "Projets"
       ],
@@ -195,7 +192,6 @@
       "type": 2,
       "title": "Odoo",
       "version": "18.0",
-      "description": "Odoo est une suite open-source d'applications de gestion d'entreprise (ERP, CRM, comptabilité).",
       "categories": [
         "Facturation"
       ],
@@ -228,7 +224,6 @@
       "type": 2,
       "title": "Matomo",
       "version": "5.14.3",
-      "description": "Matomo est un logiciel open-source de mesure de statistiques web.",
       "categories": [
         "Statistiques"
       ],
@@ -246,7 +241,6 @@
       "type": 2,
       "title": "Discourse",
       "version": "2026.7.6",
-      "description": "Discourse est une plateforme de forum open-source moderne pour créer des communautés en ligne.",
       "categories": [
         "Réseau social"
       ],
@@ -300,7 +294,6 @@
       "type": 2,
       "title": "Mastodon",
       "version": "4.7.6",
-      "description": "Mastodon est un réseau social open-source décentralisé sans publicité ni tracking.",
       "categories": [
         "Réseau social"
       ],
@@ -384,7 +377,6 @@
       "type": 2,
       "title": "Wordpress",
       "version": "7.1.5",
-      "description": "WordPress est l'application web open-source la plus utilisée au monde pour créer un beau site web.",
       "categories": [
         "Site web"
       ],
@@ -402,7 +394,6 @@
       "type": 2,
       "title": "Formbricks",
       "version": "2.7.2",
-      "description": "Formbricks est un outil open-source de création de formulaires et sondages pour collecter des retours utilisateurs.",
       "categories": [
         "Documents"
       ],
@@ -476,7 +467,6 @@
       "type": 2,
       "title": "Zammad",
       "version": "7.2.3",
-      "description": "Zammad est un système de support client open-source pour gérer tickets, emails et chats.",
       "categories": [
         "Communication"
       ],
@@ -494,7 +484,6 @@
       "type": 2,
       "title": "Rocketchat",
       "version": "8.9.1",
-      "description": "Rocket.Chat est une plateforme de communication open-source avec messagerie, appels vidéo et partage de fichiers.",
       "categories": [
         "Communication"
       ],
@@ -512,7 +501,6 @@
       "type": 2,
       "title": "Peertube",
       "version": "8.3.2",
-      "description": "PeerTube est une plateforme d'hébergement vidéo open-source décentralisée, sans publicité ni algorithme.",
       "categories": [
         "Réseau social"
       ],
@@ -589,7 +577,6 @@
       "type": 2,
       "title": "n8n",
       "version": "2.49.3",
-      "description": "n8n est un outil d'automatisation de workflows open-source pour connecter vos applications et automatiser vos tâches.",
       "categories": [
         "Automatisation"
       ],
@@ -634,7 +621,6 @@
       "type": 2,
       "title": "Calendso",
       "version": "6.2.0",
-      "description": "Cal.com est un outil open-source de planification de rendez-vous, hébergeable soi-même.",
       "categories": [
         "Communication"
       ],
@@ -737,7 +723,6 @@
       "type": 2,
       "title": "Chatwoot",
       "version": "4.20.1",
-      "description": "Chatwoot est une plateforme de support client open-source avec chat en direct, email et réseaux sociaux.",
       "categories": [
         "Communication"
       ],
@@ -820,7 +805,6 @@
       "type": 2,
       "title": "Wekan",
       "version": "13.25",
-      "description": "Wekan est un outil de gestion de projet open-source avec des tableaux Kanban pour organiser vos tâches.",
       "categories": [
         "Projets"
       ],
@@ -864,7 +848,6 @@
       "type": 2,
       "title": "Invoice-ninja",
       "version": "5.13.56",
-      "description": "Invoice Ninja est une application open-source pour la facturation de vos clients.",
       "categories": [
         "Finance"
       ],
@@ -958,7 +941,6 @@
       "type": 2,
       "title": "Etherpad",
       "version": "3.3.21",
-      "description": "Etherpad est un éditeur en ligne open-source qui permet une édition collaborative en temps réel.",
       "categories": [
         "Documents"
       ],
@@ -990,7 +972,6 @@
       "type": 2,
       "title": "Ghost",
       "version": "6.78.0",
-      "description": "Ghost est une plateforme open-source pour la création et la gestion d'une publication en ligne moderne.",
       "categories": [
         "Site web"
       ],
@@ -1028,7 +1009,6 @@
       "type": 2,
       "title": "Castopod",
       "version": "1.15.7",
-      "description": "Castopod est une plateforme de podcasting open-source pour héberger et diffuser vos podcasts.",
       "categories": [],
       "manual": true,
       "enabled": true,
@@ -1059,7 +1039,6 @@
       "type": 2,
       "title": "Taiga",
       "version": "6.10.3",
-      "description": "Taiga est une plateforme de gestion de projet open-source complète pour les équipes agiles.",
       "categories": [
         "Projets"
       ],
@@ -1101,7 +1080,6 @@
       "type": 2,
       "title": "Mautic",
       "version": "7.2.2",
-      "description": "Mautic est un logiciel open-source d'automatisation du marketing pour gérer vos campagnes email, SMS et réseaux sociaux.",
       "categories": [
         "Vente"
       ],
@@ -1139,7 +1117,6 @@
       "type": 2,
       "title": "Dolibarr",
       "version": "20.0.4",
-      "description": "Dolibarr ERP & CRM est un progiciel web open-source moderne et facile à utiliser pour la gestion de votre entreprise.",
       "categories": [
         "Facturation"
       ],
@@ -1172,7 +1149,6 @@
       "type": 2,
       "title": "Element",
       "version": "1.12.35",
-      "description": "Element est une application de collaboration open-source avec messagerie, partage de fichiers et visioconférence.",
       "categories": [
         "Communication"
       ],
@@ -1190,7 +1166,6 @@
       "type": 2,
       "title": "Metabase",
       "version": "0.65.6.3",
-      "description": "Metabase est un outil open-source d'analyse de données pour créer des tableaux de bord et explorer vos données.",
       "categories": [
         "Statistiques"
       ],
@@ -1208,7 +1183,6 @@
       "type": 2,
       "title": "Fathom",
       "version": "latest",
-      "description": "Fathom Analytics fournit des statistiques de sites web simples et utiles sans suivre ni stocker les données personnelles de vos utilisateurs.",
       "categories": [
         "Analytics"
       ],
@@ -1240,7 +1214,6 @@
       "type": 2,
       "title": "Flarum",
       "version": "stable",
-      "description": "Flarum est un logiciel de forum open-source nouvelle génération qui rend les discussions en ligne amusantes.",
       "categories": [
         "Communication"
       ],
@@ -1272,7 +1245,6 @@
       "type": 2,
       "title": "Jitsi",
       "version": "stable-11031",
-      "description": "Jitsi Meet vous permet de rester en contact avec toutes vos équipes, qu'elles soient familiales, amicales ou collègues.",
       "categories": [
         "Communication"
       ],
@@ -1298,7 +1270,6 @@
       "type": 2,
       "title": "Prestashop",
       "version": "8.2.9",
-      "description": "PrestaShop est un logiciel open-source de e-commerce pour créer et gérer votre boutique en ligne.",
       "categories": [
         "Vente"
       ],
@@ -1329,7 +1300,6 @@
       "type": 2,
       "title": "Mediawiki",
       "version": "1.46.2",
-      "description": "MediaWiki est un logiciel wiki open-source, à l'origine utilisé par Wikipédia.",
       "categories": [
         "Documents"
       ],
@@ -1375,7 +1345,6 @@
       "type": 2,
       "title": "Commento",
       "version": "1.8.0",
-      "description": "Commento est un système de commentaires open-source rapide et léger pour animer la discussion sur votre site.",
       "categories": [
         "Communication"
       ],
@@ -1428,7 +1397,6 @@
       "type": 2,
       "title": "Pixelfed",
       "version": "0.15.2",
-      "description": "PixelFed est un réseau social open-source de partage de photos décentralisé, sans publicité ni tracking.",
       "categories": [
         "Réseau social"
       ],
@@ -1569,7 +1537,6 @@
       "type": 2,
       "title": "SuiteCRM",
       "version": "8.8.1",
-      "description": "SuiteCRM est une application open-source de gestion de la relation client pour suivre vos prospects et clients.",
       "categories": [
         "Vente"
       ],
@@ -1606,7 +1573,6 @@
       "type": 2,
       "title": "Wikijs",
       "version": "3.5.0",
-      "description": "Wiki.js est une application wiki open-source moderne avec édition Markdown et contrôle d'accès granulaire.",
       "categories": [
         "Documents"
       ],
@@ -1638,7 +1604,6 @@
       "type": 2,
       "title": "Passbolt",
       "version": "5.18.0",
-      "description": "Passbolt est un gestionnaire de mots de passe open-source pour partager et stocker en toute sécurité les identifiants de votre équipe.",
       "categories": [
         "Sécurité"
       ],
@@ -1713,7 +1678,6 @@
       "type": 2,
       "title": "Wallabag",
       "version": "2.6.17",
-      "description": "Wallabag est une application open-source pour sauvegarder vos pages web et les lire plus tard.",
       "categories": [
         "Stockage"
       ],
@@ -1731,7 +1695,6 @@
       "type": 2,
       "title": "Calibre",
       "version": "4.0.8",
-      "description": "Calibre Web est une application web open-source offrant une interface claire pour la navigation, la lecture et le téléchargement de livres électroniques.",
       "categories": [
         "Stockage"
       ],
@@ -1749,7 +1712,6 @@
       "type": 2,
       "title": "Lufi",
       "version": "0.07.4",
-      "description": "Lufi est un outil open-source de partage de fichiers chiffrés, hébergeable soi-même.",
       "categories": [
         "Stockage"
       ],
@@ -1787,7 +1749,6 @@
       "type": 2,
       "title": "Polr",
       "version": "2.3.0",
-      "description": "Polr est un raccourcisseur d'URL open-source simple et rapide.",
       "categories": [
         "Marketing"
       ],
@@ -1825,7 +1786,6 @@
       "type": 2,
       "title": "SnappyMail",
       "version": "2.38.2.1",
-      "description": "SnappyMail est un client de messagerie open-source simple, moderne et rapide basé sur le web.",
       "categories": [
         "Communication"
       ],
@@ -1843,7 +1803,6 @@
       "type": 2,
       "title": "Gogs",
       "version": "0.14.4",
-      "description": "Gogs est un service Git open-source auto-hébergé léger pour héberger vos dépôts de code.",
       "categories": [
         "Stockage"
       ],
@@ -1861,7 +1820,6 @@
       "type": 2,
       "title": "CodiMD",
       "version": "2.6.1",
-      "description": "CodiMD est un éditeur open-source qui vous permet de créer des notes collaboratives en temps réel.",
       "categories": [
         "Docs"
       ],
@@ -1931,7 +1889,6 @@
       "type": 2,
       "title": "Pytition",
       "version": "2.9",
-      "description": "Pytition est un outil open-source auto-hébergé pour créer et gérer des pétitions en ligne.",
       "categories": [
         "Social"
       ],
@@ -2009,7 +1966,6 @@
       "type": 2,
       "title": "FreeScout",
       "version": "2.2.26",
-      "description": "FreeScout est un helpdesk open-source léger pour gérer les emails de support client.",
       "categories": [
         "Communication"
       ],
@@ -2040,7 +1996,6 @@
       "type": 2,
       "title": "Mobilizon",
       "version": "5.2.4",
-      "description": "Mobilizon est une plateforme open-source pour créer et partager des événements sans dépendre des grandes plateformes.",
       "categories": [
         "Réseau social"
       ],
@@ -2098,7 +2053,6 @@
       "type": 2,
       "title": "Kresus",
       "version": "0.26.0",
-      "description": "Kresus est un gestionnaire de finances personnelles open-source pour suivre vos comptes de toutes vos banques en un seul endroit.",
       "categories": [
         "Finance"
       ],
@@ -2140,27 +2094,8 @@
     {
       "id": 47,
       "type": 2,
-      "title": "Searx",
-      "version": "latest",
-      "description": "Searx est un métamoteur de recherche open-source qui agrège les résultats sans tracer les utilisateurs.",
-      "categories": [
-        "Sécurité"
-      ],
-      "enabled": false,
-      "logo": "https://ethibox.fr/images/logos/searx.png",
-      "website": "https://www.searx.me/",
-      "repository": {
-        "url": "https://github.com/ethibox/awesome-stacks",
-        "stackfile": "stacks/searx.yml",
-        "commit": "5abfa9fe8bb879aebe972a675f69529fa8408fdc"
-      }
-    },
-    {
-      "id": 48,
-      "type": 2,
       "title": "NocoDB",
       "version": "0.301.5",
-      "description": "NocoDB est une plateforme no-code open-source qui transforme n'importe quelle base de données en tableur collaboratif.",
       "categories": [
         "No-code"
       ],
@@ -2191,11 +2126,10 @@
       ]
     },
     {
-      "id": 49,
+      "id": 48,
       "type": 2,
       "title": "Focalboard",
       "version": "7.11.4",
-      "description": "Focalboard est un outil de gestion de projet open-source avec tableaux Kanban, calendriers et listes.",
       "categories": [
         "Gestion de projet"
       ],
@@ -2210,11 +2144,10 @@
       }
     },
     {
-      "id": 50,
+      "id": 49,
       "type": 2,
       "title": "Ntfy",
       "version": "2.38.1",
-      "description": "Ntfy est un service de notifications push open-source simple pour envoyer des alertes vers vos appareils.",
       "categories": [
         "Communication"
       ],
@@ -2228,11 +2161,10 @@
       }
     },
     {
-      "id": 51,
+      "id": 50,
       "type": 2,
       "title": "Grist",
       "version": "1.7.22",
-      "description": "Grist est un tableur open-source hybride combinant les fonctionnalités d'un tableur et d'une base de données.",
       "categories": [
         "Documents"
       ],
@@ -2345,11 +2277,10 @@
       ]
     },
     {
-      "id": 52,
+      "id": 51,
       "type": 2,
       "title": "Nocobase",
       "version": "2.2.50",
-      "description": "NocoBase est une plateforme no-code open-source pour créer des applications métier avec une interface flexible et extensible.",
       "categories": [
         "No-code"
       ],
@@ -2377,11 +2308,10 @@
       ]
     },
     {
-      "id": 53,
+      "id": 52,
       "type": 2,
       "title": "Bookstack",
       "version": "26.09.3",
-      "description": "BookStack est une application open-source de gestion des connaissances sous forme de livres, chapitres et pages.",
       "categories": [
         "Documents"
       ],
@@ -2489,11 +2419,10 @@
       ]
     },
     {
-      "id": 54,
+      "id": 53,
       "type": 2,
       "title": "GoGoCarto",
       "version": "4.0.1",
-      "description": "GoGoCarto est une application open-source pour créer des cartes collaboratives et interactives.",
       "categories": [
         "Social"
       ],
@@ -2508,11 +2437,10 @@
       }
     },
     {
-      "id": 55,
+      "id": 54,
       "type": 2,
       "title": "Appsmith",
       "version": "1.99",
-      "description": "Appsmith est un outil no-code open-source pour créer des applications web et des tableaux de bord.",
       "categories": [
         "No-code"
       ],
@@ -2526,11 +2454,10 @@
       }
     },
     {
-      "id": 56,
+      "id": 55,
       "type": 2,
       "title": "Dokos",
       "version": "4.71.2",
-      "description": "Dokos est une plateforme open-source de gestion d'entreprise avec facturation, comptabilité et gestion de projets.",
       "categories": [
         "Finance"
       ],
@@ -2559,11 +2486,10 @@
       ]
     },
     {
-      "id": 57,
+      "id": 56,
       "type": 2,
       "title": "Omeka",
       "version": "4.3.0",
-      "description": "Omeka est une plateforme open-source de publication et d'archivage numérique destinée aux universités et musées.",
       "categories": [
         "Site web"
       ],
@@ -2578,11 +2504,10 @@
       }
     },
     {
-      "id": 58,
+      "id": 57,
       "type": 2,
       "title": "Piwigo",
       "version": "14.5.0",
-      "description": "Piwigo est un gestionnaire de photos open-source pour organiser et partager vos collections en ligne.",
       "categories": [
         "Stockage"
       ],
@@ -2611,11 +2536,10 @@
       ]
     },
     {
-      "id": 59,
+      "id": 58,
       "type": 2,
       "title": "Moodle",
       "version": "4.5.4",
-      "description": "Moodle est une plateforme d'apprentissage en ligne open-source pour créer et gérer des formations.",
       "categories": [],
       "enabled": true,
       "logo": "https://ethibox.fr/images/logos/moodle.png",
@@ -2641,11 +2565,10 @@
       ]
     },
     {
-      "id": 60,
+      "id": 59,
       "type": 2,
       "title": "Vaultwarden",
       "version": "1.37.5",
-      "description": "Vaultwarden est un serveur open-source compatible Bitwarden pour gérer vos mots de passe en toute sécurité.",
       "categories": [
         "Sécurité"
       ],
@@ -2668,11 +2591,10 @@
       ]
     },
     {
-      "id": 61,
+      "id": 60,
       "type": 2,
       "title": "Memos",
       "version": "0.31.0",
-      "description": "Memos est un outil open-source de prise de notes léger et respectueux de la vie privée.",
       "categories": [
         "Documents"
       ],
@@ -2686,11 +2608,10 @@
       }
     },
     {
-      "id": 62,
+      "id": 61,
       "type": 2,
       "title": "Automatisch",
       "version": "0.15.0",
-      "description": "Automatisch est un outil d'automatisation open-source pour synchroniser des données entre services web sans coder.",
       "categories": [
         "Automatisation"
       ],
@@ -2720,11 +2641,10 @@
       ]
     },
     {
-      "id": 63,
+      "id": 62,
       "type": 2,
       "title": "Keila",
       "version": "0.40.2",
-      "description": "Keila est un outil open-source d'envoi de newsletters avec segmentation des contacts et statistiques.",
       "categories": [
         "Communication"
       ],
@@ -2791,11 +2711,10 @@
       ]
     },
     {
-      "id": 64,
+      "id": 63,
       "type": 2,
       "title": "Listmonk",
       "version": "6.2.0",
-      "description": "Listmonk est un gestionnaire de newsletter open-source haute performance avec gestion des listes et des campagnes.",
       "categories": [
         "Communication"
       ],
@@ -2823,11 +2742,10 @@
       ]
     },
     {
-      "id": 65,
+      "id": 64,
       "type": 2,
       "title": "Rallly",
       "version": "4.17.1",
-      "description": "Rallly est un outil open-source de planification de réunion pour trouver facilement un créneau commun.",
       "categories": [
         "Communication"
       ],
@@ -2882,11 +2800,10 @@
       ]
     },
     {
-      "id": 66,
+      "id": 65,
       "type": 2,
       "title": "Sympa",
       "version": "latest",
-      "description": "Sympa est un logiciel open-source de gestion de listes de diffusion pour animer vos communautés par email.",
       "categories": [
         "Communication"
       ],
@@ -2926,11 +2843,10 @@
       ]
     },
     {
-      "id": 67,
+      "id": 66,
       "type": 2,
       "title": "Activepieces",
       "version": "0.93.0",
-      "description": "Activepieces est un outil d'automatisation open-source pour connecter vos applications et automatiser vos tâches.",
       "categories": [
         "Automatisation"
       ],
@@ -2944,11 +2860,10 @@
       }
     },
     {
-      "id": 68,
+      "id": 67,
       "type": 2,
       "title": "Postiz",
       "version": "2.26.0",
-      "description": "Postiz est un outil open-source de planification et de publication sur les réseaux sociaux.",
       "categories": [
         "Réseau social"
       ],
@@ -2962,11 +2877,10 @@
       }
     },
     {
-      "id": 69,
+      "id": 68,
       "type": 2,
       "title": "Twenty",
       "version": "1.23.9",
-      "description": "Twenty est un CRM open-source moderne et flexible pour gérer vos relations clients.",
       "categories": [
         "Vente"
       ],
@@ -2998,11 +2912,10 @@
       ]
     },
     {
-      "id": 70,
+      "id": 69,
       "type": 2,
       "title": "Outline",
       "version": "1.13.0",
-      "description": "Outline est un wiki open-source rapide et collaboratif pour centraliser la documentation de votre équipe.",
       "categories": [
         "Documents"
       ],
@@ -3031,11 +2944,10 @@
       ]
     },
     {
-      "id": 71,
+      "id": 70,
       "type": 2,
       "title": "Chartbrew",
       "version": "6.0.1",
-      "description": "Chartbrew est un outil open-source pour créer des tableaux de bord et des graphiques à partir de vos données.",
       "categories": [
         "Analytics"
       ],
@@ -3049,11 +2961,10 @@
       }
     },
     {
-      "id": 72,
+      "id": 71,
       "type": 2,
       "title": "Paheko",
       "version": "1.3.25.1",
-      "description": "Paheko est un outil open-source de gestion d'association simple, complet et efficace.",
       "categories": [
         "Facturation"
       ],
@@ -3067,11 +2978,10 @@
       }
     },
     {
-      "id": 73,
+      "id": 72,
       "type": 2,
       "title": "Teable",
       "version": "1.8.0",
-      "description": "Teable est un tableur open-source et collaboratif avec interface no-code pour gérer vos données.",
       "categories": [
         "Documents"
       ],
@@ -3085,11 +2995,10 @@
       }
     },
     {
-      "id": 74,
+      "id": 73,
       "type": 2,
       "title": "Vikunja",
       "version": "2.8.0",
-      "description": "Vikunja est un gestionnaire de tâches open-source avec listes, tableaux Kanban et calendrier.",
       "categories": [
         "Projets"
       ],
@@ -3103,11 +3012,10 @@
       }
     },
     {
-      "id": 75,
+      "id": 74,
       "type": 2,
       "title": "Authentik",
       "version": "2026.8.6",
-      "description": "Authentik est un fournisseur d'identité open-source axé sur la flexibilité et la polyvalence.",
       "categories": [
         "Sécurité"
       ],
@@ -3135,11 +3043,10 @@
       ]
     },
     {
-      "id": 76,
+      "id": 75,
       "type": 2,
       "title": "Nextcloud-Talk",
       "version": "20261109",
-      "description": "Nextcloud Talk protège vos communications mieux que les autres plateformes d'équipe comme Microsoft Teams ou Slack.",
       "categories": [
         "Communication"
       ],
@@ -3174,11 +3081,10 @@
       ]
     },
     {
-      "id": 77,
+      "id": 76,
       "type": 2,
       "title": "Collabora",
       "version": "26.04.6.2.1",
-      "description": "Collabora Online est une suite bureautique en ligne open-source puissante basée sur LibreOffice.",
       "categories": [
         "Docs"
       ],
@@ -3199,11 +3105,10 @@
       ]
     },
     {
-      "id": 78,
+      "id": 77,
       "type": 2,
       "title": "Umami",
       "version": "3.5.0",
-      "description": "Umami est un outil d'analyse web open-source simple, rapide et respectueux de la vie privée.",
       "categories": [
         "Statistiques"
       ],
@@ -3250,11 +3155,10 @@
       ]
     },
     {
-      "id": 79,
+      "id": 78,
       "type": 2,
       "title": "Keycloak",
       "version": "26.8.2",
-      "description": "Keycloak est une solution open-source de gestion des identités et des accès destinée aux applications et services modernes.",
       "categories": [
         "Sécurité"
       ],
@@ -3280,11 +3184,10 @@
       ]
     },
     {
-      "id": 80,
+      "id": 79,
       "type": 2,
       "title": "GlitchTip",
       "version": "6.2.6",
-      "description": "GlitchTip est un outil open-source de suivi d'erreurs pour surveiller la santé de vos applications.",
       "categories": [
         "Analytics"
       ],
@@ -3339,11 +3242,10 @@
       ]
     },
     {
-      "id": 81,
+      "id": 80,
       "type": 2,
       "title": "Booklore",
       "version": "2.4.0",
-      "description": "Booklore est un gestionnaire et lecteur de livres open-source auto-hébergé pour organiser votre bibliothèque.",
       "categories": [
         "Stockage"
       ],
@@ -3357,11 +3259,10 @@
       }
     },
     {
-      "id": 82,
+      "id": 81,
       "type": 2,
       "title": "Drawio",
       "version": "32.7.4",
-      "description": "Draw.io est un éditeur de diagrammes open-source pour créer des schémas, organigrammes et diagrammes techniques.",
       "categories": [
         "Docs"
       ],
@@ -3375,11 +3276,10 @@
       }
     },
     {
-      "id": 83,
+      "id": 82,
       "type": 2,
       "title": "Healthchecks",
       "version": "5.0.3",
-      "description": "Healthchecks est un outil open-source de surveillance de tâches planifiées (cron jobs) avec alertes en cas d'échec.",
       "categories": [
         "Statistiques"
       ],
@@ -3471,11 +3371,10 @@
       ]
     },
     {
-      "id": 84,
+      "id": 83,
       "type": 2,
       "title": "Kosync",
       "version": "2.1.1",
-      "description": "KOReader Sync est un serveur open-source de synchronisation de la progression de lecture pour KOReader.",
       "categories": [
         "Stockage"
       ],
@@ -3506,10 +3405,9 @@
       ]
     },
     {
-      "id": 85,
+      "id": 84,
       "type": 2,
       "title": "Monitoring",
-      "description": "Stack de supervision open-source pour monitorer vos serveurs et conteneurs avec Prometheus, Grafana, cAdvisor et Node Exporter.",
       "categories": [
         "Analytics"
       ],
@@ -3547,11 +3445,10 @@
       ]
     },
     {
-      "id": 86,
+      "id": 85,
       "type": 2,
       "title": "Solidtime",
       "version": "0.23.0",
-      "description": "Solidtime est une application open-source de suivi du temps de travail pour les freelances et les équipes.",
       "categories": [
         "Projets"
       ],
@@ -3607,11 +3504,10 @@
       ]
     },
     {
-      "id": 87,
+      "id": 86,
       "type": 2,
       "title": "Uptime-Kuma",
       "version": "2.5.12",
-      "description": "Uptime Kuma est un outil de monitoring open-source pour surveiller la disponibilité de vos sites et services.",
       "categories": [
         "Statistiques"
       ],
@@ -3625,11 +3521,10 @@
       }
     },
     {
-      "id": 88,
+      "id": 87,
       "type": 2,
       "title": "Affine",
       "version": "0.27.4",
-      "description": "AFFiNE est un espace de travail open-source combinant notes, tableaux blancs et gestion de tâches.",
       "categories": [
         "Documents"
       ],
@@ -3644,11 +3539,10 @@
       }
     },
     {
-      "id": 89,
+      "id": 88,
       "type": 2,
       "title": "SignaturePDF",
       "version": "1.9.2",
-      "description": "SignaturePDF est une application web open-source pour signer, modifier et organiser vos documents PDF.",
       "categories": [
         "Docs"
       ],
@@ -3662,11 +3556,10 @@
       }
     },
     {
-      "id": 90,
+      "id": 89,
       "type": 2,
       "title": "DocuSeal",
       "version": "2.5.3",
-      "description": "DocuSeal est une plateforme open-source de signature électronique de documents PDF, alternative à DocuSign.",
       "categories": [
         "Documents"
       ],
@@ -3680,11 +3573,10 @@
       }
     },
     {
-      "id": 91,
+      "id": 90,
       "type": 2,
       "title": "EuroOffice",
       "version": "9.3.8",
-      "description": "EuroOffice est une suite bureautique open-source pour éditer collaborativement documents, feuilles de calcul et présentations.",
       "categories": [
         "Docs"
       ],
@@ -3704,11 +3596,10 @@
       ]
     },
     {
-      "id": 92,
+      "id": 91,
       "type": 2,
       "title": "Roundcube",
       "version": "1.7.6",
-      "description": "Roundcube est un client de messagerie web open-source pour consulter et envoyer vos emails depuis votre navigateur.",
       "categories": [
         "Communication"
       ],
@@ -3746,11 +3637,10 @@
       ]
     },
     {
-      "id": 93,
+      "id": 92,
       "type": 2,
       "title": "OpenAthlete",
       "version": "1.8.0",
-      "description": "OpenAthlete est une plateforme d'entraînement open-source pour suivre vos activités sportives et planifier vos séances.",
       "categories": [
         "Sport"
       ],
@@ -3842,11 +3732,10 @@
       ]
     },
     {
-      "id": 94,
+      "id": 93,
       "type": 2,
       "title": "Share2Fedi",
       "version": "4.0.0",
-      "description": "Share2Fedi est une page de partage open-source pour publier du contenu sur n'importe quelle instance du Fediverse (Mastodon, Misskey, etc.).",
       "categories": [
         "Social"
       ],
@@ -3860,11 +3749,10 @@
       }
     },
     {
-      "id": 95,
+      "id": 94,
       "type": 2,
       "title": "Mayan",
       "version": "4.12.2",
-      "description": "Mayan EDMS est un logiciel de gestion électronique de documents (GED) open-source avec OCR, métadonnées, workflows et gestion des versions.",
       "categories": [
         "Documents"
       ],
@@ -3898,11 +3786,10 @@
       ]
     },
     {
-      "id": 96,
+      "id": 95,
       "type": 2,
       "title": "Adminer",
       "version": "6.3.0",
-      "description": "Adminer est un outil open-source léger de gestion de bases de données (MySQL, MariaDB, PostgreSQL, SQLite, etc.) dans un seul fichier PHP.",
       "categories": [
         "Développement"
       ],
@@ -3927,11 +3814,10 @@
       ]
     },
     {
-      "id": 97,
+      "id": 96,
       "type": 2,
       "title": "SearXNG",
       "version": "latest",
-      "description": "SearXNG est un métamoteur de recherche open-source qui agrège les résultats sans tracer les utilisateurs.",
       "categories": [
         "Recherche"
       ],
@@ -3962,11 +3848,10 @@
       ]
     },
     {
-      "id": 98,
+      "id": 97,
       "type": 2,
       "title": "Invidious",
       "version": "master",
-      "description": "Invidious est une interface open-source alternative à YouTube, sans publicité ni tracking.",
       "categories": [
         "Réseau social"
       ],
@@ -3986,11 +3871,10 @@
       ]
     },
     {
-      "id": 99,
+      "id": 98,
       "type": 2,
       "title": "WriteFreely",
       "version": "0.17.2",
-      "description": "WriteFreely est une plateforme de blog open-source minimaliste et fédérée, pensée pour l'écriture.",
       "categories": [
         "Site web"
       ],
@@ -4054,6 +3938,1479 @@
           ]
         }
       ]
+    },
+    {
+      "id": 99,
+      "type": 2,
+      "title": "Actualbudget",
+      "version": "26.11.0",
+      "categories": [
+        "Finance"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/actualbudget.png",
+      "website": "https://actualbudget.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/actualbudget.yml",
+        "commit": "b268920a1cf9cffc19971c74198e3e877fe5d840"
+      }
+    },
+    {
+      "id": 100,
+      "type": 2,
+      "title": "Akaunting",
+      "version": "3.3.2",
+      "categories": [
+        "Facturation"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/akaunting.png",
+      "website": "https://akaunting.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/akaunting.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "type": 2,
+      "title": "Beszel",
+      "version": "0.21.2",
+      "categories": [
+        "Statistiques"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/beszel.png",
+      "website": "https://beszel.dev",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/beszel.yml",
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
+      }
+    },
+    {
+      "id": 102,
+      "type": 2,
+      "title": "Botpress",
+      "version": "12",
+      "categories": [
+        "Communication"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/botpress.png",
+      "website": "https://botpress.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/botpress.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 103,
+      "type": 2,
+      "title": "Changedetection",
+      "version": "0.70.4",
+      "categories": [
+        "Automatisation"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/changedetection.png",
+      "website": "https://changedetection.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/changedetection.yml",
+        "commit": "e5b9c894a2e9ea21d3d5f542786430a64adc10fc"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "type": 2,
+      "title": "Coolify",
+      "version": "4.7.6",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/coolify.png",
+      "website": "https://coolify.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/coolify.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      },
+      "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "type": 2,
+      "title": "CryptPad",
+      "version": "4.14.1",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/cryptpad.png",
+      "website": "https://cryptpad.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/cryptpad.yml",
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
+      }
+    },
+    {
+      "id": 106,
+      "type": 2,
+      "title": "Decidim",
+      "version": "0.31.6",
+      "categories": [
+        "Social"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/decidim.png",
+      "website": "https://decidim.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/decidim.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 107,
+      "type": 2,
+      "title": "Directus",
+      "version": "11.17.4",
+      "categories": [
+        "No-code"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/directus.png",
+      "website": "https://directus.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/directus.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "type": 2,
+      "title": "Docmost",
+      "version": "0.98.0",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/docmost.png",
+      "website": "https://docmost.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/docmost.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 109,
+      "type": 2,
+      "title": "Documenso",
+      "version": "2.22.0",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/documenso.png",
+      "website": "https://documenso.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/documenso.yml",
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+      }
+    },
+    {
+      "id": 110,
+      "type": 2,
+      "title": "EspoCRM",
+      "version": "7.5.6",
+      "categories": [
+        "Vente"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/espocrm.png",
+      "website": "https://www.espocrm.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/espocrm.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      },
+      "env": [
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 111,
+      "type": 2,
+      "title": "EtherCalc",
+      "version": "0.20261101.3",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/ethercalc.png",
+      "website": "https://ethercalc.net",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/ethercalc.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 112,
+      "type": 2,
+      "title": "Excalidraw",
+      "version": "latest",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/excalidraw.png",
+      "website": "https://excalidraw.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/excalidraw.yml",
+        "commit": "d45b827f7c7982b9919e022077a7b4b5dc002169"
+      }
+    },
+    {
+      "id": 113,
+      "type": 2,
+      "title": "Fider",
+      "version": "main",
+      "categories": [
+        "Communication"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/fider.png",
+      "website": "https://fider.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/fider.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 114,
+      "type": 2,
+      "title": "Filebrowser",
+      "version": "s6",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/filebrowser.png",
+      "website": "https://filebrowser.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/filebrowser.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
+    },
+    {
+      "id": 115,
+      "type": 2,
+      "title": "FileGator",
+      "version": "7.16.9",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/filegator.png",
+      "website": "https://filegator.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/filegator.yml",
+        "commit": "3dc79654a437fba6419b20f9bc1dd83aa96c77f1"
+      }
+    },
+    {
+      "id": 116,
+      "type": 2,
+      "title": "Filestash",
+      "version": "latest",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/filestash.png",
+      "website": "https://www.filestash.app",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/filestash.yml",
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+      }
+    },
+    {
+      "id": 117,
+      "type": 2,
+      "title": "Firefly",
+      "version": "version-6.1.25",
+      "categories": [
+        "Finance"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/firefly.png",
+      "website": "https://www.firefly-iii.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/firefly.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 118,
+      "type": 2,
+      "title": "Forgejo",
+      "version": "12.0.4",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/forgejo.png",
+      "website": "https://forgejo.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/forgejo.yml",
+        "commit": "a756f14dd811240b2aceaca9f4ad8bc7351822ba"
+      }
+    },
+    {
+      "id": 119,
+      "type": 2,
+      "title": "FreshRSS",
+      "version": "1.30.4",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/freshrss.png",
+      "website": "https://freshrss.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/freshrss.yml",
+        "commit": "8c134a88d53cb11f082f341ac619d8356b07c2bf"
+      }
+    },
+    {
+      "id": 120,
+      "type": 2,
+      "title": "GameVault",
+      "version": "latest",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/gamevault.png",
+      "website": "https://gamevau.lt",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/gamevault.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      },
+      "env": [
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "SERVER_ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 121,
+      "type": 2,
+      "title": "Ghostfolio",
+      "version": "2.255.0",
+      "categories": [
+        "Finance"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/ghostfolio.png",
+      "website": "https://ghostfol.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/ghostfolio.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 122,
+      "type": 2,
+      "title": "GitLab",
+      "version": "19.6.1",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/gitlab.png",
+      "website": "https://about.gitlab.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/gitlab.yml",
+        "commit": "8e764c910d1c43863d64d3d4c55326a1fee882e2"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 123,
+      "type": 2,
+      "title": "Grafana",
+      "version": "13.3.1",
+      "categories": [
+        "Statistiques"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/grafana.png",
+      "website": "https://grafana.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/grafana.yml",
+        "commit": "47405c8757c01199c77f80165932549110f708b5"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 124,
+      "type": 2,
+      "title": "Grav",
+      "version": "latest",
+      "categories": [
+        "Site web"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/grav.png",
+      "website": "https://getgrav.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/grav.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
+    },
+    {
+      "id": 125,
+      "type": 2,
+      "title": "Habitica",
+      "version": "latest",
+      "categories": [
+        "Projets"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/habitica.png",
+      "website": "https://habitica.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/habitica.yml",
+        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+      }
+    },
+    {
+      "id": 126,
+      "type": 2,
+      "title": "Hasura",
+      "version": "2.51.9",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/hasura.png",
+      "website": "https://hasura.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/hasura.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 127,
+      "type": 2,
+      "title": "HedgeDoc",
+      "version": "1.12.2",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/hedgedoc.png",
+      "website": "https://hedgedoc.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/hedgedoc.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 128,
+      "type": 2,
+      "title": "Hoppscotch",
+      "version": "2026.10.1",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/hoppscotch.png",
+      "website": "https://hoppscotch.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/hoppscotch.yml",
+        "commit": "5113a28002c6a4041f38b7ae614cf853b42a5194"
+      }
+    },
+    {
+      "id": 129,
+      "type": 2,
+      "title": "Huginn",
+      "version": "2026.11.19",
+      "categories": [
+        "Automatisation"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/huginn.png",
+      "website": "https://github.com/huginn/huginn",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/huginn.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      }
+    },
+    {
+      "id": 130,
+      "type": 2,
+      "title": "Immich",
+      "version": "3.4.2",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/immich.png",
+      "website": "https://immich.app",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/immich.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 131,
+      "type": 2,
+      "title": "IPFS",
+      "version": "0.43.1",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/ipfs.png",
+      "website": "https://ipfs.tech",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/ipfs.yml",
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+      }
+    },
+    {
+      "id": 132,
+      "type": 2,
+      "title": "Jackett",
+      "version": "0.25.20",
+      "categories": [
+        "Recherche"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/jackett.png",
+      "website": "https://github.com/Jackett/Jackett",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/jackett.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      }
+    },
+    {
+      "id": 133,
+      "type": 2,
+      "title": "Jellyfin",
+      "version": "10.11.11",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/jellyfin.png",
+      "website": "https://jellyfin.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/jellyfin.yml",
+        "commit": "68a32449eb1536756ff5fd3b971762c60ca1f8b5"
+      }
+    },
+    {
+      "id": 134,
+      "type": 2,
+      "title": "Jenkins",
+      "version": "2.591",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/jenkins.png",
+      "website": "https://www.jenkins.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/jenkins.yml",
+        "commit": "9ccff21ae7094e248d286d77f2540494af624b9d"
+      }
+    },
+    {
+      "id": 135,
+      "type": 2,
+      "title": "Joplin",
+      "version": "3.7.6",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/joplin.png",
+      "website": "https://joplinapp.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/joplin.yml",
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
+      }
+    },
+    {
+      "id": 136,
+      "type": 2,
+      "title": "Karakeep",
+      "version": "0.35.0",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/karakeep.png",
+      "website": "https://karakeep.app",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/karakeep.yml",
+        "commit": "4b3147654b4df0451b06c13a76fb0a0112d850c5"
+      }
+    },
+    {
+      "id": 137,
+      "type": 2,
+      "title": "Khoj",
+      "version": "1.42.10",
+      "categories": [
+        "IA"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/khoj.png",
+      "website": "https://khoj.dev",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/khoj.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 138,
+      "type": 2,
+      "title": "Kutt",
+      "version": "2.7.4",
+      "categories": [
+        "Marketing"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/kutt.png",
+      "website": "https://kutt.it",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/kutt.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 139,
+      "type": 2,
+      "title": "Langflow",
+      "version": "1.13.3",
+      "categories": [
+        "IA"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/langflow.png",
+      "website": "https://www.langflow.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/langflow.yml",
+        "commit": "07bfa7d94973a2c73e4f7e9b7a20cab3e491854d"
+      },
+      "env": [
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 140,
+      "type": 2,
+      "title": "Mailtrain",
+      "version": "latest",
+      "categories": [
+        "Marketing"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/mailtrain.png",
+      "website": "https://mailtrain.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/mailtrain.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 141,
+      "type": 2,
+      "title": "Matterwiki",
+      "version": "latest",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/matterwiki.png",
+      "website": "https://github.com/Matterwiki/Matterwiki",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/matterwiki.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
+    },
+    {
+      "id": 142,
+      "type": 2,
+      "title": "Maybe",
+      "version": "0.6.0",
+      "categories": [
+        "Finance"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/maybe.png",
+      "website": "https://maybefinance.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/maybe.yml",
+        "commit": "5c3737b45b2d17cf21c588ccd0037cbaec8e1c81"
+      }
+    },
+    {
+      "id": 143,
+      "type": 2,
+      "title": "Monica",
+      "version": "4.1.2",
+      "categories": [
+        "Social"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/monica.png",
+      "website": "https://www.monicahq.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/monica.yml",
+        "commit": "1202d35850902d521d8627ff5e5f53e6d0419805"
+      }
+    },
+    {
+      "id": 144,
+      "type": 2,
+      "title": "Nitter",
+      "version": "latest",
+      "categories": [
+        "Réseau social"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/nitter.png",
+      "website": "https://github.com/zedeus/nitter",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/nitter.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
+    },
+    {
+      "id": 145,
+      "type": 2,
+      "title": "Notea",
+      "version": "0.3.6",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/notea.png",
+      "website": "https://github.com/notea-org/notea",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/notea.yml",
+        "commit": "fbb8d757919be8f60e8dd0d4052c796cda88da20"
+      },
+      "env": [
+        {
+          "name": "STORE_END_POINT",
+          "label": "S3 endpoint"
+        },
+        {
+          "name": "STORE_ACCESS_KEY",
+          "label": "S3 access key"
+        },
+        {
+          "name": "STORE_SECRET_KEY",
+          "label": "S3 secret key",
+          "type": "password"
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 146,
+      "type": 2,
+      "title": "Ollama",
+      "version": "0.40.17",
+      "categories": [
+        "IA"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/ollama.png",
+      "website": "https://ollama.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/ollama.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      },
+      "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 147,
+      "type": 2,
+      "title": "OpenPanel",
+      "version": "2.3.0",
+      "categories": [
+        "Statistiques"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/openpanel.png",
+      "website": "https://openpanel.dev",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/openpanel.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 148,
+      "type": 2,
+      "title": "OpenProject",
+      "version": "17.9.8",
+      "categories": [
+        "Projets"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/openproject.png",
+      "website": "https://www.openproject.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/openproject.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 149,
+      "type": 2,
+      "title": "Openwebui",
+      "version": "0.13.4",
+      "categories": [
+        "IA"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/openwebui.png",
+      "website": "https://openwebui.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/openwebui.yml",
+        "commit": "9ccff21ae7094e248d286d77f2540494af624b9d"
+      },
+      "env": [
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Admin email",
+          "type": "email",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 150,
+      "type": 2,
+      "title": "Paperless",
+      "version": "3.5.1",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/paperless.png",
+      "website": "https://docs.paperless-ngx.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/paperless.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 151,
+      "type": 2,
+      "title": "Penpot",
+      "version": "2.19.3",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/penpot.png",
+      "website": "https://penpot.app",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/penpot.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 152,
+      "type": 2,
+      "title": "PhotoPrism",
+      "version": "261029",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/photoprism.png",
+      "website": "https://www.photoprism.app",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/photoprism.yml",
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 153,
+      "type": 2,
+      "title": "Pinafore",
+      "version": "latest",
+      "categories": [
+        "Réseau social"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/pinafore.png",
+      "website": "https://pinafore.social",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/pinafore.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
+    },
+    {
+      "id": 154,
+      "type": 2,
+      "title": "Pingvin",
+      "version": "0.29.0",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/pingvin.png",
+      "website": "https://github.com/stonith404/pingvin-share",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/pingvin.yml",
+        "commit": "07637c4f2d20f1f51c600afc5df42d9690bd1a51"
+      }
+    },
+    {
+      "id": 155,
+      "type": 2,
+      "title": "Plausible",
+      "version": "3.2.1",
+      "categories": [
+        "Statistiques"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/plausible.png",
+      "website": "https://plausible.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/plausible.yml",
+        "commit": "74baad679c26fe30c66b0c0967ad009da6aed957"
+      }
+    },
+    {
+      "id": 156,
+      "type": 2,
+      "title": "Plume",
+      "version": "0.7.2",
+      "categories": [
+        "Site web"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/plume.png",
+      "website": "https://joinplu.me",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/plume.yml",
+        "commit": "ad1f5c45ef0bfda18c0a701f719cd4d6013479ba"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 157,
+      "type": 2,
+      "title": "Pydio",
+      "version": "2.2.12",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/pydio.png",
+      "website": "https://pydio.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/pydio.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 158,
+      "type": 2,
+      "title": "Redmine",
+      "version": "4.2.10",
+      "categories": [
+        "Projets"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/redmine.png",
+      "website": "https://www.redmine.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/redmine.yml",
+        "commit": "2971c2dfb85942c286f431d52ff4bdec38a865f0"
+      }
+    },
+    {
+      "id": 159,
+      "type": 2,
+      "title": "RSSHub",
+      "version": "2026",
+      "categories": [
+        "Recherche"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/rsshub.png",
+      "website": "https://docs.rsshub.app",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/rsshub.yml",
+        "commit": "5c3737b45b2d17cf21c588ccd0037cbaec8e1c81"
+      }
+    },
+    {
+      "id": 160,
+      "type": 2,
+      "title": "Rybbit",
+      "version": "2.9.3",
+      "categories": [
+        "Statistiques"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/rybbit.png",
+      "website": "https://rybbit.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/rybbit.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 161,
+      "type": 2,
+      "title": "Scrumblr",
+      "version": "latest",
+      "categories": [
+        "Projets"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/scrumblr.png",
+      "website": "https://github.com/aliasaria/scrumblr",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/scrumblr.yml",
+        "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
+      }
+    },
+    {
+      "id": 162,
+      "type": 2,
+      "title": "SerpBear",
+      "version": "2.0.7",
+      "categories": [
+        "Marketing"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/serpbear.png",
+      "website": "https://serpbear.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/serpbear.yml",
+        "commit": "5f32c0dbba6d9703105055cca2814bd326680e9f"
+      },
+      "env": [
+        {
+          "name": "ADMIN_USERNAME",
+          "label": "Admin username",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 163,
+      "type": 2,
+      "title": "SFTPGo",
+      "version": "2.7.6",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/sftpgo.png",
+      "website": "https://sftpgo.com",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/sftpgo.yml",
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+      }
+    },
+    {
+      "id": 164,
+      "type": 2,
+      "title": "Shaarli",
+      "version": "0.16.10",
+      "categories": [
+        "Stockage"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/shaarli.png",
+      "website": "https://shaarli.readthedocs.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/shaarli.yml",
+        "commit": "8c134a88d53cb11f082f341ac619d8356b07c2bf"
+      }
+    },
+    {
+      "id": 165,
+      "type": 2,
+      "title": "Shynet",
+      "version": "0.13.1",
+      "categories": [
+        "Statistiques"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/shynet.png",
+      "website": "https://github.com/milesmcc/shynet",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/shynet.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 166,
+      "type": 2,
+      "title": "SiYuan",
+      "version": "3.8.11",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/siyuan.png",
+      "website": "https://b3log.org/siyuan",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/siyuan.yml",
+        "commit": "f681145064151b695e487ca3f44a2de038572818"
+      },
+      "env": [
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Admin password",
+          "type": "password",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": 167,
+      "type": 2,
+      "title": "SonarQube",
+      "version": "26.11.0.134175",
+      "categories": [
+        "Développement"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/sonarqube.png",
+      "website": "https://www.sonarsource.com/products/sonarqube",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/sonarqube.yml",
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+      }
+    },
+    {
+      "id": 168,
+      "type": 2,
+      "title": "Strapi",
+      "version": "latest",
+      "categories": [
+        "Site web"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/strapi.png",
+      "website": "https://strapi.io",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/strapi.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
+    },
+    {
+      "id": 169,
+      "type": 2,
+      "title": "Trilium",
+      "version": "0.107.0",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/trilium.png",
+      "website": "https://triliumnotes.org",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/trilium.yml",
+        "commit": "c88445a4ba1500860c4587e95d1001acf81d44ca"
+      }
+    },
+    {
+      "id": 170,
+      "type": 2,
+      "title": "Whoogle",
+      "version": "1.2.4",
+      "categories": [
+        "Recherche"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/whoogle.png",
+      "website": "https://github.com/benbusby/whoogle-search",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/whoogle.yml",
+        "commit": "8c134a88d53cb11f082f341ac619d8356b07c2bf"
+      }
+    },
+    {
+      "id": 171,
+      "type": 2,
+      "title": "Writebook",
+      "version": "latest",
+      "categories": [
+        "Documents"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/writebook.png",
+      "website": "https://once.com/writebook",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/writebook.yml",
+        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+      }
+    },
+    {
+      "id": 172,
+      "type": 2,
+      "title": "YesWiki",
+      "version": "latest",
+      "categories": [
+        "Site web"
+      ],
+      "enabled": false,
+      "logo": "https://ethibox.fr/images/logos/yeswiki.png",
+      "website": "https://yeswiki.net",
+      "repository": {
+        "url": "https://github.com/ethibox/awesome-stacks",
+        "stackfile": "stacks/yeswiki.yml",
+        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+      }
     }
   ]
 }
