@@ -2007,30 +2007,6 @@
     {
       "id": 44,
       "type": 2,
-      "title": "Posthog",
-      "version": "release-1.43.0",
-      "description": "PostHog est une plateforme d'analyse produit open-source pour comprendre le comportement des utilisateurs.",
-      "categories": [
-        "Analytics"
-      ],
-      "enabled": false,
-      "logo": "https://ethibox.fr/images/logos/posthog.png",
-      "website": "https://posthog.com/",
-      "repository": {
-        "url": "https://github.com/ethibox/awesome-stacks",
-        "stackfile": "stacks/posthog.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
-      },
-      "env": [
-        {
-          "name": "SECRET_KEY",
-          "preset": true
-        }
-      ]
-    },
-    {
-      "id": 45,
-      "type": 2,
       "title": "FreeScout",
       "version": "2.2.26",
       "description": "FreeScout est un helpdesk open-source léger pour gérer les emails de support client.",
@@ -2060,7 +2036,7 @@
       ]
     },
     {
-      "id": 46,
+      "id": 45,
       "type": 2,
       "title": "Mobilizon",
       "version": "5.2.4",
@@ -2118,7 +2094,7 @@
       ]
     },
     {
-      "id": 47,
+      "id": 46,
       "type": 2,
       "title": "Kresus",
       "version": "0.26.0",
@@ -2162,7 +2138,7 @@
       ]
     },
     {
-      "id": 48,
+      "id": 47,
       "type": 2,
       "title": "Searx",
       "version": "latest",
@@ -2180,7 +2156,7 @@
       }
     },
     {
-      "id": 49,
+      "id": 48,
       "type": 2,
       "title": "NocoDB",
       "version": "0.301.5",
@@ -2215,7 +2191,7 @@
       ]
     },
     {
-      "id": 50,
+      "id": 49,
       "type": 2,
       "title": "Focalboard",
       "version": "7.11.4",
@@ -2234,7 +2210,7 @@
       }
     },
     {
-      "id": 51,
+      "id": 50,
       "type": 2,
       "title": "Ntfy",
       "version": "2.38.1",
@@ -2252,7 +2228,7 @@
       }
     },
     {
-      "id": 52,
+      "id": 51,
       "type": 2,
       "title": "Grist",
       "version": "1.7.22",
@@ -2369,7 +2345,7 @@
       ]
     },
     {
-      "id": 53,
+      "id": 52,
       "type": 2,
       "title": "Nocobase",
       "version": "2.2.50",
@@ -2401,7 +2377,7 @@
       ]
     },
     {
-      "id": 54,
+      "id": 53,
       "type": 2,
       "title": "Bookstack",
       "version": "26.09.3",
@@ -2513,7 +2489,7 @@
       ]
     },
     {
-      "id": 55,
+      "id": 54,
       "type": 2,
       "title": "GoGoCarto",
       "version": "latest",
@@ -2532,7 +2508,7 @@
       }
     },
     {
-      "id": 56,
+      "id": 55,
       "type": 2,
       "title": "Appsmith",
       "version": "1.99",
@@ -2550,7 +2526,7 @@
       }
     },
     {
-      "id": 57,
+      "id": 56,
       "type": 2,
       "title": "Dokos",
       "version": "4.71.2",
@@ -2583,7 +2559,7 @@
       ]
     },
     {
-      "id": 58,
+      "id": 57,
       "type": 2,
       "title": "Omeka",
       "version": "4.3.0",
@@ -2602,7 +2578,7 @@
       }
     },
     {
-      "id": 59,
+      "id": 58,
       "type": 2,
       "title": "Piwigo",
       "version": "14.5.0",
@@ -2635,7 +2611,7 @@
       ]
     },
     {
-      "id": 60,
+      "id": 59,
       "type": 2,
       "title": "Moodle",
       "version": "4.5.4",
@@ -2665,7 +2641,7 @@
       ]
     },
     {
-      "id": 61,
+      "id": 60,
       "type": 2,
       "title": "Vaultwarden",
       "version": "1.37.5",
@@ -2692,7 +2668,7 @@
       ]
     },
     {
-      "id": 62,
+      "id": 61,
       "type": 2,
       "title": "Memos",
       "version": "0.31.0",
@@ -2710,7 +2686,7 @@
       }
     },
     {
-      "id": 63,
+      "id": 62,
       "type": 2,
       "title": "Automatisch",
       "version": "0.15.0",
@@ -2744,7 +2720,7 @@
       ]
     },
     {
-      "id": 64,
+      "id": 63,
       "type": 2,
       "title": "Keila",
       "version": "0.40.2",
@@ -2815,7 +2791,7 @@
       ]
     },
     {
-      "id": 65,
+      "id": 64,
       "type": 2,
       "title": "Listmonk",
       "version": "6.2.0",
@@ -2847,7 +2823,7 @@
       ]
     },
     {
-      "id": 66,
+      "id": 65,
       "type": 2,
       "title": "Rallly",
       "version": "4.17.1",
@@ -2906,7 +2882,7 @@
       ]
     },
     {
-      "id": 67,
+      "id": 66,
       "type": 2,
       "title": "Sympa",
       "version": "latest",
@@ -2950,7 +2926,7 @@
       ]
     },
     {
-      "id": 68,
+      "id": 67,
       "type": 2,
       "title": "Activepieces",
       "version": "0.93.0",
@@ -2968,7 +2944,7 @@
       }
     },
     {
-      "id": 69,
+      "id": 68,
       "type": 2,
       "title": "Postiz",
       "version": "2.26.0",
@@ -2986,7 +2962,7 @@
       }
     },
     {
-      "id": 70,
+      "id": 69,
       "type": 2,
       "title": "Twenty",
       "version": "1.23.9",
@@ -3022,7 +2998,7 @@
       ]
     },
     {
-      "id": 71,
+      "id": 70,
       "type": 2,
       "title": "Outline",
       "version": "1.13.0",
@@ -3055,7 +3031,7 @@
       ]
     },
     {
-      "id": 72,
+      "id": 71,
       "type": 2,
       "title": "Chartbrew",
       "version": "6.0.1",
@@ -3073,7 +3049,7 @@
       }
     },
     {
-      "id": 73,
+      "id": 72,
       "type": 2,
       "title": "Paheko",
       "version": "1.3.25.1",
@@ -3091,7 +3067,7 @@
       }
     },
     {
-      "id": 74,
+      "id": 73,
       "type": 2,
       "title": "Teable",
       "version": "1.8.0",
@@ -3109,7 +3085,7 @@
       }
     },
     {
-      "id": 75,
+      "id": 74,
       "type": 2,
       "title": "Vikunja",
       "version": "2.8.0",
@@ -3127,7 +3103,7 @@
       }
     },
     {
-      "id": 76,
+      "id": 75,
       "type": 2,
       "title": "Authentik",
       "version": "2026.8.6",
@@ -3159,7 +3135,7 @@
       ]
     },
     {
-      "id": 77,
+      "id": 76,
       "type": 2,
       "title": "Nextcloud-Talk",
       "version": "20261109",
@@ -3198,7 +3174,7 @@
       ]
     },
     {
-      "id": 78,
+      "id": 77,
       "type": 2,
       "title": "Collabora",
       "version": "26.04.6.2.1",
@@ -3223,7 +3199,7 @@
       ]
     },
     {
-      "id": 79,
+      "id": 78,
       "type": 2,
       "title": "Umami",
       "version": "3.5.0",
@@ -3274,7 +3250,7 @@
       ]
     },
     {
-      "id": 80,
+      "id": 79,
       "type": 2,
       "title": "Keycloak",
       "version": "26.8.2",
@@ -3304,7 +3280,7 @@
       ]
     },
     {
-      "id": 81,
+      "id": 80,
       "type": 2,
       "title": "GlitchTip",
       "version": "6.2.6",
@@ -3363,7 +3339,7 @@
       ]
     },
     {
-      "id": 82,
+      "id": 81,
       "type": 2,
       "title": "Booklore",
       "version": "2.4.0",
@@ -3381,7 +3357,7 @@
       }
     },
     {
-      "id": 83,
+      "id": 82,
       "type": 2,
       "title": "Drawio",
       "version": "32.7.4",
@@ -3399,7 +3375,7 @@
       }
     },
     {
-      "id": 84,
+      "id": 83,
       "type": 2,
       "title": "Healthchecks",
       "version": "5.0.3",
@@ -3495,7 +3471,7 @@
       ]
     },
     {
-      "id": 85,
+      "id": 84,
       "type": 2,
       "title": "Kosync",
       "version": "2.1.1",
@@ -3530,7 +3506,7 @@
       ]
     },
     {
-      "id": 86,
+      "id": 85,
       "type": 2,
       "title": "Monitoring",
       "description": "Stack de supervision open-source pour monitorer vos serveurs et conteneurs avec Prometheus, Grafana, cAdvisor et Node Exporter.",
@@ -3571,7 +3547,7 @@
       ]
     },
     {
-      "id": 87,
+      "id": 86,
       "type": 2,
       "title": "Solidtime",
       "version": "0.23.0",
@@ -3631,7 +3607,7 @@
       ]
     },
     {
-      "id": 88,
+      "id": 87,
       "type": 2,
       "title": "Uptime-Kuma",
       "version": "2.5.12",
@@ -3649,7 +3625,7 @@
       }
     },
     {
-      "id": 89,
+      "id": 88,
       "type": 2,
       "title": "Affine",
       "version": "0.27.4",
@@ -3668,7 +3644,7 @@
       }
     },
     {
-      "id": 90,
+      "id": 89,
       "type": 2,
       "title": "SignaturePDF",
       "version": "1.9.2",
@@ -3686,7 +3662,7 @@
       }
     },
     {
-      "id": 91,
+      "id": 90,
       "type": 2,
       "title": "DocuSeal",
       "version": "2.5.3",
@@ -3704,7 +3680,7 @@
       }
     },
     {
-      "id": 92,
+      "id": 91,
       "type": 2,
       "title": "EuroOffice",
       "version": "9.3.8",
@@ -3728,7 +3704,7 @@
       ]
     },
     {
-      "id": 93,
+      "id": 92,
       "type": 2,
       "title": "Roundcube",
       "version": "1.7.6",
@@ -3770,7 +3746,7 @@
       ]
     },
     {
-      "id": 94,
+      "id": 93,
       "type": 2,
       "title": "OpenAthlete",
       "version": "1.8.0",
@@ -3866,7 +3842,7 @@
       ]
     },
     {
-      "id": 95,
+      "id": 94,
       "type": 2,
       "title": "Share2Fedi",
       "version": "4.0.0",
@@ -3884,7 +3860,7 @@
       }
     },
     {
-      "id": 96,
+      "id": 95,
       "type": 2,
       "title": "Mayan",
       "version": "4.12.2",
@@ -3922,7 +3898,7 @@
       ]
     },
     {
-      "id": 97,
+      "id": 96,
       "type": 2,
       "title": "Adminer",
       "version": "6.3.0",
@@ -3951,7 +3927,7 @@
       ]
     },
     {
-      "id": 98,
+      "id": 97,
       "type": 2,
       "title": "SearXNG",
       "version": "latest",
@@ -3986,7 +3962,7 @@
       ]
     },
     {
-      "id": 99,
+      "id": 98,
       "type": 2,
       "title": "Invidious",
       "version": "master",
@@ -4010,7 +3986,7 @@
       ]
     },
     {
-      "id": 100,
+      "id": 99,
       "type": 2,
       "title": "WriteFreely",
       "version": "0.17.2",
