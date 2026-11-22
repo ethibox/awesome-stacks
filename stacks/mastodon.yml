@@ -3,7 +3,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 991:991 /mastodon/public/system
     volumes:
       - ${VOLUME_PATH}system:/mastodon/public/system

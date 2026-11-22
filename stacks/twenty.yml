@@ -30,7 +30,7 @@ services:
       - internal
 
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /app/packages/twenty-server/.local-storage /app/docker-data
     volumes: *volumes
     deploy:

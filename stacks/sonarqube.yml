@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /opt/sonarqube/data /opt/sonarqube/extensions /opt/sonarqube/logs
     volumes:
       - ${VOLUME_PATH}logs:/opt/sonarqube/logs

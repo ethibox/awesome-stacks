@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /rails/storage
     volumes:
       - ${VOLUME_PATH}storage:/rails/storage

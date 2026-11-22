@@ -3,7 +3,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /home/frappe/frappe-bench/sites
     volumes:
       - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites

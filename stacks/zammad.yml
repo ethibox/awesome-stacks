@@ -2,7 +2,7 @@
 
 services:
   zammad-chown:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /opt/zammad/var /opt/zammad/storage /usr/share/elasticsearch/data
     volumes:
       - ${VOLUME_PATH}var:/opt/zammad/var

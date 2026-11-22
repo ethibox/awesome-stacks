@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 5001:5001 /opt/etherpad-lite/src/plugin_packages /opt/etherpad-lite/var /opt/etherpad-lite/src/static/images
     volumes:
       - ${VOLUME_PATH}plugins:/opt/etherpad-lite/src/plugin_packages

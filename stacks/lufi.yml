@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /usr/lufi/data /usr/lufi/files
     volumes: &volumes
       - ${VOLUME_PATH}data:/usr/lufi/data

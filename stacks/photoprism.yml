@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R ${UID:-1000}:${GID:-1000} /photoprism/originals /photoprism/storage /photoprism/import
     volumes:
       - ${VOLUME_PATH}originals:/photoprism/originals

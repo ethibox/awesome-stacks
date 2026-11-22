@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /var/www/html
     volumes:
       - ${VOLUME_PATH}gogocarto:/var/www/html

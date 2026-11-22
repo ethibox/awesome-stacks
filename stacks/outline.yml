@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1001:1001 /var/lib/outline/data
     volumes:
       - ${VOLUME_PATH}data:/var/lib/outline/data

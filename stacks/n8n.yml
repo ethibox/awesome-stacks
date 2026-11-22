@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1000:1000 /home/node/.n8n
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n

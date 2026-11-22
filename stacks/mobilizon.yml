@@ -3,7 +3,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 65534:65534 /var/lib/mobilizon/uploads
     volumes:
       - ${VOLUME_PATH}uploads:/var/lib/mobilizon/uploads

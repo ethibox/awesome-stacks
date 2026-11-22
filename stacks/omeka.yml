@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 33:33 /var/www/html/files /var/www/html/config /var/www/html/modules
     volumes:
       - ${VOLUME_PATH}files:/var/www/html/files

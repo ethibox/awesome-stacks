@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: chown -R 1001 /opt/documenso
     volumes:
       - ${VOLUME_PATH}cert:/opt/documenso

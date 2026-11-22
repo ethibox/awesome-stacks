@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: busybox
+    image: busybox:latest
     command: sh -c "chown -R 472 /grafana && chown -R nobody /prometheus /config"
     volumes:
       - ${VOLUME_PATH}config:/config
