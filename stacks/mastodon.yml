@@ -36,8 +36,6 @@ services:
       - ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY=${ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY:?}
       - ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY=${ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY:?}
       - ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT=${ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT:?}
-      - HCAPTCHA_SECRET_KEY=${HCAPTCHA_SECRET_KEY}
-      - HCAPTCHA_SITE_KEY=${HCAPTCHA_SITE_KEY}
     command: bash -c "rails db:migrate && bundle exec puma -C config/puma.rb"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
