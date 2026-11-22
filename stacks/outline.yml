@@ -1,7 +1,15 @@
 # DOMAIN=example.com SECRET_KEY=$(openssl rand -hex 32) UTILS_SECRET=$(openssl rand -hex 32) docker stack deploy -c outline.yml outline
-# chown 1001:1001 data
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1001:1001 /var/lib/outline/data
+    volumes:
+      - ${VOLUME_PATH}data:/var/lib/outline/data
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     image: outlinewiki/outline:${VERSION:-1.13.0}
     environment:

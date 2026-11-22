@@ -1,7 +1,16 @@
 # DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c dolibarr.yml dolibarr
-# chown -R 33:33 data documents
 
 services:
+  init:
+    image: busybox
+    command: chown -R 33:33 /var/www/html /var/www/documents
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html
+      - ${VOLUME_PATH}documents:/var/www/documents
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   dolibarr:
     image: ${IMAGE:-dolibarr/dolibarr}:${VERSION:-20.0.4}
     environment:

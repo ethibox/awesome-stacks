@@ -1,7 +1,15 @@
 # DOMAIN=example.com SECRET_KEY_BASE=$(openssl rand -hex 32) docker stack deploy -c writebook.yml writebook
-# chown -R 1000:1000 storage/
 
 services:
+  init:
+    image: busybox
+    command: chown -R 1000:1000 /rails/storage
+    volumes:
+      - ${VOLUME_PATH}storage:/rails/storage
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     image: ethibox/writebook:${VERSION:-latest}
     volumes:

@@ -1,7 +1,17 @@
 # DOMAIN=example.com ADMIN_PASSWORD=myp@ssw0rd docker stack deploy -c photoprism.yml photoprism
-# chown -R 1000:1000 photoprism
 
 services:
+  init:
+    image: busybox
+    command: chown -R ${UID:-1000}:${GID:-1000} /photoprism/originals /photoprism/storage /photoprism/import
+    volumes:
+      - ${VOLUME_PATH}originals:/photoprism/originals
+      - ${VOLUME_PATH}storage:/photoprism/storage
+      - ${VOLUME_PATH}import:/photoprism/import
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   photoprism:
     image: photoprism/photoprism:${VERSION:-261029}
     environment:

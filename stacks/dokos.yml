@@ -1,9 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c dokos.yml dokos
-# chown -R 1000:1000 sites/
 # bench new-site --db-host mariadb dokos.localhost
 
 services:
   init:
+    image: busybox
+    command: chown -R 1000:1000 /home/frappe/frappe-bench/sites
+    volumes:
+      - ${VOLUME_PATH}sites:/home/frappe/frappe-bench/sites
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  configurator:
     image: registry.gitlab.com/dokos/dokos:${VERSION:-v4.71.2}
     entrypoint: /bin/sh -c
     command:

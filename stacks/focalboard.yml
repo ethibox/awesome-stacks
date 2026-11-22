@@ -1,7 +1,15 @@
 # DOMAIN=example.com docker stack deploy -c focalboard.yml focalboard
-# chown -R 65534:65534 data
 
 services:
+  init:
+    image: busybox
+    command: chown -R 65534:65534 /opt/focalboard/data
+    volumes:
+      - ${VOLUME_PATH}data:/opt/focalboard/data
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     image: mattermost/focalboard:${VERSION:-7.11.4}
     volumes:

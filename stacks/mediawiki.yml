@@ -1,7 +1,15 @@
 # DOMAIN=example.com docker stack deploy -c mediawiki.yml mediawiki
-# chown -R 33:33 data/
 
 services:
+  init:
+    image: busybox
+    command: chown -R 33:33 /var/www/html
+    volumes:
+      - ${VOLUME_PATH}data:/var/www/html
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   app:
     image: mediawiki:${VERSION:-1.46.2}
     volumes:
