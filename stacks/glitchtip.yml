@@ -48,7 +48,7 @@ services:
       - internal
 
   redis:
-    image: redis:7-alpine
+    image: redis:${REDIS_VERSION:-8-alpine}
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     deploy:

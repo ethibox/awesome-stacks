@@ -77,7 +77,7 @@ services:
       - extranet
 
   redis:
-    image: redis:${REDIS_VERSION:-7-alpine}
+    image: redis:${REDIS_VERSION:-8-alpine}
     volumes:
       - ${VOLUME_PATH}redis:/data
     healthcheck:

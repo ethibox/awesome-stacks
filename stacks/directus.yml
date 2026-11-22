@@ -43,7 +43,7 @@ services:
       - traefik
 
   redis:
-    image: redis:7-alpine
+    image: redis:${REDIS_VERSION:-8-alpine}
     networks:
       - internal
 

@@ -99,7 +99,7 @@ services:
         condition: on-failure
 
   redis:
-    image: redis:7-alpine
+    image: redis:${REDIS_VERSION:-8-alpine}
     volumes:
       - ${VOLUME_PATH}redis:/data
     deploy:
