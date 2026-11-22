@@ -3,7 +3,7 @@
 services:
   penpot-frontend:
     image: penpotapp/frontend:${VERSION:-2.19.3}
-    environment: &penpot-environment
+    environment: &environment
       - PENPOT_FLAGS=disable-email-verification disable-admin-console
       - PENPOT_PUBLIC_URI=https://${DOMAIN:-penpot.localhost}
       - PENPOT_SECRET_KEY=${SECRET_KEY:?}
@@ -27,7 +27,7 @@ services:
 
   penpot-backend:
     image: penpotapp/backend:${VERSION:-2.19.3}
-    environment: *penpot-environment
+    environment: *environment
     volumes:
       - ${VOLUME_PATH}assets:/opt/data/assets
     deploy:
@@ -39,7 +39,7 @@ services:
 
   penpot-exporter:
     image: penpotapp/exporter:${VERSION:-2.19.3}
-    environment: *penpot-environment
+    environment: *environment
     networks:
       - internal
 

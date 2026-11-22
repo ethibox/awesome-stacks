@@ -4,7 +4,7 @@ services:
   api:
     image: lindesvard/openpanel-api:${VERSION:-2.3.0}
     command: sh -c "CI=true pnpm -r run migrate:deploy && pnpm start"
-    environment: &openpanel-environment
+    environment: &environment
       - NODE_ENV=production
       - SELF_HOSTED=true
       - DATABASE_URL=postgres://openpanel:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/openpanel?schema=public
@@ -38,7 +38,7 @@ services:
 
   dashboard:
     image: lindesvard/openpanel-dashboard:${VERSION:-2.3.0}
-    environment: *openpanel-environment
+    environment: *environment
     deploy:
       resources:
         limits:
@@ -53,7 +53,7 @@ services:
 
   worker:
     image: lindesvard/openpanel-worker:${VERSION:-2.3.0}
-    environment: *openpanel-environment
+    environment: *environment
     deploy:
       resources:
         limits:

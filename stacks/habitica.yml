@@ -1,15 +1,12 @@
 # DOMAIN=example.com docker stack deploy -c habitica.yml habitica
 
-x-habitica: &habitica
-  image: ethibox/habitica:${VERSION:-latest}
-  environment:
-    - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@example.com}
-    - BASE_URL=http://server:3000
-    - NODE_DB_URI=mongodb://mongo/habitrpg
-
 services:
   web:
-    <<: *habitica
+    image: &image ethibox/habitica:${VERSION:-latest}
+    environment: &environment
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-noreply@example.com}
+      - BASE_URL=http://server:3000
+      - NODE_DB_URI=mongodb://mongo/habitrpg
     command: npm run client:dev
     deploy:
       labels:
@@ -21,7 +18,8 @@ services:
       - internal
 
   server:
-    <<: *habitica
+    image: *image
+    environment: *environment
     command: bash -c "cp config.json.example config.json && node ./website/transpiled-babel/index.js"
     networks:
       - internal

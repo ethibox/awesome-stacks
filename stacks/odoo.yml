@@ -3,8 +3,8 @@
 services:
   init:
     user: root
-    image: &odoo-image odoo:${VERSION:-18.0}
-    volumes: &odoo-volumes
+    image: &image odoo:${VERSION:-18.0}
+    volumes: &volumes
       - ${VOLUME_PATH}config:/etc/odoo
       - ${VOLUME_PATH}odoo:/var/lib/odoo
       - ${VOLUME_PATH}addons:/mnt/extra-addons
@@ -25,8 +25,8 @@ services:
         condition: on-failure
 
   web:
-    image: *odoo-image
-    volumes: *odoo-volumes
+    image: *image
+    volumes: *volumes
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-myp@ssw0rd}

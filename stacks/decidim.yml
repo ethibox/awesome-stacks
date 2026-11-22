@@ -3,9 +3,9 @@
 
 services:
   app:
-    image: &decidim-image decidim/decidim:${VERSION:-0.31.6}
+    image: &image decidim/decidim:${VERSION:-0.31.6}
     command: sh -c "bin/rails db:migrate &&bin/rails server -b 0.0.0.0"
-    environment: &decidim-environment
+    environment: &environment
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
       - DATABASE_URL=postgres://decidim:myp%40ssw0rd@postgres:5432/decidim
       - REDIS_URL=redis://redis:6379
@@ -19,8 +19,8 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "curl -fsH 'X-Forwarded-Proto: https' http://127.0.0.1:3000/up"]
       start_period: 5m
-    volumes:
-      - &decidim-storage ${VOLUME_PATH}storage:/code/storage
+    volumes: &volumes
+      - ${VOLUME_PATH}storage:/code/storage
     deploy:
       resources:
         limits:
@@ -34,11 +34,10 @@ services:
       - traefik
 
   sidekiq:
-    image: *decidim-image
+    image: *image
     command: bundle exec sidekiq -C config/sidekiq.yml
-    environment: *decidim-environment
-    volumes:
-      - *decidim-storage
+    environment: *environment
+    volumes: *volumes
     deploy:
       resources:
         limits:

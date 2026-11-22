@@ -15,12 +15,12 @@ services:
         condition: on-failure
 
   zammad-init:
-    image: &zammad-image zammad/zammad-docker-compose:${VERSION:-7.2.3-0017}
+    image: &image zammad/zammad-docker-compose:${VERSION:-7.2.3-0017}
     command: ["zammad-init"]
-    volumes: &zammad-volumes
+    volumes: &volumes
       - ${VOLUME_PATH}var:/opt/zammad/var
       - ${VOLUME_PATH}storage:/opt/zammad/storage
-    environment: &zammad-environment
+    environment: &environment
       - NGINX_SERVER_SCHEME=https
       - POSTGRESQL_DB=zammad
       - POSTGRESQL_USER=zammad
@@ -39,10 +39,10 @@ services:
       - internal
 
   zammad-nginx:
-    image: *zammad-image
+    image: *image
     command: ["zammad-nginx"]
-    environment: *zammad-environment
-    volumes: *zammad-volumes
+    environment: *environment
+    volumes: *volumes
     deploy:
       resources:
         limits:
@@ -112,10 +112,10 @@ services:
       - internal
 
   zammad-railsserver:
-    image: *zammad-image
+    image: *image
     command: ["zammad-railsserver"]
-    environment: *zammad-environment
-    volumes: *zammad-volumes
+    environment: *environment
+    volumes: *volumes
     deploy:
       resources:
         limits:
@@ -124,10 +124,10 @@ services:
       - internal
 
   zammad-scheduler:
-    image: *zammad-image
+    image: *image
     command: ["zammad-scheduler"]
-    environment: *zammad-environment
-    volumes: *zammad-volumes
+    environment: *environment
+    volumes: *volumes
     deploy:
       resources:
         limits:
@@ -136,10 +136,10 @@ services:
       - internal
 
   zammad-websocket:
-    image: *zammad-image
+    image: *image
     command: ["zammad-websocket"]
-    environment: *zammad-environment
-    volumes: *zammad-volumes
+    environment: *environment
+    volumes: *volumes
     deploy:
       resources:
         limits:

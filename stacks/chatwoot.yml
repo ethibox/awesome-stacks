@@ -5,8 +5,8 @@
 
 services:
   web:
-    image: &chatwoot-image chatwoot/chatwoot:${VERSION:-v4.20.1}
-    environment: &chatwoot-environment
+    image: &image chatwoot/chatwoot:${VERSION:-v4.20.1}
+    environment: &environment
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:?} # bundle exec rake secret
       - FRONTEND_URL=https://${DOMAIN:-chatwoot.localhost}
       - NODE_ENV=${NODE_ENV:-production}
@@ -45,15 +45,15 @@ services:
       - traefik
 
   sidekiq:
-    image: *chatwoot-image
-    environment: *chatwoot-environment
+    image: *image
+    environment: *environment
     command: bundle exec sidekiq -C config/sidekiq.yml
     networks:
       - internal
 
   redis:
     image: redis:6-alpine
-    environment: *chatwoot-environment
+    environment: *environment
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
     networks:
       - internal

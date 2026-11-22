@@ -12,8 +12,8 @@ services:
         condition: on-failure
 
   web:
-    image: &mastodon-image ghcr.io/mastodon/mastodon:${VERSION:-v4.7.6}
-    environment: &mastodon-environment
+    image: &image ghcr.io/mastodon/mastodon:${VERSION:-v4.7.6}
+    environment: &environment
       - LOCAL_DOMAIN=${DOMAIN:-mastodon.localhost}
       - SINGLE_USER_MODE=${SINGLE_USER_MODE:-false}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:?}
@@ -55,7 +55,7 @@ services:
 
   streaming:
     image: ghcr.io/mastodon/mastodon-streaming:${VERSION:-v4.7.6}
-    environment: *mastodon-environment
+    environment: *environment
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
     deploy:
@@ -71,8 +71,8 @@ services:
       - internal
 
   sidekiq:
-    image: *mastodon-image
-    environment: *mastodon-environment
+    image: *image
+    environment: *environment
     command: bundle exec sidekiq
     volumes:
       - ${VOLUME_PATH}system:/mastodon/public/system

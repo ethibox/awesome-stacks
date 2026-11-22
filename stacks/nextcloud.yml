@@ -26,7 +26,7 @@ services:
       - traefik
 
   app:
-    image: &nextcloud-image nextcloud:${VERSION:-35.0.3-fpm-alpine}
+    image: &image nextcloud:${VERSION:-35.0.3-fpm-alpine}
     entrypoint: /bin/sh
     command:
       - -c
@@ -41,7 +41,7 @@ services:
         echo "php /var/www/html/occ maintenance:repair --include-expensive -n" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
         chmod +x /docker-entrypoint-hooks.d/post-installation/setup.sh
         exec /entrypoint.sh php-fpm
-    environment: &nextcloud-environment
+    environment: &environment
       - DOMAIN=${DOMAIN:-nextcloud.localhost}
       - MYSQL_HOST=mariadb
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
@@ -90,9 +90,9 @@ services:
       - internal
 
   cron:
-    image: *nextcloud-image
+    image: *image
     entrypoint: /cron.sh
-    environment: *nextcloud-environment
+    environment: *environment
     volumes:
       - ${VOLUME_PATH}nextcloud:/var/www/html
     deploy:

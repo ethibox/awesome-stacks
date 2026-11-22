@@ -2,7 +2,7 @@
 
 services:
   init:
-    image: &pixelfed-image ethibox/pixelfed:${VERSION:-v0.15.2}
+    image: &image ethibox/pixelfed:${VERSION:-v0.15.2}
     user: root
     entrypoint: /bin/sh -c
     command:
@@ -16,14 +16,14 @@ services:
         condition: on-failure
 
   app:
-    image: *pixelfed-image
+    image: *image
     command:
       - /bin/sh
       - -c
       - |
         php artisan user:create --name="$$ADMIN_USERNAME" --username="$$ADMIN_USERNAME" --email="$$ADMIN_EMAIL" --password="$$ADMIN_PASSWORD" --is_admin=true --confirm_email=1 || true
         exec frankenphp run --config /etc/frankenphp/Caddyfile --adapter caddyfile
-    environment: &pixelfed-environment
+    environment: &environment
       - APP_NAME=${APP_NAME:-PixelFed}
       - APP_KEY=${APP_KEY:?}
       - APP_URL=https://${DOMAIN:-pixelfed.localhost}
@@ -81,8 +81,8 @@ services:
       - internal
 
   worker:
-    image: *pixelfed-image
-    environment: *pixelfed-environment
+    image: *image
+    environment: *environment
     entrypoint: php /var/www/html/artisan horizon
     healthcheck:
       test: ["CMD", "healthcheck-horizon"]

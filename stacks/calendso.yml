@@ -34,7 +34,7 @@ services:
         --build-arg NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=$${NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS} \
         --network $${STACK_NAME}_internal \
         --no-cache -t calendso:$${DOMAIN} .
-    environment: &calendso-environment
+    environment: &environment
       - VERSION=${VERSION:-v6.2.0}
       - NODE_ENV=production
       - POSTGRES_USER=calendso
@@ -81,7 +81,7 @@ services:
 
   calendso:
     image: calendso:${DOMAIN-calendso.localhost}
-    environment: *calendso-environment
+    environment: *environment
     deploy:
       resources:
         limits:

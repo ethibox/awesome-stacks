@@ -2,8 +2,8 @@
 
 services:
   server:
-    image: &authentik-image ghcr.io/goauthentik/server:${VERSION:-2026.8.6}
-    environment: &authentik-environment
+    image: &image ghcr.io/goauthentik/server:${VERSION:-2026.8.6}
+    environment: &environment
       - AUTHENTIK_REDIS__HOST=redis
       - AUTHENTIK_POSTGRESQL__HOST=postgres
       - AUTHENTIK_POSTGRESQL__USER=${POSTGRES_USER:-authentik}
@@ -26,8 +26,8 @@ services:
       - traefik
 
   worker:
-    image: *authentik-image
-    environment: *authentik-environment
+    image: *image
+    environment: *environment
     command: worker
     volumes:
       - ${VOLUME_PATH}media:/media

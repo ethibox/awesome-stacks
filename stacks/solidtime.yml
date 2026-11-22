@@ -20,8 +20,8 @@ services:
         condition: on-failure
 
   app:
-    image: &solidtime-image solidtime/solidtime:${VERSION:-0.23.0}
-    environment: &solidtime-environment
+    image: &image solidtime/solidtime:${VERSION:-0.23.0}
+    environment: &environment
       CONTAINER_MODE: http
       APP_URL: https://${DOMAIN:-solidtime.localhost}
       APP_KEY: ${APP_KEY}
@@ -60,9 +60,9 @@ services:
       - traefik
 
   scheduler:
-    image: *solidtime-image
+    image: *image
     environment:
-      <<: *solidtime-environment
+      <<: *environment
       CONTAINER_MODE: scheduler
     volumes:
       - ${VOLUME_PATH}storage:/var/www/html/storage
@@ -76,9 +76,9 @@ services:
       - internal
 
   queue:
-    image: *solidtime-image
+    image: *image
     environment:
-      <<: *solidtime-environment
+      <<: *environment
       CONTAINER_MODE: worker
       WORKER_COMMAND: php /var/www/html/artisan queue:work
     volumes:

@@ -4,7 +4,7 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /usr/lufi/data /usr/lufi/files
-    volumes: &lufi-volumes
+    volumes: &volumes
       - ${VOLUME_PATH}data:/usr/lufi/data
       - ${VOLUME_PATH}files:/usr/lufi/files
     deploy:
@@ -12,8 +12,8 @@ services:
         condition: on-failure
 
   web:
-    image: &lufi-image ethibox/lufi:${VERSION:-0.07.4}
-    environment: &lufi-environment
+    image: &image ethibox/lufi:${VERSION:-0.07.4}
+    environment: &environment
       - MAX_DELAY=${MAX_DELAY:-30}
       - SECRET=${SECRET:?}
       - CRON_DELAY=${CRON_DELAY:-86400}
@@ -23,7 +23,7 @@ services:
       - POLICY_WHEN_FULL=${POLICY_WHEN_FULL:-warn}
       - MAX_FILE_SIZE=${MAX_FILE_SIZE:-2147483648}
       - ADMIN_EMAIL=${ADMIN_EMAIL:-contact@example.com}
-    volumes: *lufi-volumes
+    volumes: *volumes
     deploy:
       resources:
         limits:
@@ -37,7 +37,7 @@ services:
       - internal
 
   cron:
-    image: *lufi-image
+    image: *image
     command:
       - /bin/sh
       - -ec
@@ -49,8 +49,8 @@ services:
           script/lufi cron watch --mode production
           sleep $$CRON_DELAY
         done
-    environment: *lufi-environment
-    volumes: *lufi-volumes
+    environment: *environment
+    volumes: *volumes
     healthcheck:
       disable: true
     deploy:

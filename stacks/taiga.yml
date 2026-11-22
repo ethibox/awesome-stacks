@@ -22,7 +22,7 @@ services:
 
   front:
     image: taigaio/taiga-front:${VERSION:-6.10.3}
-    environment: &taiga-environment
+    environment: &environment
       - SECRET_KEY=${SECRET_KEY:?}
       - TAIGA_SITES_SCHEME=https
       - TAIGA_ASYNC_RABBITMQ_HOST=rabbitmq
@@ -40,7 +40,7 @@ services:
       - DJANGO_SUPERUSER_USERNAME=${ADMIN_USERNAME:-admin}
       - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD:?}
       - DJANGO_SUPERUSER_EMAIL=${ADMIN_EMAIL:-admin@example.com}
-    volumes: &taiga-volumes
+    volumes: &volumes
       - ${VOLUME_PATH}static:/taiga/static
       - ${VOLUME_PATH}media:/taiga/media
     networks:
@@ -55,7 +55,7 @@ services:
         python manage.py migrate
         python manage.py createsuperuser --noinput || true
         exec /taiga-back/docker/entrypoint.sh
-    environment: *taiga-environment
+    environment: *environment
     volumes:
       - ${VOLUME_PATH}static:/taiga-back/static
       - ${VOLUME_PATH}media:/taiga-back/media
@@ -64,23 +64,23 @@ services:
 
   async:
     image: taigaio/taiga-back:${VERSION:-6.10.2}
-    environment: *taiga-environment
-    volumes: *taiga-volumes
+    environment: *environment
+    volumes: *volumes
     entrypoint: /taiga-back/docker/async_entrypoint.sh
     networks:
       - internal
 
   events:
     image: taigaio/taiga-events:${VERSION:-6.10.0}
-    environment: *taiga-environment
-    volumes: *taiga-volumes
+    environment: *environment
+    volumes: *volumes
     networks:
       - internal
 
   protected:
     image: taigaio/taiga-protected:${VERSION:-6.10.1}
-    environment: *taiga-environment
-    volumes: *taiga-volumes
+    environment: *environment
+    volumes: *volumes
     networks:
       - internal
 

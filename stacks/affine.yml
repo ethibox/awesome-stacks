@@ -1,20 +1,17 @@
 # DOMAIN=example.com docker stack deploy -c affine.yml affine
 
-x-affine: &affine
-  image: ghcr.io/toeverything/affine:${VERSION:-0.27.4}
-  volumes:
-    - ${VOLUME_PATH}storage:/root/.affine/storage
-    - ${VOLUME_PATH}config:/root/.affine/config
-  environment:
-    - REDIS_SERVER_HOST=redis
-    - AFFINE_INDEXER_ENABLED=false
-    - AFFINE_SERVER_HOST=${DOMAIN:-affine.localhost}
-    - AFFINE_SERVER_EXTERNAL_URL=https://${DOMAIN:-affine.localhost}
-    - DATABASE_URL=postgresql://affine:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/affine
-
 services:
   affine:
-    <<: *affine
+    image: &image ghcr.io/toeverything/affine:${VERSION:-0.27.4}
+    volumes: &volumes
+      - ${VOLUME_PATH}storage:/root/.affine/storage
+      - ${VOLUME_PATH}config:/root/.affine/config
+    environment: &environment
+      - REDIS_SERVER_HOST=redis
+      - AFFINE_INDEXER_ENABLED=false
+      - AFFINE_SERVER_HOST=${DOMAIN:-affine.localhost}
+      - AFFINE_SERVER_EXTERNAL_URL=https://${DOMAIN:-affine.localhost}
+      - DATABASE_URL=postgresql://affine:${POSTGRES_PASSWORD:-myp@ssw0rd}@postgres:5432/affine
     deploy:
       labels:
         - traefik.enable=true
@@ -25,7 +22,9 @@ services:
       - traefik
 
   migration:
-    <<: *affine
+    image: *image
+    volumes: *volumes
+    environment: *environment
     command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
     deploy:
       restart_policy:

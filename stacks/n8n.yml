@@ -11,8 +11,8 @@ services:
         condition: on-failure
 
   n8n:
-    image: &n8n-image n8nio/n8n:${VERSION:-2.49.3}
-    environment: &n8n-environment
+    image: &image n8nio/n8n:${VERSION:-2.49.3}
+    environment: &environment
       - NODE_ENV=production
       - N8N_PROTOCOL=https
       - N8N_HOST=${DOMAIN:-n8n.localhost}
@@ -61,9 +61,9 @@ services:
       - extranet
 
   worker:
-    image: *n8n-image
+    image: *image
     command: worker
-    environment: *n8n-environment
+    environment: *environment
     volumes:
       - ${VOLUME_PATH}n8n:/home/node/.n8n
     deploy:

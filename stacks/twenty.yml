@@ -2,8 +2,8 @@
 
 services:
   app:
-    image: &twenty-image twentycrm/twenty:${VERSION:-v1.23.9}
-    environment: &twenty-environment
+    image: &image twentycrm/twenty:${VERSION:-v1.23.9}
+    environment: &environment
       - PORT=3000
       - PG_DATABASE_URL=postgres://twenty:mypassw0rd@{{ index .Service.Labels "com.docker.stack.namespace" }}_postgres:5432/${POSTGRES_DB:-twenty}
       - SERVER_URL=https://${DOMAIN:-twenty.localhost}
@@ -14,7 +14,7 @@ services:
       - ENABLE_DB_MIGRATIONS=${ENABLE_DB_MIGRATIONS:-true}
       - IS_MULTIWORKSPACE_ENABLED=${IS_MULTIWORKSPACE_ENABLED:-false}
       - APP_SECRET=${APP_SECRET:?}
-    volumes: &twenty-volumes
+    volumes: &volumes
       - ${VOLUME_PATH}data:/app/packages/twenty-server/.local-storage
       - ${VOLUME_PATH}docker:/app/docker-data
     deploy:
@@ -32,16 +32,16 @@ services:
   init:
     image: busybox
     command: chown -R 1000:1000 /app/packages/twenty-server/.local-storage /app/docker-data
-    volumes: *twenty-volumes
+    volumes: *volumes
     deploy:
       restart_policy:
         condition: on-failure
 
   worker:
-    image: *twenty-image
+    image: *image
     command: ["yarn", "worker:prod"]
-    environment: *twenty-environment
-    volumes: *twenty-volumes
+    environment: *environment
+    volumes: *volumes
     deploy:
       resources:
         limits:
