@@ -134,7 +134,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/kanboard.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
@@ -256,7 +256,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/discourse.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
@@ -486,7 +486,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/zammad.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       }
     },
     {
@@ -748,7 +748,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/chatwoot.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
@@ -1150,7 +1150,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dolibarr.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
@@ -1182,7 +1182,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/element.yml",
-        "commit": "47405c8757c01199c77f80165932549110f708b5"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       }
     },
     {
@@ -1340,7 +1340,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mediawiki.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
@@ -1649,7 +1649,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/passbolt.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
@@ -2541,7 +2541,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dokos.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
       },
       "env": [
         {
