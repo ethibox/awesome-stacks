@@ -50,7 +50,7 @@ services:
       - internal
 
   redis:
-    image: redis:6-alpine
+    image: redis:7-alpine
     environment: *environment
     command: /bin/sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
     networks:

@@ -30,7 +30,7 @@ services:
       - traefik
 
   redis:
-    image: redis:6.0-alpine
+    image: redis:7-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
     networks:

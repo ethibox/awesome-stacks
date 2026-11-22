@@ -73,17 +73,17 @@ services:
       - internal
 
   redis-queue:
-    image: redis:6.2-alpine
+    image: redis:7-alpine
     networks:
       - internal
 
   redis-cache:
-    image: redis:6.2-alpine
+    image: redis:7-alpine
     networks:
       - internal
 
   redis-socketio:
-    image: redis:6.2-alpine
+    image: redis:7-alpine
     networks:
       - internal
 

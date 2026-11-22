@@ -16,7 +16,7 @@ services:
       - traefik
 
   redis-dock:
-    image: redis:6-alpine
+    image: redis:7-alpine
     volumes:
       - ${VOLUME_PATH}redis:/data
     deploy:
