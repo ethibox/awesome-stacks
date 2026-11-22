@@ -111,6 +111,7 @@ services:
       - MYSQL_USER=${MYSQL_USER:-nextcloud}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-nextcloud}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
+      - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     healthcheck:

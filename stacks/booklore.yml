@@ -45,6 +45,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-booklore}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-myp@ssw0rd}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-myp@ssw0rd}
+      - MARIADB_AUTO_UPGRADE=1
     volumes:
       - ${VOLUME_PATH}mariadb:/var/lib/mysql
     networks:
