@@ -748,7 +748,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/chatwoot.yml",
-        "commit": "f0e786f5895ff573817df2dd24d9a1c442bce8ad"
+        "commit": "21b5db7fda3ff21e197481874cb66388c39ae741"
       },
       "env": [
         {
@@ -2541,7 +2541,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/dokos.yml",
-        "commit": "572027d707f57cad272588c807a728318a640fc6"
+        "commit": "21b5db7fda3ff21e197481874cb66388c39ae741"
       },
       "env": [
         {
@@ -2700,7 +2700,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/automatisch.yml",
-        "commit": "e2ae5e6abf7f11acd4179b70ab2e2ea40d1959a1"
+        "commit": "21b5db7fda3ff21e197481874cb66388c39ae741"
       },
       "env": [
         {
@@ -2977,7 +2977,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/twenty.yml",
-        "commit": "2fd5b0306fc45ca5f4c72f9aa827b5e189820a3d"
+        "commit": "21b5db7fda3ff21e197481874cb66388c39ae741"
       },
       "env": [
         {
