@@ -16,8 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       files: ${{ steps.filter.outputs.stacks_files }}
+      ignored: ${{ steps.ignored.outputs.files }}
     steps:
       - uses: actions/checkout@v5
+
+      - id: ignored
+        run: echo "files=$(jq -c . .github/workflows/ignored.json)" >> "$GITHUB_OUTPUT"
 
       - id: filter
         uses: dorny/paths-filter@v3
@@ -30,6 +34,7 @@ jobs:
   deploy:
     needs: changes
     if: needs.changes.outputs.files != '[]'
+    continue-on-error: ${{ contains(fromJSON(needs.changes.outputs.ignored), matrix.file) }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
