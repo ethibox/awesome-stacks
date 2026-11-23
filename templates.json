@@ -804,7 +804,7 @@
       "id": 16,
       "type": 2,
       "title": "Wekan",
-      "version": "13.25",
+      "version": "13.28",
       "categories": [
         "Projets"
       ],
@@ -814,7 +814,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wekan.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "e0bd748b8974d64356b970ae710a38b888d39293"
       },
       "env": [
         {
@@ -940,7 +940,7 @@
       "id": 18,
       "type": 2,
       "title": "Etherpad",
-      "version": "3.3.21",
+      "version": "3.3.22",
       "categories": [
         "Documents"
       ],
@@ -950,7 +950,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/etherpad.yml",
-        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+        "commit": "e0bd748b8974d64356b970ae710a38b888d39293"
       },
       "env": [
         {
@@ -1572,7 +1572,7 @@
       "id": 34,
       "type": 2,
       "title": "Wikijs",
-      "version": "3.5.0",
+      "version": "3.6.0",
       "categories": [
         "Documents"
       ],
@@ -1582,7 +1582,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wikijs.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "e0bd748b8974d64356b970ae710a38b888d39293"
       },
       "env": [
         {
@@ -1677,7 +1677,7 @@
       "id": 36,
       "type": 2,
       "title": "Wallabag",
-      "version": "2.6.17",
+      "version": "2.6.18",
       "categories": [
         "Stockage"
       ],
@@ -1687,7 +1687,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/wallabag.yml",
-        "commit": "47405c8757c01199c77f80165932549110f708b5"
+        "commit": "e0bd748b8974d64356b970ae710a38b888d39293"
       }
     },
     {
@@ -2280,7 +2280,7 @@
       "id": 51,
       "type": 2,
       "title": "Nocobase",
-      "version": "2.2.50",
+      "version": "2.2.51",
       "categories": [
         "No-code"
       ],
@@ -2290,7 +2290,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/nocobase.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "e0bd748b8974d64356b970ae710a38b888d39293"
       },
       "env": [
         {
@@ -4594,7 +4594,7 @@
       "id": 132,
       "type": 2,
       "title": "Jackett",
-      "version": "0.25.20",
+      "version": "0.25.24",
       "categories": [
         "Recherche"
       ],
@@ -4604,7 +4604,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/jackett.yml",
-        "commit": "f681145064151b695e487ca3f44a2de038572818"
+        "commit": "e0bd748b8974d64356b970ae710a38b888d39293"
       }
     },
     {
