@@ -918,21 +918,6 @@
           "name": "MAIL_FROM_ADDRESS",
           "label": "SMTP From Address",
           "type": "email"
-        },
-        {
-          "name": "LOCK_SENT_INVOICES",
-          "label": "Restreindre la modification des factures",
-          "type": "select",
-          "select": [
-            {
-              "text": "Oui",
-              "value": "true"
-            },
-            {
-              "text": "Non",
-              "value": "false"
-            }
-          ]
         }
       ]
     },
@@ -1324,19 +1309,6 @@
           "label": "Admin password",
           "type": "password",
           "disabled": true
-        },
-        {
-          "name": "OPENID_PROVIDERURL",
-          "label": "OpenID Provider URL"
-        },
-        {
-          "name": "OPENID_CLIENTID",
-          "label": "OpenID Client ID"
-        },
-        {
-          "name": "OPENID_CLIENTSECRET",
-          "label": "OpenID Client Secret",
-          "type": "password"
         }
       ]
     },
