@@ -39,6 +39,10 @@ services:
         echo "php /var/www/html/occ app:disable app_api" > /docker-entrypoint-hooks.d/post-installation/setup.sh
         echo "php /var/www/html/occ db:add-missing-indices -n" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
         echo "php /var/www/html/occ maintenance:repair --include-expensive -n" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
+        if [ -n "${COLLABORA_URL}" ]; then
+          echo "php /var/www/html/occ app:install richdocuments" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
+          echo "php /var/www/html/occ richdocuments:activate-config --wopi-url=${COLLABORA_URL}" >> /docker-entrypoint-hooks.d/post-installation/setup.sh
+        fi
         chmod +x /docker-entrypoint-hooks.d/post-installation/setup.sh
         exec /entrypoint.sh php-fpm
     environment: &environment
