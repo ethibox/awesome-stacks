@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: ${IMAGE:-ethibox/ethibox}:${VERSION:-2.22.0}
+    image: ${IMAGE:-ethibox/ethibox}:${VERSION:-2.23.1}
     environment:
       - DATABASE_TYPE=${DATABASE_TYPE:-mariadb}
       - DATABASE_HOST=${DATABASE_HOST:-mariadb}
