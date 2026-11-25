@@ -2892,7 +2892,7 @@
         "Documents"
       ],
       "manual": true,
-      "enabled": true,
+      "enabled": false,
       "logo": "https://ethibox.fr/images/logos/outline.png",
       "website": "https://getoutline.com",
       "repository": {
@@ -4110,14 +4110,20 @@
       "categories": [
         "Documents"
       ],
-      "enabled": false,
+      "enabled": true,
       "logo": "https://ethibox.fr/images/logos/docmost.png",
       "website": "https://docmost.com",
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/docmost.yml",
         "commit": "f3d1c1982f6d0418905d8dd592dd1436633fc0f7"
-      }
+      },
+      "env": [
+        {
+          "name": "APP_SECRET",
+          "preset": true
+        }
+      ]
     },
     {
       "id": 109,
