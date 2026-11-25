@@ -581,7 +581,7 @@
         "Automatisation"
       ],
       "manual": true,
-      "enabled": true,
+      "enabled": false,
       "logo": "https://ethibox.fr/images/logos/n8n.png",
       "website": "https://n8n.io/",
       "repository": {
