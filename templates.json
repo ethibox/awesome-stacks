@@ -87,7 +87,7 @@
       "id": 2,
       "type": 2,
       "title": "Mattermost",
-      "version": "11.11.4",
+      "version": "11.11.5",
       "categories": [
         "Communication"
       ],
@@ -97,7 +97,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/mattermost.yml",
-        "commit": "8a9db58cf960718e941a861570ba3057d304e399"
+        "commit": "fa24fd990bc98070e63b6e4d7ca0204916b56de7"
       },
       "env": [
         {
