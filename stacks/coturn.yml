@@ -4,7 +4,7 @@ services:
   coturn:
     image: coturn/coturn:${VERSION:-4.19.2}
     command: >-
-      --log-file=stdout --listening-port=3478 --no-tls --no-dtls --no-cli --fingerprint
+      --log-file=stdout --listening-port=3478 --no-tls --fingerprint
       --use-auth-secret --static-auth-secret=${TURN_CREDENTIALS:?} --realm=${DOMAIN:-turn.localhost}
       --denied-peer-ip=192.168.0.0-192.168.255.255
       --denied-peer-ip=172.16.0.0-172.31.255.255
