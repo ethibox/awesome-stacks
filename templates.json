@@ -5405,7 +5405,7 @@
       "repository": {
         "url": "https://github.com/ethibox/awesome-stacks",
         "stackfile": "stacks/coturn.yml",
-        "commit": "c8bec29ebc3c5a9c94b54351e916bfe0f59f1a79"
+        "commit": "556ccc9f56fee9eab27b53fbf4207964bfae6a93"
       },
       "env": [
         {
