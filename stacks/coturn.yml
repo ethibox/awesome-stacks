@@ -1,0 +1,28 @@
+# DOMAIN=turn.example.com TURN_CREDENTIALS=$(openssl rand -hex 32) docker stack deploy -c coturn.yml coturn
+
+services:
+  coturn:
+    image: coturn/coturn:${VERSION:-4.19.2}
+    command: >-
+      --log-file=stdout --listening-port=3478 --no-tls --no-dtls --no-cli --fingerprint
+      --use-auth-secret --static-auth-secret=${TURN_CREDENTIALS:?} --realm=${DOMAIN:-turn.localhost}
+      --denied-peer-ip=192.168.0.0-192.168.255.255
+      --denied-peer-ip=172.16.0.0-172.31.255.255
+      --denied-peer-ip=10.0.0.0-10.255.255.255
+      --no-multicast-peers
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-2G}
+      labels:
+        - traefik.enable=true
+        - traefik.tcp.routers.coturn-${NUMBER:-1}.tls.certresolver=letsencrypt
+        - traefik.tcp.routers.coturn-${NUMBER:-1}.rule=HostSNI(`${DOMAIN:-turn.localhost}`)
+        - traefik.tcp.services.coturn-${NUMBER:-1}.loadbalancer.server.port=3478
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
+    name: traefik-net
