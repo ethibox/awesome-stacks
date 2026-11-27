@@ -5399,7 +5399,7 @@
         "Communication"
       ],
       "manual": true,
-      "enabled": true,
+      "enabled": false,
       "logo": "https://ethibox.fr/images/logos/coturn.png",
       "website": "https://github.com/coturn/coturn",
       "repository": {
