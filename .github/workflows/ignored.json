@@ -4,5 +4,6 @@
   "stacks/dokos.yml",
   "stacks/ipfs.yml",
   "stacks/siyuan.yml",
+  "stacks/coturn.yml",
   "stacks/solidtime.yml"
 ]
